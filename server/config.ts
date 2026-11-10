@@ -32,12 +32,14 @@ export const config = {
   tiandituKey: process.env.TIANDITU_KEY?.trim() ?? '',
   adminToken: process.env.ADMIN_TOKEN?.trim() ?? '',
   enableImages: process.env.ENABLE_IMAGES === 'true',
+  /** 无 Key 时自动使用模拟 LLM；也可用 MOCK_LLM=true 强制模拟。 */
+  mockLlm: process.env.MOCK_LLM === 'true' || !process.env.LLM_API_KEY?.trim(),
   ipHashSalt: process.env.IP_HASH_SALT?.trim() || 'citylens-dev-salt',
   simulateFail: (process.env.SIMULATE_FAIL ?? '')
     .split(',')
     .map((s) => s.trim())
     .filter(Boolean),
-  mockLlmDelayMs: num(process.env.MOCK_LLM_DELAY_MS, 0),
+  mockLlmDelayMs: num(process.env.MOCK_LLM_DELAY_MS, 150),
 } as const;
 
 export const llmConfigured = (): boolean => config.llm.apiKey.length > 0;

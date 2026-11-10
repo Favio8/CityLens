@@ -2,7 +2,7 @@
 
 交互式城市人文档案系统。输入城市名、古称或拼音，读城引擎以流式方式逐模块生成八个人文模块，每个模块独立显影、独立降级。
 
-> 当前进度：阶段 1–3（服务端基础、离线事实管线、缓存编排与 SSE）。前端完整界面在阶段 4–7 交付，详见 [FEATURES_AND_VERIFICATION.md](./FEATURES_AND_VERIFICATION.md)。
+> 当前进度：阶段 1–3 已完成（服务端基础、离线事实管线、缓存编排与 SSE 流式生成）。前端完整界面在阶段 4–7 交付，详见 [FEATURES_AND_VERIFICATION.md](./FEATURES_AND_VERIFICATION.md)。
 
 ## 技术栈
 
@@ -97,6 +97,8 @@ npm run seed              # 重新导入词典（幂等）
 | `ENABLE_IMAGES` | 是否启用 Commons 图片 | `false` |
 | `IP_HASH_SALT` | 请求方 IP 哈希盐，生产环境必须修改 | `citylens-dev-salt` |
 | `SIMULATE_FAIL` | 模拟指定模块失败，如 `poetics,figures` | 空 |
+| `MOCK_LLM` | 强制使用模拟 LLM（即使配置了真实 Key） | 空（未配置 Key 时自动开启） |
+| `MOCK_LLM_DELAY_MS` | 模拟 LLM 单模块延迟，用于观察流式时序 | `150` |
 
 ## 接口
 
@@ -106,9 +108,41 @@ npm run seed              # 重新导入词典（幂等）
 | GET | `/api/cities/search?q=` | 城市规范化检索（古称/拼音/英文/区县/纠错/消歧） |
 | GET | `/api/cities/hot` | 热门城市（预置城市优先） |
 | GET | `/api/cities/:cityId` | 读取缓存档案 |
-| POST | `/api/cities/:cityId/generate` | SSE 流式生成（阶段 3） |
+| POST | `/api/cities/:cityId/generate` | SSE 流式生成或复用档案 |
 
 SSE 事件：`meta` → `theme` → 8 个 `module`（可穿插 `module_error`）→ `done`；`ping` 每 15s 保活。
+
+### 阶段 3 自测（流式 / 单飞 / 冷却 / 限流）
+
+以下命令在 PowerShell 中执行（`curl.exe -N` 关闭缓冲才能看到逐条事件）。无 Key 时自动使用模拟 LLM，延迟默认 150ms/模块。
+
+```powershell
+# 1) 流式：观察 meta → theme → 8 个 module/module_error → done
+curl.exe -N -X POST http://localhost:8787/api/cities/CN-610100/generate -H "Content-Type: application/json" -d "{}"
+
+# 2) 单飞：同时发起 3 个请求，只应创建 1 个 job，其余复用同一个流
+1..3 | ForEach-Object -Parallel {
+  curl.exe -s -o NUL -w "%{http_code} %{time_total}`n" -X POST http://localhost:8787/api/cities/CN-330100/generate -H "Content-Type: application/json" -d "{}"
+} -ThrottleLimit 3
+
+# 3) 缓存命中：生成完成后再 GET，应返回 fromCache: true 且无 LLM 调用
+curl.exe http://localhost:8787/api/cities/CN-610100
+
+# 4) 冷却：对未发布城市（如泉州市 CN-350500）生成后立刻再次请求，应返回 429 COOLDOWN
+curl.exe -i -X POST http://localhost:8787/api/cities/CN-350500/generate -H "Content-Type: application/json" -d "{}"
+curl.exe http://localhost:8787/api/cities/CN-350500
+
+# 5) 限流：同一 IP 一小时内新建第 11 座城市，应返回 429 RATE_LIMITED（retryAfterSec=3600）
+```
+
+单元测试与类型检查：
+
+```bash
+node node_modules/vitest/vitest.mjs run   # 88 项：schema/校验/规范化/编排/SSE
+npm run typecheck                          # server + client 的 tsc --noEmit
+```
+
+实现要点：同一城市生成请求由数据库唯一部分索引 `uq_running_job` 保证单飞；失败任务冷却 10 分钟、无档案城市冷却 5 分钟；每小时最多生成 10 座新城市；每日 LLM 调用受 `LLM_DAILY_CALL_LIMIT` 预算约束；已 `ok`/`degraded` 的模块在增量重生成时复用，不重复调用 LLM。
 
 ## 数据真实性
 

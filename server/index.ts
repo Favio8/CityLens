@@ -5,14 +5,21 @@ import fastifyStatic from '@fastify/static';
 import Fastify from 'fastify';
 import { ZodError } from 'zod';
 import { config, clientDistExists, llmConfigured, mapConfigured } from './config';
+import { ArchiveRepo } from './db/archiveRepo';
 import { CityRepo } from './db/cityRepo';
 import { getDb } from './db';
+import { JobRepo } from './db/jobRepo';
 import { ApiError } from './errors';
+import { registerArchiveRoutes } from './routes/archiveRoutes';
+import { JobManager } from './services/jobManager';
+import { createGenerator, type ModuleGenerator } from './services/llmGenerator';
 import { InvalidQueryError, normalizeQuery } from './services/normalizer';
+import { RateLimiter } from './services/rateLimiter';
 
 export interface BuildAppOptions {
   db?: ReturnType<typeof getDb>;
   logger?: boolean;
+  generator?: ModuleGenerator;
 }
 
 /** 组装 Fastify 应用（导出以便集成测试）。 */
@@ -20,6 +27,11 @@ export function buildApp(options: BuildAppOptions = {}) {
   const app = Fastify({ logger: options.logger ?? false });
   const db = options.db ?? getDb();
   const repo = new CityRepo(db);
+  const archiveRepo = new ArchiveRepo(db);
+  const jobRepo = new JobRepo(db);
+  const generator = options.generator ?? createGenerator();
+  const jobManager = new JobManager({ archiveRepo, jobRepo, cityRepo: repo, generator });
+  const rateLimiter = new RateLimiter(jobRepo, { dailyCallLimit: config.llm.dailyCallLimit });
 
   app.register(cors, { origin: true });
 
@@ -46,9 +58,9 @@ export function buildApp(options: BuildAppOptions = {}) {
     ok: true,
     llmConfigured: llmConfigured(),
     mapConfigured: mapConfigured(),
-    mockLlm: !llmConfigured(),
-    presetCities: repo.countPresets(),
-    archives: repo.countArchives(),
+    mockLlm: config.mockLlm,
+    presetCities: archiveRepo.countPresets(),
+    archives: archiveRepo.countArchives(),
   }));
 
   app.get<{ Querystring: { q?: string } }>('/api/cities/search', async (request) => {
@@ -72,12 +84,13 @@ export function buildApp(options: BuildAppOptions = {}) {
     return { cities };
   });
 
-  app.get<{ Params: { cityId: string } }>('/api/cities/:cityId', async (request) => {
-    const city = repo.getCity(request.params.cityId);
-    if (!city) {
-      throw new ApiError('CITY_NOT_FOUND', '版图中暂无此城', 404);
-    }
-    throw new ApiError('NOT_GENERATED', '此城尚未收录', 404);
+  registerArchiveRoutes(app, {
+    repo,
+    archiveRepo,
+    jobRepo,
+    jobManager,
+    rateLimiter,
+    isMock: config.mockLlm,
   });
 
   // 生产模式下托管前端构建产物（开发模式由 Vite 提供）

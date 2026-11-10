@@ -160,7 +160,7 @@ describe('年表校验', () => {
 });
 
 describe('发布规则', () => {
-  it('identity 通过且 ≥5 个模块 ok 才发布', () => {
+  it('identity 通过且 ≥5 个模块通过（ok/degraded）才发布', () => {
     expect(
       computeArchiveStatus(
         {
@@ -177,7 +177,20 @@ describe('发布规则', () => {
 
     expect(
       computeArchiveStatus(
-        { identity: 'degraded', chronicle: 'ok' },
+        {
+          identity: 'degraded',
+          chronicle: 'degraded',
+          landmarks: 'ok',
+          relics: 'ok',
+          figures: 'ok',
+        },
+        ['identity', 'chronicle', 'landmarks', 'relics', 'figures'],
+      ),
+    ).toBe('partial');
+
+    expect(
+      computeArchiveStatus(
+        { identity: 'failed', chronicle: 'ok' },
         ['identity', 'chronicle'],
       ),
     ).toBe('unpublished');

@@ -471,6 +471,18 @@ export const ModuleDataSchema = z.union([
   DataPulseSchema,
 ]);
 
+/** 按模块名索引的 Schema，供服务端校验与前端渲染共用。 */
+export const MODULE_DATA_SCHEMAS = {
+  identity: IdentitySchema,
+  chronicle: ChronicleSchema,
+  landmarks: LandmarksSchema,
+  relics: RelicsSchema,
+  figures: FiguresSchema,
+  poetics: PoeticsSchema,
+  localSoul: LocalSoulSchema,
+  dataPulse: DataPulseSchema,
+} as const;
+
 export const CityArchiveResponseSchema = z.object({
   fromCache: z.boolean(),
   meta: MetaSchema,
@@ -637,6 +649,16 @@ export type SseEvent =
   | { event: 'done'; data: SseDoneEvent }
   | { event: 'error'; data: SseErrorEvent }
   | { event: 'ping'; data: Record<string, never> };
+
+/** 预置名城（阶段 6 由管线生成，受保护，需管理令牌强制刷新）。 */
+export const PRESET_CITY_IDS = [
+  'CN-610100', // 西安
+  'CN-330100', // 杭州
+  'CN-510100', // 成都
+  'CN-110000', // 北京
+  'CN-320500', // 苏州
+  'CN-410300', // 洛阳
+] as const;
 
 /** 档案发布规则：identity 通过且通过校验的模块数不少于 5 个。 */
 export const MIN_OK_MODULES_FOR_PUBLISH = 5;

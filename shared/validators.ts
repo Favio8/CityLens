@@ -215,8 +215,11 @@ export function computeArchiveStatus(
   moduleStatus: Readonly<Record<string, string>>,
   attempted: readonly string[],
 ): 'complete' | 'partial' | 'unpublished' {
-  const okCount = attempted.filter((m) => moduleStatus[m] === 'ok').length;
-  if (moduleStatus.identity !== 'ok' || okCount < 5) return 'unpublished';
+  // degraded 表示“已通过校验但可核验条数不足”，与 ok 一样计入通过数量。
+  const passing = (name: string): boolean =>
+    moduleStatus[name] === 'ok' || moduleStatus[name] === 'degraded';
+  const passedCount = attempted.filter(passing).length;
+  if (!passing('identity') || passedCount < 5) return 'unpublished';
   return attempted.every((m) => moduleStatus[m] === 'ok') ? 'complete' : 'partial';
 }
 

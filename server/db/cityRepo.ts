@@ -1,3 +1,4 @@
+import { PRESET_CITY_IDS } from '../../shared/schema';
 import type { Db } from './index';
 
 export interface CityBrief {
@@ -49,7 +50,7 @@ function toBrief(row: CityRow): CityBrief {
     center: [row.center_lng, row.center_lat],
     summary: row.summary,
     hotRank: row.hot_rank,
-    isPreset: Boolean(row.is_preset),
+    isPreset: row.is_preset === 1 || (PRESET_CITY_IDS as readonly string[]).includes(row.city_id),
   };
 }
 
@@ -116,6 +117,19 @@ export class CityRepo {
       }
     }
     return rows;
+  }
+
+  /** 城市的古称/别称展示名（用于 meta.aliases 与预置档案）。 */
+  listAncientAliases(cityId: string): string[] {
+    const rows = this.db
+      .prepare(
+        `SELECT COALESCE(display_alias, alias_key) AS alias
+         FROM city_aliases
+         WHERE city_id = ? AND match_type = 'ancient'
+         ORDER BY id ASC`,
+      )
+      .all(cityId) as Array<{ alias: string }>;
+    return rows.map((r) => r.alias);
   }
 
   listHot(limit = 12): CityBrief[] {
