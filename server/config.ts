@@ -31,6 +31,7 @@ export const config = {
     timeoutMs: num(process.env.LLM_TIMEOUT_MS, 60000),
   },
   tiandituKey: process.env.TIANDITU_KEY?.trim() ?? '',
+  tiandituServerKey: process.env.TIANDITU_SERVER_KEY?.trim() ?? '',
   adminToken: process.env.ADMIN_TOKEN?.trim() ?? '',
   enableImages: process.env.ENABLE_IMAGES === 'true',
   /** 无 Key 时自动使用模拟 LLM；也可用 MOCK_LLM=true 强制模拟。 */

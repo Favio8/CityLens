@@ -4,7 +4,7 @@ import cors from '@fastify/cors';
 import fastifyStatic from '@fastify/static';
 import Fastify from 'fastify';
 import { ZodError } from 'zod';
-import { config, clientDistExists, isOriginAllowed, mapConfigured } from './config';
+import { config, clientDistExists, isOriginAllowed } from './config';
 import { ArchiveRepo } from './db/archiveRepo';
 import { CityRepo } from './db/cityRepo';
 import { getDb } from './db';
@@ -15,6 +15,7 @@ import { registerAdminRoutes } from './routes/adminRoutes';
 import { JobManager } from './services/jobManager';
 import { createGenerator, type ModuleGenerator } from './services/llmGenerator';
 import { LlmSettingsService } from './services/llmSettings';
+import { MapSettingsService } from './services/mapSettings';
 import { InvalidQueryError, normalizeQuery } from './services/normalizer';
 import { RateLimiter } from './services/rateLimiter';
 
@@ -32,6 +33,7 @@ export function buildApp(options: BuildAppOptions = {}) {
   const archiveRepo = new ArchiveRepo(db);
   const jobRepo = new JobRepo(db);
   const llmSettings = new LlmSettingsService(db);
+  const mapSettings = new MapSettingsService(db);
   const generator = options.generator ?? createGenerator(llmSettings);
   const jobManager = new JobManager({ archiveRepo, jobRepo, cityRepo: repo, generator });
   const rateLimiter = new RateLimiter(jobRepo, { dailyCallLimit: config.llm.dailyCallLimit });
@@ -61,10 +63,11 @@ export function buildApp(options: BuildAppOptions = {}) {
 
   app.get('/api/health', async () => {
     const llm = llmSettings.get();
+    const map = mapSettings.get();
     return {
       ok: true,
       llmConfigured: llm.apiKey.length > 0,
-      mapConfigured: mapConfigured(),
+      mapConfigured: map.enabled && Boolean(map.browserKey),
       mockLlm: llm.mock,
       llmProvider: llm.provider,
       llmModel: llm.model,
@@ -99,11 +102,15 @@ export function buildApp(options: BuildAppOptions = {}) {
    * 地图配置。天地图 Key 是浏览器端瓦片请求所必需、且应按域名白名单限制的公开 Key；
    * 大模型 Key 永远不会通过任何接口下发。
    */
-  app.get('/api/map/config', async () => ({
-    enabled: mapConfigured(),
-    key: mapConfigured() ? config.tiandituKey : null,
-    styleUrl: null,
-  }));
+  app.get('/api/map/config', async () => {
+    const map = mapSettings.get();
+    const enabled = map.enabled && Boolean(map.browserKey);
+    return {
+      enabled,
+      key: enabled ? map.browserKey : null,
+      styleUrl: null,
+    };
+  });
 
   registerArchiveRoutes(app, {
     repo,
@@ -113,7 +120,7 @@ export function buildApp(options: BuildAppOptions = {}) {
     rateLimiter,
     llmSettings,
   });
-  registerAdminRoutes(app, { llmSettings });
+  registerAdminRoutes(app, { llmSettings, mapSettings, repo, archiveRepo });
 
   // 生产模式下托管前端构建产物（开发模式由 Vite 提供）
   if (clientDistExists() && existsSync(join(config.clientDist, 'index.html'))) {
@@ -134,10 +141,11 @@ async function main(): Promise<void> {
   await app.listen({ port: config.port, host: config.host });
   console.log(`[citylens] 服务已启动 http://localhost:${config.port}`);
   const llm = new LlmSettingsService(getDb()).get();
+  const map = new MapSettingsService(getDb()).get();
   console.log(
     `[citylens] LLM ${llm.apiKey ? `${llm.provider}/${llm.model}` : '未配置'}${
       llm.mock ? '（模拟 LLM）' : ''
-    }；天地图 ${mapConfigured() ? '已配置' : '未配置（无底图模式）'}`,
+    }；天地图 ${map.enabled && map.browserKey ? '已配置' : '未配置（无底图模式）'}`,
   );
 }
 

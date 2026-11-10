@@ -136,17 +136,17 @@ npm run data:refresh      # 依次刷新全部外部数据并重建预置档案
    重启后地图自动加载 t0–t7 矢量底图与注记；天地图 Key 会通过 `/api/map/config`
    下发给浏览器（瓦片请求必需），大模型 Key 永不下发。
 
-### 后台自定义大模型
+### 后台管理（`/admin`）
 
-打开 `/admin`（页脚有「后台管理」入口），可配置服务商、Base URL、模型 ID、API Key、超时与模拟开关：
+打开 `/admin`（页脚有「后台管理」入口），统一管理所有 Key 与服务。页面顶部是服务总览（大模型、天地图、文物图片、档案库），下方分为「大模型」「天地图」「数据与安全」三块。
 
-- **DeepSeek**：`https://api.deepseek.com` + 控制台模型名（默认 `deepseek-chat`）。
-- **阶跃星辰 StepFun**：`https://api.stepfun.com/v1`，模型 ID 以 StepFun 控制台为准；页面预填 `step-5` 作示例。
-- **自定义**：任何 OpenAI 兼容、提供 `{baseUrl}/chat/completions` 的服务。
+- **大模型**：DeepSeek、阶跃星辰 StepFun（`https://api.stepfun.com/v1`，模型 ID 以控制台为准，页面预填 `step-5` 作示例）或任意 OpenAI 兼容服务；支持连接测试与恢复 `.env` 默认。
+- **天地图**：浏览器端 Key（瓦片，会下发前端）与服务端 Key（地名检索，只留在服务端）可分别填写；支持启用/关闭底图与服务端 Key 测试。
+- **数据与安全**：只读展示诗词库、文物名录、地名库、事实快照、文物图片、行政区轮廓的数量与时间；展示免 Key 服务、ADMIN_TOKEN 状态与 CORS 来源。
 
 保存后 `/api/health` 会显示 `llmProvider` / `llmModel` / `llmSettingsSource=runtime`，不需要重启。
 「测试连接」会发起一次最小请求验证 Key 与模型；「恢复 .env 默认」会删除运行时配置。
-API Key 只保存在本地 SQLite，读取接口只返回 `sk-…abcd` 掩码。
+Key 只保存在本地 SQLite，读取接口只返回 `sk-…abcd` 掩码。
 
 管理接口保护：配置了 `ADMIN_TOKEN` 时必须携带 `x-admin-token`；未配置时只允许本机回环地址访问，
 公网部署请务必设置 `ADMIN_TOKEN` 并置于反向代理之后。
@@ -163,7 +163,8 @@ API Key 只保存在本地 SQLite，读取接口只返回 `sk-…abcd` 掩码。
 | `LLM_BASE_URL` | 大模型接口地址（DeepSeek / StepFun / 自定义） | `https://api.deepseek.com` |
 | `LLM_MODEL` | 模型名；可被 `/admin` 覆盖 | `deepseek-chat` |
 | `LLM_TIMEOUT_MS` | 单次大模型请求超时（毫秒） | `60000` |
-| `TIANDITU_KEY` | 天地图 Key；为空则无底图模式 | 空 |
+| `TIANDITU_KEY` | 天地图浏览器端 Key；为空则无底图模式 | 空 |
+| `TIANDITU_SERVER_KEY` | 天地图服务端 Key，用于地名检索；可被 `/admin` 覆盖 | 空 |
 | `ADMIN_TOKEN` | 后台管理与预置城市强制重生成令牌；为空时后台仅限本机 | 空 |
 | `APP_ORIGINS` | 生产环境允许的跨域来源，逗号分隔；开发环境自动放行 localhost | 空 |
 | `LLM_DAILY_CALL_LIMIT` | 每日 LLM 调用预算 | `500` |

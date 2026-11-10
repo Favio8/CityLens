@@ -32,6 +32,57 @@ export interface AdminLlmTestResult {
   message: string;
 }
 
+export interface AdminMapSettings {
+  hasBrowserKey: boolean;
+  browserKeyMasked: string;
+  hasServerKey: boolean;
+  serverKeyMasked: string;
+  enabled: boolean;
+  source: 'runtime' | 'env';
+  updatedAt: string | null;
+}
+
+export interface AdminMapInput {
+  browserKey?: string;
+  serverKey?: string;
+  clearServerKey?: boolean;
+  enabled?: boolean;
+}
+
+export interface AdminMapTestResult {
+  ok: boolean;
+  status: number;
+  latencyMs: number;
+  count: number;
+  message: string;
+}
+
+export interface AdminArtifact {
+  key: string;
+  label: string;
+  count: number | null;
+  updatedAt: string | null;
+  status: 'ready' | 'missing';
+  note: string;
+}
+
+export interface AdminOverview {
+  llm: AdminLlmSettings;
+  map: AdminMapSettings;
+  services: {
+    llm: { configured: boolean; mock: boolean };
+    map: { enabled: boolean };
+    images: { enabled: boolean; count: number };
+  };
+  artifacts: AdminArtifact[];
+  security: {
+    adminTokenConfigured: boolean;
+    adminAccess: 'token' | 'local-only';
+    allowedOrigins: string[];
+  };
+  database: { cities: number; archives: number; presets: number };
+}
+
 async function request<T>(
   path: string,
   token: string,
@@ -62,6 +113,10 @@ async function request<T>(
   return payload as T;
 }
 
+export function getAdminOverview(token: string): Promise<AdminOverview> {
+  return request('/api/admin/overview', token);
+}
+
 export function getAdminLlm(token: string): Promise<AdminLlmSettings> {
   return request('/api/admin/llm', token);
 }
@@ -79,6 +134,24 @@ export function testAdminLlm(
   input: Pick<AdminLlmInput, 'baseUrl' | 'model' | 'apiKey' | 'timeoutMs'>,
 ): Promise<AdminLlmTestResult> {
   return request('/api/admin/llm/test', token, {
+    method: 'POST',
+    body: JSON.stringify(input),
+  });
+}
+
+export function saveAdminMap(token: string, input: AdminMapInput): Promise<AdminMapSettings> {
+  return request('/api/admin/map', token, { method: 'PUT', body: JSON.stringify(input) });
+}
+
+export function resetAdminMap(token: string): Promise<AdminMapSettings> {
+  return request('/api/admin/map', token, { method: 'DELETE' });
+}
+
+export function testAdminMap(
+  token: string,
+  input: Pick<AdminMapInput, 'browserKey' | 'serverKey'>,
+): Promise<AdminMapTestResult> {
+  return request('/api/admin/map/test', token, {
     method: 'POST',
     body: JSON.stringify(input),
   });

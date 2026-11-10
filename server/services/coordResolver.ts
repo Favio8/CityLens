@@ -7,7 +7,7 @@
  */
 import type { Coord } from '../../shared/schema';
 import { normalizeKey, validateCoord } from '../../shared/validators';
-import { config } from '../config';
+import { getActiveMapConfig } from './mapSettings';
 import type { Gazetteer, GazetteerEntry } from './presetData';
 import { getGazetteer } from './presetData';
 
@@ -76,7 +76,8 @@ export function findGazetteerEntry(
 
 /** 天地图 v2 地名搜索（GCJ-02 与 WGS84 在一期误差范围内，统一按 WGS84 记录来源）。 */
 export async function tiandituSearch(name: string, cityId: string): Promise<CoordCandidate[]> {
-  const key = config.tiandituKey;
+  const map = getActiveMapConfig();
+  const key = map.serverKey || map.browserKey;
   if (!key) return [];
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), REMOTE_TIMEOUT_MS);

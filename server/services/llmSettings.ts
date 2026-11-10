@@ -7,6 +7,7 @@
  */
 import type { Db } from '../db';
 import { config } from '../config';
+import { maskSecret } from '../lib/mask';
 
 export const LLM_PROVIDERS = ['deepseek', 'stepfun', 'custom'] as const;
 export type LlmProvider = (typeof LLM_PROVIDERS)[number];
@@ -85,12 +86,6 @@ function normalizeBaseUrl(value: string): string {
   return value.trim().replace(/\/+$/, '');
 }
 
-function maskKey(key: string): string {
-  if (!key) return '';
-  if (key.length <= 8) return '已配置';
-  return `${key.slice(0, 3)}…${key.slice(-4)}`;
-}
-
 export class LlmSettingsService {
   private cached: LlmRuntimeConfig | null;
 
@@ -140,7 +135,7 @@ export class LlmSettingsService {
       baseUrl: current.baseUrl,
       model: current.model,
       hasApiKey: current.apiKey.length > 0,
-      apiKeyMasked: maskKey(current.apiKey),
+      apiKeyMasked: maskSecret(current.apiKey),
       timeoutMs: current.timeoutMs,
       mock: current.mock,
       source: current.source,
