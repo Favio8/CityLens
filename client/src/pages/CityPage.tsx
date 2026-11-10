@@ -1,7 +1,12 @@
 /** 城市页：读取缓存 / 流式生成 / 模块渲染 / 失败与冷却状态。 */
-import { useEffect, useMemo } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
-import { IdentitySchema, type Identity, type SourceRef } from '@citylens/shared/schema';
+import { useEffect, useMemo, useState, type ReactNode } from 'react';
+import { Link, useLocation, useParams } from 'react-router-dom';
+import {
+  IdentitySchema,
+  type HotCity,
+  type Identity,
+  type SourceRef,
+} from '@citylens/shared/schema';
 import { CityHero } from '../components/hero/CityHero';
 import { ScrollNav } from '../components/layout/ScrollNav';
 import { ModuleRenderer } from '../components/modules/ModuleRenderer';
@@ -11,6 +16,7 @@ import { useCityStream, type StreamedModule } from '../hooks/useCityStream';
 import { useCityTheme } from '../hooks/useDynamicTheme';
 import { useLocalLibrary } from '../hooks/useLocalLibrary';
 import { formatRetry } from '../lib/format';
+import { getHotCities } from '../lib/api';
 import { useSearch } from '../components/search/SearchProvider';
 
 const MODULE_TITLES = [
@@ -77,6 +83,7 @@ export function CityPage() {
         description="一期收录地级及以上行政区与少量文旅名城。请换一个名字，或从热门名城开始。"
         actionLabel="重新搜索"
         onAction={openSearch}
+        extra={<HotCityLinks />}
       />
     );
   }
@@ -238,16 +245,50 @@ function ReadingSkeleton({ cityId }: { cityId: string }) {
   );
 }
 
+function HotCityLinks() {
+  const [cities, setCities] = useState<HotCity[]>([]);
+  const [failed, setFailed] = useState(false);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    void getHotCities(controller.signal)
+      .then(setCities)
+      .catch((error: unknown) => {
+        // StrictMode 会先挂载再卸载，首次请求被 abort 不应视为失败。
+        if ((error as Error).name !== 'AbortError') setFailed(true);
+      });
+    return () => controller.abort();
+  }, []);
+
+  if (failed || cities.length === 0) return null;
+
+  return (
+    <div className="mt-8">
+      <p className="eyebrow">热门名城</p>
+      <div className="mt-3 flex flex-wrap justify-center gap-2">
+        {cities.slice(0, 8).map((city) => (
+          <Link key={city.cityId} to={`/city/${city.cityId}`} className="ink-btn px-3 py-1.5 text-[11px]">
+            {city.name}
+            {city.isPreset ? <span className="ml-1.5 opacity-60">馆藏</span> : null}
+          </Link>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function StatusScreen({
   title,
   description,
   actionLabel,
   onAction,
+  extra,
 }: {
   title: string;
   description: string;
   actionLabel: string;
   onAction: () => void;
+  extra?: ReactNode;
 }) {
   return (
     <div className="relative flex min-h-[70vh] items-center justify-center overflow-hidden px-5">
@@ -258,6 +299,7 @@ function StatusScreen({
         <button type="button" onClick={onAction} className="ink-btn ink-btn--solid mt-8">
           {actionLabel}
         </button>
+        {extra}
       </div>
     </div>
   );
