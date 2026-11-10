@@ -124,6 +124,8 @@ npm run data:refresh      # 依次刷新全部外部数据并重建预置档案
    真实模式只让模型做「选择与叙事」，坐标、年份、统计数值仍由本地产物回填并校验；
    无法校验的输出会重试一次，仍失败则该卷降级，绝不写假数据。
 
+   也可以不改 `.env`，直接在 `http://localhost:5173/admin` 配置（见下一节），保存后立即生效。
+
 2. **天地图**：在 https://console.tianditu.gov.cn/ 申请「浏览器端」Key，并把
    `localhost` 与你的部署域名加入白名单，写入 `.env`：
 
@@ -134,6 +136,21 @@ npm run data:refresh      # 依次刷新全部外部数据并重建预置档案
    重启后地图自动加载 t0–t7 矢量底图与注记；天地图 Key 会通过 `/api/map/config`
    下发给浏览器（瓦片请求必需），大模型 Key 永不下发。
 
+### 后台自定义大模型
+
+打开 `/admin`（页脚有「后台管理」入口），可配置服务商、Base URL、模型 ID、API Key、超时与模拟开关：
+
+- **DeepSeek**：`https://api.deepseek.com` + 控制台模型名（默认 `deepseek-chat`）。
+- **阶跃星辰 StepFun**：`https://api.stepfun.com/v1`，模型 ID 以 StepFun 控制台为准；页面预填 `step-5` 作示例。
+- **自定义**：任何 OpenAI 兼容、提供 `{baseUrl}/chat/completions` 的服务。
+
+保存后 `/api/health` 会显示 `llmProvider` / `llmModel` / `llmSettingsSource=runtime`，不需要重启。
+「测试连接」会发起一次最小请求验证 Key 与模型；「恢复 .env 默认」会删除运行时配置。
+API Key 只保存在本地 SQLite，读取接口只返回 `sk-…abcd` 掩码。
+
+管理接口保护：配置了 `ADMIN_TOKEN` 时必须携带 `x-admin-token`；未配置时只允许本机回环地址访问，
+公网部署请务必设置 `ADMIN_TOKEN` 并置于反向代理之后。
+
 > 预置六城（西安、杭州、成都、北京、苏州、洛阳）使用离线档案，不消耗 LLM 额度；
 > 其余城市首次访问时走真实 LLM 流式生成。
 
@@ -142,12 +159,12 @@ npm run data:refresh      # 依次刷新全部外部数据并重建预置档案
 | 变量 | 说明 | 默认 |
 |---|---|---|
 | `PORT` | 服务端口 | `8787` |
-| `LLM_API_KEY` | DeepSeek 兼容接口密钥；为空则启用模拟 LLM | 空 |
-| `LLM_BASE_URL` | 大模型接口地址 | `https://api.deepseek.com` |
-| `LLM_MODEL` | 模型名 | `deepseek-chat` |
+| `LLM_API_KEY` | OpenAI 兼容接口密钥；为空则启用模拟 LLM；可被 `/admin` 运行时配置覆盖 | 空 |
+| `LLM_BASE_URL` | 大模型接口地址（DeepSeek / StepFun / 自定义） | `https://api.deepseek.com` |
+| `LLM_MODEL` | 模型名；可被 `/admin` 覆盖 | `deepseek-chat` |
 | `LLM_TIMEOUT_MS` | 单次大模型请求超时（毫秒） | `60000` |
 | `TIANDITU_KEY` | 天地图 Key；为空则无底图模式 | 空 |
-| `ADMIN_TOKEN` | 预置城市强制重生成令牌 | 空 |
+| `ADMIN_TOKEN` | 后台管理与预置城市强制重生成令牌；为空时后台仅限本机 | 空 |
 | `APP_ORIGINS` | 生产环境允许的跨域来源，逗号分隔；开发环境自动放行 localhost | 空 |
 | `LLM_DAILY_CALL_LIMIT` | 每日 LLM 调用预算 | `500` |
 | `ENABLE_IMAGES` | 是否启用 Commons 图片 | `false` |

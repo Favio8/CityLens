@@ -25,6 +25,9 @@ export function Footer() {
           <Link to="/" className="ink-link">
             回到卷首
           </Link>
+          <Link to="/admin" className="ink-link">
+            后台管理
+          </Link>
           <span className="mono text-[10px]">WGS84 · 全链路不使用 GCJ-02</span>
           <span className="mono text-[10px]">PRD v1.1 · schema 1.1</span>
         </div>

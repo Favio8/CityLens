@@ -4,15 +4,17 @@ import cors from '@fastify/cors';
 import fastifyStatic from '@fastify/static';
 import Fastify from 'fastify';
 import { ZodError } from 'zod';
-import { config, clientDistExists, isOriginAllowed, llmConfigured, mapConfigured } from './config';
+import { config, clientDistExists, isOriginAllowed, mapConfigured } from './config';
 import { ArchiveRepo } from './db/archiveRepo';
 import { CityRepo } from './db/cityRepo';
 import { getDb } from './db';
 import { JobRepo } from './db/jobRepo';
 import { ApiError } from './errors';
 import { registerArchiveRoutes } from './routes/archiveRoutes';
+import { registerAdminRoutes } from './routes/adminRoutes';
 import { JobManager } from './services/jobManager';
 import { createGenerator, type ModuleGenerator } from './services/llmGenerator';
+import { LlmSettingsService } from './services/llmSettings';
 import { InvalidQueryError, normalizeQuery } from './services/normalizer';
 import { RateLimiter } from './services/rateLimiter';
 
@@ -29,7 +31,8 @@ export function buildApp(options: BuildAppOptions = {}) {
   const repo = new CityRepo(db);
   const archiveRepo = new ArchiveRepo(db);
   const jobRepo = new JobRepo(db);
-  const generator = options.generator ?? createGenerator();
+  const llmSettings = new LlmSettingsService(db);
+  const generator = options.generator ?? createGenerator(llmSettings);
   const jobManager = new JobManager({ archiveRepo, jobRepo, cityRepo: repo, generator });
   const rateLimiter = new RateLimiter(jobRepo, { dailyCallLimit: config.llm.dailyCallLimit });
 
@@ -56,14 +59,20 @@ export function buildApp(options: BuildAppOptions = {}) {
     return reply.code(500).send({ code: 'INTERNAL_ERROR', message: '服务暂时不可用' });
   });
 
-  app.get('/api/health', async () => ({
-    ok: true,
-    llmConfigured: llmConfigured(),
-    mapConfigured: mapConfigured(),
-    mockLlm: config.mockLlm,
-    presetCities: archiveRepo.countPresets(),
-    archives: archiveRepo.countArchives(),
-  }));
+  app.get('/api/health', async () => {
+    const llm = llmSettings.get();
+    return {
+      ok: true,
+      llmConfigured: llm.apiKey.length > 0,
+      mapConfigured: mapConfigured(),
+      mockLlm: llm.mock,
+      llmProvider: llm.provider,
+      llmModel: llm.model,
+      llmSettingsSource: llm.source,
+      presetCities: archiveRepo.countPresets(),
+      archives: archiveRepo.countArchives(),
+    };
+  });
 
   app.get<{ Querystring: { q?: string } }>('/api/cities/search', async (request) => {
     const raw = request.query.q ?? '';
@@ -102,8 +111,9 @@ export function buildApp(options: BuildAppOptions = {}) {
     jobRepo,
     jobManager,
     rateLimiter,
-    isMock: config.mockLlm,
+    llmSettings,
   });
+  registerAdminRoutes(app, { llmSettings });
 
   // 生产模式下托管前端构建产物（开发模式由 Vite 提供）
   if (clientDistExists() && existsSync(join(config.clientDist, 'index.html'))) {
@@ -123,8 +133,11 @@ async function main(): Promise<void> {
   const app = buildApp({ logger: true });
   await app.listen({ port: config.port, host: config.host });
   console.log(`[citylens] 服务已启动 http://localhost:${config.port}`);
+  const llm = new LlmSettingsService(getDb()).get();
   console.log(
-    `[citylens] LLM ${llmConfigured() ? '已配置' : '未配置（模拟 LLM）'}；天地图 ${mapConfigured() ? '已配置' : '未配置（无底图模式）'}`,
+    `[citylens] LLM ${llm.apiKey ? `${llm.provider}/${llm.model}` : '未配置'}${
+      llm.mock ? '（模拟 LLM）' : ''
+    }；天地图 ${mapConfigured() ? '已配置' : '未配置（无底图模式）'}`,
   );
 }
 

@@ -54,6 +54,11 @@ import {
   verifyPoemSelection,
 } from './poetryVerifier';
 import { DICTIONARY_SOURCE, DICTIONARY_SOURCE_ID } from './cacheService';
+import {
+  envLlmConfig,
+  type LlmRuntimeConfig,
+  type LlmSettingsService,
+} from './llmSettings';
 
 export class GenerationError extends Error {
   constructor(
@@ -356,12 +361,24 @@ export class MockGenerator implements ModuleGenerator {
 /* 真实 LLM：DeepSeek 兼容接口                                                 */
 /* -------------------------------------------------------------------------- */
 
-const LLM_SOURCE: SourceRef = {
-  id: 'S-LLM-CURATION',
-  type: 'llm_curation',
-  title: `DeepSeek 结构化整理（${config.llm.model}）`,
-  retrievedAt: '2026-11-10T00:00:00.000Z',
+const LLM_SOURCE_ID = 'S-LLM-CURATION';
+/** 当前生效的大模型配置；每次生成开始时由 DeepSeekGenerator 写入。 */
+let activeLlmConfig: LlmRuntimeConfig = envLlmConfig();
+
+const PROVIDER_LABELS: Record<LlmRuntimeConfig['provider'], string> = {
+  deepseek: 'DeepSeek',
+  stepfun: '阶跃星辰',
+  custom: '自定义 LLM',
 };
+
+function llmSource(): SourceRef {
+  return {
+    id: LLM_SOURCE_ID,
+    type: 'llm_curation',
+    title: `${PROVIDER_LABELS[activeLlmConfig.provider]} 结构化整理（${activeLlmConfig.model}）`,
+    retrievedAt: '2026-11-10T00:00:00.000Z',
+  };
+}
 
 interface ChatMessage {
   role: 'system' | 'user';
@@ -376,16 +393,16 @@ const SYSTEM_PROMPT =
 /** 以 fetch + SSE 流式读取 OpenAI 兼容接口，返回完整文本。 */
 async function callDeepSeek(messages: ChatMessage[]): Promise<string> {
   const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), config.llm.timeoutMs);
+  const timer = setTimeout(() => controller.abort(), activeLlmConfig.timeoutMs);
   try {
-    const response = await fetch(`${config.llm.baseUrl}/chat/completions`, {
+    const response = await fetch(`${activeLlmConfig.baseUrl}/chat/completions`, {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
-        authorization: `Bearer ${config.llm.apiKey}`,
+        authorization: `Bearer ${activeLlmConfig.apiKey}`,
       },
       body: JSON.stringify({
-        model: config.llm.model,
+        model: activeLlmConfig.model,
         stream: true,
         temperature: 0.3,
         messages,
@@ -487,11 +504,11 @@ async function llmIdentity(input: GenerateInput): Promise<GeneratedModule> {
   const base = buildIdentity(input);
   return {
     ...base,
-    sources: [...base.sources, LLM_SOURCE],
+    sources: [...base.sources, llmSource()],
     data: {
       ...(base.data as Record<string, unknown>),
       oneLinePersona: persona,
-      sourceRefs: [DICTIONARY_SOURCE_ID, LLM_SOURCE.id],
+      sourceRefs: [DICTIONARY_SOURCE_ID, llmSource().id],
     },
   };
 }
@@ -553,7 +570,7 @@ async function llmChronicle(input: GenerateInput): Promise<GeneratedModule> {
         keyEvents,
         relicToday,
         centerCoord: anchor.coordinates,
-        sourceRefs: [LLM_SOURCE.id, DYNASTY_SOURCE.id],
+        sourceRefs: [llmSource().id, DYNASTY_SOURCE.id],
         verification: 'pending_human_review' as const,
       },
     ];
@@ -564,7 +581,7 @@ async function llmChronicle(input: GenerateInput): Promise<GeneratedModule> {
   return {
     status: 'degraded',
     verification: 'pending_human_review',
-    sources: [LLM_SOURCE, DYNASTY_SOURCE],
+    sources: [llmSource(), DYNASTY_SOURCE],
     data,
   };
 }
@@ -837,12 +854,12 @@ async function llmLocalSoul(input: GenerateInput): Promise<GeneratedModule> {
       ? (asText(item.level) as 'national' | 'provincial')
       : ('待考' as const),
     intro: asText(item.intro),
-    sourceRefs: [LLM_SOURCE.id],
+    sourceRefs: [llmSource().id],
   }));
   return {
     status: 'degraded',
     verification: 'pending_human_review',
-    sources: [LLM_SOURCE],
+    sources: [llmSource()],
     data: {
       aiCurated: true,
       foods: asArray(parsed.foods),
@@ -855,10 +872,19 @@ async function llmLocalSoul(input: GenerateInput): Promise<GeneratedModule> {
 
 /** 真实 LLM：只让模型做选择与叙事，事实字段由本地库回填并校验。 */
 export class DeepSeekGenerator implements ModuleGenerator {
-  readonly name = `${config.llm.model}@deepseek-compatible`;
-  readonly promptVersion = 'deepseek-v1';
+  private readonly settings: LlmRuntimeConfig;
+  readonly promptVersion = 'openai-compatible-v1';
+
+  constructor(settings: LlmRuntimeConfig = envLlmConfig()) {
+    this.settings = settings;
+  }
+
+  get name(): string {
+    return `${this.settings.model}@${this.settings.provider}`;
+  }
 
   async generate(input: GenerateInput): Promise<GeneratedModule> {
+    activeLlmConfig = this.settings;
     if (input.module === 'dataPulse') {
       throw new GenerationError(
         'NO_FACTS',
@@ -908,7 +934,26 @@ export class DeepSeekGenerator implements ModuleGenerator {
   }
 }
 
-export function createGenerator(): ModuleGenerator {
+/** 运行时按管理页配置选择 Mock 或 OpenAI 兼容生成器，无需重启服务。 */
+class DynamicGenerator implements ModuleGenerator {
+  readonly promptVersion = 'dynamic-v1';
+
+  constructor(private readonly settings: LlmSettingsService) {}
+
+  get name(): string {
+    const current = this.settings.get();
+    return current.mock ? 'mock-local-facts' : `${current.model}@${current.provider}`;
+  }
+
+  generate(input: GenerateInput): Promise<GeneratedModule> {
+    const current = this.settings.get();
+    const generator = current.mock ? new MockGenerator() : new DeepSeekGenerator(current);
+    return generator.generate(input);
+  }
+}
+
+export function createGenerator(settings?: LlmSettingsService): ModuleGenerator {
+  if (settings) return new DynamicGenerator(settings);
   if (config.mockLlm) return new MockGenerator();
   return new DeepSeekGenerator();
 }

@@ -9,7 +9,8 @@ import {
   MODULE_NAMES,
   type ModuleName,
 } from '../../shared/schema';
-import { config, isOriginAllowed, llmConfigured } from '../config';
+import { config, isOriginAllowed } from '../config';
+import type { LlmSettingsService } from '../services/llmSettings';
 import type { ArchiveRepo } from '../db/archiveRepo';
 import type { CityRepo } from '../db/cityRepo';
 import type { JobRepo } from '../db/jobRepo';
@@ -29,7 +30,7 @@ export interface ArchiveRouteDeps {
   jobRepo: JobRepo;
   jobManager: JobManager;
   rateLimiter: RateLimiter;
-  isMock: boolean;
+  llmSettings: LlmSettingsService;
 }
 
 const PING_INTERVAL_MS = 15_000;
@@ -78,7 +79,8 @@ export function registerArchiveRoutes(app: FastifyInstance, deps: ArchiveRouteDe
       const city = repo.getCity(request.params.cityId);
       if (!city) throw new ApiError('CITY_NOT_FOUND', '版图中暂无此城', 404);
 
-      if (!deps.isMock && !llmConfigured()) {
+      const llm = deps.llmSettings.get();
+      if (!llm.mock && !llm.apiKey) {
         throw new ApiError('LLM_NOT_CONFIGURED', '未配置大模型 Key，暂不可生成', 503);
       }
 

@@ -71,3 +71,10 @@ CREATE INDEX IF NOT EXISTS idx_job_city ON generation_jobs(city_id, started_at);
 
 -- 档案发布与缓存查询辅助索引
 CREATE INDEX IF NOT EXISTS idx_archive_status ON city_archives(status);
+
+-- 运行时管理配置（当前用于大模型自定义配置）
+CREATE TABLE IF NOT EXISTS app_settings (
+    key        TEXT PRIMARY KEY,
+    value_json TEXT NOT NULL,
+    updated_at TEXT NOT NULL
+);

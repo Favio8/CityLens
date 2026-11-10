@@ -46,6 +46,8 @@
 | 免 Key 数据抓取 | `data:geo` 下载六城轮廓并生成来源清单；`data:images` 按 Wikidata P18 + Commons 抓取文物图片与许可；`data:refresh` 串联全部数据管线 |
 | 离线数据缓存 | Wikidata SPARQL 按查询哈希缓存；chinese-poetry 源文件 28 MB + 目录清单缓存，断网可回退重建；Commons 图片默认复用本地文件 |
 | 本地文物图片 | 六城前 6 件文物中 22 件有合规图片，640px 缩略图自托管；卡片展示图片、作者、许可证与 Commons 来源链接 |
+| 大模型后台配置 | `/admin` 可自定义 DeepSeek / 阶跃星辰 StepFun / 任意 OpenAI 兼容服务；运行时保存、掩码读取、连接测试、恢复 .env；保存后无需重启 |
+| 管理接口鉴权 | 配置 `ADMIN_TOKEN` 时校验 `x-admin-token`；未配置时仅允许本机回环访问；明文 Key 不下发前端 |
 
 ### 2.2 部分完成
 
@@ -64,7 +66,7 @@
 
 | 项 | 原因 |
 |---|---|
-| 真实 LLM 端到端 | 用户暂未提供 Key；生成器单元测试使用 mock `fetch`，未调用真实 DeepSeek 接口 |
+| 真实 LLM 端到端 | 用户暂未提供 Key；生成器单元测试使用 mock `fetch`，未调用真实 DeepSeek / StepFun 接口。后台配置与 API 已用本机回环实测，但未用真实 Key 生成城市 |
 | 天地图底图 | 用户暂未提供 Key；WMTS 地址与 `/api/map/config` 已实现，未加载真实瓦片 |
 | Commons 图片人工复核 | 已抓取并本地化 22 张，但作者署名、许可证与文物对应关系未逐张人工核对 |
 | Lighthouse 报告 | 本机无 Lighthouse，且 `npm exec` 拉取被网络策略拦截；见 6.2 的产物体积替代证据 |
@@ -89,7 +91,7 @@
 | AC-13 | **通过** | `jobManager.test.ts` 10 并发只建 1 个 runtime；`archiveRoutes.test.ts` 10 并发均收到 `done`，模块不重复生成 |
 | AC-14 | **部分通过（设计取舍）** | 预置与缓存城市完整；未配置 Key 时启用模拟 LLM，未缓存城市仍会基于本地快照生成部分模块并标 `degraded`，**不会**显示 PRD 原定的“尚未收录”整页；这是“无 Key 不阻塞开发”的用户指令与 PRD 的差异 |
 | AC-15 | **通过** | CDP 实测（新增内嵌地图后复测）：1280 下 `scrollWidth=1280`、375 下 `scrollWidth=375`，均无页面横向滚动；375 下 4 张地图正常挂载，文物地图高度 240px，地图启用双指协作手势；1280×900 截图与 375×812 截图核对无文字重叠。768 沿用上一轮 758/768 记录 |
-| AC-16 | **未测** | 无 Lighthouse 环境。最新生产构建：首屏 JS 403.07 kB / gzip 130.21 kB、CSS 37.61 kB / gzip 8.41 kB；CityMap（MapLibre）1,099.49 kB / gzip 301.83 kB 与图表 543.21 kB / gzip 185.58 kB 均为独立懒加载 chunk，不进入首屏 |
+| AC-16 | **未测** | 无 Lighthouse 环境。最新生产构建：首屏 JS 403.27 kB / gzip 130.27 kB、CSS 38.11 kB / gzip 8.50 kB；CityMap（MapLibre）1,099.49 kB / gzip 301.83 kB；AdminPage 独立 chunk 8.52 kB / gzip 3.35 kB 与图表 543.21 kB / gzip 185.58 kB 均为独立懒加载 chunk，不进入首屏 |
 | AC-17 | **通过** | `npm run verify`：6/6 城市通过，42 卷；Schema、来源登记、逐字诗词、诗词归属本城、跨城重复、模块完整性、年代、坐标 180km、数值量级全部 0 错误。注：这是程序化自测，不等于事实正确；人工复核见 7.2 |
 | AC-18 | **部分通过** | 预置/缓存城市仅依赖本地 SQLite 与静态资源；生成器超时 → `module_error` 降级路径有单测；未做真实断网与真实 LLM 超时实测 |
 | AC-19 | **通过** | 见第 4 节：干净副本 `npm ci` → `npm run setup` → `npm run verify` → `npm run dev` 一次跑通 |
@@ -112,7 +114,7 @@
 
 ```bash
 npm run typecheck          # 服务端 + 前端 TypeScript strict
-npm test                   # 103 项单元/集成测试（11 个文件）
+npm test                   # 107 项单元/集成测试（13 个文件）
 npm run verify             # 六城预置档案合规校验
 npm run data:geo           # 抓取并缓存六城行政区轮廓
 npm run data:images        # 抓取 Wikidata/Commons 文物图片与许可
@@ -143,10 +145,11 @@ curl "http://localhost:8787/api/cities/CN-610100"
 7. 年代轴的 `centerCoord` 是「今日遗存」参照坐标（如大明宫、大雁塔），不是古代城址中心；前端在滑块面板中明确标注。无匹配遗存的节点保持 `null` 并显示「坐标待考」。
 8. 文物图片只取 Wikidata P18 明确关联的 Commons 文件，逐张保存 `Artist`、`LicenseShortName`、许可链接与来源页；没有 P18 的文物不配图。图片与文物的对应关系、许可证适用性仍需人工复核。
 9. 行政区轮廓当前来自 DataV.GeoAtlas，字段含 `adcode/acroutes`；`client/public/geo/_manifest.json` 已记录来源与「授权/审图号待确认」，不得直接视为已合规。
+10. 大模型运行时配置（Base URL、模型、API Key）保存在本地 SQLite 的 `app_settings` 表，读取接口只返回掩码；`.env` 仍作为默认值。保存的 Key 明文落盘在本地数据库，数据库已被 gitignore，公网部署需自行加强磁盘与 `ADMIN_TOKEN` 保护。
 
 ### 6.2 性能
 
-- 首屏 JS 403.07 kB（gzip 130.21 kB），较拆分前的 2,086.83 kB（gzip 628.82 kB）显著下降；朝代滑块引入的 framer-motion 动效落在 CityPage 路由 chunk（69.92 kB / gzip 23.77 kB）。
+- 首屏 JS 403.27 kB（gzip 130.27 kB），较拆分前的 2,086.83 kB（gzip 628.82 kB）显著下降；朝代滑块引入的 framer-motion 动效落在 CityPage 路由 chunk（69.92 kB / gzip 23.77 kB），后台管理页为独立 chunk（8.52 kB / gzip 3.35 kB）。
 - 本地文物图片共 22 张、约 5.24 MB，按需懒加载；不进入 JS/CSS 首屏体积，运行期不发外部图片请求。
 - 地图 chunk 1,099.49 kB（gzip 301.83 kB）、图表 chunk 543.21 kB（gzip 185.58 kB）为按需加载；分别由 Landmarks/Relics/Figures/Poetics 与 DataPulse 的懒加载入口加载，不进入首屏。
 - 未取得 Lighthouse 分数；如需 AC-16 正式报告，请在具备 Lighthouse 的环境执行 `npx lighthouse http://localhost:5173/city/CN-610100 --view`。

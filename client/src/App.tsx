@@ -11,6 +11,9 @@ import { NotFoundPage } from './pages/NotFoundPage';
 const CityPage = lazy(() =>
   import('./pages/CityPage').then((module) => ({ default: module.CityPage })),
 );
+const AdminPage = lazy(() =>
+  import('./pages/AdminPage').then((module) => ({ default: module.AdminPage })),
+);
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -37,6 +40,7 @@ export default function App() {
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/city/:cityId" element={<CityPage />} />
+              <Route path="/admin" element={<AdminPage />} />
               <Route path="*" element={<NotFoundPage />} />
             </Routes>
           </Suspense>
