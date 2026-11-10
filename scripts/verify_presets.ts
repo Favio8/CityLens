@@ -13,6 +13,7 @@
  */
 import { ZodError } from 'zod';
 import {
+  MODULE_NAMES,
   PRESET_CITY_IDS,
   type Coord,
   type ModuleName,
@@ -78,6 +79,7 @@ function checkModule(
   sources: Map<string, SourceRef>,
   cityId: string,
   center: Coord,
+  poemCities: Map<string, { title: string; cities: Set<string> }>,
 ): string[] {
   if (record.data === null) {
     return EXPECTED_MISSING.includes(name) ? [] : [`${name} 没有数据`];
@@ -179,8 +181,15 @@ function checkModule(
       const corpus = getPoetryCorpus();
       const byId = new Map((corpus?.poems ?? []).map((poem) => [poem.poemId, poem]));
       for (const poem of data) {
-        const result = validatePoemAgainstCorpus(poem, byId.get(poem.poemId));
+        const corpusPoem = byId.get(poem.poemId);
+        const result = validatePoemAgainstCorpus(poem, corpusPoem);
         if (!result.ok) issues.push(...result.issues.map((issue) => `诗词「${poem.title}」${issue}`));
+        if (corpusPoem && !corpusPoem.matchedCities.includes(cityId)) {
+          issues.push(`诗词「${poem.title}」在核验库中未归属本城 ${cityId}`);
+        }
+        const entry = poemCities.get(poem.poemId) ?? { title: poem.title, cities: new Set<string>() };
+        entry.cities.add(cityId);
+        poemCities.set(poem.poemId, entry);
         const imagery = validateImagery(
           poem.imageryMap.map((item) => ({
             word: item.word,
@@ -226,6 +235,7 @@ function main(): void {
   const cityRepo = new CityRepo(db);
 
   const failures: string[] = [];
+  const poemCities = new Map<string, { title: string; cities: Set<string> }>();
   let passCount = 0;
 
   for (const cityId of PRESET_CITY_IDS) {
@@ -254,9 +264,19 @@ function main(): void {
     const present = new Set(modules.map((module) => module.name));
     const missing = EXPECTED_MISSING.filter((name) => !present.has(name));
 
+    for (const name of MODULE_NAMES) {
+      if (!present.has(name) && !EXPECTED_MISSING.includes(name)) {
+        issues.push(`缺少模块 ${name}，请重跑 npm run data:presets`);
+      }
+    }
+    for (const record of modules) {
+      if (record.status === 'failed') issues.push(`模块 ${record.name} 状态为 failed`);
+      else if (record.data === null) issues.push(`模块 ${record.name} 没有数据`);
+    }
+
     for (const record of modules) {
       if (record.status === 'failed' || record.data === null) continue;
-      issues.push(...checkModule(record.name, record, sources, cityId, city.center));
+      issues.push(...checkModule(record.name, record, sources, cityId, city.center, poemCities));
     }
 
     if (issues.length > 0) {
@@ -272,6 +292,14 @@ function main(): void {
   }
 
   db.close();
+
+  for (const [poemId, entry] of poemCities) {
+    if (entry.cities.size > 1) {
+      failures.push(
+        `诗词「${entry.title}」(${poemId}) 同时出现在 ${[...entry.cities].join('、')} 的预置档案中，需人工确认归属`,
+      );
+    }
+  }
 
   if (failures.length > 0) {
     console.error('\n[verify] 未通过：');
