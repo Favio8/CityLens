@@ -1,0 +1,349 @@
+{
+  "generatedAt": "2026-11-10T11:51:51.531Z",
+  "source": "Wikidata P18 + Wikimedia Commons imageinfo",
+  "licenseNote": "每条记录均保留 Commons 返回的许可证与署名；图片已下载到本地，但许可证适用性仍需人工复核。",
+  "stats": {
+    "requested": 36,
+    "downloaded": 22,
+    "reused": 22,
+    "skipped": 14
+  },
+  "records": [
+    {
+      "registryId": "CN-110000:Q133650",
+      "cityId": "CN-110000",
+      "name": "北海公园",
+      "qid": "Q133650",
+      "path": "/images/relics/CN-110000_Q133650.jpg",
+      "credit": "FishOil",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Beihai_Park.jpg",
+      "fetchedAt": "2026-11-10T11:50:53.384Z"
+    },
+    {
+      "registryId": "CN-110000:Q746736",
+      "cityId": "CN-110000",
+      "name": "柏林寺",
+      "qid": "Q746736",
+      "path": "/images/relics/CN-110000_Q746736.jpg",
+      "credit": "N509FZ",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Bailin_Temple,_Beijing_(20240104152910).jpg",
+      "fetchedAt": "2026-11-10T11:50:52.554Z"
+    },
+    {
+      "registryId": "CN-110000:Q798826",
+      "cityId": "CN-110000",
+      "name": "八达岭",
+      "qid": "Q798826",
+      "path": "/images/relics/CN-110000_Q798826.jpg",
+      "credit": "DF08 at English Wikipedia",
+      "license": "Public domain",
+      "licenseUrl": null,
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:GreatWall_Badaling.jpg",
+      "fetchedAt": "2026-11-10T11:50:50.113Z"
+    },
+    {
+      "registryId": "CN-110000:Q804054",
+      "cityId": "CN-110000",
+      "name": "白云观",
+      "qid": "Q804054",
+      "path": "/images/relics/CN-110000_Q804054.jpg",
+      "credit": "Gene Zhang",
+      "license": "CC BY 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:WhiteCloudpic1.jpg",
+      "fetchedAt": "2026-11-10T11:50:51.317Z"
+    },
+    {
+      "registryId": "CN-110000:Q838166",
+      "cityId": "CN-110000",
+      "name": "八宝山革命公墓",
+      "qid": "Q838166",
+      "path": "/images/relics/CN-110000_Q838166.jpg",
+      "credit": "Rolfmueller",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Babaoshan_cemetery_entrance_2012_01.jpg",
+      "fetchedAt": "2026-11-10T11:50:48.652Z"
+    },
+    {
+      "registryId": "CN-320500:Q11052959",
+      "cityId": "CN-320500",
+      "name": "崇教兴福寺塔",
+      "qid": "Q11052959",
+      "path": "/images/relics/CN-320500_Q11052959.jpg",
+      "credit": "Haier7917",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:%E5%B8%B8%E7%86%9F%E5%AE%8B%E5%B4%87%E6%95%99%E5%85%B4%E7%A6%8F%E5%AF%BA%E6%96%B9%E5%A1%94.jpg",
+      "fetchedAt": "2026-11-10T11:50:56.804Z"
+    },
+    {
+      "registryId": "CN-320500:Q5600169",
+      "cityId": "CN-320500",
+      "name": "沧浪亭",
+      "qid": "Q5600169",
+      "path": "/images/relics/CN-320500_Q5600169.jpg",
+      "credit": "Lamassu Design Gurdjieff",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Canglang_ting_UNESCO.jpg",
+      "fetchedAt": "2026-11-10T11:50:54.758Z"
+    },
+    {
+      "registryId": "CN-320500:Q807059",
+      "cityId": "CN-320500",
+      "name": "宝带桥",
+      "qid": "Q807059",
+      "path": "/images/relics/CN-320500_Q807059.jpg",
+      "credit": "Rolf Müller ( User:Rolfmueller )",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Preciousbeltbridge.jpg",
+      "fetchedAt": "2026-11-10T11:50:53.889Z"
+    },
+    {
+      "registryId": "CN-320500:Q836041",
+      "cityId": "CN-320500",
+      "name": "报恩寺塔",
+      "qid": "Q836041",
+      "path": "/images/relics/CN-320500_Q836041.jpg",
+      "credit": "Jakub Hałun",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:20090905_Suzhou_North_Temple_Pagoda_4611.jpg",
+      "fetchedAt": "2026-11-10T11:50:54.477Z"
+    },
+    {
+      "registryId": "CN-330100:Q10949410",
+      "cityId": "CN-330100",
+      "name": "宝成寺麻曷葛剌造像",
+      "qid": "Q10949410",
+      "path": "/images/relics/CN-330100_Q10949410.jpg",
+      "credit": "Zhangzhugang",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Hangzhou_Baochengsi_Mahegela_Zaoxiang_20120518-02.jpg",
+      "fetchedAt": "2026-11-10T11:50:40.311Z"
+    },
+    {
+      "registryId": "CN-330100:Q11116104",
+      "cityId": "CN-330100",
+      "name": "梵天寺经幢",
+      "qid": "Q11116104",
+      "path": "/images/relics/CN-330100_Q11116104.jpg",
+      "credit": "Siyuwj",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Stone_Pillars_of_Brahma_Temple,_2018-10-28_12.jpg",
+      "fetchedAt": "2026-11-10T11:50:43.709Z"
+    },
+    {
+      "registryId": "CN-330100:Q1401634",
+      "cityId": "CN-330100",
+      "name": "飞来峰造像",
+      "qid": "Q1401634",
+      "path": "/images/relics/CN-330100_Q1401634.jpg",
+      "credit": "Doctoroftcm",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Feilaifeng_zaoxiang_7577.jpg",
+      "fetchedAt": "2026-11-10T11:50:44.991Z"
+    },
+    {
+      "registryId": "CN-330100:Q15932495",
+      "cityId": "CN-330100",
+      "name": "仓前粮仓",
+      "qid": "Q15932495",
+      "path": "/images/relics/CN-330100_Q15932495.jpg",
+      "credit": "Siyuwj",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Cangqian_Granary,_2017-11-25_05.jpg",
+      "fetchedAt": "2026-11-10T11:50:42.418Z"
+    },
+    {
+      "registryId": "CN-330100:Q977249",
+      "cityId": "CN-330100",
+      "name": "保俶塔",
+      "qid": "Q977249",
+      "path": "/images/relics/CN-330100_Q977249.jpg",
+      "credit": "Yumeto",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:20250418_Baochu_Ta.jpg",
+      "fetchedAt": "2026-11-10T11:50:41.380Z"
+    },
+    {
+      "registryId": "CN-410300:Q1264618",
+      "cityId": "CN-410300",
+      "name": "白马寺",
+      "qid": "Q1264618",
+      "path": "/images/relics/CN-410300_Q1264618.jpg",
+      "credit": "xiquinhosilva",
+      "license": "CC BY 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:27467-Luoyang_(49085730123).jpg",
+      "fetchedAt": "2026-11-10T11:50:57.867Z"
+    },
+    {
+      "registryId": "CN-510100:Q1069942",
+      "cityId": "CN-510100",
+      "name": "成都武侯祠",
+      "qid": "Q1069942",
+      "path": "/images/relics/CN-510100_Q1069942.jpg",
+      "credit": "螺钉",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:%E6%88%90%E9%83%BD%E7%9A%84%E6%AD%A6%E4%BE%AF%E7%A5%A0.jpg",
+      "fetchedAt": "2026-11-10T11:50:48.350Z"
+    },
+    {
+      "registryId": "CN-510100:Q123375882",
+      "cityId": "CN-510100",
+      "name": "朝阳洞",
+      "qid": "Q123375882",
+      "path": "/images/relics/CN-510100_Q123375882.jpg",
+      "credit": "Kcx36",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:%E9%9D%92%E5%9F%8E%E5%B1%B1%E6%9C%9D%E9%98%B3%E6%B4%9E_04.jpg",
+      "fetchedAt": "2026-11-10T11:50:47.570Z"
+    },
+    {
+      "registryId": "CN-510100:Q17025263",
+      "cityId": "CN-510100",
+      "name": "成都古蜀船棺合葬墓",
+      "qid": "Q17025263",
+      "path": "/images/relics/CN-510100_Q17025263.jpg",
+      "credit": "Nekitarc",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:%E6%88%90%E9%83%BD%E5%8D%9A%E7%89%A9%E9%A6%86%E8%97%8F%E5%95%86%E4%B8%9A%E8%A1%97%E5%8F%A4%E8%9C%80%E8%88%B9%E6%A3%BA%E5%90%88%E8%91%AC%E5%A2%93%E8%88%B9%E6%A3%BA.jpg",
+      "fetchedAt": "2026-11-10T11:50:47.840Z"
+    },
+    {
+      "registryId": "CN-510100:Q4857451",
+      "cityId": "CN-510100",
+      "name": "宝光寺",
+      "qid": "Q4857451",
+      "path": "/images/relics/CN-510100_Q4857451.jpg",
+      "credit": "BenBen",
+      "license": "CC BY-SA 2.5",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.5",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Baoguangsi.jpg",
+      "fetchedAt": "2026-11-10T11:50:46.276Z"
+    },
+    {
+      "registryId": "CN-610100:Q1073538",
+      "cityId": "CN-610100",
+      "name": "阿房宫",
+      "qid": "Q1073538",
+      "path": "/images/relics/CN-610100_Q1073538.jpg",
+      "credit": "Gzy.29",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:%E9%98%BF%E6%88%BF%E5%AE%AB%E9%81%97%E5%9D%80%E5%A4%A7%E9%97%A8.jpg",
+      "fetchedAt": "2026-11-10T11:50:37.688Z"
+    },
+    {
+      "registryId": "CN-610100:Q15913387",
+      "cityId": "CN-610100",
+      "name": "八路军西安办事处旧址",
+      "qid": "Q15913387",
+      "path": "/images/relics/CN-610100_Q15913387.jpg",
+      "credit": "Zhangzhugang",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Xi%27an_Balujun_Banshichu_Jiuzhi_2014.01.04_09-44-59.jpg",
+      "fetchedAt": "2026-11-10T11:50:38.469Z"
+    },
+    {
+      "registryId": "CN-610100:Q806929",
+      "cityId": "CN-610100",
+      "name": "半坡遗址",
+      "qid": "Q806929",
+      "path": "/images/relics/CN-610100_Q806929.jpg",
+      "credit": "eecc",
+      "license": "Public domain",
+      "licenseUrl": null,
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Banpo.jpg",
+      "fetchedAt": "2026-11-10T11:50:39.035Z"
+    }
+  ],
+  "skipped": [
+    {
+      "registryId": "CN-610100:Q10891925",
+      "name": "八云塔",
+      "reason": "Wikidata 无 P18 图片"
+    },
+    {
+      "registryId": "CN-610100:Q15934021",
+      "name": "灞桥遗址",
+      "reason": "Wikidata 无 P18 图片"
+    },
+    {
+      "registryId": "CN-610100:Q24838918",
+      "name": "薄太后陵",
+      "reason": "Wikidata 无 P18 图片"
+    },
+    {
+      "registryId": "CN-330100:Q133278908",
+      "name": "独松关和古驿道",
+      "reason": "Wikidata 无 P18 图片"
+    },
+    {
+      "registryId": "CN-510100:Q17021607",
+      "name": "北周文王碑及摩崖造像",
+      "reason": "Wikidata 无 P18 图片"
+    },
+    {
+      "registryId": "CN-510100:Q17025265",
+      "name": "成都平原史前城址",
+      "reason": "Wikidata 无 P18 图片"
+    },
+    {
+      "registryId": "CN-110000:Q10902206",
+      "name": "北京安徽会馆",
+      "reason": "Wikidata 无 P18 图片"
+    },
+    {
+      "registryId": "CN-320500:Q5470134",
+      "name": "常熟翁氏故居",
+      "reason": "Wikidata 无 P18 图片"
+    },
+    {
+      "registryId": "CN-320500:Q85879438",
+      "name": "常熟言子祠",
+      "reason": "Wikidata 无 P18 图片"
+    },
+    {
+      "registryId": "CN-410300:Q10946962",
+      "name": "安济桥",
+      "reason": "Wikidata 无 P18 图片"
+    },
+    {
+      "registryId": "CN-410300:Q133261147",
+      "name": "八路军洛阳办事处旧址",
+      "reason": "Wikidata 无 P18 图片"
+    },
+    {
+      "registryId": "CN-410300:Q133305796",
+      "name": "北窑遗址",
+      "reason": "Wikidata 无 P18 图片"
+    },
+    {
+      "registryId": "CN-410300:Q133306515",
+      "name": "程颐、程颢墓",
+      "reason": "Wikidata 无 P18 图片"
+    },
+    {
+      "registryId": "CN-410300:Q133306980",
+      "name": "大宋新修会圣宫铭碑",
+      "reason": "Wikidata 无 P18 图片"
+    }
+  ]
+}

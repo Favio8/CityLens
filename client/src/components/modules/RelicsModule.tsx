@@ -90,6 +90,28 @@ export function RelicsModule({
                 {relic.era.slice(0, 1)}
               </span>
 
+              {relic.images?.[0] ? (
+                <figure className="-mx-6 -mt-6 mb-5 border-b hairline">
+                  <img
+                    src={relic.images[0].url}
+                    alt={`${relic.name}（Wikimedia Commons）`}
+                    loading="lazy"
+                    className="h-44 w-full object-cover"
+                  />
+                  <figcaption className="flex items-center justify-between gap-2 px-3 py-1.5 text-[9px] text-[var(--text-secondary)]">
+                    <span className="truncate">图 · {relic.images[0].credit}</span>
+                    <a
+                      href={relic.images[0].sourceUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="ink-link shrink-0 hover:text-[var(--city-primary)]"
+                    >
+                      {relic.images[0].license} · Commons ↗
+                    </a>
+                  </figcaption>
+                </figure>
+              ) : null}
+
               <div className="flex items-start justify-between gap-3">
                 <div>
                   <span className="mono text-[9px] tracking-[0.16em] text-[var(--text-secondary)]">

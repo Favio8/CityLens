@@ -1,10 +1,20 @@
 /** 构建期脚本共用的 Wikidata 访问与解析工具。 */
-import { readFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 export const WIKIDATA_ENDPOINT = 'https://query.wikidata.org/sparql';
 const USER_AGENT = 'CityLens/0.1 (build-time data pipeline; local development)';
+const libDir = dirname(fileURLToPath(import.meta.url));
+const CACHE_DIR = resolve(libDir, '../.cache/wikidata');
+/** 设为 1 可强制重新联网查询，忽略本地缓存。 */
+const REFRESH_CACHE = process.env.REFRESH_WIKIDATA === '1';
+
+function cachePath(query: string): string {
+  const hash = createHash('sha256').update(query).digest('hex').slice(0, 24);
+  return resolve(CACHE_DIR, `${hash}.json`);
+}
 
 export interface Binding {
   [key: string]: { value: string; type: string } | undefined;
@@ -14,8 +24,23 @@ export function sleep(ms: number): Promise<void> {
   return new Promise((r) => setTimeout(r, ms));
 }
 
-/** 带重试的 SPARQL 查询，失败时抛出真实错误（绝不伪造数据）。 */
+/**
+ * 带磁盘缓存的 SPARQL 查询。
+ * 查询结果按 query 哈希缓存到 scripts/.cache/wikidata，默认优先读缓存，
+ * 这样断网或 Wikidata 限流时仍能离线重建；REFRESH_WIKIDATA=1 可强制刷新。
+ * 失败时抛出真实错误（绝不伪造数据）。
+ */
 export async function sparql(query: string, retries = 2): Promise<Binding[]> {
+  const path = cachePath(query);
+  if (!REFRESH_CACHE) {
+    try {
+      const cached = JSON.parse(readFileSync(path, 'utf8')) as { bindings: Binding[] };
+      if (Array.isArray(cached.bindings)) return cached.bindings;
+    } catch {
+      /* 无缓存或缓存损坏，继续联网 */
+    }
+  }
+
   let lastError: unknown;
   for (let attempt = 0; attempt <= retries; attempt += 1) {
     try {
@@ -30,6 +55,21 @@ export async function sparql(query: string, retries = 2): Promise<Binding[]> {
       });
       if (!res.ok) throw new Error(`HTTP ${res.status} ${res.statusText}`);
       const json = (await res.json()) as { results: { bindings: Binding[] } };
+      mkdirSync(CACHE_DIR, { recursive: true });
+      writeFileSync(
+        path,
+        `${JSON.stringify(
+          {
+            endpoint: WIKIDATA_ENDPOINT,
+            fetchedAt: new Date().toISOString(),
+            queryPreview: query.replace(/\s+/g, ' ').slice(0, 160),
+            bindings: json.results.bindings,
+          },
+          null,
+          2,
+        )}\n`,
+        'utf8',
+      );
       return json.results.bindings;
     } catch (error) {
       lastError = error;

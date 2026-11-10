@@ -62,23 +62,37 @@ npm run data:dictionary   # Wikidata 行政区划代码 + 坐标 → city_dictio
 npm run data:poetry       # chinese-poetry → 本地诗词库（逐字校验源）
 npm run data:snapshot     # Wikidata → 城市事实快照
 npm run data:gazetteer    # 地名坐标库
+npm run data:geo          # DataV.GeoAtlas → 六城行政区轮廓（含来源清单）
+npm run data:images       # Wikidata P18 + Wikimedia Commons → 本地文物图片与许可
 npm run data:presets      # 六座预置城市档案（本地事实模块 + 人工整理稿）
 npm run seed              # 重新导入词典（幂等）
 npm run verify            # 校验预置档案：Schema / 来源 / 坐标 / 年份 / 诗词逐字
+npm run data:refresh      # 依次刷新全部外部数据并重建预置档案
 ```
 
 构建期脚本的网络失败会以非 0 退出并保留旧产物，不会伪造快照；失败原因写入产物 `failures` 字段，并同步记录到验收文档。
+
+### 免 Key 数据源的本地缓存
+
+- **Wikidata**：SPARQL 结果按查询哈希缓存在 `scripts/.cache/wikidata/`，断网时可直接复用；`REFRESH_WIKIDATA=1` 强制联网刷新。
+- **chinese-poetry**：源 JSON 缓存在 `scripts/.cache/chinese-poetry/`（约 28 MB），并用 `.listings/` 记录目录清单；断网时自动回退本地缓存重建。可选 `GITHUB_TOKEN` 提高 GitHub API 限额，`REFRESH_POETRY=1` 强制更新清单。
+- **Wikimedia Commons**：图片与许可元数据由 `npm run data:images` 抓取并落到 `client/public/images/relics/` 与 `server/data/relic_images.json`；默认复用已下载文件，`REFRESH_IMAGES=1` 强制刷新。
+- **行政区轮廓**：`npm run data:geo` 会缓存到 `scripts/.cache/geo/` 并生成 `client/public/geo/_manifest.json`；现有来源为 DataV.GeoAtlas，**授权与审图号未完成人工确认**，公开上线前必须合规审校或替换为天地图/自然资源部标准地图来源。
+- **国家文物局名录**：没有公开 API，无法可靠自动抓取，仍需人工下载官方名单后离线导入。
 
 ### 数据产物（构建期生成，已提交）
 
 | 产物 | 生成脚本 | 内容与用途 |
 |---|---|---|
 | `server/data/city_dictionary.json` | `build_city_dictionary.ts` | 342 座城市（334 地级 + 4 直辖市 + 4 文旅县级市白名单）、1480 条别名、WGS84 中心点、Wikidata QID |
-| `server/data/verified_poetry_corpus.json` | `build_poetry_corpus.ts` | chinese-poetry（MIT）全唐诗/宋词/元曲中与六座预置城市相关的 868 首作品（每城 150 首），繁转简仅用于比对，保留原文 |
+| `server/data/verified_poetry_corpus.json` | `build_poetry_corpus.ts` | chinese-poetry（MIT）全唐诗/宋词/元曲中与六座预置城市相关的 815 首作品（每城 150 首），繁转简仅用于比对，保留原文 |
 | `server/data/fact_snapshot/{cityId}.json` | `build_fact_snapshot.ts` | 六座预置城市的 Wikidata 景点/文物/人物事实快照 |
 | `server/data/relics_registry.json` | `build_relics_registry.ts` | 由快照汇总的 427 件文物名录（国保 / 禁止出境展览文物） |
 | `server/data/place_gazetteer.json` | `build_place_gazetteer.ts` | 862 条 WGS84 地名坐标（城市中心 + 景点 + 文物） |
 | `server/data/dynasties.json` | 人工整理 | 固定朝代年表（起止年份），待人工复核 |
+| `server/data/relic_images.json` | `build_relic_images.ts` | 六城前 6 件文物的本地图片路径、Commons 署名、许可证与来源页 |
+| `client/public/images/relics/` | `build_relic_images.ts` | 已下载到本地的文物缩略图（640px），运行期不请求外部图片 |
+| `client/public/geo/*.json` | `build_geo_boundaries.ts` | 六城行政区轮廓；`_manifest.json` 记录来源与合规待确认提示 |
 
 产物中的每条实体均带 `sourceRef`/`sourceRefs`；`server/data/*.db*` 为运行时数据库，不提交。
 
@@ -92,7 +106,7 @@ npm run verify            # 校验预置档案：Schema / 来源 / 坐标 / 年�
 
 - 未配置 `LLM_API_KEY`：服务端启用**模拟 LLM**，仍然走完整的流式、单飞、冷却、限流与降级路径，输出带 `mock` 标记；预置档案只由 `npm run data:presets` 构建，模拟结果不会覆盖预置档案。
 - 未配置 `TIANDITU_KEY`：前端使用**无底图模式**，只绘制行政区轮廓与宣纸底色。
-- `ENABLE_IMAGES=false`（默认）：不请求任何外部图片。
+- `ENABLE_IMAGES=false`（默认）：档案不带图片；运行 `npm run data:images` 后设为 `true`，会使用已下载到本地的 Commons 图片，运行期仍不请求外部图片。
 
 配置真实 Key：复制 `.env.example` 为 `.env`，填写后重启 `npm run dev` 即可切换，无需改代码。
 

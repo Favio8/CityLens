@@ -266,8 +266,17 @@ export const LandmarksSchema = z.array(LandmarkSchema).min(1).max(10);
 /* 04 文物重器                                                                 */
 /* -------------------------------------------------------------------------- */
 
+/** 图片地址：站内自托管路径（/images/...）或绝对 URL。 */
+export const ImageUrlSchema = z
+  .string()
+  .min(1)
+  .refine(
+    (value) => value.startsWith('/') || /^https?:\/\//.test(value),
+    '图片地址必须为站内路径或 http(s) URL',
+  );
+
 export const RelicImageSchema = z.object({
-  url: z.string().url(),
+  url: ImageUrlSchema,
   credit: z.string().min(1),
   license: z.string().min(1),
   sourceUrl: z.string().url(),

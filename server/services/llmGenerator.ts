@@ -31,6 +31,7 @@ import {
   getDynasties,
   getFactSnapshot,
   getGazetteer,
+  getRelicImages,
   getRelicsRegistry,
 } from './presetData';
 import {
@@ -171,6 +172,7 @@ function buildRelics(input: GenerateInput): GeneratedModule {
   const relics = registry.relics.filter((relic) => relic.cityId === input.city.cityId);
   if (relics.length === 0) throw new GenerationError('NO_FACTS', '本城文物名录为空');
   const gazetteer = input.gazetteer ?? getGazetteer();
+  const imageIndex = config.enableImages ? getRelicImages() : null;
   const usedSources = new Map<string, SourceRef>();
   const data = relics.slice(0, 6).map((relic: RegistryRelic) => {
     const place = resolveEntityPlace(
@@ -191,6 +193,14 @@ function buildRelics(input: GenerateInput): GeneratedModule {
         });
       }
     }
+    const images = (imageIndex?.records ?? [])
+      .filter((record) => record.registryId === relic.registryId)
+      .map((record) => ({
+        url: record.path,
+        credit: record.credit,
+        license: record.license,
+        sourceUrl: record.sourceUrl,
+      }));
     return {
       registryId: relic.registryId,
       name: relic.name,
@@ -200,6 +210,7 @@ function buildRelics(input: GenerateInput): GeneratedModule {
       findSpot: relicFindSpot(relic),
       story: '该条目来自自建文物名录（全国重点文物保护单位 / 禁止出境展览文物），详情与馆藏说明待人工复核补充。',
       coordinates: place.coordinates,
+      ...(images.length > 0 ? { images } : {}),
       sourceRefs: relic.sourceRefs,
       verification: 'pending_human_review' as const,
     };

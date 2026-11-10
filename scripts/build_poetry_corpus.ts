@@ -10,7 +10,7 @@
  * 同时保留原文。网络失败如实记录，不伪造诗词。
  */
 import { createHash } from 'node:crypto';
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import * as OpenCC from 'opencc-js';
@@ -22,6 +22,10 @@ const OUTPUT = resolve(here, '../server/data/verified_poetry_corpus.json');
 const API = 'https://api.github.com/repos/chinese-poetry/chinese-poetry/contents';
 const RAW = 'https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master';
 const USER_AGENT = 'CityLens/0.1 (build_poetry_corpus)';
+/** 可选：公开仓库只读 Token，用于提高 GitHub API 限额；不配置也能工作。 */
+const GITHUB_TOKEN = process.env.GITHUB_TOKEN?.trim() ?? '';
+const LISTING_DIR = resolve(CACHE_DIR, '.listings');
+const REFRESH_LISTING = process.env.REFRESH_POETRY === '1';
 
 type Converter = (text: string) => string;
 const toSimplified: Converter = (OpenCC as unknown as {
@@ -99,7 +103,11 @@ async function fetchJson<T>(url: string, retries = 2): Promise<T> {
   let lastError: unknown;
   for (let attempt = 0; attempt <= retries; attempt += 1) {
     try {
-      const res = await fetch(url, { headers: { 'User-Agent': USER_AGENT } });
+      const headers: Record<string, string> = { 'User-Agent': USER_AGENT };
+      if (GITHUB_TOKEN && url.startsWith('https://api.github.com/')) {
+        headers.Authorization = `Bearer ${GITHUB_TOKEN}`;
+      }
+      const res = await fetch(url, { headers });
       if (!res.ok) throw new Error(`HTTP ${res.status} ${res.statusText}`);
       return (await res.json()) as T;
     } catch (error) {
@@ -110,11 +118,43 @@ async function fetchJson<T>(url: string, retries = 2): Promise<T> {
   throw new Error(`${url} 获取失败：${(lastError as Error).message}`);
 }
 
+/**
+ * 目录清单优先读本地缓存：首次联网成功后写入 .listings，
+ * 之后即使 GitHub API 被限流或断网，也能用已缓存的文件清单重建诗词库。
+ */
 async function listDir(dir: string): Promise<string[]> {
-  const items = await fetchJson<Array<{ name: string; type: string }>>(
-    `${API}/${encodeURIComponent(dir)}?ref=master`,
-  );
-  return items.filter((i) => i.type === 'file').map((i) => i.name);
+  const listingPath = resolve(LISTING_DIR, `${dir}.json`);
+  if (!REFRESH_LISTING) {
+    try {
+      const cached = JSON.parse(await readFile(listingPath, 'utf8')) as { files: string[] };
+      if (cached.files.length > 0) return cached.files;
+    } catch {
+      /* 首次运行没有清单，继续联网 */
+    }
+  }
+
+  try {
+    const items = await fetchJson<Array<{ name: string; type: string }>>(
+      `${API}/${encodeURIComponent(dir)}?ref=master`,
+    );
+    const files = items.filter((i) => i.type === 'file').map((i) => i.name);
+    await mkdir(LISTING_DIR, { recursive: true });
+    await writeFile(listingPath, JSON.stringify({ dir, files, fetchedAt: new Date().toISOString() }, null, 2));
+    return files;
+  } catch (error) {
+    // 联网失败时退回扫描本地缓存目录，保证离线可重建。
+    try {
+      const entries = await readdir(resolve(CACHE_DIR, dir));
+      const files = entries.filter((name) => name.endsWith('.json')).sort();
+      if (files.length > 0) {
+        console.warn(`[poetry] ${dir} 目录联网失败，改用本地缓存清单（${files.length} 个文件）`);
+        return files;
+      }
+    } catch {
+      /* 本地也没有缓存 */
+    }
+    throw error;
+  }
 }
 
 async function loadFile(dir: string, name: string): Promise<RawPoem[]> {
@@ -353,6 +393,34 @@ async function main(): Promise<void> {
 
   await mkdir(dirname(OUTPUT), { recursive: true });
   await writeFile(OUTPUT, `${JSON.stringify(payload, null, 2)}\n`, 'utf8');
+
+  // 记录本地源文件缓存清单，便于下次离线重建与人工核对版本。
+  const cachedFiles: Record<string, number> = {};
+  for (const dir of ['全唐诗', '宋词', '元曲']) {
+    try {
+      cachedFiles[dir] = (await readdir(resolve(CACHE_DIR, dir))).filter((name) =>
+        name.endsWith('.json'),
+      ).length;
+    } catch {
+      cachedFiles[dir] = 0;
+    }
+  }
+  await writeFile(
+    resolve(CACHE_DIR, '_manifest.json'),
+    `${JSON.stringify(
+      {
+        source: 'https://github.com/chinese-poetry/chinese-poetry',
+        license: 'MIT',
+        updatedAt: new Date().toISOString(),
+        cachedFiles,
+        note: '构建期源文件缓存，不提交到仓库；删除后重新运行 npm run data:poetry 会重新下载。',
+      },
+      null,
+      2,
+    )}\n`,
+    'utf8',
+  );
+
   console.log(`[poetry] 写入 ${poems.length} 首诗词 → ${OUTPUT}`);
   console.log('[poetry] 各城数量：', cityStats);
   if (failures.length) {

@@ -28,7 +28,10 @@
     "data:poetry": "tsx scripts/build_poetry_corpus.ts",
     "data:snapshot": "tsx scripts/build_fact_snapshot.ts",
     "data:relics": "tsx scripts/build_relics_registry.ts",
-    "data:gazetteer": "tsx scripts/build_place_gazetteer.ts"
+    "data:gazetteer": "tsx scripts/build_place_gazetteer.ts",
+    "data:geo": "tsx scripts/build_geo_boundaries.ts",
+    "data:images": "tsx scripts/build_relic_images.ts",
+    "data:refresh": "npm run data:dictionary && npm run data:snapshot && npm run data:relics && npm run data:gazetteer && npm run data:poetry && npm run data:geo && npm run data:images && npm run seed && npm run data:presets"
   },
   "devDependencies": {
     "@types/node": "^22.10.2",

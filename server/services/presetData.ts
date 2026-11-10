@@ -82,6 +82,28 @@ export interface RelicsRegistry {
   relics: RegistryRelic[];
 }
 
+export interface RelicImageRecord {
+  registryId: string;
+  cityId: string;
+  name: string;
+  qid: string;
+  path: string;
+  credit: string;
+  license: string;
+  licenseUrl: string | null;
+  sourceUrl: string;
+  fetchedAt: string;
+}
+
+export interface RelicImages {
+  generatedAt: string;
+  source: string;
+  licenseNote: string;
+  stats: { requested: number; downloaded: number; reused: number; skipped: number };
+  records: RelicImageRecord[];
+  skipped: Array<{ registryId: string; name: string; reason: string }>;
+}
+
 export interface GazetteerEntry {
   name: string;
   coordinates: Coord;
@@ -146,6 +168,7 @@ function loadJson<T>(fileName: string): T | null {
 
 const snapshotCache = new Map<string, FactSnapshot | null>();
 let relicsCache: RelicsRegistry | null | undefined;
+let relicImagesCache: RelicImages | null | undefined;
 let gazetteerCache: Gazetteer | null | undefined;
 let poetryCache: PoetryCorpus | null | undefined;
 let dynastyCache: DynastyTable | null | undefined;
@@ -160,6 +183,13 @@ export function getFactSnapshot(cityId: string): FactSnapshot | null {
 export function getRelicsRegistry(): RelicsRegistry | null {
   if (relicsCache === undefined) relicsCache = loadJson<RelicsRegistry>('relics_registry.json');
   return relicsCache;
+}
+
+export function getRelicImages(): RelicImages | null {
+  if (relicImagesCache === undefined) {
+    relicImagesCache = loadJson<RelicImages>('relic_images.json');
+  }
+  return relicImagesCache;
 }
 
 export function getGazetteer(): Gazetteer | null {
@@ -181,6 +211,7 @@ export function getDynasties(): DynastyTable | null {
 export function resetPresetDataCache(): void {
   snapshotCache.clear();
   relicsCache = undefined;
+  relicImagesCache = undefined;
   gazetteerCache = undefined;
   poetryCache = undefined;
   dynastyCache = undefined;
