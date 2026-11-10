@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" fill="#F7F4ED"/>
+  <rect x="8" y="8" width="48" height="48" fill="none" stroke="#8C3F2B" stroke-width="2"/>
+  <text x="32" y="43" text-anchor="middle" font-family="serif" font-size="32" fill="#8C3F2B">读</text>
+</svg>

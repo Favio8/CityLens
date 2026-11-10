@@ -538,6 +538,7 @@ export const HotCitySchema = z.object({
   isPreset: z.boolean(),
   summary: z.string().nullable(),
 });
+export type HotCity = z.infer<typeof HotCitySchema>;
 export const HotCitiesResponseSchema = z.object({
   cities: z.array(HotCitySchema),
 });

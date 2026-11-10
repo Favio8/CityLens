@@ -1,12 +1,16 @@
-import React from 'react';
+import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { App } from './App';
+import { BrowserRouter } from 'react-router-dom';
+import App from './App';
+import './styles/global.css';
 
-const root = document.getElementById('root');
-if (!root) throw new Error('缺少 #root 挂载点');
+const container = document.getElementById('root');
+if (!container) throw new Error('缺少 #root 挂载点');
 
-createRoot(root).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+createRoot(container).render(
+  <StrictMode>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </StrictMode>,
 );

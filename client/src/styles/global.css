@@ -1,0 +1,435 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ------------------------------------------------------------------ */
+/* 自托管字体：全部来自 OFL 授权源文件，经 scripts/build_font_subset.py 子集化 */
+/* 不引用任何外部字体 CDN                                              */
+/* ------------------------------------------------------------------ */
+@font-face {
+  font-family: 'Noto Serif SC';
+  src: url('/fonts/NotoSerifSC-subset.woff2') format('woff2');
+  font-weight: 200 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/Inter-subset.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('/fonts/JetBrainsMono-subset.woff2') format('woff2');
+  font-weight: 100 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ------------------------------------------------------------------ */
+/* 设计令牌（PRD 4.2）                                                 */
+/* ------------------------------------------------------------------ */
+:root {
+  --bg-canvas: #f7f4ed;
+  --bg-surface: rgba(255, 253, 248, 0.82);
+  --bg-elevated: #fffdf8;
+  --text-primary: #1e1e1e;
+  --text-secondary: #5a564c;
+  --border-subtle: rgba(30, 30, 30, 0.12);
+  --border-strong: rgba(30, 30, 30, 0.28);
+  --shadow-soft: 0 18px 48px rgba(46, 40, 30, 0.08);
+  --shadow-lift: 0 30px 80px rgba(46, 40, 30, 0.16);
+  --grain-opacity: 0.045;
+  --city-primary: #8c3f2b;
+  --city-secondary: #4a4e54;
+  --city-accent: #c89b40;
+  --city-glow: rgba(140, 63, 43, 0.16);
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  --bg-canvas: #121316;
+  --bg-surface: rgba(28, 30, 36, 0.82);
+  --bg-elevated: #1c1e24;
+  --text-primary: #eae6df;
+  --text-secondary: #a39e93;
+  --border-subtle: rgba(234, 230, 223, 0.12);
+  --border-strong: rgba(234, 230, 223, 0.32);
+  --shadow-soft: 0 18px 48px rgba(0, 0, 0, 0.45);
+  --shadow-lift: 0 30px 80px rgba(0, 0, 0, 0.6);
+  --grain-opacity: 0.06;
+  color-scheme: dark;
+}
+
+/* ------------------------------------------------------------------ */
+/* 基础排版                                                            */
+/* ------------------------------------------------------------------ */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 96px;
+}
+
+body {
+  margin: 0;
+  background-color: var(--bg-canvas);
+  color: var(--text-primary);
+  font-family: 'Inter', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-size: 16px;
+  line-height: 1.75;
+  transition: background-color var(--theme-transition, 0.8s) ease,
+    color var(--theme-transition, 0.8s) ease;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* 宣纸 / 丝绢噪点：纯 CSS 内联 SVG，无外部资源 */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: var(--grain-opacity);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply;
+}
+
+:root[data-theme='dark'] body::before {
+  mix-blend-mode: screen;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(1100px 620px at 78% -8%, var(--city-glow), transparent 68%),
+    radial-gradient(900px 520px at 4% 12%, rgba(200, 155, 64, 0.08), transparent 70%);
+  transition: background 0.8s ease;
+}
+
+#root {
+  position: relative;
+  z-index: 1;
+}
+
+::selection {
+  background: var(--city-primary);
+  color: var(--bg-canvas);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--city-primary);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* 自定义滚动条 */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 999px;
+  border: 3px solid var(--bg-canvas);
+}
+
+/* ------------------------------------------------------------------ */
+/* 组件级工具类                                                        */
+/* ------------------------------------------------------------------ */
+@layer components {
+  .page-shell {
+    @apply mx-auto w-full max-w-page px-5 md:px-8 xl:px-10;
+  }
+
+  .surface-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .hairline {
+    border-color: var(--border-subtle);
+  }
+
+  .serif {
+    font-family: 'Noto Serif SC', 'Source Han Serif SC', 'Songti SC', serif;
+  }
+
+  .mono {
+    font-family: 'JetBrains Mono', 'DIN Alternate', monospace;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .display-city {
+    font-family: 'Noto Serif SC', 'Songti SC', serif;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    line-height: 1.1;
+  }
+
+  .section-title {
+    font-family: 'Noto Serif SC', 'Songti SC', serif;
+    font-weight: 600;
+    font-size: 26px;
+    line-height: 1.35;
+    letter-spacing: 0.08em;
+  }
+
+  @media (min-width: 768px) {
+    .section-title {
+      font-size: 36px;
+      line-height: 1.3;
+    }
+  }
+
+  .eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+  }
+
+  .hanzi-index {
+    font-family: 'Noto Serif SC', serif;
+    color: var(--city-primary);
+    letter-spacing: 0.2em;
+    font-size: 12px;
+  }
+
+  .ink-link {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+  }
+
+  .ink-link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 100%;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+
+  .ink-link:hover::after {
+    transform: scaleX(1);
+  }
+
+  .city-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.45rem 0.9rem;
+    border: 1px solid var(--border-subtle);
+    border-radius: 999px;
+    background: var(--bg-surface);
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    transition: border-color 0.3s ease, transform 0.3s ease, background 0.3s ease;
+  }
+
+  .city-pill:hover {
+    border-color: var(--city-primary);
+    transform: translateY(-1px);
+  }
+
+  .stamp {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 0.75rem;
+    border: 1px solid currentColor;
+    color: var(--city-primary);
+    font-family: 'Noto Serif SC', serif;
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    border-radius: 3px;
+    background: color-mix(in srgb, var(--city-primary) 7%, transparent);
+  }
+
+  .vertical-label {
+    writing-mode: vertical-rl;
+    letter-spacing: 0.35em;
+    font-family: 'Noto Serif SC', serif;
+  }
+
+  .ink-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.7rem 1.25rem;
+    border-radius: 999px;
+    border: 1px solid var(--border-strong);
+    background: transparent;
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    transition: all 0.3s ease;
+  }
+
+  .ink-btn:hover:not(:disabled) {
+    background: var(--city-primary);
+    border-color: var(--city-primary);
+    color: var(--bg-canvas);
+  }
+
+  .ink-btn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+
+  .ink-btn--solid {
+    background: var(--city-primary);
+    border-color: var(--city-primary);
+    color: #fffdf8;
+  }
+
+  .ink-btn--solid:hover:not(:disabled) {
+    filter: brightness(1.06);
+    color: #fffdf8;
+  }
+
+  .data-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* 动效                                                                */
+/* ------------------------------------------------------------------ */
+@keyframes ink-breathe {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.015);
+  }
+}
+
+@keyframes ink-rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes brush-sweep {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes seal-in {
+  0% {
+    opacity: 0;
+    transform: scale(1.25) rotate(-6deg);
+  }
+  60% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(-3deg);
+  }
+}
+
+@keyframes drift {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(-12px, 8px, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.reveal {
+  animation: ink-rise 0.9s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+.ink-breathe {
+  animation: ink-breathe 3.2s ease-in-out infinite;
+}
+
+.seal {
+  animation: seal-in 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+.mist-drift {
+  animation: drift 18s ease-in-out infinite;
+}
+
+/* 首屏城名书写：clip-path 从左至右 */
+.write-in {
+  animation: brush-sweep 1.6s cubic-bezier(0.65, 0, 0.35, 1) both;
+}
+
+/* 减少动态偏好：关闭所有非必要动画与平滑滚动 */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .write-in {
+    clip-path: none;
+  }
+}
+
+/* 打印：只保留正文 */
+@media print {
+  body::before,
+  body::after {
+    display: none;
+  }
+}

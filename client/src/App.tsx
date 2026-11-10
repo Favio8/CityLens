@@ -1,12 +1,42 @@
-/**
- * 阶段 1 占位页面：用于验证前后端工作区与 /api/health 连通。
- * 阶段 4 将替换为完整路由、主题系统与搜索界面。
- */
-export function App() {
+import { useEffect } from 'react';
+import { Route, Routes, useLocation } from 'react-router-dom';
+import { Footer } from './components/layout/Footer';
+import { TopBar } from './components/layout/TopBar';
+import { SearchProvider } from './components/search/SearchProvider';
+import { ThemeProvider } from './hooks/useDynamicTheme';
+import { CityPage } from './pages/CityPage';
+import { HomePage } from './pages/HomePage';
+import { NotFoundPage } from './pages/NotFoundPage';
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  }, [pathname]);
+  return null;
+}
+
+export default function App() {
   return (
-    <main style={{ fontFamily: 'serif', padding: 48 }}>
-      <h1>CityLens 读城</h1>
-      <p>前端骨架已就绪，阶段 4 接入完整界面。</p>
-    </main>
+    <ThemeProvider>
+      <SearchProvider>
+        <ScrollToTop />
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:bg-[var(--bg-elevated)] focus:px-4 focus:py-2"
+        >
+          跳到正文
+        </a>
+        <TopBar />
+        <div id="main-content">
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/city/:cityId" element={<CityPage />} />
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+        </div>
+        <Footer />
+      </SearchProvider>
+    </ThemeProvider>
   );
 }

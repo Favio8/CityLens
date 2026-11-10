@@ -84,6 +84,16 @@ export function buildApp(options: BuildAppOptions = {}) {
     return { cities };
   });
 
+  /**
+   * 地图配置。天地图 Key 是浏览器端瓦片请求所必需、且应按域名白名单限制的公开 Key；
+   * 大模型 Key 永远不会通过任何接口下发。
+   */
+  app.get('/api/map/config', async () => ({
+    enabled: mapConfigured(),
+    key: mapConfigured() ? config.tiandituKey : null,
+    styleUrl: null,
+  }));
+
   registerArchiveRoutes(app, {
     repo,
     archiveRepo,

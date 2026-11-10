@@ -3,10 +3,29 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="CityLens 读城：输入一座城，读取它的人文档案。八个人文模块流式展卷，每处事实标注来源。"
+    />
+    <meta name="theme-color" content="#F7F4ED" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>CityLens 读城</title>
+    <script>
+      // 首帧前应用主题，避免明暗闪烁
+      (function () {
+        try {
+          var saved = localStorage.getItem('citylens:theme');
+          var dark = saved === 'dark' || (!saved && matchMedia('(prefers-color-scheme: dark)').matches);
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch (error) {
+          document.documentElement.dataset.theme = 'light';
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
+    <noscript>CityLens 读城需要启用 JavaScript 才能展卷。</noscript>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
