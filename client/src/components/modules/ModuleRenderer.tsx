@@ -1,4 +1,5 @@
 /** 模块分发：每个模块先用自身的 Schema 运行时校验，校验不过即降级隐藏。 */
+import { lazy, Suspense } from 'react';
 import {
   ChronicleSchema,
   DataPulseSchema,
@@ -14,14 +15,28 @@ import {
   type ThemePalette,
 } from '@citylens/shared/schema';
 import { ChronicleModule } from './ChronicleModule';
-import { DataPulseModule } from './DataPulseModule';
 import { FiguresModule } from './FiguresModule';
 import { IdentityModule } from './IdentityModule';
-import { LandmarksModule } from './LandmarksModule';
 import { LocalSoulModule } from './LocalSoulModule';
 import { PoeticsModule } from './PoeticsModule';
 import { RelicsModule } from './RelicsModule';
 import { PendingTag } from '../ui/Tags';
+
+/** 地图与图表依赖较重，进入视口时再加载，避免拖慢首屏。 */
+const LandmarksModule = lazy(() =>
+  import('./LandmarksModule').then((module) => ({ default: module.LandmarksModule })),
+);
+const DataPulseModule = lazy(() =>
+  import('./DataPulseModule').then((module) => ({ default: module.DataPulseModule })),
+);
+
+function HeavyModuleFallback() {
+  return (
+    <div className="surface-card h-[280px] animate-pulse rounded-md md:h-[420px]" aria-busy="true">
+      <span className="sr-only">地图与图表加载中</span>
+    </div>
+  );
+}
 
 interface ModuleRendererProps {
   name: ModuleName;
@@ -67,13 +82,15 @@ export function ModuleRenderer({
     case 'landmarks': {
       const parsed = LandmarksSchema.parse(data);
       return (
-        <LandmarksModule
-          cityId={cityId}
-          cityName={cityName}
-          center={center}
-          data={parsed}
-          sources={sources}
-        />
+        <Suspense fallback={<HeavyModuleFallback />}>
+          <LandmarksModule
+            cityId={cityId}
+            cityName={cityName}
+            center={center}
+            data={parsed}
+            sources={sources}
+          />
+        </Suspense>
       );
     }
     case 'relics': {
@@ -94,7 +111,11 @@ export function ModuleRenderer({
     }
     case 'dataPulse': {
       const parsed = DataPulseSchema.parse(data);
-      return <DataPulseModule data={parsed} sources={sources} palette={palette} />;
+      return (
+        <Suspense fallback={<HeavyModuleFallback />}>
+          <DataPulseModule data={parsed} sources={sources} palette={palette} />
+        </Suspense>
+      );
     }
     default:
       return null;

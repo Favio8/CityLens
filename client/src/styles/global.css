@@ -348,6 +348,11 @@ button {
   transform: translateY(2px);
 }
 
+/* 移动端协作手势提示改用页面内中文说明，隐藏 MapLibre 默认英文浮层。 */
+.maplibregl-cooperative-gesture-screen {
+  display: none !important;
+}
+
 .citylens-marker__dot {
   display: block;
   width: 12px;
@@ -381,6 +386,7 @@ button {
   opacity: 0;
   transform: translateY(-3px);
   transition: opacity 0.25s ease, transform 0.25s ease;
+  pointer-events: none;
 }
 
 .citylens-marker:hover .citylens-marker__label,
@@ -474,6 +480,19 @@ button {
   100% {
     transform: translate3d(0, 0, 0);
   }
+}
+
+@keyframes ink-sweep {
+  from {
+    transform: translateX(-110%);
+  }
+  to {
+    transform: translateX(220%);
+  }
+}
+
+.ink-sweep {
+  animation: ink-sweep 1.4s ease-in-out infinite;
 }
 
 .reveal {

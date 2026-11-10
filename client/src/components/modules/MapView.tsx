@@ -125,6 +125,8 @@ export function MapView({ cityId, cityName, center, landmarks, sources }: MapVie
         dragRotate: false,
         pitchWithRotate: false,
         maxZoom: 17,
+        // 移动端需双指手势，避免地图拦截页面垂直滚动（PRD 4.4）
+        cooperativeGestures: window.innerWidth < 768,
       });
     } catch {
       setFailed(true);
@@ -171,25 +173,7 @@ export function MapView({ cityId, cityName, center, landmarks, sources }: MapVie
             source: 'boundary',
             paint: { 'line-color': '#8C3F2B', 'line-width': 1.2, 'line-opacity': 0.5 },
           });
-          const bounds = new LngLatBounds();
-          const walk = (coords: unknown): void => {
-            if (!Array.isArray(coords)) return;
-            if (typeof coords[0] === 'number' && typeof coords[1] === 'number') {
-              bounds.extend([coords[0] as number, coords[1] as number]);
-              return;
-            }
-            for (const child of coords) walk(child);
-          };
-          walk((geojson as { geometry?: { coordinates?: unknown } }).geometry?.coordinates);
-          const featureCollection = geojson as {
-            features?: Array<{ geometry?: { coordinates?: unknown } }>;
-          };
-          for (const feature of featureCollection.features ?? []) {
-            walk(feature.geometry?.coordinates);
-          }
-          if (!bounds.isEmpty()) {
-            map.fitBounds(bounds, { padding: 44, duration: reduced ? 0 : 900 });
-          }
+          // 不用轮廓拟合视口：初始视野由景点坐标包围盒决定，避免点位挤成一团。
         })
         .catch(() => {
           /* 无轮廓文件时保持无底图模式 */
@@ -338,24 +322,8 @@ export function MapView({ cityId, cityName, center, landmarks, sources }: MapVie
         </span>
       </div>
 
-      <div className="grid gap-5 lg:grid-cols-[1fr_320px]">
-        <div className="relative overflow-hidden rounded-md border hairline">
-          <div ref={containerRef} className="h-[320px] w-full md:h-[460px]" role="application" aria-label={`${cityName}景点地图`} />
-          {failed ? (
-            <div className="absolute inset-0 grid place-items-center bg-[var(--bg-canvas)]/90 p-6 text-center">
-              <p className="text-xs leading-relaxed text-[var(--text-secondary)]">
-                当前环境不支持 WebGL 地图。以下清单仍可阅读，坐标均为 WGS84。
-              </p>
-            </div>
-          ) : null}
-          {!config?.enabled ? (
-            <span className="pointer-events-none absolute bottom-3 left-3 rounded-sm bg-[var(--bg-canvas)]/85 px-2 py-1 text-[9px] tracking-[0.18em] text-[var(--text-secondary)]">
-              无底图模式 · 配置 TIANDITU_KEY 后显示瓦片
-            </span>
-          ) : null}
-        </div>
-
-        <ul className="max-h-[460px] space-y-2 overflow-y-auto pr-1">
+      <div className="grid gap-5 lg:grid-cols-[minmax(0,340px)_minmax(0,1fr)] lg:items-start">
+        <ul className="order-2 max-h-[420px] space-y-2 overflow-y-auto pr-1 lg:order-1 lg:max-h-[calc(100vh-180px)]">
           {visible.map((landmark) => (
             <li
               key={landmark.entityRef}
@@ -401,6 +369,30 @@ export function MapView({ cityId, cityName, center, landmarks, sources }: MapVie
             </li>
           ))}
         </ul>
+
+        <div className="relative order-1 overflow-hidden rounded-md border hairline lg:order-2 lg:sticky lg:top-24">
+          <div
+            ref={containerRef}
+            className="h-[280px] w-full md:h-[420px] lg:h-[min(600px,calc(100vh-140px))]"
+            role="application"
+            aria-label={`${cityName}景点地图`}
+          />
+          {failed ? (
+            <div className="absolute inset-0 grid place-items-center bg-[var(--bg-canvas)]/90 p-6 text-center">
+              <p className="text-xs leading-relaxed text-[var(--text-secondary)]">
+                当前环境不支持 WebGL 地图。以下清单仍可阅读，坐标均为 WGS84。
+              </p>
+            </div>
+          ) : null}
+          {!config?.enabled ? (
+            <span className="pointer-events-none absolute bottom-3 left-3 rounded-sm bg-[var(--bg-canvas)]/85 px-2 py-1 text-[9px] tracking-[0.18em] text-[var(--text-secondary)]">
+              无底图模式 · 配置 TIANDITU_KEY 后显示瓦片
+            </span>
+          ) : null}
+          <span className="pointer-events-none absolute right-3 top-3 rounded-sm bg-[var(--bg-canvas)]/85 px-2 py-1 text-[9px] tracking-[0.18em] text-[var(--text-secondary)] md:hidden">
+            双指移动地图 · 单指滑动页面
+          </span>
+        </div>
       </div>
     </div>
   );

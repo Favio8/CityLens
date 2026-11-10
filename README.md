@@ -2,7 +2,7 @@
 
 交互式城市人文档案系统。输入城市名、古称或拼音，读城引擎以流式方式逐模块生成八个人文模块，每个模块独立显影、独立降级。
 
-> 当前进度：阶段 1–6 已完成（服务端、离线事实管线、缓存编排、SSE 流式、八模块前端、预置档案与 verify）；阶段 7 进行最终打磨与验收复核。
+> 当前进度：阶段 1–7 已完成（服务端、离线事实管线、缓存编排、SSE 流式、八模块前端、预置档案与 verify、性能与响应式打磨）。功能完成度、AC-01～AC-19 自测证据与待人工复核清单见 [FEATURES_AND_VERIFICATION.md](./FEATURES_AND_VERIFICATION.md)。
 
 ## 技术栈
 
@@ -50,6 +50,10 @@ curl http://localhost:8787/api/cities/hot
 ```
 
 > 若在 Windows 上 `better-sqlite3` 未找到预编译包，会回退到源码编译，需要安装 Visual Studio Build Tools（C++ 工作负载）。
+>
+> 若 `npm ci` 在 `better-sqlite3` 的安装脚本处报 `'prebuild-install' 不是内部或外部命令`，通常是终端 `PATH` 过长（超过 8191 字符）导致 `cmd.exe` 截断 `PATH`。在系统默认终端中执行，或先精简 `PATH` 再安装即可；本项目无需额外的全局依赖。
+>
+> Vite 默认只监听 `localhost`（IPv6），请使用 http://localhost:5173 ；若浏览器打不开，改用 `npm run dev:client -- --host 127.0.0.1`。
 
 ### 数据管线（可重复执行）
 

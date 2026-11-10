@@ -36,7 +36,7 @@ export function ScrollNav() {
   return (
     <>
       <nav
-        className="fixed right-5 top-1/2 z-30 hidden -translate-y-1/2 flex-col items-end gap-1 xl:flex"
+        className="fixed right-5 top-1/2 z-30 hidden -translate-y-1/2 flex-col items-end gap-1 2xl:flex"
         aria-label="卷目导航"
       >
         {MODULE_SECTIONS.map((section, position) => {
@@ -74,7 +74,7 @@ export function ScrollNav() {
         })}
       </nav>
 
-      <div className="fixed bottom-5 right-5 z-30 xl:hidden">
+      <div className="fixed bottom-5 right-5 z-30 2xl:hidden">
         {open ? (
           <nav
             className="surface-card mb-2 w-44 rounded-md p-3"

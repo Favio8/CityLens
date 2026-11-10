@@ -34,7 +34,7 @@ export function PoeticsModule({ data, sources }: { data: Poem[]; sources: Source
             </div>
 
             <div className="mt-6 overflow-x-auto">
-              <div className="flex min-w-max flex-row-reverse items-start gap-3 md:mx-auto md:h-[260px] md:gap-5">
+              <div className="flex min-w-max flex-row-reverse items-start justify-center gap-3 md:mx-auto md:h-[260px] md:gap-5">
                 {poem.lines.map((line) => (
                   <p
                     key={line}

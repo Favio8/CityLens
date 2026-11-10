@@ -1,5 +1,5 @@
 /** 城市卷首：城名、古称、坐标、显影进度与操作。 */
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { Meta } from '@citylens/shared/schema';
 import type { StreamPhase } from '../../hooks/useCityStream';
 import { formatCoord, formatDateTime } from '../../lib/format';
@@ -29,6 +29,8 @@ export function CityHero({
   onRegenerate,
 }: CityHeroProps) {
   const [copied, setCopied] = useState(false);
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const [notice, setNotice] = useState<string | null>(null);
   const streaming = phase === 'streaming_init' || phase === 'streaming_modules' || phase === 'reading';
   const statusText =
     phase === 'streaming_init'
@@ -36,7 +38,7 @@ export function CityHero({
       : phase === 'streaming_modules'
         ? `已显影 ${moduleCount} / 8 卷`
         : fromCache
-          ? '馆藏已收录'
+          ? '已为你复用'
           : '档案已成卷';
 
   const share = async (): Promise<void> => {
@@ -48,6 +50,24 @@ export function CityHero({
       setCopied(false);
     }
   };
+
+  const requestRegenerate = (): void => {
+    if (meta?.isPreset) {
+      setNotice('预置馆藏受保护：该城档案由构建期管线组装，不支持重新生成。');
+      return;
+    }
+    setNotice(null);
+    setConfirmOpen(true);
+  };
+
+  useEffect(() => {
+    if (!confirmOpen) return;
+    const onKey = (event: KeyboardEvent): void => {
+      if (event.key === 'Escape') setConfirmOpen(false);
+    };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [confirmOpen]);
 
   return (
     <section className="relative overflow-hidden border-b hairline" aria-labelledby="city-title">
@@ -170,16 +190,67 @@ export function CityHero({
                 <button type="button" onClick={() => void share()} className="ink-btn px-3 py-2 text-[11px]" disabled={!meta}>
                   {copied ? '链接已复制' : '分享此卷'}
                 </button>
-                {onRegenerate && !meta?.isPreset ? (
-                  <button type="button" onClick={onRegenerate} className="ink-btn px-3 py-2 text-[11px]" disabled={streaming}>
-                    重读此城
+                {onRegenerate ? (
+                  <button
+                    type="button"
+                    onClick={requestRegenerate}
+                    className="ink-btn px-3 py-2 text-[11px]"
+                    disabled={streaming || !meta}
+                  >
+                    重新生成
                   </button>
                 ) : null}
               </div>
+              {notice ? (
+                <p className="mt-3 text-[11px] leading-relaxed text-[var(--city-primary)]" role="status">
+                  {notice}
+                </p>
+              ) : null}
             </div>
           </aside>
         </div>
       </div>
+
+      {confirmOpen ? (
+        <div
+          className="fixed inset-0 z-[70] grid place-items-center bg-black/30 px-5 backdrop-blur-sm"
+          role="presentation"
+          onClick={() => setConfirmOpen(false)}
+        >
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="regenerate-title"
+            aria-describedby="regenerate-desc"
+            className="surface-card w-full max-w-md rounded-md p-6"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <p className="eyebrow">重新展卷</p>
+            <h2 id="regenerate-title" className="mt-3 font-serif text-2xl tracking-[0.12em]">
+              重读此城？
+            </h2>
+            <p id="regenerate-desc" className="mt-3 text-xs leading-[1.9] text-[var(--text-secondary)]">
+              将增量重新生成档案：已通过校验的模块原子替换，失败模块单独重试。
+              同一城市 5 分钟内仅可重新生成一次，确认后可能消耗一次模型调用。
+            </p>
+            <div className="mt-6 flex justify-end gap-2">
+              <button type="button" className="ink-btn px-4 py-2 text-[11px]" onClick={() => setConfirmOpen(false)}>
+                取消
+              </button>
+              <button
+                type="button"
+                className="ink-btn ink-btn--solid px-4 py-2 text-[11px]"
+                onClick={() => {
+                  setConfirmOpen(false);
+                  onRegenerate?.();
+                }}
+              >
+                确认重读
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : null}
     </section>
   );
 }
