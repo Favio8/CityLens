@@ -1,0 +1,50 @@
+{
+  "generatedAt": "2026-11-10T06:55:41.904Z",
+  "source": "Wikidata SPARQL",
+  "endpoint": "https://query.wikidata.org/sparql",
+  "license": "CC0",
+  "summary": [
+    {
+      "cityId": "CN-610100",
+      "landmarks": 69,
+      "relics": 60,
+      "figures": 59,
+      "failures": 0
+    },
+    {
+      "cityId": "CN-330100",
+      "landmarks": 71,
+      "relics": 52,
+      "figures": 5,
+      "failures": 0
+    },
+    {
+      "cityId": "CN-510100",
+      "landmarks": 66,
+      "relics": 53,
+      "figures": 2,
+      "failures": 0
+    },
+    {
+      "cityId": "CN-110000",
+      "landmarks": 120,
+      "relics": 145,
+      "figures": 22,
+      "failures": 0
+    },
+    {
+      "cityId": "CN-320500",
+      "landmarks": 71,
+      "relics": 64,
+      "figures": 7,
+      "failures": 0
+    },
+    {
+      "cityId": "CN-410300",
+      "landmarks": 67,
+      "relics": 53,
+      "figures": 2,
+      "failures": 0
+    }
+  ]
+}

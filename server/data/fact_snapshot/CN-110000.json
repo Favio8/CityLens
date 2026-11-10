@@ -1,0 +1,4252 @@
+{
+  "cityId": "CN-110000",
+  "cityName": "北京",
+  "cityQid": "Q956",
+  "center": [
+    116.407526,
+    39.90403
+  ],
+  "retrievedAt": "2026-11-10T06:55:23.202Z",
+  "sourceRef": {
+    "id": "S-WD-CN-110000",
+    "type": "wikidata",
+    "title": "Wikidata 事实快照 · 北京",
+    "url": "https://query.wikidata.org/sparql",
+    "retrievedAt": "2026-11-10T06:55:23.202Z"
+  },
+  "landmarks": [
+    {
+      "entityId": "Q12501",
+      "name": "长城",
+      "coordinates": [
+        116.564444444,
+        40.431388888
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": "中国古代的一系列边界防御工事",
+      "sitelinks": 195
+    },
+    {
+      "entityId": "Q80290",
+      "name": "故宫",
+      "coordinates": [
+        116.390833333,
+        39.915833333
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [
+        "全国重点文物保护单位",
+        "世界遗产组成部分"
+      ],
+      "description": "中国明清两个朝代二十四位皇帝的皇宫",
+      "sitelinks": 106
+    },
+    {
+      "entityId": "Q125445",
+      "name": "天坛",
+      "coordinates": [
+        116.4066,
+        39.8822
+      ],
+      "kind": "庙",
+      "heritageDesignations": [
+        "世界遗产",
+        "全国重点文物保护单位"
+      ],
+      "description": "一个皇家祭坛",
+      "sitelinks": 70
+    },
+    {
+      "entityId": "Q4132",
+      "name": "颐和园",
+      "coordinates": [
+        116.2689,
+        39.9975
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": "北京皇家园林",
+      "sitelinks": 62
+    },
+    {
+      "entityId": "Q41135",
+      "name": "明十三陵",
+      "coordinates": [
+        116.2175,
+        40.253333333
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": "明朝皇帝陵墓",
+      "sitelinks": 47
+    },
+    {
+      "entityId": "Q499552",
+      "name": "周口店遗址",
+      "coordinates": [
+        115.92483,
+        39.68896
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 45
+    },
+    {
+      "entityId": "Q83973",
+      "name": "天安门",
+      "coordinates": [
+        116.39122009,
+        39.90735412
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 44
+    },
+    {
+      "entityId": "Q197889",
+      "name": "中南海",
+      "coordinates": [
+        116.380555555,
+        39.911388888
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": "中共中央和中央人民政府（国务院）所在地",
+      "sitelinks": 39
+    },
+    {
+      "entityId": "Q907894",
+      "name": "圆明园",
+      "coordinates": [
+        116.306793055,
+        40.012045
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 35
+    },
+    {
+      "entityId": "Q798826",
+      "name": "八达岭",
+      "coordinates": [
+        116.00649,
+        40.35428
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 35
+    },
+    {
+      "entityId": "Q603256",
+      "name": "牛街礼拜寺",
+      "coordinates": [
+        116.358055555,
+        39.884444444
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 34
+    },
+    {
+      "entityId": "Q734499",
+      "name": "景山公园",
+      "coordinates": [
+        116.390555555,
+        39.923611111
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 31
+    },
+    {
+      "entityId": "Q285141",
+      "name": "北京站",
+      "coordinates": [
+        116.421111111,
+        39.902222222
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": "北京市东城区东便门西侧毛家湾胡同甲13号铁路车站（地铁站请参见Q10902386）",
+      "sitelinks": 31
+    },
+    {
+      "entityId": "Q220083",
+      "name": "北京动物园",
+      "coordinates": [
+        116.333333333,
+        39.938611111
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 30
+    },
+    {
+      "entityId": "Q133650",
+      "name": "北海公园",
+      "coordinates": [
+        116.383055555,
+        39.924444444
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 30
+    },
+    {
+      "entityId": "Q1060121",
+      "name": "卢沟桥",
+      "coordinates": [
+        116.21288611,
+        39.84903889
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 28
+    },
+    {
+      "entityId": "Q536955",
+      "name": "人民英雄纪念碑",
+      "coordinates": [
+        116.391666666,
+        39.903055555
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 27
+    },
+    {
+      "entityId": "Q692723",
+      "name": "雍和宫",
+      "coordinates": [
+        116.410916666,
+        39.947086111
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 26
+    },
+    {
+      "entityId": "Q1064185",
+      "name": "王府井天主堂",
+      "coordinates": [
+        116.405833333,
+        39.915833333
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 23
+    },
+    {
+      "entityId": "Q197703",
+      "name": "正阳门",
+      "coordinates": [
+        116.39166667,
+        39.89925
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 23
+    },
+    {
+      "entityId": "Q1188864",
+      "name": "宣武门天主堂",
+      "coordinates": [
+        116.369291666,
+        39.899463888
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 22
+    },
+    {
+      "entityId": "Q1347866",
+      "name": "太庙",
+      "coordinates": [
+        116.39361111,
+        39.91
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 22
+    },
+    {
+      "entityId": "Q615178",
+      "name": "地坛",
+      "coordinates": [
+        116.40972222,
+        39.95138889
+      ],
+      "kind": "庙",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 21
+    },
+    {
+      "entityId": "Q2047427",
+      "name": "故宫博物院",
+      "coordinates": [
+        116.39083333,
+        39.91555556
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 20
+    },
+    {
+      "entityId": "Q2032749",
+      "name": "西什库天主堂",
+      "coordinates": [
+        116.3725,
+        39.923888888
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 20
+    },
+    {
+      "entityId": "Q1399104",
+      "name": "法源寺",
+      "coordinates": [
+        116.363611111,
+        39.883333333
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 20
+    },
+    {
+      "entityId": "Q804054",
+      "name": "白云观",
+      "coordinates": [
+        116.338,
+        39.8989
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 19
+    },
+    {
+      "entityId": "Q439299",
+      "name": "北京古观象台",
+      "coordinates": [
+        116.428055555,
+        39.906111111
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 19
+    },
+    {
+      "entityId": "Q1064580",
+      "name": "北京孔庙",
+      "coordinates": [
+        116.408299,
+        39.945183
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 18
+    },
+    {
+      "entityId": "Q680679",
+      "name": "月坛",
+      "coordinates": [
+        116.346005,
+        39.915867
+      ],
+      "kind": "庙",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 17
+    },
+    {
+      "entityId": "Q964720",
+      "name": "日坛",
+      "coordinates": [
+        116.438111111,
+        39.914416666
+      ],
+      "kind": "庙",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 17
+    },
+    {
+      "entityId": "Q2741116",
+      "name": "北京鼓楼和钟楼",
+      "coordinates": [
+        116.38963611,
+        39.94018889
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 17
+    },
+    {
+      "entityId": "Q2666344",
+      "name": "恭王府",
+      "coordinates": [
+        116.379862,
+        39.936636
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 16
+    },
+    {
+      "entityId": "Q1200624",
+      "name": "德胜门",
+      "coordinates": [
+        116.373367498,
+        39.948464803
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": "北京城门之一",
+      "sitelinks": 16
+    },
+    {
+      "entityId": "Q2287033",
+      "name": "司马台长城",
+      "coordinates": [
+        117.281756,
+        40.659139
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 14
+    },
+    {
+      "entityId": "Q838166",
+      "name": "八宝山革命公墓",
+      "coordinates": [
+        116.235963888,
+        39.907736111
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 14
+    },
+    {
+      "entityId": "Q1815062",
+      "name": "潭柘寺",
+      "coordinates": [
+        116.02416667,
+        39.90416667
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 13
+    },
+    {
+      "entityId": "Q1536965",
+      "name": "广济寺",
+      "coordinates": [
+        116.365833333,
+        39.923611111
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 13
+    },
+    {
+      "entityId": "Q1242684",
+      "name": "大钟寺",
+      "coordinates": [
+        116.33196,
+        39.96783
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 13
+    },
+    {
+      "entityId": "Q1538571",
+      "name": "宛平城",
+      "coordinates": [
+        116.22,
+        39.85
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [
+        "国家级抗战纪念设施、遗址名录"
+      ],
+      "description": null,
+      "sitelinks": 12
+    },
+    {
+      "entityId": "Q1688939",
+      "name": "戒台寺",
+      "coordinates": [
+        116.080246,
+        39.868884
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 12
+    },
+    {
+      "entityId": "Q1120716",
+      "name": "碧云寺",
+      "coordinates": [
+        116.185851149,
+        39.99600589
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 12
+    },
+    {
+      "entityId": "Q718582",
+      "name": "北京国子监",
+      "coordinates": [
+        116.407,
+        39.9455
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 12
+    },
+    {
+      "entityId": "Q2063448",
+      "name": "万寿寺",
+      "coordinates": [
+        116.305226,
+        39.945282
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 12
+    },
+    {
+      "entityId": "Q846592",
+      "name": "中国古动物馆",
+      "coordinates": [
+        116.32777778,
+        39.93625
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 11
+    },
+    {
+      "entityId": "Q197781",
+      "name": "智化寺",
+      "coordinates": [
+        116.425833333,
+        39.916111111
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 11
+    },
+    {
+      "entityId": "Q2562938",
+      "name": "慈寿寺塔",
+      "coordinates": [
+        116.289305555,
+        39.926805555
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 10
+    },
+    {
+      "entityId": "Q814721",
+      "name": "北京东岳庙",
+      "coordinates": [
+        116.437777777,
+        39.923611111
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 10
+    },
+    {
+      "entityId": "Q1157508",
+      "name": "大慧寺",
+      "coordinates": [
+        116.326666666,
+        39.952222222
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 10
+    },
+    {
+      "entityId": "Q250002",
+      "name": "大觉寺",
+      "coordinates": [
+        116.099166666,
+        40.051111111
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 10
+    },
+    {
+      "entityId": "Q2592536",
+      "name": "居庸关云台",
+      "coordinates": [
+        116.068,
+        40.289
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 10
+    },
+    {
+      "entityId": "Q341718",
+      "name": "先农坛",
+      "coordinates": [
+        116.386227868,
+        39.876847036
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 9
+    },
+    {
+      "entityId": "Q605463",
+      "name": "尤伦斯当代艺术中心",
+      "coordinates": [
+        116.488,
+        39.9891
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 9
+    },
+    {
+      "entityId": "Q1126265",
+      "name": "北京市规划展览馆",
+      "coordinates": [
+        116.39503,
+        39.898416
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 9
+    },
+    {
+      "entityId": "Q4578286",
+      "name": "滕公栅栏",
+      "coordinates": [
+        116.3399,
+        39.93016
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 9
+    },
+    {
+      "entityId": "Q2436168",
+      "name": "长椿寺",
+      "coordinates": [
+        116.358055555,
+        39.891388888
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 9
+    },
+    {
+      "entityId": "Q1544107",
+      "name": "十方普觉寺",
+      "coordinates": [
+        116.201111111,
+        40.005
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": "北京的佛教寺庙",
+      "sitelinks": 9
+    },
+    {
+      "entityId": "Q1392042",
+      "name": "法海寺",
+      "coordinates": [
+        116.1533,
+        39.9401
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 9
+    },
+    {
+      "entityId": "Q1361047",
+      "name": "北京社稷坛",
+      "coordinates": [
+        116.38861111,
+        39.91041667
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 9
+    },
+    {
+      "entityId": "Q1069870",
+      "name": "承恩寺",
+      "coordinates": [
+        116.158599,
+        39.934205
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 8
+    },
+    {
+      "entityId": "Q746736",
+      "name": "柏林寺",
+      "coordinates": [
+        116.413733333,
+        39.945013888
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 8
+    },
+    {
+      "entityId": "Q17010215",
+      "name": "北京明城墙遗址公园",
+      "coordinates": [
+        116.42914,
+        39.90014
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 7
+    },
+    {
+      "entityId": "Q2360268",
+      "name": "十字寺遗址",
+      "coordinates": [
+        115.901666666,
+        39.743055555
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": "中国北京市房山区的教堂遗址",
+      "sitelinks": 7
+    },
+    {
+      "entityId": "Q21042913",
+      "name": "京杭大运河",
+      "coordinates": [
+        120.580277777,
+        31.276111111
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": "大运线干线",
+      "sitelinks": 7
+    },
+    {
+      "entityId": "Q10937871",
+      "name": "大葆台汉墓",
+      "coordinates": [
+        116.291,
+        39.805
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 6
+    },
+    {
+      "entityId": "Q107292018",
+      "name": "中国共产党历史展览馆",
+      "coordinates": [
+        116.39284,
+        40.00244
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 6
+    },
+    {
+      "entityId": "Q1740592",
+      "name": "琉璃河遗址",
+      "coordinates": [
+        116.05,
+        39.6153
+      ],
+      "kind": "考古遗址",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 6
+    },
+    {
+      "entityId": "Q15908686",
+      "name": "元大都城垣遗址公园",
+      "coordinates": [
+        116.352579,
+        39.974082
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 6
+    },
+    {
+      "entityId": "Q822338",
+      "name": "团城演武厅",
+      "coordinates": [
+        116.20305556,
+        39.98388889
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 6
+    },
+    {
+      "entityId": "Q4165410",
+      "name": "北京宋庆龄故居",
+      "coordinates": [
+        116.376878,
+        39.944318
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 6
+    },
+    {
+      "entityId": "Q2680493",
+      "name": "辽金城垣博物馆",
+      "coordinates": [
+        116.35263889,
+        39.86138889
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 6
+    },
+    {
+      "entityId": "Q1689587",
+      "name": "景泰陵",
+      "coordinates": [
+        116.23619444,
+        40.00227778
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 6
+    },
+    {
+      "entityId": "Q10883162",
+      "name": "京张铁路",
+      "coordinates": [
+        116.12288,
+        40.23789
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 6
+    },
+    {
+      "entityId": "Q950677",
+      "name": "西藏文化博物馆",
+      "coordinates": [
+        116.408193,
+        39.987925
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 5
+    },
+    {
+      "entityId": "Q10902402",
+      "name": "北京航空航天博物馆",
+      "coordinates": [
+        116.3445,
+        39.98082
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 5
+    },
+    {
+      "entityId": "Q4881160",
+      "name": "北京鲁迅博物馆",
+      "coordinates": [
+        116.35234,
+        39.92445
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 5
+    },
+    {
+      "entityId": "Q2067818",
+      "name": "北京湖广会馆",
+      "coordinates": [
+        116.377684,
+        39.887477
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 5
+    },
+    {
+      "entityId": "Q7243867",
+      "name": "醇亲王府",
+      "coordinates": [
+        116.378597,
+        39.943241
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 5
+    },
+    {
+      "entityId": "Q22083356",
+      "name": "天宁寺塔",
+      "coordinates": [
+        116.33994444,
+        39.89372222
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 5
+    },
+    {
+      "entityId": "Q7263389",
+      "name": "东交民巷天主堂",
+      "coordinates": [
+        116.40586,
+        39.90142
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 5
+    },
+    {
+      "entityId": "Q807062",
+      "name": "大报国慈仁寺",
+      "coordinates": [
+        116.353369,
+        39.889488
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 5
+    },
+    {
+      "entityId": "Q751648",
+      "name": "亚斯立堂",
+      "coordinates": [
+        116.41416667,
+        39.90138889
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 5
+    },
+    {
+      "entityId": "Q10902406",
+      "name": "北京茅盾故居",
+      "coordinates": [
+        116.3983611,
+        39.93722222
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q5099673",
+      "name": "中华民族园",
+      "coordinates": [
+        116.39027778,
+        39.98388889
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q4165212",
+      "name": "北京梅兰芳故居",
+      "coordinates": [
+        116.373177777,
+        39.934169444
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q7124400",
+      "name": "万松老人塔",
+      "coordinates": [
+        116.36686563,
+        39.92111385
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q16928682",
+      "name": "北京汽车博物馆",
+      "coordinates": [
+        116.29617,
+        39.82752
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q1823623",
+      "name": "历代帝王庙",
+      "coordinates": [
+        116.36125,
+        39.92361111
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q4165193",
+      "name": "郭沫若故居",
+      "coordinates": [
+        116.3832,
+        39.933212
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": "北京建筑",
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q10872266",
+      "name": "中华圣公会救主堂",
+      "coordinates": [
+        116.36203,
+        39.90079
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q2067824",
+      "name": "普度寺",
+      "coordinates": [
+        116.39846111,
+        39.91203333
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q1621028",
+      "name": "北京大学红楼",
+      "coordinates": [
+        116.39916667,
+        39.92333333
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q15933492",
+      "name": "静明园",
+      "coordinates": [
+        116.24268,
+        39.99244
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q10949821",
+      "name": "宣仁庙",
+      "coordinates": [
+        116.396858,
+        39.921127
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q4306266",
+      "name": "中国妇女儿童博物馆",
+      "coordinates": [
+        116.41729,
+        39.90909
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q10874154",
+      "name": "中国钱币博物馆",
+      "coordinates": [
+        116.38875,
+        39.90075
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q10926010",
+      "name": "国家动物博物馆",
+      "coordinates": [
+        116.375,
+        40.00111111
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q15931190",
+      "name": "程砚秋故居",
+      "coordinates": [
+        116.3618611,
+        39.92655556
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q4803550",
+      "name": "北京都城隍庙",
+      "coordinates": [
+        116.353862,
+        39.909067
+      ],
+      "kind": "庙",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q65171962",
+      "name": "中国民航博物馆",
+      "coordinates": [
+        116.53225,
+        40.01677
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q28418208",
+      "name": "中国华侨历史博物馆",
+      "coordinates": [
+        116.418885,
+        39.941542
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q2603421",
+      "name": "万佛堂、孔水洞石刻及塔",
+      "coordinates": [
+        115.98166667,
+        39.78916667
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q4165201",
+      "name": "李大钊旧居",
+      "coordinates": [
+        116.359832,
+        39.903346
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q1157184",
+      "name": "大高玄殿",
+      "coordinates": [
+        116.386714,
+        39.922886
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q10902144",
+      "name": "北京城墙",
+      "coordinates": [
+        116.42088,
+        39.89979
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": "中国史上最后两代王朝明朝和清朝都城的城墙",
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q10902072",
+      "name": "北京国会旧址",
+      "coordinates": [
+        116.3656,
+        39.89894
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q1632845",
+      "name": "皇史宬",
+      "coordinates": [
+        116.397522,
+        39.908428
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q15222968",
+      "name": "良乡多宝佛塔",
+      "coordinates": [
+        116.148000774,
+        39.733362281
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q2600397",
+      "name": "银山塔林",
+      "coordinates": [
+        116.32111111,
+        40.32166667
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q15916904",
+      "name": "袁崇焕纪念馆",
+      "coordinates": [
+        116.43173,
+        39.8936
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q10873736",
+      "name": "中国工艺美术馆",
+      "coordinates": [
+        116.39124,
+        40.00238
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q15921471",
+      "name": "工美大厦",
+      "coordinates": [
+        116.40582,
+        39.90948
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q11058114",
+      "name": "巩华城",
+      "coordinates": [
+        116.2791107,
+        40.1238846
+      ],
+      "kind": "城堡",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q18651572",
+      "name": "保利艺术博物馆",
+      "coordinates": [
+        116.429438,
+        39.9332369
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q15918892",
+      "name": "田义墓",
+      "coordinates": [
+        116.158298,
+        39.934779
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q10902396",
+      "name": "北京老舍故居",
+      "coordinates": [
+        116.408362,
+        39.918643
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q4165228",
+      "name": "齐白石故居 (北京)",
+      "coordinates": [
+        116.364267,
+        39.914496
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q16929051",
+      "name": "顺天府学",
+      "coordinates": [
+        116.403653,
+        39.934452
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q15929487",
+      "name": "京报馆",
+      "coordinates": [
+        116.374291,
+        39.889672
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q15928838",
+      "name": "北京老爷车博物馆",
+      "coordinates": [
+        116.67236,
+        40.2982
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 2
+    }
+  ],
+  "relics": [
+    {
+      "entityId": "Q4578286",
+      "name": "滕公栅栏",
+      "coordinates": [
+        116.3399,
+        39.93016
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 9
+    },
+    {
+      "entityId": "Q220083",
+      "name": "北京动物园",
+      "coordinates": [
+        116.333333333,
+        39.938611111
+      ],
+      "inceptionYear": 1906,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 30
+    },
+    {
+      "entityId": "Q2603421",
+      "name": "万佛堂、孔水洞石刻及塔",
+      "coordinates": [
+        115.98166667,
+        39.78916667
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q2067818",
+      "name": "北京湖广会馆",
+      "coordinates": [
+        116.377684,
+        39.887477
+      ],
+      "inceptionYear": 1807,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 5
+    },
+    {
+      "entityId": "Q133274466",
+      "name": "大栅栏商业建筑",
+      "coordinates": [
+        116.39084,
+        39.89464
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q2360268",
+      "name": "十字寺遗址",
+      "coordinates": [
+        115.901666666,
+        39.743055555
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": "中国北京市房山区的教堂遗址",
+      "sitelinks": 7
+    },
+    {
+      "entityId": "Q133650",
+      "name": "北海公园",
+      "coordinates": [
+        116.383055555,
+        39.924444444
+      ],
+      "inceptionYear": 1150,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 30
+    },
+    {
+      "entityId": "Q15908686",
+      "name": "元大都城垣遗址公园",
+      "coordinates": [
+        116.352579,
+        39.974082
+      ],
+      "inceptionYear": 1988,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 6
+    },
+    {
+      "entityId": "Q12501",
+      "name": "长城",
+      "coordinates": [
+        116.564444444,
+        40.431388888
+      ],
+      "inceptionYear": -700,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": "中国古代的一系列边界防御工事",
+      "sitelinks": 195
+    },
+    {
+      "entityId": "Q4165212",
+      "name": "北京梅兰芳故居",
+      "coordinates": [
+        116.373177777,
+        39.934169444
+      ],
+      "inceptionYear": 1986,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q2032749",
+      "name": "西什库天主堂",
+      "coordinates": [
+        116.3725,
+        39.923888888
+      ],
+      "inceptionYear": 1880,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 20
+    },
+    {
+      "entityId": "Q1399104",
+      "name": "法源寺",
+      "coordinates": [
+        116.363611111,
+        39.883333333
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 20
+    },
+    {
+      "entityId": "Q1823623",
+      "name": "历代帝王庙",
+      "coordinates": [
+        116.36125,
+        39.92361111
+      ],
+      "inceptionYear": 1530,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q1740592",
+      "name": "琉璃河遗址",
+      "coordinates": [
+        116.05,
+        39.6153
+      ],
+      "inceptionYear": 1995,
+      "museumOrSite": null,
+      "location": "北京市",
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 6
+    },
+    {
+      "entityId": "Q133277896",
+      "name": "京师女子师范学堂旧址",
+      "coordinates": [
+        116.36507,
+        39.90288
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q680679",
+      "name": "月坛",
+      "coordinates": [
+        116.346005,
+        39.915867
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 17
+    },
+    {
+      "entityId": "Q2287033",
+      "name": "司马台长城",
+      "coordinates": [
+        117.281756,
+        40.659139
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 14
+    },
+    {
+      "entityId": "Q11078493",
+      "name": "摩诃庵",
+      "coordinates": [
+        116.29382,
+        39.92574
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q197889",
+      "name": "中南海",
+      "coordinates": [
+        116.380555555,
+        39.911388888
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": "中共中央和中央人民政府（国务院）所在地",
+      "sitelinks": 39
+    },
+    {
+      "entityId": "Q123099895",
+      "name": "祥义号旧址门面",
+      "coordinates": [
+        116.391081111,
+        39.894661944
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q4165201",
+      "name": "李大钊旧居",
+      "coordinates": [
+        116.359832,
+        39.903346
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q7243867",
+      "name": "醇亲王府",
+      "coordinates": [
+        116.378597,
+        39.943241
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 5
+    },
+    {
+      "entityId": "Q15905330",
+      "name": "灵岳寺",
+      "coordinates": [
+        115.67055556,
+        39.99833333
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q133275588",
+      "name": "未名湖燕园建筑",
+      "coordinates": [
+        116.2986,
+        39.9933
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q603256",
+      "name": "牛街礼拜寺",
+      "coordinates": [
+        116.358055555,
+        39.884444444
+      ],
+      "inceptionYear": 1442,
+      "museumOrSite": null,
+      "location": "牛街",
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 34
+    },
+    {
+      "entityId": "Q1157184",
+      "name": "大高玄殿",
+      "coordinates": [
+        116.386714,
+        39.922886
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q822338",
+      "name": "团城演武厅",
+      "coordinates": [
+        116.20305556,
+        39.98388889
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": "健锐营",
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 6
+    },
+    {
+      "entityId": "Q1188864",
+      "name": "宣武门天主堂",
+      "coordinates": [
+        116.369291666,
+        39.899463888
+      ],
+      "inceptionYear": 1904,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 22
+    },
+    {
+      "entityId": "Q7124400",
+      "name": "万松老人塔",
+      "coordinates": [
+        116.36686563,
+        39.92111385
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q16928748",
+      "name": "清华大学早期建筑",
+      "coordinates": [
+        116.3184,
+        40.00221
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q2666344",
+      "name": "恭王府",
+      "coordinates": [
+        116.379862,
+        39.936636
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 16
+    },
+    {
+      "entityId": "Q4165410",
+      "name": "北京宋庆龄故居",
+      "coordinates": [
+        116.376878,
+        39.944318
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 6
+    },
+    {
+      "entityId": "Q4165193",
+      "name": "郭沫若故居",
+      "coordinates": [
+        116.3832,
+        39.933212
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": "北京建筑",
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q341718",
+      "name": "先农坛",
+      "coordinates": [
+        116.386227868,
+        39.876847036
+      ],
+      "inceptionYear": 1420,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 9
+    },
+    {
+      "entityId": "Q10926176",
+      "name": "国立蒙藏学校旧址",
+      "coordinates": [
+        116.368333333,
+        39.908611111
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q226089",
+      "name": "关岳庙",
+      "coordinates": [
+        116.379535,
+        39.945186
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q133276850",
+      "name": "爨底下村古建筑群",
+      "coordinates": [
+        115.63838,
+        39.99702
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q804054",
+      "name": "白云观",
+      "coordinates": [
+        116.338,
+        39.8989
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 19
+    },
+    {
+      "entityId": "Q2436168",
+      "name": "长椿寺",
+      "coordinates": [
+        116.358055555,
+        39.891388888
+      ],
+      "inceptionYear": 1592,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 9
+    },
+    {
+      "entityId": "Q133307009",
+      "name": "西交民巷近代银行建筑群",
+      "coordinates": [
+        116.3887,
+        39.9006
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q18119306",
+      "name": "醇亲王墓",
+      "coordinates": [
+        116.07889358,
+        40.081058669
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q1688939",
+      "name": "戒台寺",
+      "coordinates": [
+        116.080246,
+        39.868884
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 12
+    },
+    {
+      "entityId": "Q123099893",
+      "name": "谦祥益旧址门面",
+      "coordinates": [
+        116.390146944,
+        39.896196111
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q123099897",
+      "name": "劝业场旧址",
+      "coordinates": [
+        116.390146944,
+        39.896196111
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q734499",
+      "name": "景山公园",
+      "coordinates": [
+        116.390555555,
+        39.923611111
+      ],
+      "inceptionYear": 1928,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 31
+    },
+    {
+      "entityId": "Q1299365",
+      "name": "国民政府财政部印刷局旧址",
+      "coordinates": [
+        116.35111111,
+        39.87444444
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q4132",
+      "name": "颐和园",
+      "coordinates": [
+        116.2689,
+        39.9975
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": "北京皇家园林",
+      "sitelinks": 62
+    },
+    {
+      "entityId": "Q10902929",
+      "name": "中国国家图书馆古籍馆",
+      "coordinates": [
+        116.379052,
+        39.922141
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q499552",
+      "name": "周口店遗址",
+      "coordinates": [
+        115.92483,
+        39.68896
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 45
+    },
+    {
+      "entityId": "Q15955556",
+      "name": "辛亥滦州起义纪念园",
+      "coordinates": [
+        116.15916667,
+        40.04916667
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q24062403",
+      "name": "真觉寺金刚宝座",
+      "coordinates": [
+        116.32423,
+        39.94362
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q133453157",
+      "name": "房山云居寺塔及石经",
+      "coordinates": [
+        115.7689,
+        39.60828
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q10902142",
+      "name": "北京城东南角楼",
+      "coordinates": [
+        116.42918,
+        39.90008
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q15904021",
+      "name": "琉璃河大桥",
+      "coordinates": [
+        116.029031,
+        39.604026
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q1069870",
+      "name": "承恩寺",
+      "coordinates": [
+        116.158599,
+        39.934205
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 8
+    },
+    {
+      "entityId": "Q133466164",
+      "name": "原子能“一堆一器”旧址",
+      "coordinates": [
+        116.03548,
+        39.74442
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q15928669",
+      "name": "盛新中学与佑贞女中旧址",
+      "coordinates": [
+        116.37983,
+        39.93116
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q123100201",
+      "name": "富育女校",
+      "coordinates": [
+        116.641674,
+        39.899479
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q15926589",
+      "name": "上宅文化遗址",
+      "coordinates": [
+        117.2959,
+        40.18606
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q10943306",
+      "name": "姚广孝墓塔",
+      "coordinates": [
+        116.07966,
+        39.8238
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q10902144",
+      "name": "北京城墙",
+      "coordinates": [
+        116.42088,
+        39.89979
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": "中国史上最后两代王朝明朝和清朝都城的城墙",
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q2145657",
+      "name": "崇礼住宅",
+      "coordinates": [
+        116.413312,
+        39.92918
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q133465461",
+      "name": "金中都水关遗址",
+      "coordinates": [
+        116.35248,
+        39.86138
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q10872266",
+      "name": "中华圣公会救主堂",
+      "coordinates": [
+        116.36203,
+        39.90079
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q22070243",
+      "name": "妙应寺白塔",
+      "coordinates": [
+        116.35706,
+        39.92424
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q692723",
+      "name": "雍和宫",
+      "coordinates": [
+        116.410916666,
+        39.947086111
+      ],
+      "inceptionYear": 1694,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 26
+    },
+    {
+      "entityId": "Q10902064",
+      "name": "北京可园",
+      "coordinates": [
+        116.395388,
+        39.934916
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q1815062",
+      "name": "潭柘寺",
+      "coordinates": [
+        116.02416667,
+        39.90416667
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 13
+    },
+    {
+      "entityId": "Q10902206",
+      "name": "北京安徽会馆",
+      "coordinates": [
+        116.376659,
+        39.89236
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q15909506",
+      "name": "北京大学地质学馆旧址",
+      "coordinates": [
+        116.39715,
+        39.92428
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q22083356",
+      "name": "天宁寺塔",
+      "coordinates": [
+        116.33994444,
+        39.89372222
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 5
+    },
+    {
+      "entityId": "Q15909219",
+      "name": "克勤郡王府",
+      "coordinates": [
+        116.363018888,
+        39.902908055
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q15930740",
+      "name": "清陆军部和海军部旧址",
+      "coordinates": [
+        116.40861111,
+        39.93277778
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q4881160",
+      "name": "北京鲁迅博物馆",
+      "coordinates": [
+        116.35234,
+        39.92445
+      ],
+      "inceptionYear": 1956,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 5
+    },
+    {
+      "entityId": "Q1064185",
+      "name": "王府井天主堂",
+      "coordinates": [
+        116.405833333,
+        39.915833333
+      ],
+      "inceptionYear": 1904,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 23
+    },
+    {
+      "entityId": "Q15923548",
+      "name": "房山大白玉塘采石场遗址",
+      "coordinates": [
+        115.7875,
+        39.56985
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q83973",
+      "name": "天安门",
+      "coordinates": [
+        116.39122009,
+        39.90735412
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 44
+    },
+    {
+      "entityId": "Q10902072",
+      "name": "北京国会旧址",
+      "coordinates": [
+        116.3656,
+        39.89894
+      ],
+      "inceptionYear": 1913,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q1632845",
+      "name": "皇史宬",
+      "coordinates": [
+        116.397522,
+        39.908428
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q80290",
+      "name": "故宫",
+      "coordinates": [
+        116.390833333,
+        39.915833333
+      ],
+      "inceptionYear": 1420,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": "中国明清两个朝代二十四位皇帝的皇宫",
+      "sitelinks": 106
+    },
+    {
+      "entityId": "Q1544107",
+      "name": "十方普觉寺",
+      "coordinates": [
+        116.201111111,
+        40.005
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": "北京的佛教寺庙",
+      "sitelinks": 9
+    },
+    {
+      "entityId": "Q536955",
+      "name": "人民英雄纪念碑",
+      "coordinates": [
+        116.391666666,
+        39.903055555
+      ],
+      "inceptionYear": 1952,
+      "museumOrSite": null,
+      "location": "天安门广场",
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 27
+    },
+    {
+      "entityId": "Q2680493",
+      "name": "辽金城垣博物馆",
+      "coordinates": [
+        116.35263889,
+        39.86138889
+      ],
+      "inceptionYear": 1995,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 6
+    },
+    {
+      "entityId": "Q7263389",
+      "name": "东交民巷天主堂",
+      "coordinates": [
+        116.40586,
+        39.90142
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": "东交民巷",
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 5
+    },
+    {
+      "entityId": "Q117437112",
+      "name": "宋庆龄儿童科学技术馆",
+      "coordinates": [
+        116.312788,
+        39.911314
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q15926541",
+      "name": "通州近代学校建筑群",
+      "coordinates": [
+        116.64662,
+        39.89813
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q123100200",
+      "name": "路河中学",
+      "coordinates": [
+        116.646615,
+        39.898134
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q1120716",
+      "name": "碧云寺",
+      "coordinates": [
+        116.185851149,
+        39.99600589
+      ],
+      "inceptionYear": 1331,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 12
+    },
+    {
+      "entityId": "Q10944960",
+      "name": "孚王府",
+      "coordinates": [
+        116.4187,
+        39.923282
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q807062",
+      "name": "大报国慈仁寺",
+      "coordinates": [
+        116.353369,
+        39.889488
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 5
+    },
+    {
+      "entityId": "Q21587120",
+      "name": "景山",
+      "coordinates": [
+        116.39059,
+        39.92347
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": "景山公园",
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q133307014",
+      "name": "长辛店“二七”大罢工旧址",
+      "coordinates": [
+        116.20007,
+        39.8304
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q1536965",
+      "name": "广济寺",
+      "coordinates": [
+        116.365833333,
+        39.923611111
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 13
+    },
+    {
+      "entityId": "Q285141",
+      "name": "北京站",
+      "coordinates": [
+        116.421111111,
+        39.902222222
+      ],
+      "inceptionYear": 1901,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": "北京市东城区东便门西侧毛家湾胡同甲13号铁路车站（地铁站请参见Q10902386）",
+      "sitelinks": 31
+    },
+    {
+      "entityId": "Q1242684",
+      "name": "大钟寺",
+      "coordinates": [
+        116.33196,
+        39.96783
+      ],
+      "inceptionYear": 1733,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 13
+    },
+    {
+      "entityId": "Q197703",
+      "name": "正阳门",
+      "coordinates": [
+        116.39166667,
+        39.89925
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 23
+    },
+    {
+      "entityId": "Q21042913",
+      "name": "京杭大运河",
+      "coordinates": [
+        120.580277777,
+        31.276111111
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": "大运线干线",
+      "sitelinks": 7
+    },
+    {
+      "entityId": "Q2562938",
+      "name": "慈寿寺塔",
+      "coordinates": [
+        116.289305555,
+        39.926805555
+      ],
+      "inceptionYear": 1576,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 10
+    },
+    {
+      "entityId": "Q1200624",
+      "name": "德胜门",
+      "coordinates": [
+        116.373367498,
+        39.948464803
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": "北京城门之一",
+      "sitelinks": 16
+    },
+    {
+      "entityId": "Q123099892",
+      "name": "瑞蚨祥旧址门面",
+      "coordinates": [
+        116.391326944,
+        39.896636111
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q10902204",
+      "name": "北京孙中山行馆",
+      "coordinates": [
+        116.4047,
+        39.9325
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q2067824",
+      "name": "普度寺",
+      "coordinates": [
+        116.39846111,
+        39.91203333
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q18110997",
+      "name": "双清别墅",
+      "coordinates": [
+        116.188186,
+        39.985431
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q15222968",
+      "name": "良乡多宝佛塔",
+      "coordinates": [
+        116.148000774,
+        39.733362281
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q10883154",
+      "name": "京师大学堂分科大学旧址",
+      "coordinates": [
+        116.38786,
+        39.95839
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q123100202",
+      "name": "华美学校",
+      "coordinates": [
+        116.643192,
+        39.898685
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q41135",
+      "name": "明十三陵",
+      "coordinates": [
+        116.2175,
+        40.253333333
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": "明朝皇帝陵墓",
+      "sitelinks": 47
+    },
+    {
+      "entityId": "Q15911523",
+      "name": "中华圣经会北京分会会所",
+      "coordinates": [
+        116.41143,
+        39.91297
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q838166",
+      "name": "八宝山革命公墓",
+      "coordinates": [
+        116.235963888,
+        39.907736111
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 14
+    },
+    {
+      "entityId": "Q746736",
+      "name": "柏林寺",
+      "coordinates": [
+        116.413733333,
+        39.945013888
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 8
+    },
+    {
+      "entityId": "Q1689587",
+      "name": "景泰陵",
+      "coordinates": [
+        116.23619444,
+        40.00227778
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 6
+    },
+    {
+      "entityId": "Q814721",
+      "name": "北京东岳庙",
+      "coordinates": [
+        116.437777777,
+        39.923611111
+      ],
+      "inceptionYear": 1319,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 10
+    },
+    {
+      "entityId": "Q615178",
+      "name": "地坛",
+      "coordinates": [
+        116.40972222,
+        39.95138889
+      ],
+      "inceptionYear": 1530,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 21
+    },
+    {
+      "entityId": "Q751648",
+      "name": "亚斯立堂",
+      "coordinates": [
+        116.41416667,
+        39.90138889
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 5
+    },
+    {
+      "entityId": "Q964720",
+      "name": "日坛",
+      "coordinates": [
+        116.438111111,
+        39.914416666
+      ],
+      "inceptionYear": 1530,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 17
+    },
+    {
+      "entityId": "Q15913821",
+      "name": "通州燃灯塔",
+      "coordinates": [
+        116.65985,
+        39.91451
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q2600397",
+      "name": "银山塔林",
+      "coordinates": [
+        116.32111111,
+        40.32166667
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q1157508",
+      "name": "大慧寺",
+      "coordinates": [
+        116.326666666,
+        39.952222222
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 10
+    },
+    {
+      "entityId": "Q439299",
+      "name": "北京古观象台",
+      "coordinates": [
+        116.428055555,
+        39.906111111
+      ],
+      "inceptionYear": 1442,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 19
+    },
+    {
+      "entityId": "Q133445357",
+      "name": "清净化城塔",
+      "coordinates": [
+        116.384101932,
+        39.96369772
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q718582",
+      "name": "北京国子监",
+      "coordinates": [
+        116.407,
+        39.9455
+      ],
+      "inceptionYear": 1306,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 12
+    },
+    {
+      "entityId": "Q11090276",
+      "name": "智珠寺",
+      "coordinates": [
+        116.39725,
+        39.92677
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q15926617",
+      "name": "镇岗塔",
+      "coordinates": [
+        116.163611,
+        39.814222
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q15902624",
+      "name": "国家广播电视总局四九一台",
+      "coordinates": [
+        116.56994,
+        39.88946
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q1621028",
+      "name": "北京大学红楼",
+      "coordinates": [
+        116.39916667,
+        39.92333333
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q2063448",
+      "name": "万寿寺",
+      "coordinates": [
+        116.305226,
+        39.945282
+      ],
+      "inceptionYear": 1578,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 12
+    },
+    {
+      "entityId": "Q133277891",
+      "name": "协和医学院旧址",
+      "coordinates": [
+        116.40856,
+        39.90925
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q1060121",
+      "name": "卢沟桥",
+      "coordinates": [
+        116.21288611,
+        39.84903889
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": "丰台区",
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 28
+    },
+    {
+      "entityId": "Q1392042",
+      "name": "法海寺",
+      "coordinates": [
+        116.1533,
+        39.9401
+      ],
+      "inceptionYear": 1443,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 9
+    },
+    {
+      "entityId": "Q11079676",
+      "name": "文天祥祠",
+      "coordinates": [
+        116.403991666,
+        39.934302777
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q133275581",
+      "name": "东交民巷使馆建筑群",
+      "coordinates": [
+        116.39986,
+        39.90432
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": "东交民巷",
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q197781",
+      "name": "智化寺",
+      "coordinates": [
+        116.425833333,
+        39.916111111
+      ],
+      "inceptionYear": 1443,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 11
+    },
+    {
+      "entityId": "Q1361047",
+      "name": "北京社稷坛",
+      "coordinates": [
+        116.38861111,
+        39.91041667
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 9
+    },
+    {
+      "entityId": "Q250002",
+      "name": "大觉寺",
+      "coordinates": [
+        116.099166666,
+        40.051111111
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 10
+    },
+    {
+      "entityId": "Q2741116",
+      "name": "北京鼓楼和钟楼",
+      "coordinates": [
+        116.38963611,
+        39.94018889
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 17
+    },
+    {
+      "entityId": "Q15933492",
+      "name": "静明园",
+      "coordinates": [
+        116.24268,
+        39.99244
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q907894",
+      "name": "圆明园",
+      "coordinates": [
+        116.306793055,
+        40.012045
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 35
+    },
+    {
+      "entityId": "Q15916904",
+      "name": "袁崇焕纪念馆",
+      "coordinates": [
+        116.43173,
+        39.8936
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q798826",
+      "name": "八达岭",
+      "coordinates": [
+        116.00649,
+        40.35428
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 35
+    },
+    {
+      "entityId": "Q10883162",
+      "name": "京张铁路",
+      "coordinates": [
+        116.12288,
+        40.23789
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 6
+    },
+    {
+      "entityId": "Q1064580",
+      "name": "北京孔庙",
+      "coordinates": [
+        116.408299,
+        39.945183
+      ],
+      "inceptionYear": 1302,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 18
+    },
+    {
+      "entityId": "Q15928303",
+      "name": "北京焦庄户地道战遗址纪念馆",
+      "coordinates": [
+        116.864039,
+        40.232531
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q125445",
+      "name": "天坛",
+      "coordinates": [
+        116.4066,
+        39.8822
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": "一个皇家祭坛",
+      "sitelinks": 70
+    },
+    {
+      "entityId": "Q2592536",
+      "name": "居庸关云台",
+      "coordinates": [
+        116.068,
+        40.289
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 10
+    },
+    {
+      "entityId": "Q1347866",
+      "name": "太庙",
+      "coordinates": [
+        116.39361111,
+        39.91
+      ],
+      "inceptionYear": 1420,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 22
+    }
+  ],
+  "figures": [
+    {
+      "entityId": "Q5816",
+      "name": "毛泽东",
+      "birthYear": 1893,
+      "deathYear": 1976,
+      "relationType": "sojourner",
+      "evidence": {
+        "property": "deathplace",
+        "value": "中南海"
+      },
+      "sitelinks": 233,
+      "description": "中国共产党第一任中央委员会主席丶中华人民共和国第一代最高领导人（1893–1976）"
+    },
+    {
+      "entityId": "Q8573",
+      "name": "孙中山",
+      "birthYear": 1866,
+      "deathYear": 1925,
+      "relationType": "sojourner",
+      "evidence": {
+        "property": "deathplace",
+        "value": "北京协和医院"
+      },
+      "sitelinks": 152,
+      "description": "近代中国政治人物、革命家，中国国民党总理，中华民国国父（1866—1925）"
+    },
+    {
+      "entityId": "Q47842",
+      "name": "慈禧太后",
+      "birthYear": 1835,
+      "deathYear": 1908,
+      "relationType": "sojourner",
+      "evidence": {
+        "property": "deathplace",
+        "value": "北京皇城"
+      },
+      "sitelinks": 101,
+      "description": null
+    },
+    {
+      "entityId": "Q185152",
+      "name": "溥仪",
+      "birthYear": 1906,
+      "deathYear": 1967,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "西城区"
+      },
+      "sitelinks": 85,
+      "description": "中国历史上最后一位皇帝，清朝最后一位皇帝"
+    },
+    {
+      "entityId": "Q17790",
+      "name": "康熙帝",
+      "birthYear": 1654,
+      "deathYear": 1722,
+      "relationType": "sojourner",
+      "evidence": {
+        "property": "deathplace",
+        "value": "圆明园"
+      },
+      "sitelinks": 64,
+      "description": "清朝第3位皇帝"
+    },
+    {
+      "entityId": "Q299710",
+      "name": "光绪帝",
+      "birthYear": 1871,
+      "deathYear": 1908,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "醇亲王府"
+      },
+      "sitelinks": 59,
+      "description": "清朝第10位皇帝"
+    },
+    {
+      "entityId": "Q310453",
+      "name": "顺治帝",
+      "birthYear": 1638,
+      "deathYear": 1661,
+      "relationType": "sojourner",
+      "evidence": {
+        "property": "deathplace",
+        "value": "养心殿"
+      },
+      "sitelinks": 52,
+      "description": "清朝第2位皇帝"
+    },
+    {
+      "entityId": "Q334452",
+      "name": "咸丰帝",
+      "birthYear": 1831,
+      "deathYear": 1861,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "圆明园"
+      },
+      "sitelinks": 49,
+      "description": "清朝第8位皇帝"
+    },
+    {
+      "entityId": "Q317839",
+      "name": "雍正帝",
+      "birthYear": 1678,
+      "deathYear": 1735,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "故宫"
+      },
+      "sitelinks": 48,
+      "description": "清朝第4位皇帝"
+    },
+    {
+      "entityId": "Q10069",
+      "name": "明思宗",
+      "birthYear": 1611,
+      "deathYear": 1644,
+      "relationType": "sojourner",
+      "evidence": {
+        "property": "deathplace",
+        "value": "景山公园"
+      },
+      "sitelinks": 48,
+      "description": "明朝最后一任皇帝"
+    },
+    {
+      "entityId": "Q334351",
+      "name": "道光帝",
+      "birthYear": 1782,
+      "deathYear": 1850,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "故宫"
+      },
+      "sitelinks": 46,
+      "description": "清朝第7位皇帝"
+    },
+    {
+      "entityId": "Q318811",
+      "name": "同治帝",
+      "birthYear": 1856,
+      "deathYear": 1875,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "故宫"
+      },
+      "sitelinks": 46,
+      "description": "清朝第9位皇帝"
+    },
+    {
+      "entityId": "Q333178",
+      "name": "嘉庆帝",
+      "birthYear": 1760,
+      "deathYear": 1820,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "圆明园"
+      },
+      "sitelinks": 45,
+      "description": "清朝皇帝 (1760-1820)"
+    },
+    {
+      "entityId": "Q591407",
+      "name": "周有光",
+      "birthYear": 1906,
+      "deathYear": 2017,
+      "relationType": "sojourner",
+      "evidence": {
+        "property": "deathplace",
+        "value": "北京协和医院"
+      },
+      "sitelinks": 44,
+      "description": null
+    },
+    {
+      "entityId": "Q9977",
+      "name": "明宣宗",
+      "birthYear": 1399,
+      "deathYear": 1435,
+      "relationType": "sojourner",
+      "evidence": {
+        "property": "deathplace",
+        "value": "北京皇城"
+      },
+      "sitelinks": 40,
+      "description": "明朝第五位皇帝 (1399-1435)"
+    },
+    {
+      "entityId": "Q333500",
+      "name": "钱学森",
+      "birthYear": 1911,
+      "deathYear": 2009,
+      "relationType": "sojourner",
+      "evidence": {
+        "property": "deathplace",
+        "value": "中国人民解放军总医院"
+      },
+      "sitelinks": 39,
+      "description": null
+    },
+    {
+      "entityId": "Q379836",
+      "name": "梁启超",
+      "birthYear": 1873,
+      "deathYear": 1929,
+      "relationType": "sojourner",
+      "evidence": {
+        "property": "deathplace",
+        "value": "北京协和医院"
+      },
+      "sitelinks": 35,
+      "description": "中国思想家和政治家"
+    },
+    {
+      "entityId": "Q467140",
+      "name": "林徽因",
+      "birthYear": 1904,
+      "deathYear": 1955,
+      "relationType": "sojourner",
+      "evidence": {
+        "property": "deathplace",
+        "value": "首都医科大学附属北京同仁医院"
+      },
+      "sitelinks": 31,
+      "description": null
+    },
+    {
+      "entityId": "Q715121",
+      "name": "杨绛",
+      "birthYear": 1911,
+      "deathYear": 2016,
+      "relationType": "sojourner",
+      "evidence": {
+        "property": "deathplace",
+        "value": "北京协和医院"
+      },
+      "sitelinks": 26,
+      "description": null
+    },
+    {
+      "entityId": "Q1150358",
+      "name": "慈安太后",
+      "birthYear": 1837,
+      "deathYear": 1881,
+      "relationType": "sojourner",
+      "evidence": {
+        "property": "deathplace",
+        "value": "故宫"
+      },
+      "sitelinks": 23,
+      "description": null
+    },
+    {
+      "entityId": "Q715553",
+      "name": "袁崇焕",
+      "birthYear": 1584,
+      "deathYear": 1630,
+      "relationType": "sojourner",
+      "evidence": {
+        "property": "deathplace",
+        "value": "西城区"
+      },
+      "sitelinks": 22,
+      "description": null
+    },
+    {
+      "entityId": "Q461124",
+      "name": "孝仪纯皇后",
+      "birthYear": 1727,
+      "deathYear": 1775,
+      "relationType": "sojourner",
+      "evidence": {
+        "property": "deathplace",
+        "value": "故宫"
+      },
+      "sitelinks": 20,
+      "description": null
+    }
+  ],
+  "failures": []
+}

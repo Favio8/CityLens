@@ -60,6 +60,19 @@ npm run seed              # 重新导入词典（幂等）
 
 构建期脚本的网络失败会以非 0 退出并保留旧产物，不会伪造快照；失败原因写入产物 `failures` 字段，并同步记录到验收文档。
 
+### 数据产物（构建期生成，已提交）
+
+| 产物 | 生成脚本 | 内容与用途 |
+|---|---|---|
+| `server/data/city_dictionary.json` | `build_city_dictionary.ts` | 342 座城市（334 地级 + 4 直辖市 + 4 文旅县级市白名单）、1480 条别名、WGS84 中心点、Wikidata QID |
+| `server/data/verified_poetry_corpus.json` | `build_poetry_corpus.ts` | chinese-poetry（MIT）全唐诗/宋词/元曲中与六座预置城市相关的 868 首作品（每城 150 首），繁转简仅用于比对，保留原文 |
+| `server/data/fact_snapshot/{cityId}.json` | `build_fact_snapshot.ts` | 六座预置城市的 Wikidata 景点/文物/人物事实快照 |
+| `server/data/relics_registry.json` | `build_relics_registry.ts` | 由快照汇总的 427 件文物名录（国保 / 禁止出境展览文物） |
+| `server/data/place_gazetteer.json` | `build_place_gazetteer.ts` | 862 条 WGS84 地名坐标（城市中心 + 景点 + 文物） |
+| `server/data/dynasties.json` | 人工整理 | 固定朝代年表（起止年份），待人工复核 |
+
+产物中的每条实体均带 `sourceRef`/`sourceRefs`；`server/data/*.db*` 为运行时数据库，不提交。
+
 ## 无 Key 开发模式
 
 项目在没有 LLM Key、没有天地图 Key 时也能完整开发与自测：

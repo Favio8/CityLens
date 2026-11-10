@@ -25,6 +25,7 @@
     "data:dictionary": "tsx scripts/build_city_dictionary.ts",
     "data:poetry": "tsx scripts/build_poetry_corpus.ts",
     "data:snapshot": "tsx scripts/build_fact_snapshot.ts",
+    "data:relics": "tsx scripts/build_relics_registry.ts",
     "data:gazetteer": "tsx scripts/build_place_gazetteer.ts"
   },
   "devDependencies": {

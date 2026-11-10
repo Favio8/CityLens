@@ -30,6 +30,7 @@ interface DictCity {
   cityId: string;
   standardName: string;
   province: string;
+  wikidataQid: string;
   adminLevel: 'municipality' | 'prefecture' | 'whitelist_county';
   countryCode: 'CN';
   pinyin: string;
@@ -390,7 +391,10 @@ async function main(): Promise<void> {
     failures.push(`地级行政区查询失败：${(error as Error).message}`);
   }
 
-  const byCode = new Map<string, { name: string; province: string; coord: [number, number]; en?: string }>();
+  const byCode = new Map<
+    string,
+    { name: string; province: string; coord: [number, number]; en?: string; qid: string }
+  >();
   for (const row of prefectureRows) {
     const codeRaw = row.code?.value;
     const coordRaw = row.coord?.value;
@@ -409,9 +413,11 @@ async function main(): Promise<void> {
         ? row.provinceLabel.value
         : PROVINCE_BY_CODE[compact.slice(0, 2)] ?? '待考';
     const en = row.enLabel?.value;
+    const qid = row.item?.value?.split('/').pop() ?? '';
+    if (!qid) continue;
     const existing = byCode.get(code);
     if (!existing || (!existing.en && en)) {
-      byCode.set(code, { name, province, coord, en });
+      byCode.set(code, { name, province, coord, en, qid });
     }
   }
 
@@ -430,7 +436,7 @@ async function main(): Promise<void> {
       if (!meta || !coordRaw) continue;
       const coord = parsePoint(coordRaw);
       if (!coord) continue;
-      byCode.set(meta.code, { name: meta.name, province: meta.province, coord });
+      byCode.set(meta.code, { name: meta.name, province: meta.province, coord, qid: meta.qid });
     }
   } catch (error) {
     failures.push(`直辖市查询失败：${(error as Error).message}`);
@@ -462,7 +468,12 @@ async function main(): Promise<void> {
         failures.push(`白名单城市「${item.name}」坐标解析失败`);
         continue;
       }
-      byCode.set(item.code, { name: item.name, province: item.province, coord });
+      byCode.set(item.code, {
+        name: item.name,
+        province: item.province,
+        coord,
+        qid: match?.item?.value?.split('/').pop() ?? '',
+      });
     } catch (error) {
       failures.push(`白名单城市「${item.name}」查询失败：${(error as Error).message}`);
     }
@@ -480,6 +491,7 @@ async function main(): Promise<void> {
       cityId: `CN-${code}`,
       standardName: info.name,
       province: info.province,
+      wikidataQid: info.qid,
       adminLevel,
       countryCode: 'CN',
       pinyin: py,

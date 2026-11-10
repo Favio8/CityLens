@@ -1,0 +1,2701 @@
+{
+  "cityId": "CN-610100",
+  "cityName": "西安",
+  "cityQid": "Q5826",
+  "center": [
+    108.942222222,
+    34.261111111
+  ],
+  "retrievedAt": "2026-11-10T06:54:58.509Z",
+  "sourceRef": {
+    "id": "S-WD-CN-610100",
+    "type": "wikidata",
+    "title": "Wikidata 事实快照 · 西安",
+    "url": "https://query.wikidata.org/sparql",
+    "retrievedAt": "2026-11-10T06:54:58.509Z"
+  },
+  "landmarks": [
+    {
+      "entityId": "Q6501000",
+      "name": "长安",
+      "coordinates": [
+        108.858333333,
+        34.308333333
+      ],
+      "kind": "考古遗址",
+      "heritageDesignations": [],
+      "description": "万国之城",
+      "sitelinks": 44
+    },
+    {
+      "entityId": "Q820842",
+      "name": "西安清真大寺",
+      "coordinates": [
+        108.936655788,
+        34.263385616
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 40
+    },
+    {
+      "entityId": "Q910180",
+      "name": "秦始皇陵",
+      "coordinates": [
+        109.25388889,
+        34.38166667
+      ],
+      "kind": "考古遗址",
+      "heritageDesignations": [
+        "世界遗产",
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 37
+    },
+    {
+      "entityId": "Q1047061",
+      "name": "大雁塔",
+      "coordinates": [
+        108.959335,
+        34.219769
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 37
+    },
+    {
+      "entityId": "Q806929",
+      "name": "半坡遗址",
+      "coordinates": [
+        109.0475,
+        34.27444444
+      ],
+      "kind": "考古遗址",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 26
+    },
+    {
+      "entityId": "Q1194818",
+      "name": "小雁塔",
+      "coordinates": [
+        108.937358333,
+        34.240802777
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 22
+    },
+    {
+      "entityId": "Q1334336",
+      "name": "西安城墙",
+      "coordinates": [
+        108.942226111,
+        34.253338888
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 21
+    },
+    {
+      "entityId": "Q1158530",
+      "name": "大明宫",
+      "coordinates": [
+        108.959444444,
+        34.291388888
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [
+        "全国重点文物保护单位",
+        "世界遗产组成部分"
+      ],
+      "description": null,
+      "sitelinks": 20
+    },
+    {
+      "entityId": "Q1073538",
+      "name": "阿房宫",
+      "coordinates": [
+        108.8089,
+        34.26327
+      ],
+      "kind": "考古遗址",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 20
+    },
+    {
+      "entityId": "Q3818368",
+      "name": "镐京",
+      "coordinates": [
+        108.75,
+        34.233333333
+      ],
+      "kind": "考古遗址",
+      "heritageDesignations": [],
+      "description": "西周都城",
+      "sitelinks": 15
+    },
+    {
+      "entityId": "Q641427",
+      "name": "西安碑林",
+      "coordinates": [
+        108.948201394,
+        34.255729214
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 15
+    },
+    {
+      "entityId": "Q1151087",
+      "name": "西安钟楼",
+      "coordinates": [
+        108.942377141,
+        34.261014529
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 15
+    },
+    {
+      "entityId": "Q2742315",
+      "name": "西安鼓楼",
+      "coordinates": [
+        108.93893069,
+        34.261793573
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 14
+    },
+    {
+      "entityId": "Q596605",
+      "name": "大秦寺塔",
+      "coordinates": [
+        108.307771,
+        34.058909
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 14
+    },
+    {
+      "entityId": "Q275515",
+      "name": "丰镐",
+      "coordinates": [
+        108.72,
+        34.21
+      ],
+      "kind": "考古遗址",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 13
+    },
+    {
+      "entityId": "Q1688891",
+      "name": "姜寨遗址",
+      "coordinates": [
+        109.207851111,
+        34.380713055
+      ],
+      "kind": "考古遗址",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 9
+    },
+    {
+      "entityId": "Q11110399",
+      "name": "栎阳城遗址",
+      "coordinates": [
+        109.313321,
+        34.642501
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 6
+    },
+    {
+      "entityId": "Q15911545",
+      "name": "漢霸陵",
+      "coordinates": [
+        109.11845,
+        34.23586
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q1179018",
+      "name": "大学习巷清真寺",
+      "coordinates": [
+        108.93111111,
+        34.26372222
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q17067049",
+      "name": "西汉帝陵",
+      "coordinates": [
+        108.94072,
+        34.44386
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q1723733",
+      "name": "康家遗址",
+      "coordinates": [
+        109.3736,
+        34.58389
+      ],
+      "kind": "考古遗址",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q11133390",
+      "name": "汉长安城",
+      "coordinates": [
+        108.85863,
+        34.30502
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q15920108",
+      "name": "西安美术馆",
+      "coordinates": [
+        108.95883,
+        34.21267
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q10893854",
+      "name": "关中民俗艺术博物院",
+      "coordinates": [
+        108.9701323,
+        34.0276194
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q135761213",
+      "name": "豐",
+      "coordinates": [
+        108.716666666,
+        34.216666666
+      ],
+      "kind": "考古遗址",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q48897367",
+      "name": "明秦王墓",
+      "coordinates": [
+        109.00861,
+        34.17028
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q18574469",
+      "name": "易俗社剧场",
+      "coordinates": [
+        108.944314964,
+        34.263064766
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q10905823",
+      "name": "华清宫遗址",
+      "coordinates": [
+        109.20744,
+        34.36531
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q133453160",
+      "name": "兴教寺塔",
+      "coordinates": [
+        109.03334,
+        34.09139
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q15934021",
+      "name": "灞桥遗址",
+      "coordinates": [
+        109.06611,
+        34.30712
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q122932113",
+      "name": "西安事变旧址",
+      "coordinates": [
+        108.96253,
+        34.2588
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q10923028",
+      "name": "唐长安城",
+      "coordinates": [
+        108.9,
+        34.266666666
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": "唐朝首都",
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q15907766",
+      "name": "革命公园",
+      "coordinates": [
+        108.954309762,
+        34.272970062
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q10289897",
+      "name": "建章宫",
+      "coordinates": [
+        108.83348,
+        34.30863
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": "西汉长安城宫殿",
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q20722985",
+      "name": "华严寺塔",
+      "coordinates": [
+        108.96694444,
+        34.13722222
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q15913387",
+      "name": "八路军西安办事处旧址",
+      "coordinates": [
+        108.94995,
+        34.27431
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q15941584",
+      "name": "西安城隍庙",
+      "coordinates": [
+        108.93270343,
+        34.263219865
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q10922649",
+      "name": "圜丘遗址",
+      "coordinates": [
+        108.94536,
+        34.20266
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q17032732",
+      "name": "漢杜陵",
+      "coordinates": [
+        109.022653084,
+        34.181035792
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q105906237",
+      "name": "陕西师范大学教育博物馆",
+      "coordinates": [
+        108.88691,
+        34.15821
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q18653506",
+      "name": "敬德塔",
+      "coordinates": [
+        108.72968,
+        33.97018
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q133306565",
+      "name": "蓝田吕氏家族墓地",
+      "coordinates": [
+        109.29758,
+        34.18905
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q10891925",
+      "name": "八云塔",
+      "coordinates": [
+        108.20666667,
+        34.16166667
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q133275810",
+      "name": "蓝田猿人遗址",
+      "coordinates": [
+        109.48892,
+        34.18503
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q133232739",
+      "name": "重阳宫祖庵碑林",
+      "coordinates": [
+        108.48974,
+        34.10968
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q15911291",
+      "name": "秦东陵",
+      "coordinates": [
+        109.16661,
+        34.33386
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q10870684",
+      "name": "东渭桥遗址",
+      "coordinates": [
+        109.11168,
+        34.43557
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q10893020",
+      "name": "公输堂",
+      "coordinates": [
+        108.5825,
+        34.20416667
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q112341919",
+      "name": "鱼化寨遗址",
+      "coordinates": [
+        108.85225,
+        34.24141
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q17009387",
+      "name": "香积寺善导塔",
+      "coordinates": [
+        108.88777778,
+        34.125
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q55718098",
+      "name": "昭慧塔",
+      "coordinates": [
+        109.09651,
+        34.52505
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q15935984",
+      "name": "长安圣寿寺塔",
+      "coordinates": [
+        108.95861053,
+        34.00749969
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q133312691",
+      "name": "江村大墓",
+      "coordinates": [
+        109.11101,
+        34.23809
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q117437150",
+      "name": "凤栖原西汉家族墓地",
+      "coordinates": [
+        108.95759,
+        34.1621
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q114136707",
+      "name": "杨官寨遗址",
+      "coordinates": [
+        109.01852,
+        34.46952
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q133275596",
+      "name": "丰镐遗址",
+      "coordinates": [
+        108.71362,
+        34.20501
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q133309540",
+      "name": "西安二龙塔",
+      "coordinates": [
+        109.03091,
+        34.01802
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q11174149",
+      "name": "鸠摩罗什舍利塔",
+      "coordinates": [
+        108.73944444,
+        34.01527778
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q10884319",
+      "name": "仙游寺法王塔",
+      "coordinates": [
+        108.19735,
+        34.05782
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q117437149",
+      "name": "西峪遗址",
+      "coordinates": [
+        108.04686,
+        34.16439
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q24838918",
+      "name": "薄太后陵",
+      "coordinates": [
+        109.09668,
+        34.22113
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q11130782",
+      "name": "水陆庵",
+      "coordinates": [
+        109.41166667,
+        34.13333333
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q113496106",
+      "name": "醴泉坊窑址",
+      "coordinates": [
+        108.902725,
+        34.257093
+      ],
+      "kind": "考古遗址",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q122931722",
+      "name": "秦始皇帝陵博物院",
+      "coordinates": [
+        109.27323,
+        34.38503
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q133232759",
+      "name": "兆伦铸钱遗址",
+      "coordinates": [
+        108.66266,
+        34.18368
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q133309359",
+      "name": "东马坊遗址",
+      "coordinates": [
+        108.70613,
+        34.26833
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q133309484",
+      "name": "葛牌镇红25军军部旧址",
+      "coordinates": [
+        109.50134,
+        33.91069
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q133309543",
+      "name": "户县化羊庙东岳献殿",
+      "coordinates": [
+        108.66615,
+        34.0105
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q133309360",
+      "name": "中渭桥遗址",
+      "coordinates": [
+        108.86933,
+        34.35436
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    }
+  ],
+  "relics": [
+    {
+      "entityId": "Q48897367",
+      "name": "明秦王墓",
+      "coordinates": [
+        109.00861,
+        34.17028
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q820842",
+      "name": "西安清真大寺",
+      "coordinates": [
+        108.936655788,
+        34.263385616
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 40
+    },
+    {
+      "entityId": "Q1194818",
+      "name": "小雁塔",
+      "coordinates": [
+        108.937358333,
+        34.240802777
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 22
+    },
+    {
+      "entityId": "Q18653506",
+      "name": "敬德塔",
+      "coordinates": [
+        108.72968,
+        33.97018
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q133306565",
+      "name": "蓝田吕氏家族墓地",
+      "coordinates": [
+        109.29758,
+        34.18905
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q10891925",
+      "name": "八云塔",
+      "coordinates": [
+        108.20666667,
+        34.16166667
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q910180",
+      "name": "秦始皇陵",
+      "coordinates": [
+        109.25388889,
+        34.38166667
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 37
+    },
+    {
+      "entityId": "Q1334336",
+      "name": "西安城墙",
+      "coordinates": [
+        108.942226111,
+        34.253338888
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 21
+    },
+    {
+      "entityId": "Q133232759",
+      "name": "兆伦铸钱遗址",
+      "coordinates": [
+        108.66266,
+        34.18368
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q133275810",
+      "name": "蓝田猿人遗址",
+      "coordinates": [
+        109.48892,
+        34.18503
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q133232739",
+      "name": "重阳宫祖庵碑林",
+      "coordinates": [
+        108.48974,
+        34.10968
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q15911291",
+      "name": "秦东陵",
+      "coordinates": [
+        109.16661,
+        34.33386
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q18574469",
+      "name": "易俗社剧场",
+      "coordinates": [
+        108.944314964,
+        34.263064766
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q10905823",
+      "name": "华清宫遗址",
+      "coordinates": [
+        109.20744,
+        34.36531
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q133309359",
+      "name": "东马坊遗址",
+      "coordinates": [
+        108.70613,
+        34.26833
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q15911545",
+      "name": "漢霸陵",
+      "coordinates": [
+        109.11845,
+        34.23586
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q10870684",
+      "name": "东渭桥遗址",
+      "coordinates": [
+        109.11168,
+        34.43557
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q641427",
+      "name": "西安碑林",
+      "coordinates": [
+        108.948201394,
+        34.255729214
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 15
+    },
+    {
+      "entityId": "Q2742315",
+      "name": "西安鼓楼",
+      "coordinates": [
+        108.93893069,
+        34.261793573
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 14
+    },
+    {
+      "entityId": "Q10893020",
+      "name": "公输堂",
+      "coordinates": [
+        108.5825,
+        34.20416667
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q112341919",
+      "name": "鱼化寨遗址",
+      "coordinates": [
+        108.85225,
+        34.24141
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q133453160",
+      "name": "兴教寺塔",
+      "coordinates": [
+        109.03334,
+        34.09139
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q1158530",
+      "name": "大明宫",
+      "coordinates": [
+        108.959444444,
+        34.291388888
+      ],
+      "inceptionYear": 2010,
+      "museumOrSite": null,
+      "location": "西安市",
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 20
+    },
+    {
+      "entityId": "Q806929",
+      "name": "半坡遗址",
+      "coordinates": [
+        109.0475,
+        34.27444444
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": "和田市",
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 26
+    },
+    {
+      "entityId": "Q17009387",
+      "name": "香积寺善导塔",
+      "coordinates": [
+        108.88777778,
+        34.125
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q55718098",
+      "name": "昭慧塔",
+      "coordinates": [
+        109.09651,
+        34.52505
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q15935984",
+      "name": "长安圣寿寺塔",
+      "coordinates": [
+        108.95861053,
+        34.00749969
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q15934021",
+      "name": "灞桥遗址",
+      "coordinates": [
+        109.06611,
+        34.30712
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q11110399",
+      "name": "栎阳城遗址",
+      "coordinates": [
+        109.313321,
+        34.642501
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 6
+    },
+    {
+      "entityId": "Q122932113",
+      "name": "西安事变旧址",
+      "coordinates": [
+        108.96253,
+        34.2588
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q1179018",
+      "name": "大学习巷清真寺",
+      "coordinates": [
+        108.93111111,
+        34.26372222
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q17067049",
+      "name": "西汉帝陵",
+      "coordinates": [
+        108.94072,
+        34.44386
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q133312691",
+      "name": "江村大墓",
+      "coordinates": [
+        109.11101,
+        34.23809
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q117437150",
+      "name": "凤栖原西汉家族墓地",
+      "coordinates": [
+        108.95759,
+        34.1621
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q1151087",
+      "name": "西安钟楼",
+      "coordinates": [
+        108.942377141,
+        34.261014529
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 15
+    },
+    {
+      "entityId": "Q10923028",
+      "name": "唐长安城",
+      "coordinates": [
+        108.9,
+        34.266666666
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": "唐朝首都",
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q114136707",
+      "name": "杨官寨遗址",
+      "coordinates": [
+        109.01852,
+        34.46952
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q133275596",
+      "name": "丰镐遗址",
+      "coordinates": [
+        108.71362,
+        34.20501
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q1073538",
+      "name": "阿房宫",
+      "coordinates": [
+        108.8089,
+        34.26327
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 20
+    },
+    {
+      "entityId": "Q15907766",
+      "name": "革命公园",
+      "coordinates": [
+        108.954309762,
+        34.272970062
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q133309540",
+      "name": "西安二龙塔",
+      "coordinates": [
+        109.03091,
+        34.01802
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q10289897",
+      "name": "建章宫",
+      "coordinates": [
+        108.83348,
+        34.30863
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": "西汉长安城宫殿",
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q20722985",
+      "name": "华严寺塔",
+      "coordinates": [
+        108.96694444,
+        34.13722222
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q11174149",
+      "name": "鸠摩罗什舍利塔",
+      "coordinates": [
+        108.73944444,
+        34.01527778
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q10884319",
+      "name": "仙游寺法王塔",
+      "coordinates": [
+        108.19735,
+        34.05782
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q117437149",
+      "name": "西峪遗址",
+      "coordinates": [
+        108.04686,
+        34.16439
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q1723733",
+      "name": "康家遗址",
+      "coordinates": [
+        109.3736,
+        34.58389
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q15913387",
+      "name": "八路军西安办事处旧址",
+      "coordinates": [
+        108.94995,
+        34.27431
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q133309484",
+      "name": "葛牌镇红25军军部旧址",
+      "coordinates": [
+        109.50134,
+        33.91069
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q24838918",
+      "name": "薄太后陵",
+      "coordinates": [
+        109.09668,
+        34.22113
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q596605",
+      "name": "大秦寺塔",
+      "coordinates": [
+        108.307771,
+        34.058909
+      ],
+      "inceptionYear": 601,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 14
+    },
+    {
+      "entityId": "Q11130782",
+      "name": "水陆庵",
+      "coordinates": [
+        109.41166667,
+        34.13333333
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q133309543",
+      "name": "户县化羊庙东岳献殿",
+      "coordinates": [
+        108.66615,
+        34.0105
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q1688891",
+      "name": "姜寨遗址",
+      "coordinates": [
+        109.207851111,
+        34.380713055
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 9
+    },
+    {
+      "entityId": "Q11133390",
+      "name": "汉长安城",
+      "coordinates": [
+        108.85863,
+        34.30502
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q15941584",
+      "name": "西安城隍庙",
+      "coordinates": [
+        108.93270343,
+        34.263219865
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q1047061",
+      "name": "大雁塔",
+      "coordinates": [
+        108.959335,
+        34.219769
+      ],
+      "inceptionYear": 648,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 37
+    },
+    {
+      "entityId": "Q133309360",
+      "name": "中渭桥遗址",
+      "coordinates": [
+        108.86933,
+        34.35436
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q10922649",
+      "name": "圜丘遗址",
+      "coordinates": [
+        108.94536,
+        34.20266
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q17032732",
+      "name": "漢杜陵",
+      "coordinates": [
+        109.022653084,
+        34.181035792
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    }
+  ],
+  "figures": [
+    {
+      "entityId": "Q7225",
+      "name": "汉武帝",
+      "birthYear": -155,
+      "deathYear": -86,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "长安"
+      },
+      "sitelinks": 72,
+      "description": "中国汉朝皇帝"
+    },
+    {
+      "entityId": "Q7210",
+      "name": "刘邦",
+      "birthYear": -255,
+      "deathYear": -194,
+      "relationType": "sojourner",
+      "evidence": {
+        "property": "deathplace",
+        "value": "长安"
+      },
+      "sitelinks": 71,
+      "description": "西汉开国皇帝"
+    },
+    {
+      "entityId": "Q318998",
+      "name": "韩愈",
+      "birthYear": 768,
+      "deathYear": 824,
+      "relationType": "sojourner",
+      "evidence": {
+        "property": "deathplace",
+        "value": "长安"
+      },
+      "sitelinks": 55,
+      "description": "唐代散文家，唐宋八大家之首。"
+    },
+    {
+      "entityId": "Q313605",
+      "name": "王维",
+      "birthYear": 699,
+      "deathYear": 761,
+      "relationType": "sojourner",
+      "evidence": {
+        "property": "deathplace",
+        "value": "长安"
+      },
+      "sitelinks": 54,
+      "description": "唐朝诗人、画家"
+    },
+    {
+      "entityId": "Q9700",
+      "name": "李渊",
+      "birthYear": 566,
+      "deathYear": 635,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "长安"
+      },
+      "sitelinks": 53,
+      "description": "唐朝开国皇帝"
+    },
+    {
+      "entityId": "Q335293",
+      "name": "鸠摩罗什",
+      "birthYear": 344,
+      "deathYear": 413,
+      "relationType": "sojourner",
+      "evidence": {
+        "property": "deathplace",
+        "value": "长安"
+      },
+      "sitelinks": 50,
+      "description": "汉传佛教着名比丘、译经师"
+    },
+    {
+      "entityId": "Q7250",
+      "name": "王莽",
+      "birthYear": -44,
+      "deathYear": 23,
+      "relationType": "sojourner",
+      "evidence": {
+        "property": "deathplace",
+        "value": "长安"
+      },
+      "sitelinks": 50,
+      "description": "新朝皇帝"
+    },
+    {
+      "entityId": "Q9746",
+      "name": "唐玄宗",
+      "birthYear": 685,
+      "deathYear": 762,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "长安"
+      },
+      "sitelinks": 47,
+      "description": "唐朝皇帝"
+    },
+    {
+      "entityId": "Q7418",
+      "name": "杨坚",
+      "birthYear": 541,
+      "deathYear": 604,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "长安"
+      },
+      "sitelinks": 43,
+      "description": "隋朝开国皇帝"
+    },
+    {
+      "entityId": "Q334095",
+      "name": "杜牧",
+      "birthYear": 803,
+      "deathYear": 852,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "长安"
+      },
+      "sitelinks": 39,
+      "description": null
+    },
+    {
+      "entityId": "Q7214",
+      "name": "汉惠帝",
+      "birthYear": -212,
+      "deathYear": -187,
+      "relationType": "sojourner",
+      "evidence": {
+        "property": "deathplace",
+        "value": "长安"
+      },
+      "sitelinks": 38,
+      "description": null
+    },
+    {
+      "entityId": "Q7419",
+      "name": "隋炀帝",
+      "birthYear": 569,
+      "deathYear": 618,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "长安"
+      },
+      "sitelinks": 37,
+      "description": "大隋政权的第二位皇帝"
+    },
+    {
+      "entityId": "Q337773",
+      "name": "柳宗元",
+      "birthYear": 773,
+      "deathYear": 819,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "长安"
+      },
+      "sitelinks": 37,
+      "description": null
+    },
+    {
+      "entityId": "Q7221",
+      "name": "汉文帝",
+      "birthYear": -202,
+      "deathYear": -156,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "长安"
+      },
+      "sitelinks": 36,
+      "description": "西汉皇帝"
+    },
+    {
+      "entityId": "Q9722",
+      "name": "唐睿宗",
+      "birthYear": 662,
+      "deathYear": 716,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "长安"
+      },
+      "sitelinks": 35,
+      "description": "唐朝皇帝"
+    },
+    {
+      "entityId": "Q7230",
+      "name": "汉宣帝",
+      "birthYear": -90,
+      "deathYear": -47,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "长安"
+      },
+      "sitelinks": 32,
+      "description": null
+    },
+    {
+      "entityId": "Q9717",
+      "name": "唐中宗",
+      "birthYear": 656,
+      "deathYear": 710,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "长安"
+      },
+      "sitelinks": 32,
+      "description": "唐朝皇帝"
+    },
+    {
+      "entityId": "Q7227",
+      "name": "汉昭帝",
+      "birthYear": -93,
+      "deathYear": -73,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "长安"
+      },
+      "sitelinks": 32,
+      "description": null
+    },
+    {
+      "entityId": "Q7224",
+      "name": "汉景帝",
+      "birthYear": -187,
+      "deathYear": -140,
+      "relationType": "sojourner",
+      "evidence": {
+        "property": "deathplace",
+        "value": "长安"
+      },
+      "sitelinks": 32,
+      "description": "中国汉朝皇帝"
+    },
+    {
+      "entityId": "Q334081",
+      "name": "董卓",
+      "birthYear": 138,
+      "deathYear": 192,
+      "relationType": "sojourner",
+      "evidence": {
+        "property": "deathplace",
+        "value": "长安"
+      },
+      "sitelinks": 31,
+      "description": null
+    },
+    {
+      "entityId": "Q9749",
+      "name": "唐肃宗",
+      "birthYear": 711,
+      "deathYear": 762,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "长安"
+      },
+      "sitelinks": 30,
+      "description": "唐朝皇帝"
+    },
+    {
+      "entityId": "Q7232",
+      "name": "汉元帝",
+      "birthYear": -74,
+      "deathYear": -32,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "长安"
+      },
+      "sitelinks": 30,
+      "description": null
+    },
+    {
+      "entityId": "Q457629",
+      "name": "义净",
+      "birthYear": 635,
+      "deathYear": 713,
+      "relationType": "sojourner",
+      "evidence": {
+        "property": "deathplace",
+        "value": "长安"
+      },
+      "sitelinks": 30,
+      "description": null
+    },
+    {
+      "entityId": "Q9755",
+      "name": "唐德宗",
+      "birthYear": 742,
+      "deathYear": 805,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "长安"
+      },
+      "sitelinks": 29,
+      "description": "唐朝皇帝"
+    },
+    {
+      "entityId": "Q9753",
+      "name": "唐代宗",
+      "birthYear": 727,
+      "deathYear": 779,
+      "relationType": "sojourner",
+      "evidence": {
+        "property": "deathplace",
+        "value": "长安区"
+      },
+      "sitelinks": 29,
+      "description": "唐朝皇帝"
+    },
+    {
+      "entityId": "Q9892",
+      "name": "唐哀帝",
+      "birthYear": 892,
+      "deathYear": 908,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "长安"
+      },
+      "sitelinks": 28,
+      "description": "唐朝末代皇帝"
+    },
+    {
+      "entityId": "Q7234",
+      "name": "汉成帝",
+      "birthYear": -50,
+      "deathYear": -6,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "长安"
+      },
+      "sitelinks": 28,
+      "description": null
+    },
+    {
+      "entityId": "Q574498",
+      "name": "韩信",
+      "birthYear": -230,
+      "deathYear": -195,
+      "relationType": "sojourner",
+      "evidence": {
+        "property": "deathplace",
+        "value": "长安"
+      },
+      "sitelinks": 28,
+      "description": null
+    },
+    {
+      "entityId": "Q9801",
+      "name": "唐武宗",
+      "birthYear": 814,
+      "deathYear": 846,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "长安"
+      },
+      "sitelinks": 27,
+      "description": "唐朝皇帝"
+    },
+    {
+      "entityId": "Q479788",
+      "name": "阿倍仲麻吕",
+      "birthYear": 698,
+      "deathYear": 770,
+      "relationType": "sojourner",
+      "evidence": {
+        "property": "deathplace",
+        "value": "唐长安城"
+      },
+      "sitelinks": 27,
+      "description": null
+    },
+    {
+      "entityId": "Q453449",
+      "name": "刘歆",
+      "birthYear": -49,
+      "deathYear": 23,
+      "relationType": "sojourner",
+      "evidence": {
+        "property": "deathplace",
+        "value": "长安"
+      },
+      "sitelinks": 27,
+      "description": null
+    },
+    {
+      "entityId": "Q9790",
+      "name": "唐文宗",
+      "birthYear": 809,
+      "deathYear": 840,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "长安"
+      },
+      "sitelinks": 26,
+      "description": "唐朝皇帝"
+    },
+    {
+      "entityId": "Q707702",
+      "name": "蔡邕",
+      "birthYear": 133,
+      "deathYear": 192,
+      "relationType": "sojourner",
+      "evidence": {
+        "property": "deathplace",
+        "value": "长安"
+      },
+      "sitelinks": 26,
+      "description": null
+    },
+    {
+      "entityId": "Q378356",
+      "name": "魏徵",
+      "birthYear": 580,
+      "deathYear": 643,
+      "relationType": "sojourner",
+      "evidence": {
+        "property": "deathplace",
+        "value": "唐长安城"
+      },
+      "sitelinks": 26,
+      "description": "隋末唐初政治人物"
+    },
+    {
+      "entityId": "Q9891",
+      "name": "唐昭宗",
+      "birthYear": 867,
+      "deathYear": 904,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "长安"
+      },
+      "sitelinks": 25,
+      "description": "唐朝皇帝"
+    },
+    {
+      "entityId": "Q301650",
+      "name": "贾谊",
+      "birthYear": -199,
+      "deathYear": -167,
+      "relationType": "sojourner",
+      "evidence": {
+        "property": "deathplace",
+        "value": "长安"
+      },
+      "sitelinks": 25,
+      "description": null
+    },
+    {
+      "entityId": "Q9889",
+      "name": "唐僖宗",
+      "birthYear": 862,
+      "deathYear": 888,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "长安"
+      },
+      "sitelinks": 24,
+      "description": "唐朝皇帝"
+    },
+    {
+      "entityId": "Q9763",
+      "name": "唐穆宗",
+      "birthYear": 795,
+      "deathYear": 824,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "长安"
+      },
+      "sitelinks": 24,
+      "description": "唐朝皇帝"
+    },
+    {
+      "entityId": "Q9776",
+      "name": "唐敬宗",
+      "birthYear": 809,
+      "deathYear": 827,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "长安"
+      },
+      "sitelinks": 23,
+      "description": "唐朝皇帝"
+    },
+    {
+      "entityId": "Q1267666",
+      "name": "薛涛",
+      "birthYear": 768,
+      "deathYear": 831,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "长安"
+      },
+      "sitelinks": 22,
+      "description": null
+    },
+    {
+      "entityId": "Q721435",
+      "name": "阎立本",
+      "birthYear": 600,
+      "deathYear": 673,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "长安"
+      },
+      "sitelinks": 22,
+      "description": null
+    },
+    {
+      "entityId": "Q9760",
+      "name": "唐顺宗",
+      "birthYear": 761,
+      "deathYear": 806,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "长安"
+      },
+      "sitelinks": 22,
+      "description": "唐朝皇帝"
+    },
+    {
+      "entityId": "Q710705",
+      "name": "一行",
+      "birthYear": 683,
+      "deathYear": 727,
+      "relationType": "sojourner",
+      "evidence": {
+        "property": "deathplace",
+        "value": "长安"
+      },
+      "sitelinks": 22,
+      "description": null
+    },
+    {
+      "entityId": "Q9825",
+      "name": "唐宣宗",
+      "birthYear": 810,
+      "deathYear": 859,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "大明宫"
+      },
+      "sitelinks": 21,
+      "description": "唐朝皇帝"
+    },
+    {
+      "entityId": "Q1363621",
+      "name": "不空",
+      "birthYear": 705,
+      "deathYear": 774,
+      "relationType": "sojourner",
+      "evidence": {
+        "property": "deathplace",
+        "value": "长安"
+      },
+      "sitelinks": 21,
+      "description": null
+    },
+    {
+      "entityId": "Q1368034",
+      "name": "萧何",
+      "birthYear": -256,
+      "deathYear": -192,
+      "relationType": "sojourner",
+      "evidence": {
+        "property": "deathplace",
+        "value": "长安"
+      },
+      "sitelinks": 21,
+      "description": null
+    },
+    {
+      "entityId": "Q758566",
+      "name": "颜真卿",
+      "birthYear": 709,
+      "deathYear": 785,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "长安"
+      },
+      "sitelinks": 20,
+      "description": "唐代政治家、书法家"
+    },
+    {
+      "entityId": "Q9886",
+      "name": "唐懿宗",
+      "birthYear": 833,
+      "deathYear": 873,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "长安"
+      },
+      "sitelinks": 20,
+      "description": "唐朝皇帝"
+    },
+    {
+      "entityId": "Q1285764",
+      "name": "上官婉儿",
+      "birthYear": 664,
+      "deathYear": 710,
+      "relationType": "sojourner",
+      "evidence": {
+        "property": "deathplace",
+        "value": "长安"
+      },
+      "sitelinks": 20,
+      "description": null
+    },
+    {
+      "entityId": "Q1021828",
+      "name": "韦应物",
+      "birthYear": 737,
+      "deathYear": 792,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "长安"
+      },
+      "sitelinks": 19,
+      "description": null
+    },
+    {
+      "entityId": "Q1196022",
+      "name": "吴道子",
+      "birthYear": 680,
+      "deathYear": 740,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "长安"
+      },
+      "sitelinks": 18,
+      "description": "唐代著名画家"
+    },
+    {
+      "entityId": "Q1290788",
+      "name": "鱼玄机",
+      "birthYear": 844,
+      "deathYear": 869,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "长安"
+      },
+      "sitelinks": 18,
+      "description": null
+    },
+    {
+      "entityId": "Q706438",
+      "name": "太平公主",
+      "birthYear": 665,
+      "deathYear": 713,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "长安"
+      },
+      "sitelinks": 17,
+      "description": "武则天之女，唐代女政治家"
+    },
+    {
+      "entityId": "Q2308422",
+      "name": "周昉",
+      "birthYear": 730,
+      "deathYear": 810,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "长安"
+      },
+      "sitelinks": 16,
+      "description": null
+    },
+    {
+      "entityId": "Q702166",
+      "name": "杜预",
+      "birthYear": 222,
+      "deathYear": 285,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "长安"
+      },
+      "sitelinks": 16,
+      "description": null
+    },
+    {
+      "entityId": "Q565370",
+      "name": "张萱",
+      "birthYear": 713,
+      "deathYear": 755,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "长安"
+      },
+      "sitelinks": 16,
+      "description": "唐朝宫廷画家 (713–755)"
+    },
+    {
+      "entityId": "Q1349949",
+      "name": "法藏",
+      "birthYear": 643,
+      "deathYear": 713,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "长安"
+      },
+      "sitelinks": 16,
+      "description": "佛教华严宗祖师"
+    },
+    {
+      "entityId": "Q1152149",
+      "name": "长孙皇后",
+      "birthYear": 601,
+      "deathYear": 636,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "长安"
+      },
+      "sitelinks": 15,
+      "description": "唐太宗李世民的皇后"
+    },
+    {
+      "entityId": "Q1063783",
+      "name": "韦皇后",
+      "birthYear": 664,
+      "deathYear": 710,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "长安"
+      },
+      "sitelinks": 15,
+      "description": "唐中宗之妻"
+    }
+  ],
+  "failures": []
+}
