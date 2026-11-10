@@ -147,6 +147,7 @@ curl "http://localhost:8787/api/cities/CN-610100"
 - 预置诗词 `imageryMap` 为空（模拟生成不产出意象），离线体验里实际没有可点击的意象词，AC-07 的点击定位仅有代码路径。
 - `validateNarrativeYears` 已实现且有单测，但尚未接入 LLM 生成链路；LLM 年代叙事仍依赖 `pending_human_review`。
 - SSE 与 CORS 会反射任意 `Origin`（无鉴权、无 Cookie，按本地开发工具取舍）；若部署到公网需收窄允许来源。
+- 预置诗词选题重复度偏高：成都 3 首《将赴成都草堂途中有作》、苏州 3 首太湖石题咏、杭州 2 首李绅同题组诗；均为真实诗作，但策展多样性不足，未改动。
 - 未缓存城市在无 Key 时仍生成部分档案，与 PRD AC-14 文案不一致（设计取舍）。
 - 真实 LLM、天地图、Commons 图片均未实测。
 
