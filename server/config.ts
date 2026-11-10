@@ -41,8 +41,23 @@ export const config = {
     .map((s) => s.trim())
     .filter(Boolean),
   mockLlmDelayMs: num(process.env.MOCK_LLM_DELAY_MS, 150),
+  /** 生产环境允许的跨域来源（逗号分隔）；开发环境额外放行 localhost 任意端口。 */
+  allowedOrigins: (process.env.APP_ORIGINS ?? '')
+    .split(',')
+    .map((origin) => origin.trim())
+    .filter(Boolean),
 } as const;
 
 export const llmConfigured = (): boolean => config.llm.apiKey.length > 0;
 export const mapConfigured = (): boolean => config.tiandituKey.length > 0;
 export const clientDistExists = (): boolean => existsSync(config.clientDist);
+
+/** CORS / SSE 共用的来源校验：同源请求（无 Origin）始终放行。 */
+export function isOriginAllowed(origin: string | undefined): boolean {
+  if (!origin) return true;
+  if (config.allowedOrigins.includes(origin)) return true;
+  if (config.nodeEnv !== 'production') {
+    return /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin);
+  }
+  return false;
+}

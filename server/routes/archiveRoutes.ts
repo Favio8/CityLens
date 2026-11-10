@@ -9,7 +9,7 @@ import {
   MODULE_NAMES,
   type ModuleName,
 } from '../../shared/schema';
-import { config, llmConfigured } from '../config';
+import { config, isOriginAllowed, llmConfigured } from '../config';
 import type { ArchiveRepo } from '../db/archiveRepo';
 import type { CityRepo } from '../db/cityRepo';
 import type { JobRepo } from '../db/jobRepo';
@@ -126,16 +126,17 @@ export function registerArchiveRoutes(app: FastifyInstance, deps: ArchiveRouteDe
       });
 
       reply.hijack();
-      const origin = request.headers.origin ?? '*';
-      reply.raw.writeHead(200, {
+      const origin = request.headers.origin;
+      const headers: Record<string, string> = {
         'Content-Type': 'text/event-stream; charset=utf-8',
         'Cache-Control': 'no-cache, no-transform',
         Connection: 'keep-alive',
         'X-Accel-Buffering': 'no',
-        'Access-Control-Allow-Origin': origin,
-        'Access-Control-Allow-Credentials': 'true',
         Vary: 'Origin',
-      });
+      };
+      // 只回显白名单内的来源；不携带 Cookie，因此不开启 credentials。
+      if (origin && isOriginAllowed(origin)) headers['Access-Control-Allow-Origin'] = origin;
+      reply.raw.writeHead(200, headers);
       reply.raw.write(`retry: 3000\n\n`);
 
       const ping = setInterval(() => {

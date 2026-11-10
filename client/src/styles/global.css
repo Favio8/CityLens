@@ -374,6 +374,19 @@ button {
   transform: scale(1.25);
 }
 
+/* 联动选中：与卡片高亮呼应 */
+.citylens-marker--active .citylens-marker__dot {
+  transform: scale(1.4);
+  box-shadow:
+    0 0 0 5px color-mix(in srgb, var(--city-primary) 28%, transparent),
+    0 0 0 9px color-mix(in srgb, var(--city-primary) 12%, transparent);
+}
+
+.citylens-marker--active .citylens-marker__label {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 .citylens-marker__label {
   font-family: 'Noto Serif SC', serif;
   font-size: 10px;

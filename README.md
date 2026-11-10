@@ -134,6 +134,7 @@ npm run verify            # 校验预置档案：Schema / 来源 / 坐标 / 年�
 | `LLM_TIMEOUT_MS` | 单次大模型请求超时（毫秒） | `60000` |
 | `TIANDITU_KEY` | 天地图 Key；为空则无底图模式 | 空 |
 | `ADMIN_TOKEN` | 预置城市强制重生成令牌 | 空 |
+| `APP_ORIGINS` | 生产环境允许的跨域来源，逗号分隔；开发环境自动放行 localhost | 空 |
 | `LLM_DAILY_CALL_LIMIT` | 每日 LLM 调用预算 | `500` |
 | `ENABLE_IMAGES` | 是否启用 Commons 图片 | `false` |
 | `IP_HASH_SALT` | 请求方 IP 哈希盐，生产环境必须修改 | `citylens-dev-salt` |

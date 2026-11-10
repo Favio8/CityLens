@@ -4,7 +4,7 @@ import cors from '@fastify/cors';
 import fastifyStatic from '@fastify/static';
 import Fastify from 'fastify';
 import { ZodError } from 'zod';
-import { config, clientDistExists, llmConfigured, mapConfigured } from './config';
+import { config, clientDistExists, isOriginAllowed, llmConfigured, mapConfigured } from './config';
 import { ArchiveRepo } from './db/archiveRepo';
 import { CityRepo } from './db/cityRepo';
 import { getDb } from './db';
@@ -33,7 +33,9 @@ export function buildApp(options: BuildAppOptions = {}) {
   const jobManager = new JobManager({ archiveRepo, jobRepo, cityRepo: repo, generator });
   const rateLimiter = new RateLimiter(jobRepo, { dailyCallLimit: config.llm.dailyCallLimit });
 
-  app.register(cors, { origin: true });
+  app.register(cors, {
+    origin: (origin, callback) => callback(null, isOriginAllowed(origin ?? undefined)),
+  });
 
   app.setErrorHandler((error, _request, reply) => {
     if (error instanceof ApiError) {

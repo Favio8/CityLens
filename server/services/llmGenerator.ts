@@ -15,6 +15,7 @@ import type {
   VerificationStatus,
 } from '../../shared/schema';
 import { MODULE_DATA_SCHEMAS, PENDING } from '../../shared/schema';
+import { validateNarrativeYears } from '../../shared/validators';
 import type { CityBrief } from '../db/cityRepo';
 import { config } from '../config';
 import type {
@@ -23,6 +24,7 @@ import type {
   PoetryCorpus,
   RegistryRelic,
   RelicsRegistry,
+  SnapshotFigure,
 } from './presetData';
 import {
   DYNASTY_SOURCE,
@@ -37,13 +39,17 @@ import {
   relicFindSpot,
   relicMuseumOrSite,
   relicProtectionLevel,
+  resolveChronicleAnchor,
   resolveEntityPlace,
 } from './entityVerifier';
 import {
   buildPoetryIndex,
+  createTitleDeduplicator,
+  deriveImagery,
   findPoemCandidates,
   getPoetryIndex,
   poemSourceRef,
+  selectDiversePoems,
   verifyPoemSelection,
 } from './poetryVerifier';
 import { DICTIONARY_SOURCE, DICTIONARY_SOURCE_ID } from './cacheService';
@@ -206,11 +212,33 @@ function buildRelics(input: GenerateInput): GeneratedModule {
   };
 }
 
+/** 人物遗迹：仅当关联证据是地名（籍贯/卒地/任职地）且能在地名库解析时生成坐标。 */
+function buildFigureSites(
+  figure: SnapshotFigure,
+  city: CityBrief,
+  gazetteer: Gazetteer | null,
+): Array<{ placeName: string; coordinates: [number, number] }> {
+  const placeProperties = new Set(['birthplace', 'deathplace', 'workplace']);
+  if (!placeProperties.has(figure.evidence.property)) return [];
+  const placeName = figure.evidence.value.trim();
+  if (!placeName) return [];
+  const place = resolveEntityPlace(
+    { name: placeName, coordinates: null },
+    city.cityId,
+    city.center,
+    gazetteer,
+  );
+  return place.coordinates
+    ? [{ placeName, coordinates: place.coordinates }]
+    : [];
+}
+
 function buildFigures(input: GenerateInput): GeneratedModule {
   const snapshot = input.snapshot ?? getFactSnapshot(input.city.cityId);
   if (!snapshot || snapshot.figures.length === 0) {
     throw new GenerationError('NO_FACTS', '本地快照无可用人物实体');
   }
+  const gazetteer = input.gazetteer ?? getGazetteer();
   const data = snapshot.figures.slice(0, 6).map((figure) => ({
     entityRef: figure.entityId,
     name: figure.name,
@@ -221,7 +249,7 @@ function buildFigures(input: GenerateInput): GeneratedModule {
     evidence: figure.evidence,
     cityBond: `与城市的关联来自 Wikidata 属性 ${figure.evidence.property}（${figure.evidence.value}），生平细节待人工复核。`,
     highlights: '当前仅保留可核验的城市关联属性，生平高光待人工复核补全。',
-    sites: [],
+    sites: buildFigureSites(figure, input.city, gazetteer),
     sourceRefs: [snapshot.sourceRef.id],
     verification: 'pending_human_review' as const,
   }));
@@ -236,15 +264,26 @@ function buildFigures(input: GenerateInput): GeneratedModule {
 function buildPoetics(input: GenerateInput): GeneratedModule {
   const corpus = input.poetryCorpus;
   const index = corpus ? buildPoetryIndex(corpus) : getPoetryIndex();
-  const candidates = findPoemCandidates(index, input.city.cityId, 5);
-  if (candidates.length === 0) {
+  const ranked = findPoemCandidates(index, input.city.cityId, 20);
+  if (ranked.length === 0) {
     throw new GenerationError('NO_FACTS', '本地诗词库无本城候选');
   }
+  const candidates = selectDiversePoems(ranked, 5);
   const sources: SourceRef[] = [];
   const poems = [];
   for (const candidate of candidates) {
     const verified = verifyPoemSelection(
-      { poemId: candidate.poemId, background: PENDING, relationType: 'direct', imageryMap: [] },
+      {
+        poemId: candidate.poemId,
+        background: PENDING,
+        relationType: 'direct',
+        imageryMap: deriveImagery(
+          candidate,
+          input.city.cityId,
+          input.gazetteer ?? getGazetteer(),
+          { aliases: input.aliases, center: input.city.center },
+        ),
+      },
       index,
       input.city.cityId,
     );
@@ -463,10 +502,18 @@ async function llmChronicle(input: GenerateInput): Promise<GeneratedModule> {
         '请挑选 3-5 个与本城历史最相关的朝代，输出 {"items":[{"eraName","startYear","endYear",' +
         '"periodRange","ancientCityName","keyEvents","relicToday"}]}。' +
         'eraName 必须来自年表，startYear/endYear 必须与年表完全一致；' +
-        'keyEvents 10-400 字，relicToday 写今天仍可寻访的遗址或建筑名。',
+        'keyEvents 10-400 字，relicToday 写今天仍可寻访的遗址或建筑名；' +
+        'keyEvents 中如出现具体年份，该年份必须在上面的年表中出现，否则改用朝代级表述。',
     },
   ]);
   const parsed = parseJsonObject(text);
+  // 叙事中的具体年份只能是年表里出现过的年份（PRD 3.2 三·年表）。
+  const allowedYears = new Set<number>();
+  for (const dynasty of dynasties.dynasties) {
+    allowedYears.add(dynasty.startYear);
+    if (dynasty.endYear !== null) allowedYears.add(dynasty.endYear);
+  }
+  const gazetteer = input.gazetteer ?? getGazetteer();
   const data = asArray(parsed.items).flatMap((item) => {
     const dynasty = dynasties.dynasties.find((entry) => entry.name === asText(item.eraName));
     if (!dynasty) return [];
@@ -478,6 +525,13 @@ async function llmChronicle(input: GenerateInput): Promise<GeneratedModule> {
     const keyEvents = asText(item.keyEvents);
     const relicToday = asText(item.relicToday);
     if (!periodRange || !ancientCityName || !keyEvents || !relicToday) return [];
+    if (!validateNarrativeYears(keyEvents, allowedYears).ok) return [];
+    const anchor = resolveChronicleAnchor(
+      relicToday,
+      input.city.cityId,
+      input.city.center,
+      gazetteer,
+    );
     return [
       {
         eraName: dynasty.name,
@@ -487,7 +541,7 @@ async function llmChronicle(input: GenerateInput): Promise<GeneratedModule> {
         ancientCityName,
         keyEvents,
         relicToday,
-        centerCoord: null,
+        centerCoord: anchor.coordinates,
         sourceRefs: [LLM_SOURCE.id, DYNASTY_SOURCE.id],
         verification: 'pending_human_review' as const,
       },
@@ -653,6 +707,7 @@ async function llmFigures(input: GenerateInput): Promise<GeneratedModule> {
     },
   ]);
   const parsed = parseJsonObject(text);
+  const gazetteer = input.gazetteer ?? getGazetteer();
   const data = asArray(parsed.items).flatMap((item) => {
     const figure = snapshot.figures.find((entry) => entry.entityId === asText(item.entityRef));
     if (!figure) return [];
@@ -667,7 +722,7 @@ async function llmFigures(input: GenerateInput): Promise<GeneratedModule> {
         evidence: figure.evidence,
         cityBond: asText(item.cityBond),
         highlights: asText(item.highlights),
-        sites: [],
+        sites: buildFigureSites(figure, input.city, gazetteer),
         sourceRefs: [snapshot.sourceRef.id],
         verification: 'pending_human_review' as const,
       },
@@ -714,9 +769,11 @@ async function llmPoetics(input: GenerateInput): Promise<GeneratedModule> {
   const parsed = parseJsonObject(text);
   const sources: SourceRef[] = [];
   const poems: unknown[] = [];
+  const acceptTitle = createTitleDeduplicator();
   for (const item of asArray(parsed.items)) {
     const corpusPoem = candidates.find((poem) => poem.poemId === asText(item.poemId));
     if (!corpusPoem) continue;
+    if (!acceptTitle(corpusPoem.title)) continue;
     const imagery = asArray(item.imagery).map((entry) => ({
       word: asText(entry.word),
       note: asText(entry.note),

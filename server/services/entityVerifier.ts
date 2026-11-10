@@ -149,6 +149,29 @@ export function resolveEntityPlace(
   };
 }
 
+/**
+ * 年代轴地图参照点：从「今日遗存」文本中拆出地名，匹配本城地名库。
+ * 返回的是今日遗存坐标，不是古代城址中心；前端必须按“今日遗存参照”标注。
+ */
+export function resolveChronicleAnchor(
+  relicToday: string,
+  cityId: string,
+  center: Coord,
+  gazetteer: Gazetteer | null,
+): { placeName: string | null; coordinates: Coord | null } {
+  const tokens = relicToday
+    .split(/[、，,；;／/\s]+/)
+    .map((token) => token.trim())
+    .filter((token) => token.length >= 2);
+  for (const token of tokens) {
+    const resolved = resolveCoordLocal(gazetteer, cityId, token, center);
+    if (resolved.coordinates) {
+      return { placeName: resolved.matchedName ?? token, coordinates: resolved.coordinates };
+    }
+  }
+  return { placeName: null, coordinates: null };
+}
+
 /** 生卒年缺失统一为“待考”，保留公元前负数。 */
 export function figureYear(value: number | null | undefined): number | typeof PENDING {
   return typeof value === 'number' && Number.isInteger(value) && value !== 0 ? value : PENDING;

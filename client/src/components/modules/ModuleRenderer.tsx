@@ -15,16 +15,22 @@ import {
   type ThemePalette,
 } from '@citylens/shared/schema';
 import { ChronicleModule } from './ChronicleModule';
-import { FiguresModule } from './FiguresModule';
 import { IdentityModule } from './IdentityModule';
 import { LocalSoulModule } from './LocalSoulModule';
-import { PoeticsModule } from './PoeticsModule';
-import { RelicsModule } from './RelicsModule';
 import { PendingTag } from '../ui/Tags';
 
 /** 地图与图表依赖较重，进入视口时再加载，避免拖慢首屏。 */
 const LandmarksModule = lazy(() =>
   import('./LandmarksModule').then((module) => ({ default: module.LandmarksModule })),
+);
+const RelicsModule = lazy(() =>
+  import('./RelicsModule').then((module) => ({ default: module.RelicsModule })),
+);
+const FiguresModule = lazy(() =>
+  import('./FiguresModule').then((module) => ({ default: module.FiguresModule })),
+);
+const PoeticsModule = lazy(() =>
+  import('./PoeticsModule').then((module) => ({ default: module.PoeticsModule })),
 );
 const DataPulseModule = lazy(() =>
   import('./DataPulseModule').then((module) => ({ default: module.DataPulseModule })),
@@ -95,15 +101,45 @@ export function ModuleRenderer({
     }
     case 'relics': {
       const parsed = RelicsSchema.parse(data);
-      return <RelicsModule data={parsed} sources={sources} />;
+      return (
+        <Suspense fallback={<HeavyModuleFallback />}>
+          <RelicsModule
+            cityId={cityId}
+            cityName={cityName}
+            center={center}
+            data={parsed}
+            sources={sources}
+          />
+        </Suspense>
+      );
     }
     case 'figures': {
       const parsed = FiguresSchema.parse(data);
-      return <FiguresModule data={parsed} sources={sources} />;
+      return (
+        <Suspense fallback={<HeavyModuleFallback />}>
+          <FiguresModule
+            cityId={cityId}
+            cityName={cityName}
+            center={center}
+            data={parsed}
+            sources={sources}
+          />
+        </Suspense>
+      );
     }
     case 'poetics': {
       const parsed = PoeticsSchema.parse(data);
-      return <PoeticsModule data={parsed} sources={sources} />;
+      return (
+        <Suspense fallback={<HeavyModuleFallback />}>
+          <PoeticsModule
+            cityId={cityId}
+            cityName={cityName}
+            center={center}
+            data={parsed}
+            sources={sources}
+          />
+        </Suspense>
+      );
     }
     case 'localSoul': {
       const parsed = LocalSoulSchema.parse(data);

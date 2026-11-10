@@ -16,8 +16,9 @@ import type { CityBrief } from '../db/cityRepo';
 import { DICTIONARY_SOURCE, DICTIONARY_SOURCE_ID } from './cacheService';
 import { collectSourceRefs } from './jobManager';
 import { MockGenerator, type GeneratedModule, validateModuleData } from './llmGenerator';
-import { DYNASTY_SOURCE, getDynasties } from './presetData';
+import { DYNASTY_SOURCE, getDynasties, getGazetteer, type Gazetteer } from './presetData';
 import { PRESET_CURATIONS } from './presetCurations';
+import { resolveChronicleAnchor } from './entityVerifier';
 
 export const PRESET_MANUAL_SOURCE: SourceRef = {
   id: 'S-PRESET-MANUAL',
@@ -83,10 +84,12 @@ function assertCuration(cityId: string) {
   return curation;
 }
 
-function buildChronicle(cityId: string): PresetModule {
+function buildChronicle(city: CityBrief, gazetteer: Gazetteer | null): PresetModule {
+  const cityId = city.cityId;
   const curation = assertCuration(cityId);
   const dynasties = getDynasties();
   const data = curation.chronicle.map((entry) => {
+    const anchor = resolveChronicleAnchor(entry.relicToday, cityId, city.center, gazetteer);
     const dynasty = dynasties?.dynasties.find((item) => item.name === entry.eraName);
     if (!dynasty) {
       throw new Error(`[preset] ${cityId} 年代条目 ${entry.eraName} 不在本地朝代年表中`);
@@ -105,7 +108,7 @@ function buildChronicle(cityId: string): PresetModule {
       ancientCityName: entry.ancientCityName,
       keyEvents: entry.keyEvents,
       relicToday: entry.relicToday,
-      centerCoord: null,
+      centerCoord: anchor.coordinates,
       sourceRefs: [PRESET_MANUAL_SOURCE.id, PRESET_DYNASTY_SOURCE.id],
       verification: 'preset_manual',
     };
@@ -152,7 +155,7 @@ export async function buildPresetBundle(
   const generator = new MockGenerator({ delayMs: 0 });
   const modules: PresetModule[] = [
     buildIdentity(city, aliases, curation.persona),
-    buildChronicle(city.cityId),
+    buildChronicle(city, getGazetteer()),
     buildLocalSoul(city.cityId),
   ];
   const missing: ModuleName[] = ['dataPulse'];

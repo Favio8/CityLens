@@ -114,6 +114,44 @@ describe('DeepSeekGenerator：模型只做选择与叙事，事实由本地库�
     expect(fetchMock).toHaveBeenCalledTimes(2);
   });
 
+  it('年代叙事里出现年表之外的年份时丢弃该节点', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn().mockResolvedValue(
+        sseResponse([
+          JSON.stringify({
+            items: [
+              {
+                eraName: '唐',
+                startYear: 618,
+                endYear: 907,
+                periodRange: '618—907',
+                ancientCityName: '长安',
+                keyEvents: '公元618年唐立国，长安成为都城，城市格局延续至今。',
+                relicToday: '大雁塔',
+              },
+              {
+                eraName: '唐',
+                startYear: 618,
+                endYear: 907,
+                periodRange: '618—907',
+                ancientCityName: '长安',
+                keyEvents: '1234年发生了一件年表之外的事，应当被校验拦截。',
+                relicToday: '大雁塔',
+              },
+            ],
+          }),
+        ]),
+      ),
+    );
+    const generator = new DeepSeekGenerator();
+    const result = await generator.generate({ city: CITY, module: 'chronicle', aliases: ['长安'] });
+    const data = result.data as Array<{ keyEvents: string; centerCoord: unknown }>;
+    expect(data).toHaveLength(1);
+    expect(data[0]!.keyEvents).toContain('618');
+    expect(data[0]!.centerCoord).not.toBeNull();
+  });
+
   it('数据脉搏在缺少统计产物时明确拒绝生成', async () => {
     const generator = new DeepSeekGenerator();
     await expect(

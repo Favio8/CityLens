@@ -3,7 +3,9 @@ import { describe, expect, it } from 'vitest';
 import type { PoetryCorpus } from './presetData';
 import {
   buildPoetryIndex,
+  deriveImagery,
   findPoemCandidates,
+  selectDiversePoems,
   verifyPoemSelection,
   verifyPoemText,
 } from './poetryVerifier';
@@ -41,6 +43,40 @@ describe('诗词候选检索', () => {
 
   it('未收录城市返回空候选（不伪造）', () => {
     expect(findPoemCandidates(index, 'CN-440300', 5)).toEqual([]);
+  });
+
+  it('选题去重：同题应制诗与同题组诗不重复占版', () => {
+    const chengdu = selectDiversePoems(findPoemCandidates(index, 'CN-510100', 20), 5);
+    const titles = chengdu.map((poem) => poem.title);
+    expect(new Set(titles).size).toBe(titles.length);
+    expect(titles.filter((title) => title.includes('将赴成都草堂')).length).toBeLessThanOrEqual(1);
+    expect(chengdu.length).toBeGreaterThanOrEqual(3);
+
+    const suzhou = selectDiversePoems(findPoemCandidates(index, 'CN-320500', 20), 5);
+    const taohuShi = suzhou.filter((poem) => poem.title.includes('太湖石'));
+    expect(taohuShi.length).toBeLessThanOrEqual(2);
+
+    const xian = selectDiversePoems(findPoemCandidates(index, 'CN-610100', 20), 5);
+    const xianTitles = xian.map((poem) => poem.title);
+    expect(new Set(xianTitles).size).toBe(xianTitles.length);
+  });
+});
+
+describe('离线意象推导', () => {
+  it('只从原文逐字命中本城地名库的词生成地理意象', () => {
+    const poem = seed('孟郊', '登科后');
+    const imagery = deriveImagery(poem, 'CN-610100');
+    const changan = imagery.find((item) => item.word === '长安');
+    expect(changan).toBeDefined();
+    expect(changan?.isGeographic).toBe(true);
+    expect(changan?.coordinates).not.toBeNull();
+    expect(imagery.every((item) => poem.lines.join('').includes(item.word))).toBe(true);
+  });
+
+  it('原文没有的地名不生成意象', () => {
+    const poem = seed('张继', '枫桥夜泊');
+    const imagery = deriveImagery(poem, 'CN-610100');
+    expect(imagery.some((item) => item.word === '长安')).toBe(false);
   });
 });
 
