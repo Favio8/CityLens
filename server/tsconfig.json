@@ -1,0 +1,12 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "baseUrl": "..",
+    "paths": {
+      "@citylens/shared": ["shared/schema.ts"],
+      "@citylens/shared/*": ["shared/*"]
+    },
+    "noEmit": true
+  },
+  "include": ["./**/*.ts", "../shared/**/*.ts", "../scripts/**/*.ts", "../vitest.config.ts"]
+}

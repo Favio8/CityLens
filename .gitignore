@@ -1,0 +1,25 @@
+node_modules/
+dist/
+coverage/
+.env
+.env.local
+*.log
+npm-debug.log*
+
+# SQLite 运行时数据库（由 npm run seed 生成）
+server/data/*.db
+server/data/*.db-wal
+server/data/*.db-shm
+
+# 构建期脚本的中间缓存
+.cache/
+scripts/.cache/
+
+# 编辑器与系统
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Lighthouse 报告在验收时保留，其余临时产物忽略
+.lighthouse/

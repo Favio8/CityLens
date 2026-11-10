@@ -1,0 +1,73 @@
+-- CityLens 读城 数据库结构（SQLite / better-sqlite3）
+-- 对应 PRD 5.2。所有 SQL 仅出现在仓储层。
+
+CREATE TABLE IF NOT EXISTS cities (
+    city_id       TEXT PRIMARY KEY,
+    standard_name TEXT NOT NULL,
+    province      TEXT NOT NULL,
+    admin_level   TEXT NOT NULL,
+    country_code  TEXT NOT NULL DEFAULT 'CN',
+    pinyin        TEXT NOT NULL,
+    english_name  TEXT NOT NULL,
+    center_lng    REAL NOT NULL,
+    center_lat    REAL NOT NULL,
+    summary       TEXT,
+    hot_rank      INTEGER
+);
+
+CREATE TABLE IF NOT EXISTS city_aliases (
+    id            INTEGER PRIMARY KEY AUTOINCREMENT,
+    alias_key     TEXT NOT NULL,
+    display_alias TEXT,
+    city_id       TEXT NOT NULL REFERENCES cities(city_id),
+    match_type    TEXT NOT NULL,
+    hint          TEXT,
+    UNIQUE (alias_key, city_id, match_type)
+);
+
+CREATE INDEX IF NOT EXISTS idx_alias_key ON city_aliases(alias_key);
+CREATE INDEX IF NOT EXISTS idx_alias_city ON city_aliases(city_id);
+
+CREATE TABLE IF NOT EXISTS city_archives (
+    city_id            TEXT PRIMARY KEY REFERENCES cities(city_id),
+    status             TEXT NOT NULL,
+    theme_palette_json TEXT NOT NULL,
+    sources_json       TEXT NOT NULL,
+    schema_version     TEXT NOT NULL DEFAULT '1.1',
+    data_version       INTEGER NOT NULL DEFAULT 1,
+    is_preset          INTEGER NOT NULL DEFAULT 0,
+    generator_json     TEXT,
+    generated_at       TEXT NOT NULL,
+    updated_at         TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS city_modules (
+    city_id           TEXT NOT NULL REFERENCES cities(city_id),
+    module_name       TEXT NOT NULL,
+    status            TEXT NOT NULL,
+    data_json         TEXT,
+    verification_json TEXT NOT NULL,
+    generated_at      TEXT NOT NULL,
+    PRIMARY KEY (city_id, module_name)
+);
+
+CREATE TABLE IF NOT EXISTS generation_jobs (
+    job_id          TEXT PRIMARY KEY,
+    city_id         TEXT NOT NULL REFERENCES cities(city_id),
+    status          TEXT NOT NULL,
+    force_flag      INTEGER NOT NULL DEFAULT 0,
+    modules_json    TEXT NOT NULL,
+    failed_json     TEXT,
+    requester_hash  TEXT NOT NULL,
+    llm_calls       INTEGER NOT NULL DEFAULT 0,
+    started_at      TEXT NOT NULL,
+    finished_at     TEXT,
+    cooldown_until  TEXT
+);
+
+CREATE UNIQUE INDEX IF NOT EXISTS uq_running_job ON generation_jobs(city_id) WHERE status = 'running';
+CREATE INDEX IF NOT EXISTS idx_job_requester ON generation_jobs(requester_hash, started_at);
+CREATE INDEX IF NOT EXISTS idx_job_city ON generation_jobs(city_id, started_at);
+
+-- 档案发布与缓存查询辅助索引
+CREATE INDEX IF NOT EXISTS idx_archive_status ON city_archives(status);

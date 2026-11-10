@@ -1,0 +1,37 @@
+{
+  "name": "citylens",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "CityLens 读城 — 交互式城市人文档案系统",
+  "workspaces": [
+    "shared",
+    "server",
+    "client"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "concurrently -n server,client -c cyan,magenta \"npm:dev:server\" \"npm:dev:client\"",
+    "dev:server": "npm --workspace server run dev",
+    "dev:client": "npm --workspace client run dev",
+    "build": "npm --workspace client run build",
+    "start": "npm --workspace server run start",
+    "seed": "npm --workspace server run seed",
+    "verify": "tsx scripts/verify_presets.ts",
+    "test": "vitest run",
+    "typecheck": "tsc -p server/tsconfig.json --noEmit && tsc -p client/tsconfig.json --noEmit",
+    "data:dictionary": "tsx scripts/build_city_dictionary.ts",
+    "data:poetry": "tsx scripts/build_poetry_corpus.ts",
+    "data:snapshot": "tsx scripts/build_fact_snapshot.ts",
+    "data:gazetteer": "tsx scripts/build_place_gazetteer.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "concurrently": "^9.1.2",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  }
+}
