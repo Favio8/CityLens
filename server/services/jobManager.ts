@@ -125,7 +125,8 @@ export class JobManager {
 
     const bundle = loadBundle(this.deps.archiveRepo, input.city.cityId);
     const reusable = input.force ? new Set<ModuleName>() : reusableModules(bundle);
-    const requested = input.modules.length > 0 ? input.modules : DEFAULT_MODULES;
+    // 去重，避免同一模块在单次请求里被重复生成（放大 LLM 调用）。
+    const requested = [...new Set(input.modules.length > 0 ? input.modules : DEFAULT_MODULES)];
     const planned = requested.filter((module) => !reusable.has(module));
 
     this.deps.archiveRepo.ensureArchive({
@@ -300,7 +301,8 @@ export class JobManager {
 
       const bundle = loadBundle(this.deps.archiveRepo, runtime.cityId);
       const statusMap = bundle ? moduleStatusMap(bundle) : {};
-      const status = computeArchiveStatus(statusMap, runtime.requested);
+      // 发布规则针对整份档案判定：单模块重试不能因本次只尝试 1 个模块而把已发布档案打回 unpublished。
+      const status = computeArchiveStatus(statusMap, MODULE_NAMES);
       const generatedAt = this.now().toISOString();
       this.deps.archiveRepo.setMeta(runtime.cityId, {
         themePalette: runtime.themePalette,

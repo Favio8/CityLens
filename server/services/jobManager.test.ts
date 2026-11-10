@@ -148,6 +148,48 @@ describe('增量生成', () => {
     await waitDone(forced.runtime, manager);
     expect(counting.calls.length).toBe(8);
   });
+
+  it('单模块请求不会把已发布档案打回 unpublished', async () => {
+    const { manager, archiveRepo, city } = context;
+    await waitDone(
+      manager.start({
+        city,
+        aliases: [],
+        requesterHash: 'hash',
+        force: false,
+        modules: [...MODULE_NAMES],
+      }).runtime,
+      manager,
+    );
+    expect(archiveRepo.getArchive(CITY_ID)?.status).toBe('partial');
+
+    const subset = manager.start({
+      city,
+      aliases: [],
+      requesterHash: 'hash',
+      force: false,
+      modules: ['landmarks'],
+    });
+    expect(subset.runtime.planned).toEqual([]);
+    const done = await waitDone(subset.runtime, manager);
+    expect(done.status).toBe('partial');
+    expect(archiveRepo.getArchive(CITY_ID)?.status).toBe('partial');
+  });
+
+  it('重复模块名只生成一次', async () => {
+    const { manager, counting, city } = context;
+    const runtime = manager.start({
+      city,
+      aliases: [],
+      requesterHash: 'hash',
+      force: false,
+      modules: ['landmarks', 'landmarks', 'landmarks'],
+    }).runtime;
+    expect(runtime.requested).toEqual(['landmarks']);
+    expect(runtime.planned).toEqual(['landmarks']);
+    await waitDone(runtime, manager);
+    expect(counting.calls).toEqual(['landmarks']);
+  });
 });
 
 describe('模块级失败与冷却', () => {

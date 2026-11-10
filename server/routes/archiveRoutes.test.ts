@@ -202,6 +202,44 @@ describe('缓存读取', () => {
 });
 
 describe('保护与限流', () => {
+  it('非 force 的单模块请求不会把已发布档案打成 unpublished', async () => {
+    const { app } = setup();
+    const base = await listen(app);
+    await collectSse(`${base}/api/cities/CN-610100/generate`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({}),
+    });
+
+    const subset = await collectSse(`${base}/api/cities/CN-610100/generate`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ modules: ['landmarks'] }),
+    });
+    expect(subset.status).toBe(200);
+    expect(subset.events.at(-1)?.data.status).toBe('partial');
+
+    const hit = await fetch(`${base}/api/cities/CN-610100`);
+    expect(hit.status).toBe(200);
+    const body = (await hit.json()) as { fromCache: boolean; meta: { status: string } };
+    expect(body.fromCache).toBe(true);
+    expect(body.meta.status).toBe('partial');
+  });
+
+  it('重复模块名只创建一次任务模块记录', async () => {
+    const { db, app } = setup();
+    const base = await listen(app);
+    await collectSse(`${base}/api/cities/CN-350500/generate`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ modules: ['landmarks', 'landmarks', 'landmarks'] }),
+    });
+    const job = db
+      .prepare('SELECT modules_json FROM generation_jobs WHERE city_id = ?')
+      .get('CN-350500') as { modules_json: string };
+    expect(JSON.parse(job.modules_json)).toEqual(['landmarks']);
+  });
+
   it('预置城市强制刷新无管理令牌返回 403 PRESET_LOCKED', async () => {
     const { app } = setup();
     const base = await listen(app);

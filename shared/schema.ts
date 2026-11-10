@@ -545,7 +545,8 @@ export const HotCitiesResponseSchema = z.object({
 
 export const GenerateRequestSchema = z.object({
   force: z.boolean().optional(),
-  modules: z.array(ModuleNameSchema).min(1).optional(),
+  // 模块名去重由 JobManager 统一处理；这里限制长度，避免单请求无限放大生成次数。
+  modules: z.array(ModuleNameSchema).min(1).max(MODULE_NAMES.length).optional(),
 });
 export type GenerateRequest = z.infer<typeof GenerateRequestSchema>;
 
