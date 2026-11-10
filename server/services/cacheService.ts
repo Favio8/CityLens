@@ -6,16 +6,13 @@ import type {
   CityArchiveResponse,
   ModuleName,
   ModuleStatus,
-  ThemePalette,
 } from '../../shared/schema';
 import { MODULE_NAMES } from '../../shared/schema';
+import { DEFAULT_THEME_PALETTE } from '../../shared/cityThemes';
 import type { CityBrief } from '../db/cityRepo';
 import type { ArchiveRecord, ArchiveRepo, ModuleRecord } from '../db/archiveRepo';
 
-export const DEFAULT_THEME_PALETTE: ThemePalette = {
-  light: { primary: '#8C3F2B', secondary: '#4A4E54', accent: '#C89B40' },
-  dark: { primary: '#D2957F', secondary: '#B4B9C0', accent: '#D9B45C' },
-};
+export { DEFAULT_THEME_PALETTE };
 
 export interface ArchiveBundle {
   archive: ArchiveRecord;

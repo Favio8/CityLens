@@ -2,7 +2,7 @@
 
 交互式城市人文档案系统。输入城市名、古称或拼音，读城引擎以流式方式逐模块生成八个人文模块，每个模块独立显影、独立降级。
 
-> 当前进度：阶段 1–3 已完成（服务端基础、离线事实管线、缓存编排与 SSE 流式生成）。前端完整界面在阶段 4–7 交付，详见 [FEATURES_AND_VERIFICATION.md](./FEATURES_AND_VERIFICATION.md)。
+> 当前进度：阶段 1–6 已完成（服务端、离线事实管线、缓存编排、SSE 流式、八模块前端、预置档案与 verify）；阶段 7 进行最终打磨与验收复核。
 
 ## 技术栈
 
@@ -33,9 +33,12 @@ CityLens/
 
 ```bash
 npm ci
-npm run seed          # 建表并导入城市词典（server/data/citylens.db）
+npm run setup         # 建表 + 导入城市词典 + 构建六座预置城市档案
 npm run dev           # 同时启动 server:8787 与 client:5173
+npm run verify        # 预置档案自动校验（需先 setup）
 ```
+
+打开 http://localhost:5173 ，搜索「长安」「临安」「锦官城」或直接进入预置城市。
 
 只启动服务端：
 
@@ -55,7 +58,9 @@ npm run data:dictionary   # Wikidata 行政区划代码 + 坐标 → city_dictio
 npm run data:poetry       # chinese-poetry → 本地诗词库（逐字校验源）
 npm run data:snapshot     # Wikidata → 城市事实快照
 npm run data:gazetteer    # 地名坐标库
+npm run data:presets      # 六座预置城市档案（本地事实模块 + 人工整理稿）
 npm run seed              # 重新导入词典（幂等）
+npm run verify            # 校验预置档案：Schema / 来源 / 坐标 / 年份 / 诗词逐字
 ```
 
 构建期脚本的网络失败会以非 0 退出并保留旧产物，不会伪造快照；失败原因写入产物 `failures` 字段，并同步记录到验收文档。
@@ -73,15 +78,46 @@ npm run seed              # 重新导入词典（幂等）
 
 产物中的每条实体均带 `sourceRef`/`sourceRefs`；`server/data/*.db*` 为运行时数据库，不提交。
 
+**预置档案覆盖 7/8 卷**：城市名片、前世今生、景点地图、文物重器、历史名人、诗句中的 Ta、城市味道均已落库；
+「数说城市」因缺少可核验的统计序列产物（GDP/人口/气候月度值）暂不生成，前端显示「此卷暂缺」，
+详见 [FEATURES_AND_VERIFICATION.md](./FEATURES_AND_VERIFICATION.md) 的已知问题；绝不以估算值填充。
+
 ## 无 Key 开发模式
 
 项目在没有 LLM Key、没有天地图 Key 时也能完整开发与自测：
 
-- 未配置 `LLM_API_KEY`：服务端启用**模拟 LLM**，仍然走完整的流式、单飞、冷却、限流与降级路径，输出带 `mock` 标记，绝不写入预置档案。
+- 未配置 `LLM_API_KEY`：服务端启用**模拟 LLM**，仍然走完整的流式、单飞、冷却、限流与降级路径，输出带 `mock` 标记；预置档案只由 `npm run data:presets` 构建，模拟结果不会覆盖预置档案。
 - 未配置 `TIANDITU_KEY`：前端使用**无底图模式**，只绘制行政区轮廓与宣纸底色。
 - `ENABLE_IMAGES=false`（默认）：不请求任何外部图片。
 
-配置真实 Key：复制 `.env.example` 为 `.env`，填写 `LLM_API_KEY`、`TIANDITU_KEY`。密钥只在服务端读取，前端构建产物不包含任何密钥。
+配置真实 Key：复制 `.env.example` 为 `.env`，填写后重启 `npm run dev` 即可切换，无需改代码。
+
+### 切换到真实模式（两步）
+
+1. **大模型**：在 https://platform.deepseek.com/ 创建 API Key，写入 `.env`：
+
+   ```dotenv
+   LLM_API_KEY=sk-你的真实Key
+   LLM_BASE_URL=https://api.deepseek.com
+   LLM_MODEL=deepseek-chat
+   ```
+
+   重启后 `/api/health` 返回 `llmConfigured: true`。未配置时自动使用模拟 LLM。
+   真实模式只让模型做「选择与叙事」，坐标、年份、统计数值仍由本地产物回填并校验；
+   无法校验的输出会重试一次，仍失败则该卷降级，绝不写假数据。
+
+2. **天地图**：在 https://console.tianditu.gov.cn/ 申请「浏览器端」Key，并把
+   `localhost` 与你的部署域名加入白名单，写入 `.env`：
+
+   ```dotenv
+   TIANDITU_KEY=你的天地图Key
+   ```
+
+   重启后地图自动加载 t0–t7 矢量底图与注记；天地图 Key 会通过 `/api/map/config`
+   下发给浏览器（瓦片请求必需），大模型 Key 永不下发。
+
+> 预置六城（西安、杭州、成都、北京、苏州、洛阳）使用离线档案，不消耗 LLM 额度；
+> 其余城市首次访问时走真实 LLM 流式生成。
 
 ## 环境变量
 
@@ -91,6 +127,7 @@ npm run seed              # 重新导入词典（幂等）
 | `LLM_API_KEY` | DeepSeek 兼容接口密钥；为空则启用模拟 LLM | 空 |
 | `LLM_BASE_URL` | 大模型接口地址 | `https://api.deepseek.com` |
 | `LLM_MODEL` | 模型名 | `deepseek-chat` |
+| `LLM_TIMEOUT_MS` | 单次大模型请求超时（毫秒） | `60000` |
 | `TIANDITU_KEY` | 天地图 Key；为空则无底图模式 | 空 |
 | `ADMIN_TOKEN` | 预置城市强制重生成令牌 | 空 |
 | `LLM_DAILY_CALL_LIMIT` | 每日 LLM 调用预算 | `500` |
@@ -138,7 +175,7 @@ curl.exe http://localhost:8787/api/cities/CN-350500
 单元测试与类型检查：
 
 ```bash
-node node_modules/vitest/vitest.mjs run   # 88 项：schema/校验/规范化/编排/SSE
+node node_modules/vitest/vitest.mjs run   # 95 项：schema/校验/规范化/编排/SSE/主题色/真实 LLM 解析
 npm run typecheck                          # server + client 的 tsc --noEmit
 ```
 

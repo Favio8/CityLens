@@ -134,6 +134,35 @@ export class ArchiveRepo {
       );
   }
 
+  /** 预置档案构建：存在则整体覆盖元数据，便于重复执行构建脚本。 */
+  upsertArchive(input: ArchiveWriteInput): void {
+    this.db
+      .prepare(
+        `INSERT INTO city_archives
+           (city_id, status, theme_palette_json, sources_json, schema_version,
+            data_version, is_preset, generator_json, generated_at, updated_at)
+         VALUES (?, ?, ?, ?, '1.1', 1, ?, ?, ?, ?)
+         ON CONFLICT(city_id) DO UPDATE SET
+           status = excluded.status,
+           theme_palette_json = excluded.theme_palette_json,
+           sources_json = excluded.sources_json,
+           is_preset = excluded.is_preset,
+           generator_json = excluded.generator_json,
+           generated_at = excluded.generated_at,
+           updated_at = excluded.updated_at`,
+      )
+      .run(
+        input.cityId,
+        input.status,
+        JSON.stringify(input.themePalette),
+        JSON.stringify(input.sources),
+        input.isPreset ? 1 : 0,
+        input.generator ? JSON.stringify(input.generator) : null,
+        input.generatedAt,
+        input.generatedAt,
+      );
+  }
+
   /** 模块通过校验后原子替换，并递增 data_version。 */
   saveModule(input: {
     cityId: string;

@@ -4,8 +4,16 @@
  */
 import { existsSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-import type { Coord } from '../../shared/schema';
+import type { Coord, SourceRef } from '../../shared/schema';
 import { config } from '../config';
+
+/** 本地朝代年表的来源登记（供预置档案与真实生成共用）。 */
+export const DYNASTY_SOURCE: SourceRef = {
+  id: 'S-DYNASTY',
+  type: 'preset_manual',
+  title: '本地朝代年表（构建期整理，待复核）',
+  retrievedAt: '2026-11-10T00:00:00.000Z',
+};
 
 export interface SnapshotLandmark {
   entityId: string;

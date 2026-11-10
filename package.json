@@ -19,6 +19,8 @@
     "build": "npm --workspace client run build",
     "start": "npm --workspace server run start",
     "seed": "npm --workspace server run seed",
+    "setup": "npm run seed && npm run data:presets",
+    "data:presets": "tsx scripts/build_preset_archives.ts",
     "verify": "tsx scripts/verify_presets.ts",
     "test": "vitest run",
     "typecheck": "tsc -p server/tsconfig.json --noEmit && tsc -p client/tsconfig.json --noEmit",

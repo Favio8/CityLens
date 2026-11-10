@@ -163,6 +163,10 @@ export function CityPage() {
                       >
                         重试此卷
                       </button>
+                    ) : state.phase === 'ready' ? (
+                      <span className="mono text-[10px] tracking-[0.16em] text-[var(--text-secondary)]">
+                        暂缺
+                      </span>
                     ) : (
                       <span className="mono text-[10px] tracking-[0.16em] text-[var(--text-secondary)]">
                         显影中
@@ -188,9 +192,11 @@ export function CityPage() {
                         <p className="font-serif text-sm leading-relaxed text-[var(--text-secondary)]">
                           {error
                             ? `此卷未能成卷（${error.code}），可单独重试，不影响其他卷。`
-                            : '方志官正在检索与校验，请稍候。'}
+                            : state.phase === 'ready'
+                              ? '此卷暂缺：暂无可核验的数据来源，已列入人工复核清单，绝不以推测数据充数。'
+                              : '方志官正在检索与校验，请稍候。'}
                         </p>
-                        {!error ? (
+                        {!error && state.phase !== 'ready' ? (
                           <div className="mt-6 space-y-3" aria-hidden>
                             <div className="ink-breathe h-3 w-2/3 rounded bg-[var(--border-subtle)]" />
                             <div className="ink-breathe h-3 w-full rounded bg-[var(--border-subtle)]" style={{ animationDelay: '0.2s' }} />

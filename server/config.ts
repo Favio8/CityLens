@@ -28,6 +28,7 @@ export const config = {
     baseUrl: (process.env.LLM_BASE_URL?.trim() || 'https://api.deepseek.com').replace(/\/+$/, ''),
     model: process.env.LLM_MODEL?.trim() || 'deepseek-chat',
     dailyCallLimit: num(process.env.LLM_DAILY_CALL_LIMIT, 500),
+    timeoutMs: num(process.env.LLM_TIMEOUT_MS, 60000),
   },
   tiandituKey: process.env.TIANDITU_KEY?.trim() ?? '',
   adminToken: process.env.ADMIN_TOKEN?.trim() ?? '',
