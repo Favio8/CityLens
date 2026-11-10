@@ -45,7 +45,7 @@ const CITY_KEYWORDS: Record<string, string[]> = {
     '岷江',
   ],
   'CN-110000': [
-    '燕京', '幽州', '大都', '蓟门', '卢沟', '居庸', '金台', '北平', '燕山', '玉泉山',
+    '燕京', '幽州', '蓟门', '卢沟', '居庸', '金台', '北平', '燕山', '玉泉山',
   ],
   'CN-320500': [
     '姑苏', '苏州', '吴门', '平江', '枫桥', '寒山寺', '虎丘', '太湖', '阊门', '胥门',
@@ -134,15 +134,42 @@ function hash(input: string): string {
   return createHash('sha1').update(input).digest('hex').slice(0, 16);
 }
 
-function scorePoem(title: string, body: string, keywords: string[]): number {
-  let score = 0;
+/**
+ * 去掉括注/夹注后再做地名匹配。
+ * 古籍中的题注、夹注常含大量他城地名（例如杭州僧传注文里的「西岭草堂」），
+ * 直接用全文匹配会把无关作品误配给别的城市。
+ */
+function stripAnnotations(text: string): string {
+  let current = text;
+  let previous: string;
+  do {
+    previous = current;
+    current = current
+      .replace(/（[^（）]*）/g, '')
+      .replace(/〖[^〖〗]*〗/g, '')
+      .replace(/\([^()]*\)/g, '');
+  } while (current !== previous);
+  return current;
+}
+
+interface KeywordHits {
+  titleHits: number;
+  bodyHits: number;
+}
+
+/** 分别统计标题与正文命中的关键词数量（同词只计一次）。 */
+function countKeywordHits(title: string, body: string, keywords: string[]): KeywordHits {
+  let titleHits = 0;
+  let bodyHits = 0;
   for (const keyword of keywords) {
     if (!keyword) continue;
-    if (title.includes(keyword)) score += 6;
-    if (body.includes(keyword)) score += 1;
+    if (title.includes(keyword)) titleHits += 1;
+    if (body.includes(keyword)) bodyHits += 1;
   }
-  return Math.min(score, 20);
+  return { titleHits, bodyHits };
 }
+
+const SEED_KEYS = new Set(SEEDS.map((seed) => `${seed.author}|${seed.title}`));
 
 function makePoem(
   raw: RawPoem,
@@ -158,18 +185,23 @@ function makePoem(
 
   const titleSimplified = toSimplified(title);
   const lines = linesTraditional.map((l) => toSimplified(l));
-  const text = `${titleSimplified}\n${lines.join('\n')}`;
+  const authorSimplified = toSimplified(author);
+  const titleForMatch = stripAnnotations(titleSimplified);
+  const bodyForMatch = stripAnnotations(lines.join('\n'));
+  const isSeed = SEED_KEYS.has(`${authorSimplified}|${titleSimplified}`);
 
   const matchedCities: string[] = [];
   let bestScore = 0;
   for (const [cityId, keywords] of cityKeywords) {
-    const score = scorePoem(titleSimplified, text, keywords);
-    if (score > 0) {
+    const { titleHits, bodyHits } = countKeywordHits(titleForMatch, bodyForMatch, keywords);
+    // 标题命中视为直接相关；仅正文命中时要求至少两个不同关键词，避免单个泛称误配。
+    if (titleHits > 0 || bodyHits >= 2) {
       matchedCities.push(cityId);
-      bestScore = Math.max(bestScore, score);
+      bestScore = Math.max(bestScore, Math.min(titleHits * 6 + bodyHits, 20));
     }
   }
-  if (matchedCities.length === 0) return null;
+  // 名篇即使不含关键词也保留，交给 SEEDS 显式归属。
+  if (matchedCities.length === 0 && !isSeed) return null;
 
   const contentKey = `${author}|${titleSimplified}|${lines.join('')}`;
   const poemId =
@@ -178,7 +210,7 @@ function makePoem(
   return {
     poemId,
     title: titleSimplified,
-    author: toSimplified(author),
+    author: authorSimplified,
     dynasty,
     lines,
     linesTraditional,
