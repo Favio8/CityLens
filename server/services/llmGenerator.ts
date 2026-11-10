@@ -71,6 +71,8 @@ export interface GeneratedModule {
 
 export interface ModuleGenerator {
   readonly name: string;
+  /** 提示词版本，写入档案 meta.generator.promptVersion，便于追溯成卷口径。 */
+  readonly promptVersion: string;
   generate(input: GenerateInput): Promise<GeneratedModule>;
 }
 
@@ -258,6 +260,7 @@ function buildPoetics(input: GenerateInput): GeneratedModule {
 /** 模拟 LLM：仅用本地事实产物组装，缺数据即失败。 */
 export class MockGenerator implements ModuleGenerator {
   readonly name = 'mock-local-facts';
+  readonly promptVersion = 'mock-v1';
 
   constructor(
     private readonly options: { delayMs?: number; failModules?: string[] } = {},
@@ -294,6 +297,7 @@ export class MockGenerator implements ModuleGenerator {
 
 class NotImplementedGenerator implements ModuleGenerator {
   readonly name = 'deepseek-pending';
+  readonly promptVersion = 'pending';
 
   async generate(): Promise<GeneratedModule> {
     throw new GenerationError('LLM_NOT_IMPLEMENTED', '真实 LLM 将在阶段 6 接入，请设置 MOCK_LLM=true');

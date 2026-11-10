@@ -324,6 +324,95 @@ button {
   }
 }
 
+/* 诗笺：桌面端逐行竖排，移动端横排 */
+@media (min-width: 768px) {
+  .poem-line {
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    white-space: nowrap;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* 地图                                                                */
+/* ------------------------------------------------------------------ */
+.citylens-marker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  transform: translateY(2px);
+}
+
+.citylens-marker__dot {
+  display: block;
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+  background: var(--city-primary);
+  border: 2px solid var(--bg-canvas);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--city-primary) 22%, transparent);
+  transition: transform 0.25s ease;
+}
+
+.citylens-marker__dot--gem {
+  background: var(--bg-canvas);
+  border-color: var(--city-accent);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--city-accent) 24%, transparent);
+}
+
+.citylens-marker:hover .citylens-marker__dot {
+  transform: scale(1.25);
+}
+
+.citylens-marker__label {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+  color: var(--text-primary);
+  background: color-mix(in srgb, var(--bg-canvas) 86%, transparent);
+  padding: 1px 6px;
+  border-radius: 2px;
+  opacity: 0;
+  transform: translateY(-3px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.citylens-marker:hover .citylens-marker__label,
+.citylens-marker:focus-visible .citylens-marker__label {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.citylens-popup .maplibregl-popup-content {
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  border: 1px solid var(--border-subtle);
+  border-radius: 3px;
+  padding: 8px 12px;
+  box-shadow: var(--shadow-soft);
+}
+
+.citylens-popup .maplibregl-popup-tip {
+  border-top-color: var(--bg-elevated);
+}
+
+.maplibregl-ctrl-attrib {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  background: color-mix(in srgb, var(--bg-canvas) 80%, transparent) !important;
+  color: var(--text-secondary);
+}
+
+.maplibregl-ctrl-attrib a {
+  color: var(--text-secondary);
+}
+
 /* ------------------------------------------------------------------ */
 /* 动效                                                                */
 /* ------------------------------------------------------------------ */

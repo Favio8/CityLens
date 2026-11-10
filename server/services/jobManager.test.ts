@@ -39,6 +39,9 @@ class CountingGenerator implements ModuleGenerator {
   get name(): string {
     return this.inner.name;
   }
+  get promptVersion(): string {
+    return this.inner.promptVersion;
+  }
   async generate(input: GenerateInput): Promise<GeneratedModule> {
     this.count += 1;
     this.calls.push(input.module);

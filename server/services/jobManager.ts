@@ -305,7 +305,10 @@ export class JobManager {
       this.deps.archiveRepo.setMeta(runtime.cityId, {
         themePalette: runtime.themePalette,
         sources: [...runtime.sources.values()],
-        generator: { model: this.deps.generator.name, promptVersion: 'mock-v1' },
+        generator: {
+          model: this.deps.generator.name,
+          promptVersion: this.deps.generator.promptVersion,
+        },
         generatedAt,
       });
       this.deps.archiveRepo.updateStatus(runtime.cityId, status, generatedAt);

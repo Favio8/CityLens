@@ -65,7 +65,9 @@ export function CityHero({
             <div className="flex flex-wrap items-center gap-3">
               <span className="eyebrow">{meta ? `${meta.province} · ${meta.cityId}` : '方志官检索中'}</span>
               {meta?.isPreset ? <span className="stamp">预置馆藏</span> : null}
-              {meta?.generator ? <span className="text-[10px] tracking-[0.16em] text-[var(--text-secondary)]">模拟生成</span> : null}
+              {meta?.generator?.model.includes('mock') ? (
+                <span className="text-[10px] tracking-[0.16em] text-[var(--text-secondary)]">模拟生成</span>
+              ) : null}
             </div>
 
             <h1

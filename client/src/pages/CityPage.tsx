@@ -1,12 +1,13 @@
 /** 城市页：读取缓存 / 流式生成 / 模块渲染 / 失败与冷却状态。 */
 import { useEffect, useMemo } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
-import { IdentitySchema, type Identity } from '@citylens/shared/schema';
+import { IdentitySchema, type Identity, type SourceRef } from '@citylens/shared/schema';
 import { CityHero } from '../components/hero/CityHero';
 import { ScrollNav } from '../components/layout/ScrollNav';
+import { ModuleRenderer } from '../components/modules/ModuleRenderer';
 import { Reveal } from '../components/ui/Reveal';
 import { SectionShell } from '../components/ui/SectionShell';
-import { useCityStream } from '../hooks/useCityStream';
+import { useCityStream, type StreamedModule } from '../hooks/useCityStream';
 import { useCityTheme } from '../hooks/useDynamicTheme';
 import { useLocalLibrary } from '../hooks/useLocalLibrary';
 import { formatRetry } from '../lib/format';
@@ -22,6 +23,18 @@ const MODULE_TITLES = [
   ['localSoul', '07', '城市性格'],
   ['dataPulse', '08', '数据脉搏'],
 ] as const;
+
+/** 合并档案来源与流式模块来源，按 id 去重，保证 [源] 浮层始终有据可查。 */
+function mergeSources(base: SourceRef[], modules: Partial<Record<string, StreamedModule>>): SourceRef[] {
+  const seen = new Map<string, SourceRef>();
+  for (const source of base) seen.set(source.id, source);
+  for (const module of Object.values(modules)) {
+    for (const source of module?.sources ?? []) {
+      if (!seen.has(source.id)) seen.set(source.id, source);
+    }
+  }
+  return [...seen.values()];
+}
 
 export function CityPage() {
   const { cityId = '' } = useParams();
@@ -42,6 +55,11 @@ export function CityPage() {
     const parsed = IdentitySchema.safeParse(raw);
     return parsed.success ? parsed.data : null;
   }, [state.archive, state.modules.identity]);
+
+  const sources = useMemo(
+    () => mergeSources(state.archive?.sources ?? [], state.modules),
+    [state.archive, state.modules],
+  );
 
   useEffect(() => {
     if (!state.meta) return;
@@ -98,6 +116,7 @@ export function CityPage() {
     );
   }
 
+  const meta = state.meta;
   const persona =
     identity && typeof identity.oneLinePersona === 'string' ? identity.oneLinePersona : null;
   const moduleCount = Object.keys(state.modules).length;
@@ -118,7 +137,7 @@ export function CityPage() {
       <ScrollNav />
 
       <main className="page-shell pb-10">
-        {state.phase === 'reading' ? (
+        {state.phase === 'reading' || !meta ? (
           <ReadingSkeleton cityId={cityId} />
         ) : (
           <div>
@@ -151,24 +170,36 @@ export function CityPage() {
                     )
                   }
                 >
-                  <Reveal>
-                    <div className="surface-card rounded-md p-8">
-                      <p className="font-serif text-sm leading-relaxed text-[var(--text-secondary)]">
-                        {error
-                          ? `此卷未能成卷（${error.code}），可单独重试，不影响其他卷。`
-                          : module
-                            ? '此卷数据已就绪，正在排版。'
+                  {module ? (
+                    <Reveal>
+                      <ModuleRenderer
+                        name={name}
+                        data={module.data}
+                        sources={sources}
+                        cityId={cityId}
+                        cityName={meta.standardName}
+                        center={meta.center}
+                        palette={state.theme ?? meta.themePalette}
+                      />
+                    </Reveal>
+                  ) : (
+                    <Reveal>
+                      <div className="surface-card rounded-md p-8">
+                        <p className="font-serif text-sm leading-relaxed text-[var(--text-secondary)]">
+                          {error
+                            ? `此卷未能成卷（${error.code}），可单独重试，不影响其他卷。`
                             : '方志官正在检索与校验，请稍候。'}
-                      </p>
-                      {!module && !error ? (
-                        <div className="mt-6 space-y-3" aria-hidden>
-                          <div className="ink-breathe h-3 w-2/3 rounded bg-[var(--border-subtle)]" />
-                          <div className="ink-breathe h-3 w-full rounded bg-[var(--border-subtle)]" style={{ animationDelay: '0.2s' }} />
-                          <div className="ink-breathe h-3 w-4/5 rounded bg-[var(--border-subtle)]" style={{ animationDelay: '0.4s' }} />
-                        </div>
-                      ) : null}
-                    </div>
-                  </Reveal>
+                        </p>
+                        {!error ? (
+                          <div className="mt-6 space-y-3" aria-hidden>
+                            <div className="ink-breathe h-3 w-2/3 rounded bg-[var(--border-subtle)]" />
+                            <div className="ink-breathe h-3 w-full rounded bg-[var(--border-subtle)]" style={{ animationDelay: '0.2s' }} />
+                            <div className="ink-breathe h-3 w-4/5 rounded bg-[var(--border-subtle)]" style={{ animationDelay: '0.4s' }} />
+                          </div>
+                        ) : null}
+                      </div>
+                    </Reveal>
+                  )}
                 </SectionShell>
               );
             })}
