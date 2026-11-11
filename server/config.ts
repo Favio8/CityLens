@@ -32,6 +32,11 @@ export const config = {
   },
   tiandituKey: process.env.TIANDITU_KEY?.trim() ?? '',
   tiandituServerKey: process.env.TIANDITU_SERVER_KEY?.trim() ?? '',
+  search: {
+    tavilyApiKey: process.env.TAVILY_API_KEY?.trim() ?? '',
+    baseUrl: (process.env.TAVILY_BASE_URL?.trim() || 'https://api.tavily.com').replace(/\/+$/, ''),
+    dailyLimit: num(process.env.SEARCH_DAILY_LIMIT, 200),
+  },
   adminToken: process.env.ADMIN_TOKEN?.trim() ?? '',
   enableImages: process.env.ENABLE_IMAGES === 'true',
   /** 无 Key 时自动使用模拟 LLM；也可用 MOCK_LLM=true 强制模拟。 */
@@ -51,6 +56,7 @@ export const config = {
 
 export const llmConfigured = (): boolean => config.llm.apiKey.length > 0;
 export const mapConfigured = (): boolean => config.tiandituKey.length > 0;
+export const searchConfigured = (): boolean => config.search.tavilyApiKey.length > 0;
 export const clientDistExists = (): boolean => existsSync(config.clientDist);
 
 /** CORS / SSE 共用的来源校验：同源请求（无 Origin）始终放行。 */
