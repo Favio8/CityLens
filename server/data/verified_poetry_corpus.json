@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-11T05:13:45.438Z",
+  "generatedAt": "2026-11-11T10:32:51.499Z",
   "source": {
     "repo": "https://github.com/chinese-poetry/chinese-poetry",
     "license": "MIT",
@@ -7,10 +7,10 @@
   },
   "stats": {
     "filesProcessed": 81,
-    "poems": 2730,
+    "poems": 2702,
     "byCity": {
       "CN-110000": 76,
-      "CN-120000": 20,
+      "CN-120000": 3,
       "CN-130100": 11,
       "CN-130200": 3,
       "CN-130300": 9,
@@ -68,7 +68,7 @@
       "CN-220700": 0,
       "CN-220800": 0,
       "CN-222400": 0,
-      "CN-230100": 12,
+      "CN-230100": 0,
       "CN-230200": 0,
       "CN-230300": 0,
       "CN-230400": 0,
@@ -108,7 +108,7 @@
       "CN-331100": 17,
       "CN-340100": 7,
       "CN-340200": 3,
-      "CN-340300": 20,
+      "CN-340300": 4,
       "CN-340400": 20,
       "CN-340500": 20,
       "CN-340600": 1,
@@ -122,7 +122,7 @@
       "CN-341600": 2,
       "CN-341700": 20,
       "CN-341800": 20,
-      "CN-350100": 50,
+      "CN-350100": 35,
       "CN-350200": 3,
       "CN-350300": 1,
       "CN-350500": 50,
@@ -142,7 +142,7 @@
       "CN-361000": 20,
       "CN-361100": 8,
       "CN-370100": 4,
-      "CN-370200": 3,
+      "CN-370200": 2,
       "CN-370300": 0,
       "CN-370400": 0,
       "CN-370500": 0,
@@ -510,40 +510,6 @@
       "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%AE%8B%E8%AF%8D/ci.song.8000.json",
       "matchedCities": [
         "CN-110000"
-      ],
-      "seedFor": [],
-      "matchScore": 6
-    },
-    {
-      "poemId": "songci:f6210d2bac93bc69",
-      "title": "黄河清",
-      "author": "晁端礼",
-      "dynasty": "宋",
-      "lines": [
-        "晴景初升风细细。",
-        "云收天淡如洗。",
-        "望外凤凰双阙，葱葱佳气。",
-        "朝罢香烟满袖，近臣报、天颜有喜。",
-        "夜来连得封章，奏大河、彻底清泚。",
-        "君王寿与天齐，馨香动上穹，频降嘉瑞。",
-        "大晟奏功，六乐初调清征。",
-        "合殿春风乍转，万花覆、千官尽醉。",
-        "内家传敕，重开宴、未央宫里。"
-      ],
-      "linesTraditional": [
-        "晴景初升风细细。",
-        "云收天淡如洗。",
-        "望外凤凰双阙，葱葱佳气。",
-        "朝罢香烟满袖，近臣报、天颜有喜。",
-        "夜来连得封章，奏大河、彻底清泚。",
-        "君王寿与天齐，馨香动上穹，频降嘉瑞。",
-        "大晟奏功，六乐初调清徵。",
-        "合殿春风乍转，万花覆、千官尽醉。",
-        "内家传敕，重开宴、未央宫里。"
-      ],
-      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%AE%8B%E8%AF%8D/ci.song.3000.json",
-      "matchedCities": [
-        "CN-410100"
       ],
       "seedFor": [],
       "matchScore": 6
@@ -1121,8 +1087,7 @@
       ],
       "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%AE%8B%E8%AF%8D/ci.song.0.json",
       "matchedCities": [
-        "CN-330100",
-        "CN-350100"
+        "CN-330100"
       ],
       "seedFor": [],
       "matchScore": 7
@@ -1472,40 +1437,6 @@
       "matchedCities": [
         "CN-330100",
         "CN-420100"
-      ],
-      "seedFor": [],
-      "matchScore": 6
-    },
-    {
-      "poemId": "songci:28633bd44e4d03c3",
-      "title": "黄河清",
-      "author": "丘崈",
-      "dynasty": "宋",
-      "lines": [
-        "鼓角清雄占云祲。",
-        "喜边尘、今度还静。",
-        "一线乍添，长觉皇州日永。",
-        "楼外崇牙影转，拥千骑、欢声万井。",
-        "太平官府人初见，梦熊三占佳景。",
-        "皇恩夜出天闱，云章粲、凤鸾飞动相映。",
-        "宝带万钉，与作今朝佳庆。",
-        "勋业如斯得也，况整顿、江淮大定。",
-        "这回恰好，归朝去、共调金鼎。"
-      ],
-      "linesTraditional": [
-        "鼓角清雄占云祲。",
-        "喜边尘、今度还静。",
-        "一线乍添，长觉皇州日永。",
-        "楼外崇牙影转，拥千骑、欢声万井。",
-        "太平官府人初见，梦熊三占佳景。",
-        "皇恩夜出天闱，云章粲、凤鸾飞动相映。",
-        "宝带万钉，与作今朝佳庆。",
-        "勋业如斯得也，况整顿、江淮大定。",
-        "这回恰好，归朝去、共调金鼎。"
-      ],
-      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%AE%8B%E8%AF%8D/ci.song.10000.json",
-      "matchedCities": [
-        "CN-410100"
       ],
       "seedFor": [],
       "matchScore": 6
@@ -2366,110 +2297,6 @@
       "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%AE%8B%E8%AF%8D/ci.song.10000.json",
       "matchedCities": [
         "CN-220100"
-      ],
-      "seedFor": [],
-      "matchScore": 6
-    },
-    {
-      "poemId": "tang:696bdf92-9cff-4fd6-bf94-b45f28aa5032",
-      "title": "春尽日天津桥醉吟偶呈李尹侍郎",
-      "author": "白居易",
-      "dynasty": "唐",
-      "lines": [
-        "宿雨洗天津，无泥未有尘。",
-        "初晴迎早夏，落照送残春。",
-        "兴发诗随口，狂来酒寄身。",
-        "水边行嵬峩，桥上立逡巡。",
-        "疎傅心情老，吴公政化新。",
-        "三川徒有主，风景属闲人。"
-      ],
-      "linesTraditional": [
-        "宿雨洗天津，無泥未有塵。",
-        "初晴迎早夏，落照送殘春。",
-        "興發詩隨口，狂來酒寄身。",
-        "水邊行嵬峩，橋上立逡巡。",
-        "疎傅心情老，吳公政化新。",
-        "三川徒有主，風景屬閑人。"
-      ],
-      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.24000.json",
-      "matchedCities": [
-        "CN-120000",
-        "CN-410300"
-      ],
-      "seedFor": [],
-      "matchScore": 7
-    },
-    {
-      "poemId": "tang:38434da3-f501-498a-a4f7-40767d11a417",
-      "title": "晓上天津桥闲望偶逢卢郎中张员外携酒同倾",
-      "author": "白居易",
-      "dynasty": "唐",
-      "lines": [
-        "上阳宫里晓钟后，天津桥头残月前。",
-        "空阔境疑非下界，飘飖身似在寥天。",
-        "星河隐映初生日，楼阁葱茏半出烟。",
-        "此处相逢倾一醆，始知地上有神仙。"
-      ],
-      "linesTraditional": [
-        "上陽宮裏曉鐘後，天津橋頭殘月前。",
-        "空闊境疑非下界，飄颻身似在寥天。",
-        "星河隱映初生日，樓閣蔥蘢半出煙。",
-        "此處相逢傾一醆，始知地上有神仙。"
-      ],
-      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.24000.json",
-      "matchedCities": [
-        "CN-120000",
-        "CN-410300"
-      ],
-      "seedFor": [],
-      "matchScore": 7
-    },
-    {
-      "poemId": "tang:1da16782-2e2c-4d65-8d87-64203d26c2ff",
-      "title": "天津桥",
-      "author": "白居易",
-      "dynasty": "唐",
-      "lines": [
-        "津桥东北斗亭西，到此令人诗思迷。",
-        "眉月晚生神女浦，脸波春傍窈娘堤。",
-        "柳丝褭褭风缲出，草缕茸茸雨剪齐。",
-        "报道前驱少呼喝，恐惊黄鸟不成啼。"
-      ],
-      "linesTraditional": [
-        "津橋東北斗亭西，到此令人詩思迷。",
-        "眉月晚生神女浦，臉波春傍窈娘堤。",
-        "柳絲褭褭風繰出，草縷茸茸雨剪齊。",
-        "報道前驅少呼喝，恐驚黃鳥不成啼。"
-      ],
-      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.23000.json",
-      "matchedCities": [
-        "CN-120000",
-        "CN-410300"
-      ],
-      "seedFor": [],
-      "matchScore": 6
-    },
-    {
-      "poemId": "tang:b220732d-1241-4a3d-bebd-062783fe694c",
-      "title": "雪后早过天津桥偶呈诸客",
-      "author": "白居易",
-      "dynasty": "唐",
-      "lines": [
-        "官桥晴雪晓峩峩，老尹行吟独一过。",
-        "紫绶相辉应不恶，白须同色复如何。",
-        "悠扬短景凋年急，牢落衰情感事多。",
-        "犹赖洛中饶醉客，时时䛏我唤笙歌。"
-      ],
-      "linesTraditional": [
-        "官橋晴雪曉峩峩，老尹行吟獨一過。",
-        "紫綬相輝應不惡，白鬚同色復如何。",
-        "悠揚短景凋年急，牢落衰情感事多。",
-        "猶賴洛中饒醉客，時時䛏我喚笙歌。"
-      ],
-      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.23000.json",
-      "matchedCities": [
-        "CN-120000",
-        "CN-410300"
       ],
       "seedFor": [],
       "matchScore": 6
@@ -3603,8 +3430,7 @@
       ],
       "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.23000.json",
       "matchedCities": [
-        "CN-330100",
-        "CN-350100"
+        "CN-330100"
       ],
       "seedFor": [],
       "matchScore": 12
@@ -3734,7 +3560,6 @@
       "matchedCities": [
         "CN-330100",
         "CN-330600",
-        "CN-350100",
         "CN-410500"
       ],
       "seedFor": [],
@@ -5061,6 +4886,30 @@
       "matchScore": 7
     },
     {
+      "poemId": "tang:38434da3-f501-498a-a4f7-40767d11a417",
+      "title": "晓上天津桥闲望偶逢卢郎中张员外携酒同倾",
+      "author": "白居易",
+      "dynasty": "唐",
+      "lines": [
+        "上阳宫里晓钟后，天津桥头残月前。",
+        "空阔境疑非下界，飘飖身似在寥天。",
+        "星河隐映初生日，楼阁葱茏半出烟。",
+        "此处相逢倾一醆，始知地上有神仙。"
+      ],
+      "linesTraditional": [
+        "上陽宮裏曉鐘後，天津橋頭殘月前。",
+        "空闊境疑非下界，飄颻身似在寥天。",
+        "星河隱映初生日，樓閣蔥蘢半出煙。",
+        "此處相逢傾一醆，始知地上有神仙。"
+      ],
+      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.24000.json",
+      "matchedCities": [
+        "CN-410300"
+      ],
+      "seedFor": [],
+      "matchScore": 7
+    },
+    {
       "poemId": "tang:07c8b2cb-4eee-4d3e-a9dc-1e3c48626beb",
       "title": "早春雪后赠洛阳李长官长水郑明府二同年",
       "author": "白居易",
@@ -5083,6 +4932,34 @@
       ],
       "seedFor": [],
       "matchScore": 7
+    },
+    {
+      "poemId": "tang:696bdf92-9cff-4fd6-bf94-b45f28aa5032",
+      "title": "春尽日天津桥醉吟偶呈李尹侍郎",
+      "author": "白居易",
+      "dynasty": "唐",
+      "lines": [
+        "宿雨洗天津，无泥未有尘。",
+        "初晴迎早夏，落照送残春。",
+        "兴发诗随口，狂来酒寄身。",
+        "水边行嵬峩，桥上立逡巡。",
+        "疎傅心情老，吴公政化新。",
+        "三川徒有主，风景属闲人。"
+      ],
+      "linesTraditional": [
+        "宿雨洗天津，無泥未有塵。",
+        "初晴迎早夏，落照送殘春。",
+        "興發詩隨口，狂來酒寄身。",
+        "水邊行嵬峩，橋上立逡巡。",
+        "疎傅心情老，吳公政化新。",
+        "三川徒有主，風景屬閑人。"
+      ],
+      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.24000.json",
+      "matchedCities": [
+        "CN-410300"
+      ],
+      "seedFor": [],
+      "matchScore": 6
     },
     {
       "poemId": "tang:27e1e855-bdb1-4d4a-96a6-681cf936ccd4",
@@ -6515,27 +6392,6 @@
       "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.48000.json",
       "matchedCities": [
         "CN-110000"
-      ],
-      "seedFor": [],
-      "matchScore": 6
-    },
-    {
-      "poemId": "tang:97cc9343-5904-468d-8c56-a8b98fa61951",
-      "title": "钱知微卜卖天津桥",
-      "author": "不详",
-      "dynasty": "唐",
-      "lines": [
-        "两头点土，中心虚悬。",
-        "人足踏跋，不肯下钱。"
-      ],
-      "linesTraditional": [
-        "兩頭點土，中心虛懸。",
-        "人足踏跋，不肯下錢。"
-      ],
-      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.48000.json",
-      "matchedCities": [
-        "CN-120000",
-        "CN-410300"
       ],
       "seedFor": [],
       "matchScore": 6
@@ -10707,6 +10563,30 @@
       "matchScore": 6
     },
     {
+      "poemId": "tang:34447457-a278-449e-9750-5f2a39eef734",
+      "title": "嵩山石淙侍宴应制",
+      "author": "崔融",
+      "dynasty": "唐",
+      "lines": [
+        "洞口仙岩类削成，泉香石冷昼含清。",
+        "龙旗画月中天下，凤管披云此地迎。",
+        "树作帷屏阳景翳，芝如宫阙夏凉生。",
+        "今朝出豫临悬圃，明日陪游向赤城。"
+      ],
+      "linesTraditional": [
+        "洞口仙巖類削成，泉香石冷晝含清。",
+        "龍旗畫月中天下，鳳管披雲此地迎。",
+        "樹作帷屏陽景翳，芝如宮闕夏涼生。",
+        "今朝出豫臨懸圃，明日陪遊向赤城。"
+      ],
+      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.3000.json",
+      "matchedCities": [
+        "CN-410100"
+      ],
+      "seedFor": [],
+      "matchScore": 6
+    },
+    {
       "poemId": "tang:495d3ae4-4bc2-46f3-a2bd-1fda9353283f",
       "title": "景龙二年余自门下平章事削阶授江州员外司马寻拜襄州刺史春日赴襄阳途中言志",
       "author": "崔湜",
@@ -10811,38 +10691,6 @@
       ],
       "seedFor": [],
       "matchScore": 6
-    },
-    {
-      "poemId": "tang:08548e78-98b8-4fec-83fe-eefedf6d9615",
-      "title": "登水门楼见亡友张贞期题望黄河诗因以感兴",
-      "author": "崔曙",
-      "dynasty": "唐",
-      "lines": [
-        "吾友东南美，昔闻登此楼。",
-        "人随川上逝，书向壁中留。",
-        "严子好真隐，谢公耽远游。",
-        "清风初作颂，暇日复销忧。",
-        "时与文字古，迹将山水幽。",
-        "已孤苍生望，空见黄河流。",
-        "流落年将晚，悲凉物已秋。",
-        "天高不可问，掩泣赴行舟。"
-      ],
-      "linesTraditional": [
-        "吾友東南美，昔聞登此樓。",
-        "人隨川上逝，書向壁中留。",
-        "嚴子好真隱，謝公耽遠遊。",
-        "清風初作頌，暇日復銷憂。",
-        "時與文字古，跡將山水幽。",
-        "已孤蒼生望，空見黃河流。",
-        "流落年將晚，悲涼物已秋。",
-        "天高不可問，掩泣赴行舟。"
-      ],
-      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.7000.json",
-      "matchedCities": [
-        "CN-410100"
-      ],
-      "seedFor": [],
-      "matchScore": 7
     },
     {
       "poemId": "tang:668736cb-2e47-45b1-b6d9-e943c41e1f7f",
@@ -12018,34 +11866,6 @@
       "matchScore": 12
     },
     {
-      "poemId": "tang:8005e823-4697-4083-b629-431465a59833",
-      "title": "天津晓望因寄呈分司一二省郎",
-      "author": "窦牟",
-      "dynasty": "唐",
-      "lines": [
-        "万乘西都去，千门正位虚。",
-        "凿龙横碧落，提象出华胥。",
-        "望幸宫嫔老，迎春海燕初。",
-        "保厘才半仗，容卫尽空庐。",
-        "要自词难拟，繇来画不如。",
-        "散郎无所属，聊事穆清居。"
-      ],
-      "linesTraditional": [
-        "萬乘西都去，千門正位虛。",
-        "鑿龍橫碧落，提象出華胥。",
-        "望幸宮嬪老，迎春海燕初。",
-        "保釐纔半仗，容衛盡空廬。",
-        "要自詞難擬，繇來畫不如。",
-        "散郎無所屬，聊事穆清居。"
-      ],
-      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.14000.json",
-      "matchedCities": [
-        "CN-120000"
-      ],
-      "seedFor": [],
-      "matchScore": 6
-    },
-    {
       "poemId": "tang:3b09acbc-a3e5-46bf-ac39-37223c0650e8",
       "title": "秋日洛阳官舍寄上水部家兄",
       "author": "窦牟",
@@ -12758,8 +12578,7 @@
       ],
       "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.11000.json",
       "matchedCities": [
-        "CN-330100",
-        "CN-350100"
+        "CN-330100"
       ],
       "seedFor": [],
       "matchScore": 6
@@ -12962,46 +12781,6 @@
       "matchScore": 6
     },
     {
-      "poemId": "tang:1913f5e2-b937-40ac-ba4b-ea09007d13e1",
-      "title": "黄河二首 二",
-      "author": "杜甫",
-      "dynasty": "唐",
-      "lines": [
-        "黄河西岸是吾蜀，欲须供给家无粟。",
-        "愿驱众蔗戴君王，混一车书弃金玉。"
-      ],
-      "linesTraditional": [
-        "黃河西岸是吾蜀，欲須供給家無粟。",
-        "願驅衆蔗戴君王，混一車書棄金玉。"
-      ],
-      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.11000.json",
-      "matchedCities": [
-        "CN-410100"
-      ],
-      "seedFor": [],
-      "matchScore": 7
-    },
-    {
-      "poemId": "tang:6aad28c5-dded-4c0c-884f-1c21d25854ef",
-      "title": "黄河二首 一",
-      "author": "杜甫",
-      "dynasty": "唐",
-      "lines": [
-        "黄河北岸海西军，椎鼓鸣钟天下闻。",
-        "铁马长鸣不知数，胡人高鼻动成群。"
-      ],
-      "linesTraditional": [
-        "黃河北岸海西軍，椎鼓鳴鐘天下聞。",
-        "鐵馬長鳴不知數，胡人高鼻動成羣。"
-      ],
-      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.11000.json",
-      "matchedCities": [
-        "CN-410100"
-      ],
-      "seedFor": [],
-      "matchScore": 7
-    },
-    {
       "poemId": "tang:57fcfc8f-4993-43a2-a154-615b75a5105f",
       "title": "八哀诗 赠左仆射郑国公严公武",
       "author": "杜甫",
@@ -13077,46 +12856,6 @@
         "飛旐出江漢，孤舟輕荆衡。",
         "虛無馬融笛，悵望龍驤塋。",
         "空餘老賓客，身上媿簪纓。"
-      ],
-      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.10000.json",
-      "matchedCities": [
-        "CN-410100"
-      ],
-      "seedFor": [],
-      "matchScore": 6
-    },
-    {
-      "poemId": "tang:df4bd05c-a0a4-4c19-8e8d-ada2db3ccbf2",
-      "title": "临邑舍弟书至苦雨黄河泛溢隄防之患簿领所忧因寄此诗用宽其意",
-      "author": "杜甫",
-      "dynasty": "唐",
-      "lines": [
-        "二仪积风雨，百谷漏波涛。",
-        "闻道洪何坼，遥连沧海高。",
-        "职思忧悄悄，郡国诉嗷嗷。",
-        "舍弟卑栖邑，防川领簿曹。",
-        "尺书前日至，版筑不时操。",
-        "难假鼋鼍力，空瞻乌鹊毛。",
-        "燕南吹畎亩，济上没蓬蒿。",
-        "螺蚌满近郭，蛟螭乘九臯。",
-        "徐关深水府，碣石小秋毫。",
-        "白屋留孤树，清天矢万艘。",
-        "吾衰同泛梗，利涉想蟠桃。",
-        "倚赖天涯钓，犹能掣巨鼇。"
-      ],
-      "linesTraditional": [
-        "二儀積風雨，百谷漏波濤。",
-        "聞道洪何坼，遙連滄海高。",
-        "職思憂悄悄，郡國訴嗷嗷。",
-        "舍弟卑棲邑，防川領簿曹。",
-        "尺書前日至，版築不時操。",
-        "難假黿鼉力，空瞻烏鵲毛。",
-        "燕南吹畎畝，濟上沒蓬蒿。",
-        "螺蚌滿近郭，蛟螭乘九臯。",
-        "徐關深水府，碣石小秋毫。",
-        "白屋留孤樹，清天矢萬艘。",
-        "吾衰同泛梗，利涉想蟠桃。",
-        "倚賴天涯釣，猶能掣巨鼇。"
       ],
       "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.10000.json",
       "matchedCities": [
@@ -15590,55 +15329,6 @@
       "matchScore": 6
     },
     {
-      "poemId": "tang:81acf292-4b8b-427e-bf96-bfceded135ea",
-      "title": "中秋日拜起居表晨渡天津桥即事十六韵献居守相国崔公兼呈工部刘公",
-      "author": "杜牧",
-      "dynasty": "唐",
-      "lines": [
-        "碧树康庄内，清川巩洛间。",
-        "坛分中岳顶，城缭大河湾。",
-        "广殿含凉静，深宫积翠闲。",
-        "楼齐云漠漠，桥束水潺潺。",
-        "过雨柽枝润，迎霜柿叶殷。",
-        "紫鳞冲晚浪，白鸟背秋山。",
-        "月拜西归表，晨趋北向班。",
-        "鸳鸿随半仗，貔虎护重关。",
-        "玉帐才容足，金罇暂解颜。",
-        "迹留伤堕屦，恩在乐衔环。",
-        "南省兰先握，东堂桂早攀。",
-        "龙门君夭矫，莺谷我绵蛮。",
-        "分薄嵇心懒，哀多庾鬓班。",
-        "人慙公干卧，频送子牟还。",
-        "自覩宸居壮，谁忧国步艰。",
-        "只应时与醉，因病纵疎顽。"
-      ],
-      "linesTraditional": [
-        "碧樹康莊內，清川鞏洛間。",
-        "壇分中岳頂，城繚大河灣。",
-        "廣殿含涼靜，深宮積翠閑。",
-        "樓齊雲漠漠，橋束水潺潺。",
-        "過雨檉枝潤，迎霜柿葉殷。",
-        "紫鱗衝晚浪，白鳥背秋山。",
-        "月拜西歸表，晨趨北向班。",
-        "鴛鴻隨半仗，貔虎護重關。",
-        "玉帳才容足，金罇暫解顏。",
-        "跡留傷墮屨，恩在樂銜環。",
-        "南省蘭先握，東堂桂早攀。",
-        "龍門君夭矯，鶯谷我綿蠻。",
-        "分薄嵇心懶，哀多庾鬢班。",
-        "人慙公幹臥，頻送子牟還。",
-        "自覩宸居壯，誰憂國步艱。",
-        "只應時與醉，因病縱疎頑。"
-      ],
-      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.28000.json",
-      "matchedCities": [
-        "CN-120000",
-        "CN-410300"
-      ],
-      "seedFor": [],
-      "matchScore": 7
-    },
-    {
       "poemId": "tang:eb5120bb-738e-4b1f-b212-869ed20e2c48",
       "title": "并州道中",
       "author": "杜牧",
@@ -15658,31 +15348,6 @@
       "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.28000.json",
       "matchedCities": [
         "CN-140100"
-      ],
-      "seedFor": [],
-      "matchScore": 6
-    },
-    {
-      "poemId": "tang:90d5325d-54e6-4dd0-a0e0-94a6fbb5eb57",
-      "title": "自宣城赴官上京",
-      "author": "杜牧",
-      "dynasty": "唐",
-      "lines": [
-        "潇洒江湖十过秋，酒杯无日不淹留。",
-        "谢公城畔溪惊梦，苏小门前柳拂头。",
-        "千里云山何处好，几人襟韵一生休。",
-        "尘冠挂却知闲事，终拟蹉跎访旧游。"
-      ],
-      "linesTraditional": [
-        "瀟灑江湖十過秋，酒杯無日不淹留。",
-        "謝公城畔溪驚夢，蘇小門前柳拂頭。",
-        "千里雲山何處好，幾人襟韻一生休。",
-        "塵冠挂却知閑事，終擬蹉跎訪舊遊。"
-      ],
-      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.28000.json",
-      "matchedCities": [
-        "CN-230100",
-        "CN-341800"
       ],
       "seedFor": [],
       "matchScore": 6
@@ -16432,6 +16097,54 @@
         "桃李香消金谷在，綺羅魂斷玉樓空。",
         "往年人事傷心外，今日風光屬夢中。",
         "徒想夜泉流客恨，夜泉流恨恨無窮。"
+      ],
+      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.28000.json",
+      "matchedCities": [
+        "CN-410300"
+      ],
+      "seedFor": [],
+      "matchScore": 7
+    },
+    {
+      "poemId": "tang:81acf292-4b8b-427e-bf96-bfceded135ea",
+      "title": "中秋日拜起居表晨渡天津桥即事十六韵献居守相国崔公兼呈工部刘公",
+      "author": "杜牧",
+      "dynasty": "唐",
+      "lines": [
+        "碧树康庄内，清川巩洛间。",
+        "坛分中岳顶，城缭大河湾。",
+        "广殿含凉静，深宫积翠闲。",
+        "楼齐云漠漠，桥束水潺潺。",
+        "过雨柽枝润，迎霜柿叶殷。",
+        "紫鳞冲晚浪，白鸟背秋山。",
+        "月拜西归表，晨趋北向班。",
+        "鸳鸿随半仗，貔虎护重关。",
+        "玉帐才容足，金罇暂解颜。",
+        "迹留伤堕屦，恩在乐衔环。",
+        "南省兰先握，东堂桂早攀。",
+        "龙门君夭矫，莺谷我绵蛮。",
+        "分薄嵇心懒，哀多庾鬓班。",
+        "人慙公干卧，频送子牟还。",
+        "自覩宸居壮，谁忧国步艰。",
+        "只应时与醉，因病纵疎顽。"
+      ],
+      "linesTraditional": [
+        "碧樹康莊內，清川鞏洛間。",
+        "壇分中岳頂，城繚大河灣。",
+        "廣殿含涼靜，深宮積翠閑。",
+        "樓齊雲漠漠，橋束水潺潺。",
+        "過雨檉枝潤，迎霜柿葉殷。",
+        "紫鱗衝晚浪，白鳥背秋山。",
+        "月拜西歸表，晨趨北向班。",
+        "鴛鴻隨半仗，貔虎護重關。",
+        "玉帳才容足，金罇暫解顏。",
+        "跡留傷墮屨，恩在樂銜環。",
+        "南省蘭先握，東堂桂早攀。",
+        "龍門君夭矯，鶯谷我綿蠻。",
+        "分薄嵇心懶，哀多庾鬢班。",
+        "人慙公幹臥，頻送子牟還。",
+        "自覩宸居壯，誰憂國步艱。",
+        "只應時與醉，因病縱疎頑。"
       ],
       "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.28000.json",
       "matchedCities": [
@@ -17892,8 +17605,7 @@
       ],
       "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.36000.json",
       "matchedCities": [
-        "CN-330100",
-        "CN-350100"
+        "CN-330100"
       ],
       "seedFor": [],
       "matchScore": 6
@@ -19021,62 +18733,6 @@
       "matchScore": 7
     },
     {
-      "poemId": "tang:ef119060-f85f-444a-a103-4a07a56d1202",
-      "title": "自淇涉黄河途中作十三首 十三",
-      "author": "高适",
-      "dynasty": "唐",
-      "lines": [
-        "皤皤河滨叟，相遇似有耻。",
-        "辍榜聊问之，荅言尽终结。",
-        "一生虽贫贱，九十年未死。",
-        "且喜对儿孙，弥慙远城市。",
-        "结庐黄河曲，垂钓长河里。",
-        "漫漫望云沙，萧条听风水。",
-        "所思强饭食，永愿在乡里。",
-        "万事吾不知，其心只如此。"
-      ],
-      "linesTraditional": [
-        "皤皤河濱叟，相遇似有耻。",
-        "輟榜聊問之，荅言盡終結。",
-        "一生雖貧賤，九十年未死。",
-        "且喜對兒孫，彌慙遠城市。",
-        "結廬黃河曲，垂釣長河裏。",
-        "漫漫望雲沙，蕭條聽風水。",
-        "所思強飯食，永願在鄉里。",
-        "萬事吾不知，其心只如此。"
-      ],
-      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.10000.json",
-      "matchedCities": [
-        "CN-410100"
-      ],
-      "seedFor": [],
-      "matchScore": 7
-    },
-    {
-      "poemId": "tang:62492dd9-477c-4ce8-af80-cf9f9f895a3f",
-      "title": "自淇涉黄河途中作十三首 五",
-      "author": "高适",
-      "dynasty": "唐",
-      "lines": [
-        "东入黄河水，茫茫泛纡直。",
-        "北望太行山，峨峨半天色。",
-        "山河相暎带，深浅未可测。",
-        "自昔有贤才，相逢不相识。"
-      ],
-      "linesTraditional": [
-        "東入黃河水，茫茫汎紆直。",
-        "北望太行山，峨峨半天色。",
-        "山河相暎帶，深淺未可測。",
-        "自昔有賢才，相逢不相識。"
-      ],
-      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.10000.json",
-      "matchedCities": [
-        "CN-410100"
-      ],
-      "seedFor": [],
-      "matchScore": 7
-    },
-    {
       "poemId": "tang:5e31820a-bcc7-4bb7-b173-ab69e432e45c",
       "title": "古大梁行",
       "author": "高适",
@@ -19705,31 +19361,6 @@
       "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.55000.json",
       "matchedCities": [
         "CN-421000"
-      ],
-      "seedFor": [],
-      "matchScore": 6
-    },
-    {
-      "poemId": "tang:b76e6627-d4aa-45e2-b056-525e4084bb05",
-      "title": "天津桥晚望",
-      "author": "顾非熊",
-      "dynasty": "唐",
-      "lines": [
-        "晴登洛桥望，寒色古槐稀。",
-        "流水东不息，翠华西未归。",
-        "云收中岳近，钟出后宫微。",
-        "回首禁门路，群鸦度落晖。"
-      ],
-      "linesTraditional": [
-        "晴登洛橋望，寒色古槐稀。",
-        "流水東不息，翠華西未歸。",
-        "雲收中岳近，鐘出後宮微。",
-        "回首禁門路，羣鴉度落暉。"
-      ],
-      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.27000.json",
-      "matchedCities": [
-        "CN-120000",
-        "CN-410300"
       ],
       "seedFor": [],
       "matchScore": 6
@@ -22687,26 +22318,6 @@
       "matchScore": 6
     },
     {
-      "poemId": "tang:c1874d9f-a8b1-4b2d-97fe-3a64abc1c3b4",
-      "title": "咏史诗 黄河",
-      "author": "胡曾",
-      "dynasty": "唐",
-      "lines": [
-        "博望沈埋不复旋，黄河依旧水茫然。",
-        "沿流欲共牛郎语，只得灵槎送上天。"
-      ],
-      "linesTraditional": [
-        "博望沈埋不復旋，黃河依舊水茫然。",
-        "沿流欲共牛郎語，只得靈槎送上天。"
-      ],
-      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.35000.json",
-      "matchedCities": [
-        "CN-410100"
-      ],
-      "seedFor": [],
-      "matchScore": 7
-    },
-    {
       "poemId": "tang:db19b3af-8153-48ee-aa9c-af85a7004e15",
       "title": "咏史诗 荥阳",
       "author": "胡曾",
@@ -23083,35 +22694,6 @@
       "matchScore": 6
     },
     {
-      "poemId": "tang:318cdefe-d46b-4f4c-b462-5f9337aa0fa7",
-      "title": "送包佶赋得天津桥",
-      "author": "皇甫冉",
-      "dynasty": "唐",
-      "lines": [
-        "洛阳岁暮作征客，囗囗囗囗囗囗囗。",
-        "相望依然一水间，相思已如千年隔。",
-        "晴烟霁景满天津，凤阁龙楼暎水滨。",
-        "岂无朝夕轩车度，其奈相逢非所亲。",
-        "巩树甘陵愁远道，他乡一望人堪老。",
-        "君报还期在早春，桥边日日看芳草。"
-      ],
-      "linesTraditional": [
-        "洛陽歲暮作征客，囗囗囗囗囗囗囗。",
-        "相望依然一水間，相思已如千年隔。",
-        "晴煙霽景滿天津，鳳閣龍樓暎水濱。",
-        "豈無朝夕軒車度，其奈相逢非所親。",
-        "鞏樹甘陵愁遠道，他鄉一望人堪老。",
-        "君報還期在早春，橋邊日日看芳草。"
-      ],
-      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.13000.json",
-      "matchedCities": [
-        "CN-120000",
-        "CN-410300"
-      ],
-      "seedFor": [],
-      "matchScore": 7
-    },
-    {
       "poemId": "tang:6e0488e2-d817-4e8d-a2dc-641a84bda578",
       "title": "杂言无锡惠山寺流泉歌",
       "author": "皇甫冉",
@@ -23316,6 +22898,54 @@
       "matchScore": 6
     },
     {
+      "poemId": "tang:071e72e6-de40-4aa0-add7-7eed7e63ac4c",
+      "title": "送蒋评事往福州",
+      "author": "皇甫冉",
+      "dynasty": "唐",
+      "lines": [
+        "江上春常早，闽中客去稀。",
+        "登山怨迢递，临水惜芳菲。",
+        "烟树何时尽，风帆几日归。",
+        "还看复命处，盛府有光辉。"
+      ],
+      "linesTraditional": [
+        "江上春常早，閩中客去稀。",
+        "登山怨迢遞，臨水惜芳菲。",
+        "煙樹何時盡，風帆幾日歸。",
+        "還看復命處，盛府有光輝。"
+      ],
+      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.13000.json",
+      "matchedCities": [
+        "CN-350100"
+      ],
+      "seedFor": [],
+      "matchScore": 6
+    },
+    {
+      "poemId": "tang:b4df1827-8d5d-4cbb-ba7e-e5d7cf1a787d",
+      "title": "詶李郎中侍御秋夜登福州城楼见寄",
+      "author": "皇甫冉",
+      "dynasty": "唐",
+      "lines": [
+        "辛勤万里道，箫索九秋残。",
+        "月照闽中夜，天凝海上寒。",
+        "王程无地远，主意在人安。",
+        "遥寄登楼作，空知行路难。"
+      ],
+      "linesTraditional": [
+        "辛勤萬里道，簫索九秋殘。",
+        "月照閩中夜，天凝海上寒。",
+        "王程無地遠，主意在人安。",
+        "遙寄登樓作，空知行路難。"
+      ],
+      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.13000.json",
+      "matchedCities": [
+        "CN-350100"
+      ],
+      "seedFor": [],
+      "matchScore": 6
+    },
+    {
       "poemId": "tang:79497342-fc67-40d5-a09b-3fa21a1927af",
       "title": "和郑少尹祭中岳寺北访萧居士越上方",
       "author": "皇甫冉",
@@ -23370,6 +23000,34 @@
       ],
       "seedFor": [],
       "matchScore": 6
+    },
+    {
+      "poemId": "tang:318cdefe-d46b-4f4c-b462-5f9337aa0fa7",
+      "title": "送包佶赋得天津桥",
+      "author": "皇甫冉",
+      "dynasty": "唐",
+      "lines": [
+        "洛阳岁暮作征客，囗囗囗囗囗囗囗。",
+        "相望依然一水间，相思已如千年隔。",
+        "晴烟霁景满天津，凤阁龙楼暎水滨。",
+        "岂无朝夕轩车度，其奈相逢非所亲。",
+        "巩树甘陵愁远道，他乡一望人堪老。",
+        "君报还期在早春，桥边日日看芳草。"
+      ],
+      "linesTraditional": [
+        "洛陽歲暮作征客，囗囗囗囗囗囗囗。",
+        "相望依然一水間，相思已如千年隔。",
+        "晴煙霽景滿天津，鳳閣龍樓暎水濱。",
+        "豈無朝夕軒車度，其奈相逢非所親。",
+        "鞏樹甘陵愁遠道，他鄉一望人堪老。",
+        "君報還期在早春，橋邊日日看芳草。"
+      ],
+      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.13000.json",
+      "matchedCities": [
+        "CN-410300"
+      ],
+      "seedFor": [],
+      "matchScore": 7
     },
     {
       "poemId": "tang:567751ef-9c7d-48c8-8429-548cda0cc1d2",
@@ -24331,82 +23989,6 @@
       "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.45000.json",
       "matchedCities": [
         "CN-211300"
-      ],
-      "seedFor": [],
-      "matchScore": 6
-    },
-    {
-      "poemId": "tang:1c61ad4f-d648-4851-bc9d-7718e4b99bf8",
-      "title": "九日和于使君思上京亲故",
-      "author": "皎然",
-      "dynasty": "唐",
-      "lines": [
-        "霁景满水国，我公望江城。",
-        "碧山与黄花，烂熳多秋情。",
-        "摇落见松柏，岁寒比忠贞。",
-        "欢娱在鸿都，是日思朝英。"
-      ],
-      "linesTraditional": [
-        "霽景滿水國，我公望江城。",
-        "碧山與黃花，爛熳多秋情。",
-        "搖落見松柏，歲寒比忠貞。",
-        "歡娛在鴻都，是日思朝英。"
-      ],
-      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.45000.json",
-      "matchedCities": [
-        "CN-230100"
-      ],
-      "seedFor": [],
-      "matchScore": 6
-    },
-    {
-      "poemId": "tang:832673b1-038f-4eda-bc92-10b938233652",
-      "title": "送陆侍御士佳赴上京",
-      "author": "皎然",
-      "dynasty": "唐",
-      "lines": [
-        "长安三千里，喜行不言永。",
-        "清路黄尘飞，大河沧流静。",
-        "更怀西川府，主公昔和鼎。",
-        "伊郁瑶瑟情，威迟花骢影。",
-        "此时已难别，日又无停景。",
-        "出饯阙相从，心随过前岭。"
-      ],
-      "linesTraditional": [
-        "長安三千里，喜行不言永。",
-        "清路黃塵飛，大河滄流靜。",
-        "更懷西川府，主公昔和鼎。",
-        "伊鬱瑤瑟情，威遲花驄影。",
-        "此時已難別，日又無停景。",
-        "出餞闕相從，心隨過前嶺。"
-      ],
-      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.45000.json",
-      "matchedCities": [
-        "CN-230100"
-      ],
-      "seedFor": [],
-      "matchScore": 6
-    },
-    {
-      "poemId": "tang:efc703bb-6916-4269-bf9c-01513fd90d14",
-      "title": "送裴邕之上京",
-      "author": "皎然",
-      "dynasty": "唐",
-      "lines": [
-        "辞山偶世清，挟策忽西行。",
-        "帆过随江疾，衣沾楚雪轻。",
-        "尚文须献赋，重道莫论兵。",
-        "东观今多事，应高白马生。"
-      ],
-      "linesTraditional": [
-        "辭山偶世清，挾策忽西行。",
-        "帆過隨江疾，衣霑楚雪輕。",
-        "尚文須獻賦，重道莫論兵。",
-        "東觀今多事，應高白馬生。"
-      ],
-      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.45000.json",
-      "matchedCities": [
-        "CN-230100"
       ],
       "seedFor": [],
       "matchScore": 6
@@ -29336,8 +28918,7 @@
       ],
       "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.25000.json",
       "matchedCities": [
-        "CN-330100",
-        "CN-350100"
+        "CN-330100"
       ],
       "seedFor": [],
       "matchScore": 6
@@ -31644,6 +31225,30 @@
       "matchScore": 6
     },
     {
+      "poemId": "tang:72d4cb05-629b-4a9e-baee-6c46c3bdb37f",
+      "title": "与三山人夜话",
+      "author": "李群玉",
+      "dynasty": "唐",
+      "lines": [
+        "静谈云鹤趣，高会两三贤。",
+        "酒思弹琴夜，茶芳向火天。",
+        "兔裘堆膝暖，鸠杖倚床偏。",
+        "各厌池笼窄，相看意浩然。"
+      ],
+      "linesTraditional": [
+        "靜談雲鶴趣，高會兩三賢。",
+        "酒思彈琴夜，茶芳向火天。",
+        "兔裘堆膝暖，鳩杖倚牀偏。",
+        "各厭池籠窄，相看意浩然。"
+      ],
+      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.31000.json",
+      "matchedCities": [
+        "CN-350100"
+      ],
+      "seedFor": [],
+      "matchScore": 6
+    },
+    {
       "poemId": "tang:c2dc6859-8cc9-49fd-a5dd-73c15437a51d",
       "title": "登宜春醉宿景星寺寄郑判官兼简空上人",
       "author": "李群玉",
@@ -32045,26 +31650,6 @@
       "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.35000.json",
       "matchedCities": [
         "CN-610100"
-      ],
-      "seedFor": [],
-      "matchScore": 7
-    },
-    {
-      "poemId": "tang:da10a8c6-c0e0-47be-8f73-e4358888fd31",
-      "title": "天津西望",
-      "author": "李商隐",
-      "dynasty": "唐",
-      "lines": [
-        "虏马崩腾忽一狂，翠华无日到东方。",
-        "天津西望肠真断，满眼秋波出苑墙。"
-      ],
-      "linesTraditional": [
-        "虜馬崩騰忽一狂，翠華無日到東方。",
-        "天津西望腸真斷，滿眼秋波出苑牆。"
-      ],
-      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.29000.json",
-      "matchedCities": [
-        "CN-120000"
       ],
       "seedFor": [],
       "matchScore": 7
@@ -32803,8 +32388,7 @@
       "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.25000.json",
       "matchedCities": [
         "CN-320200",
-        "CN-330100",
-        "CN-350100"
+        "CN-330100"
       ],
       "seedFor": [],
       "matchScore": 12
@@ -33496,27 +33080,6 @@
       "matchScore": 6
     },
     {
-      "poemId": "tang:53bc96df-8ea0-4936-b697-2fc94a3bdef3",
-      "title": "天津桥南山中各题一句",
-      "author": "李益",
-      "dynasty": "唐",
-      "lines": [
-        "野坐分苔席，山行绕菊丛。",
-        "云衣惹不破，秋色望来空。"
-      ],
-      "linesTraditional": [
-        "野坐分苔席，山行繞菊叢。",
-        "雲衣惹不破，秋色望來空。"
-      ],
-      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.43000.json",
-      "matchedCities": [
-        "CN-120000",
-        "CN-410300"
-      ],
-      "seedFor": [],
-      "matchScore": 6
-    },
-    {
       "poemId": "tang:5d171072-47a3-4daf-ba8f-202d4c47ce49",
       "title": "宿石邑山中",
       "author": "李益",
@@ -33785,8 +33348,7 @@
       ],
       "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.32000.json",
       "matchedCities": [
-        "CN-330100",
-        "CN-350100"
+        "CN-330100"
       ],
       "seedFor": [],
       "matchScore": 6
@@ -33910,48 +33472,6 @@
       ],
       "seedFor": [],
       "matchScore": 7
-    },
-    {
-      "poemId": "tang:1fd67a6d-84e8-406b-80ac-d6af8b7f5f7e",
-      "title": "题琅琊山寺道标道揖二上人东峰禅室时助成此□□筑斯地",
-      "author": "李幼卿",
-      "dynasty": "唐",
-      "lines": [
-        "佛寺秋山里，僧堂绝顶边。",
-        "同依妙乐土，别占净居天。",
-        "转壁千林合，归房一径穿。",
-        "豁心群壑尽，骇目半空悬。",
-        "锡杖栖云湿，绳床挂月圆。",
-        "经行蹑霞雨，跬步隔岚烟。",
-        "地胜情非系，言忘意可传。",
-        "凭虚堪喻道，封境自安禅。",
-        "每贮归休巅，多慙爱深偏。",
-        "助君成此地，一到一留连。",
-        "（安徽人民出版社出版《瑯琊山石刻选》载拓片。",
-        "此诗承周勋初先生录示。",
-        "）。"
-      ],
-      "linesTraditional": [
-        "佛寺秋山裏，僧堂絕頂邊。",
-        "同依妙樂土，別占淨居天。",
-        "轉壁千林合，歸房一逕穿。",
-        "豁心羣壑盡，駭目半空懸。",
-        "錫杖棲雲濕，繩床挂月圓。",
-        "經行躡霞雨，跬步隔嵐煙。",
-        "地勝情非繫，言忘意可傳。",
-        "憑虛堪喻道，封境自安禪。",
-        "每貯歸休巔，多慙愛深偏。",
-        "助君成此地，一到一留連。",
-        "（安徽人民出版社出版《瑯琊山石刻選》載拓片。",
-        "此詩承周勳初先生錄示。",
-        "）。"
-      ],
-      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.52000.json",
-      "matchedCities": [
-        "CN-370200"
-      ],
-      "seedFor": [],
-      "matchScore": 6
     },
     {
       "poemId": "tang:64487d0c-5df1-41fa-8da2-fcffa8b760a5",
@@ -34452,30 +33972,6 @@
       "matchScore": 7
     },
     {
-      "poemId": "tang:5eaa230b-69e8-41d4-8799-1af8ab21e870",
-      "title": "九日和于使君思上京亲故",
-      "author": "灵澈",
-      "dynasty": "唐",
-      "lines": [
-        "清晨有高会，宾从出东方。",
-        "楚俗风烟古，汀洲草木凉。",
-        "山情来远思，菊意在重阳。",
-        "心忆华池上，从容鸳鹭行。"
-      ],
-      "linesTraditional": [
-        "清晨有高會，賓從出東方。",
-        "楚俗風煙古，汀洲草木涼。",
-        "山情來遠思，菊意在重陽。",
-        "心憶華池上，從容鴛鷺行。"
-      ],
-      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.44000.json",
-      "matchedCities": [
-        "CN-230100"
-      ],
-      "seedFor": [],
-      "matchScore": 6
-    },
-    {
       "poemId": "tang:a37d754c-e93f-461c-9c91-c92308277ac1",
       "title": "酬皇甫冉将赴无锡于云门寺赠别",
       "author": "灵一",
@@ -34882,7 +34378,6 @@
       ],
       "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.21000.json",
       "matchedCities": [
-        "CN-120000",
         "CN-410300"
       ],
       "seedFor": [],
@@ -35880,30 +35375,6 @@
       "matchScore": 6
     },
     {
-      "poemId": "tang:9a00cce8-1114-4504-ada3-659321e53036",
-      "title": "洛中初冬拜表有怀上京故人",
-      "author": "刘禹锡",
-      "dynasty": "唐",
-      "lines": [
-        "凤楼南面控三条，拜表郎官早渡桥。",
-        "清洛晓光铺碧簟，上阳霜叶剪红绡。",
-        "省门簪组初成列，云路鸳鸾想退朝。",
-        "寄谢慇懃九天侣，抢榆水击各逍遥。"
-      ],
-      "linesTraditional": [
-        "鳳樓南面控三條，拜表郎官早渡橋。",
-        "清洛曉光鋪碧簟，上陽霜葉剪紅綃。",
-        "省門簪組初成列，雲路鴛鸞想退朝。",
-        "寄謝慇懃九天侶，搶榆水擊各逍遙。"
-      ],
-      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.19000.json",
-      "matchedCities": [
-        "CN-230100"
-      ],
-      "seedFor": [],
-      "matchScore": 6
-    },
-    {
       "poemId": "tang:14ae1987-b0e2-4b19-a5c0-4357d11b1d4b",
       "title": "松江送处州奚使君",
       "author": "刘禹锡",
@@ -36419,8 +35890,7 @@
       ],
       "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.19000.json",
       "matchedCities": [
-        "CN-330100",
-        "CN-350100"
+        "CN-330100"
       ],
       "seedFor": [],
       "matchScore": 7
@@ -38377,8 +37847,7 @@
       ],
       "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.7000.json",
       "matchedCities": [
-        "CN-330100",
-        "CN-350100"
+        "CN-330100"
       ],
       "seedFor": [],
       "matchScore": 6
@@ -38639,6 +38108,127 @@
       "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.7000.json",
       "matchedCities": [
         "CN-341700"
+      ],
+      "seedFor": [],
+      "matchScore": 6
+    },
+    {
+      "poemId": "tang:ec319906-635a-47f6-bea3-82c168e4a5ce",
+      "title": "送乔判官赴福州",
+      "author": "刘长卿",
+      "dynasty": "唐",
+      "lines": [
+        "扬帆向何处，插羽逐征东。",
+        "夷落人烟迥，王程鸟路通。",
+        "江流回涧底，山色聚闽中。",
+        "君去凋残后，应怜百越空。"
+      ],
+      "linesTraditional": [
+        "揚帆向何處，插羽逐征東。",
+        "夷落人煙迥，王程鳥路通。",
+        "江流回澗底，山色聚閩中。",
+        "君去凋殘後，應憐百越空。"
+      ],
+      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.7000.json",
+      "matchedCities": [
+        "CN-350100"
+      ],
+      "seedFor": [],
+      "matchScore": 6
+    },
+    {
+      "poemId": "tang:aec89983-bf8a-4474-9b19-e00ea24e0de7",
+      "title": "送秦侍御外甥张篆之福州谒鲍大夫秦侍御与大夫有旧",
+      "author": "刘长卿",
+      "dynasty": "唐",
+      "lines": [
+        "万里闽中去渺然，孤舟水上入寒烟。",
+        "辕门拜首儒衣弊，貌似牢之岂不怜。"
+      ],
+      "linesTraditional": [
+        "萬里閩中去渺然，孤舟水上入寒煙。",
+        "轅門拜首儒衣弊，貌似牢之豈不憐。"
+      ],
+      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.7000.json",
+      "matchedCities": [
+        "CN-350100"
+      ],
+      "seedFor": [],
+      "matchScore": 6
+    },
+    {
+      "poemId": "tang:03857755-ded7-4098-9d07-94ad24cd20f2",
+      "title": "夜宴洛阳程九主簿宅送杨三山人往天台寻智者禅师隐居",
+      "author": "刘长卿",
+      "dynasty": "唐",
+      "lines": [
+        "东林问逋客，何处栖幽偏？",
+        "满腹万余卷，息机三十年。",
+        "志图良已久，鬓发空苍然。",
+        "调啸寄疎旷，形骸如弃捐。",
+        "本家关西族，别业嵩阳田。",
+        "云卧能独往，山栖幸周旋。",
+        "垂竿不在鱼，卖药不为钱。",
+        "藜杖闲倚壁，松花常醉眠。",
+        "顷辞青溪隐，来访赤县仙。",
+        "南亩自甘贱，中朝唯爱贤。",
+        "仍空世谛法，远结天台缘。",
+        "魏阙从此去，沧洲知所便。",
+        "主人琼枝秀，宠别瑶华篇。",
+        "落日扫尘榻，春风吹客船。",
+        "此行颇自适，物外谁能牵。",
+        "弄棹白苹里，挂帆飞鸟边。",
+        "落潮见孤屿，彻底观澄涟。",
+        "雁过湖上月，猿声峰际天。",
+        "群峰趋海峤，千里黛相连。",
+        "遥倚赤城上，曈曈初日圆。",
+        "昔闻智公隐，此地常安禅。",
+        "千载已如梦，一灯今尚传。",
+        "云龛闭遗影，石窟无人烟。",
+        "古寺暗乔木，春崖鸣细泉。",
+        "流尘既寂寞，缅想增婵娟。",
+        "山鸟怨庭树，门人思步莲。",
+        "夷犹怀永路，怅望临清川。",
+        "渔人来梦里，沙鸥飞眼前。",
+        "独游岂易惬，群动多相缠。",
+        "羡尔五湖夜，往来闲扣舷。"
+      ],
+      "linesTraditional": [
+        "東林問逋客，何處棲幽偏？",
+        "滿腹萬餘卷，息機三十年。",
+        "志圖良已久，鬢髮空蒼然。",
+        "調嘯寄疎曠，形骸如棄捐。",
+        "本家關西族，別業嵩陽田。",
+        "雲臥能獨往，山棲幸周旋。",
+        "垂竿不在魚，賣藥不爲錢。",
+        "藜杖閑倚壁，松花常醉眠。",
+        "頃辭青溪隱，來訪赤縣仙。",
+        "南畝自甘賤，中朝唯愛賢。",
+        "仍空世諦法，遠結天台緣。",
+        "魏闕從此去，滄洲知所便。",
+        "主人瓊枝秀，寵別瑤華篇。",
+        "落日掃塵榻，春風吹客船。",
+        "此行頗自適，物外誰能牽。",
+        "弄棹白蘋裏，挂帆飛鳥邊。",
+        "落潮見孤嶼，徹底觀澄漣。",
+        "雁過湖上月，猿聲峰際天。",
+        "羣峰趨海嶠，千里黛相連。",
+        "遙倚赤城上，曈曈初日圓。",
+        "昔聞智公隱，此地常安禪。",
+        "千載已如夢，一燈今尚傳。",
+        "雲龕閉遺影，石窟無人煙。",
+        "古寺暗喬木，春崖鳴細泉。",
+        "流塵既寂寞，緬想增嬋娟。",
+        "山鳥怨庭樹，門人思步蓮。",
+        "夷猶懷永路，悵望臨清川。",
+        "漁人來夢裏，沙鷗飛眼前。",
+        "獨遊豈易愜，羣動多相纏。",
+        "羨爾五湖夜，往來閑扣舷。"
+      ],
+      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.7000.json",
+      "matchedCities": [
+        "CN-350100",
+        "CN-410300"
       ],
       "seedFor": [],
       "matchScore": 6
@@ -40160,6 +39750,198 @@
         "窮三休兮曠一觀，忽若登崑崙兮中期汗漫仙。",
         "聳天關兮倒景臺，鯊顥氣兮軼囂埃。",
         "皎皎之子兮自獨立，雲可朋兮赮可吸，曾何榮辱之所及。"
+      ],
+      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.5000.json",
+      "matchedCities": [
+        "CN-410100"
+      ],
+      "seedFor": [],
+      "matchScore": 6
+    },
+    {
+      "poemId": "tang:18e37bbe-ca89-418c-b448-a5fd41e4d72c",
+      "title": "嵩山十志十首 其九",
+      "author": "卢鸿一",
+      "dynasty": "唐",
+      "lines": [
+        "岚气肃兮岩翠冥，空阴虚兮户芳迎。",
+        "披蕙帐兮促萝筵，谈空空兮核元元。",
+        "蕙帐萝筵兮洞元室，秘而幽兮真可吉。",
+        "返自然兮道可冥，泽妙思兮草玄经，结幽门兮在黄庭。"
+      ],
+      "linesTraditional": [
+        "嵐氣肅兮巖翠冥，空陰虛兮戶芳迎。",
+        "披蕙帳兮促蘿筵，談空空兮覈元元。",
+        "蕙帳蘿筵兮洞元室，祕而幽兮真可吉。",
+        "返自然兮道可冥，澤妙思兮草玄經，結幽門兮在黃庭。"
+      ],
+      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.5000.json",
+      "matchedCities": [
+        "CN-410100"
+      ],
+      "seedFor": [],
+      "matchScore": 6
+    },
+    {
+      "poemId": "tang:4931b852-e4fd-4473-b014-6308390904a6",
+      "title": "嵩山十志十首 其六",
+      "author": "卢鸿一",
+      "dynasty": "唐",
+      "lines": [
+        "霏微阴壑兮气腾虹，迤逦危磴兮上凌空。",
+        "青霞杪兮紫云垂，鸾歌凤舞兮吹参差。",
+        "鸾吹凤舞兮期仙磴，鸿驾迎兮瑶华赠。",
+        "山中人兮好神仙，想像闻此兮欲升烟，铸月炼液兮竚还年。"
+      ],
+      "linesTraditional": [
+        "霏微陰壑兮氣騰虹，迤邐危磴兮上凌空。",
+        "青霞杪兮紫雲垂，鸞歌鳳舞兮吹參差。",
+        "鸞吹鳳舞兮期仙磴，鴻駕迎兮瑤華贈。",
+        "山中人兮好神仙，想像聞此兮欲升煙，鑄月煉液兮竚還年。"
+      ],
+      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.5000.json",
+      "matchedCities": [
+        "CN-410100"
+      ],
+      "seedFor": [],
+      "matchScore": 6
+    },
+    {
+      "poemId": "tang:c06b734d-acb4-4a0a-ba70-e9ba22f1678f",
+      "title": "嵩山十志十首 其七",
+      "author": "卢鸿一",
+      "dynasty": "唐",
+      "lines": [
+        "灵矶盘礴兮溜奔错漱，冷风兮镇冥壑。",
+        "研苔滋兮泉珠洁，一饮一憩兮气想灭。",
+        "磷涟清淬兮涤烦矶，灵仙境兮仁智归。",
+        "中有琴兮徽以玉，峨峨汤汤兮弹此曲，寄声知音兮同所欲。"
+      ],
+      "linesTraditional": [
+        "靈磯盤礴兮溜奔錯漱，冷風兮鎮冥壑。",
+        "研苔滋兮泉珠潔，一飲一憩兮氣想滅。",
+        "磷漣清淬兮滌煩磯，靈仙境兮仁智歸。",
+        "中有琴兮徽以玉，峨峨湯湯兮彈此曲，寄聲知音兮同所欲。"
+      ],
+      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.5000.json",
+      "matchedCities": [
+        "CN-410100"
+      ],
+      "seedFor": [],
+      "matchScore": 6
+    },
+    {
+      "poemId": "tang:07f7646b-27e6-4ba1-b033-848578a238a1",
+      "title": "嵩山十志十首 其三",
+      "author": "卢鸿一",
+      "dynasty": "唐",
+      "lines": [
+        "紫岩隈兮青溪侧，云松烟茑兮千古色。",
+        "芳靃蘼兮荫蒙茏，幽人构馆兮在其中。",
+        "靃蘼蒙茏兮开樾馆，卧风霄兮坐赮旦。",
+        "粤有宾兮时戾止，樵苏不爨兮清淡已，永岁终朝兮常若此。"
+      ],
+      "linesTraditional": [
+        "紫巖隈兮青谿側，雲松煙蔦兮千古色。",
+        "芳靃蘼兮蔭蒙蘢，幽人構館兮在其中。",
+        "靃蘼蒙蘢兮開樾館，臥風霄兮坐赮旦。",
+        "粵有賓兮時戾止，樵蘇不爨兮清淡已，永歲終朝兮常若此。"
+      ],
+      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.5000.json",
+      "matchedCities": [
+        "CN-410100"
+      ],
+      "seedFor": [],
+      "matchScore": 6
+    },
+    {
+      "poemId": "tang:7e6bfc79-bfdb-4645-a08b-855124e0e02b",
+      "title": "嵩山十志十首 其十",
+      "author": "卢鸿一",
+      "dynasty": "唐",
+      "lines": [
+        "水碧色兮石金光，滟熠熠兮濙湟湟。",
+        "泉葩映兮烟茑临，红灼灼，翠阴阴。",
+        "翠相鲜兮金碧潭，霜天洞兮烟景涵。",
+        "有幽人兮好冥绝，炳其焕兮凝其洁，悠悠千古长不灭。"
+      ],
+      "linesTraditional": [
+        "水碧色兮石金光，灩熠熠兮濙湟湟。",
+        "泉葩映兮煙蔦臨，紅灼灼，翠陰陰。",
+        "翠相鮮兮金碧潭，霜天洞兮煙景涵。",
+        "有幽人兮好冥絕，炳其煥兮凝其潔，悠悠千古長不滅。"
+      ],
+      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.5000.json",
+      "matchedCities": [
+        "CN-410100"
+      ],
+      "seedFor": [],
+      "matchScore": 6
+    },
+    {
+      "poemId": "tang:27a2907f-b550-4a46-8973-4e24d5e19dbf",
+      "title": "嵩山十志十首 其四",
+      "author": "卢鸿一",
+      "dynasty": "唐",
+      "lines": [
+        "临泱漭兮背青荧，吐云烟兮合窅冥。",
+        "怳欻翕兮杳幽霭，意缥缈兮群仙会。",
+        "窅冥仙会兮枕烟庭，竦魂形兮凝视听。",
+        "闻夫至诚必感兮祈此巅，契颢气，养丹田，终彷像兮觏灵仙。"
+      ],
+      "linesTraditional": [
+        "臨泱漭兮背青熒，吐雲煙兮合窅冥。",
+        "怳欻翕兮杳幽靄，意縹緲兮羣仙會。",
+        "窅冥仙會兮枕煙庭，竦魂形兮凝視聽。",
+        "聞夫至誠必感兮祈此巔，契顥氣，養丹田，終彷像兮覯靈仙。"
+      ],
+      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.5000.json",
+      "matchedCities": [
+        "CN-410100"
+      ],
+      "seedFor": [],
+      "matchScore": 6
+    },
+    {
+      "poemId": "tang:64d377ec-aa69-468e-8c30-2ccc80b3fbd2",
+      "title": "嵩山十志十首 其五",
+      "author": "卢鸿一",
+      "dynasty": "唐",
+      "lines": [
+        "水攒冲兮石丛耸，焕云锦兮喷汹涌。",
+        "苔駮荦兮草夤缘，芳幂幂兮濑溅溅。",
+        "石攒丛兮云锦淙，波连珠兮文沓綘。",
+        "有洁冥者媚此幽，漱灵液兮乐天休，实获我心兮夫何求。"
+      ],
+      "linesTraditional": [
+        "水攢衝兮石叢聳，煥雲錦兮噴洶湧。",
+        "苔駮犖兮草夤緣，芳冪冪兮瀨濺濺。",
+        "石攢叢兮雲錦淙，波連珠兮文沓綘。",
+        "有潔冥者媚此幽，漱靈液兮樂天休，實獲我心兮夫何求。"
+      ],
+      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.5000.json",
+      "matchedCities": [
+        "CN-410100"
+      ],
+      "seedFor": [],
+      "matchScore": 6
+    },
+    {
+      "poemId": "tang:bedfaf3c-db06-4b7d-9435-a55e394bf8f7",
+      "title": "嵩山十志十首 其一",
+      "author": "卢鸿一",
+      "dynasty": "唐",
+      "lines": [
+        "山为宅兮草为堂，芝兰兮药房。",
+        "罗蘼芜兮拍薜荔，荃壁兮兰砌。",
+        "蘼芜薜荔兮成草堂，阴阴邃兮馥馥香。",
+        "中有人兮信宜常，读金书兮饮玉浆，童颜幽操兮不易长。"
+      ],
+      "linesTraditional": [
+        "山爲宅兮草爲堂，芝蘭兮葯房。",
+        "羅蘼蕪兮拍薜荔，荃壁兮蘭砌。",
+        "蘼蕪薜荔兮成草堂，陰陰邃兮馥馥香。",
+        "中有人兮信宜常，讀金書兮飲玉漿，童顏幽操兮不易長。"
       ],
       "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.5000.json",
       "matchedCities": [
@@ -43459,26 +43241,6 @@
       "matchScore": 6
     },
     {
-      "poemId": "tang:27737fca-8666-46d6-b5bf-fd6599d8a976",
-      "title": "呈钟离云房",
-      "author": "吕岩",
-      "dynasty": "唐",
-      "lines": [
-        "生在儒家遇太平，悬缨重滞布衣轻。",
-        "谁能世上争名利，臣事玉皇归上清。"
-      ],
-      "linesTraditional": [
-        "生在儒家遇太平，懸纓重滯布衣輕。",
-        "誰能世上爭名利，臣事玉皇歸上清。"
-      ],
-      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.47000.json",
-      "matchedCities": [
-        "CN-340300"
-      ],
-      "seedFor": [],
-      "matchScore": 6
-    },
-    {
       "poemId": "tang:ce6ec907-4bb3-4266-b3bf-02569ffd7ddf",
       "title": "宿州天庆观殿门留赠符离道士",
       "author": "吕岩",
@@ -43560,26 +43322,6 @@
       "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.47000.json",
       "matchedCities": [
         "CN-620500"
-      ],
-      "seedFor": [],
-      "matchScore": 6
-    },
-    {
-      "poemId": "tang:08cccc1b-944b-4889-a93d-cfc9788b8837",
-      "title": "黄河晓渡",
-      "author": "罗邺",
-      "dynasty": "唐",
-      "lines": [
-        "大河平野正穷秋，羸马羸僮古渡头。",
-        "昨夜莲花峰下月，隔帘相伴到明愁。"
-      ],
-      "linesTraditional": [
-        "大河平野正窮秋，羸馬羸僮古渡頭。",
-        "昨夜蓮花峰下月，隔簾相伴到明愁。"
-      ],
-      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.36000.json",
-      "matchedCities": [
-        "CN-410100"
       ],
       "seedFor": [],
       "matchScore": 6
@@ -44219,30 +43961,6 @@
       "matchScore": 6
     },
     {
-      "poemId": "tang:8ea3421c-ab98-4fe8-96a5-b3e0328016e4",
-      "title": "黄河",
-      "author": "罗隐",
-      "dynasty": "唐",
-      "lines": [
-        "莫把阿胶向此倾，此中天意固难明。",
-        "解通银汉应须曲，才出昆仑便不清。",
-        "高祖誓功衣带小，仙人占斗客槎轻。",
-        "三千年后知谁在，何必劳君报太平。"
-      ],
-      "linesTraditional": [
-        "莫把阿膠向此傾，此中天意固難明。",
-        "解通銀漢應須曲，纔出崑崙便不清。",
-        "高祖誓功衣帶小，仙人占斗客槎輕。",
-        "三千年後知誰在，何必勞君報太平。"
-      ],
-      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.36000.json",
-      "matchedCities": [
-        "CN-410100"
-      ],
-      "seedFor": [],
-      "matchScore": 6
-    },
-    {
       "poemId": "tang:2f54a309-e8ea-435c-a619-761d42169ff5",
       "title": "送友人归夷门",
       "author": "罗隐",
@@ -44647,31 +44365,6 @@
       "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.36000.json",
       "matchedCities": [
         "CN-610100"
-      ],
-      "seedFor": [],
-      "matchScore": 7
-    },
-    {
-      "poemId": "tang:3f8e4588-5318-4bbd-822e-366d6d2ae56a",
-      "title": "咏美人在天津桥",
-      "author": "骆宾王",
-      "dynasty": "唐",
-      "lines": [
-        "美女出东邻，容与上天津。",
-        "整衣香满路，移步袜生尘。",
-        "水下看妆影，眉头画月新。",
-        "寄言曹子建，个是洛川神。"
-      ],
-      "linesTraditional": [
-        "美女出東鄰，容與上天津。",
-        "整衣香滿路，移步襪生塵。",
-        "水下看妝影，眉頭畫月新。",
-        "寄言曹子建，箇是洛川神。"
-      ],
-      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.4000.json",
-      "matchedCities": [
-        "CN-120000",
-        "CN-410300"
       ],
       "seedFor": [],
       "matchScore": 7
@@ -45962,30 +45655,6 @@
       "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.19000.json",
       "matchedCities": [
         "CN-361100"
-      ],
-      "seedFor": [],
-      "matchScore": 6
-    },
-    {
-      "poemId": "tang:f0e09783-3ec8-4c5f-920f-2a0d3e35f67b",
-      "title": "泛黄河",
-      "author": "孟郊",
-      "dynasty": "唐",
-      "lines": [
-        "谁开昆仑源，流出混沌河。",
-        "积雨飞作风，惊龙喷为波。",
-        "湘瑟飕飗弦，越宾呜咽歌。",
-        "有恨不可洗，虚此来经过。"
-      ],
-      "linesTraditional": [
-        "誰開崑崙源，流出混沌河。",
-        "積雨飛作風，驚龍噴爲波。",
-        "湘瑟颼飀弦，越賓嗚咽歌。",
-        "有恨不可洗，虛此來經過。"
-      ],
-      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.19000.json",
-      "matchedCities": [
-        "CN-410100"
       ],
       "seedFor": [],
       "matchScore": 6
@@ -48496,8 +48165,7 @@
       ],
       "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.46000.json",
       "matchedCities": [
-        "CN-330100",
-        "CN-350100"
+        "CN-330100"
       ],
       "seedFor": [],
       "matchScore": 6
@@ -51606,6 +51274,30 @@
       "matchScore": 6
     },
     {
+      "poemId": "tang:7d249927-ee35-46b1-8c00-05d4b6adadfb",
+      "title": "嵩山石淙侍宴应制",
+      "author": "沈佺期",
+      "dynasty": "唐",
+      "lines": [
+        "金舆旦下绿云衢，彩殿晴临碧涧隅。",
+        "溪水泠泠杂行漏，山烟片片绕香炉。",
+        "仙人六膳调神鼎，玉女三浆捧帝壶。",
+        "自惜汾阳纡道驾，无如太室览真图。"
+      ],
+      "linesTraditional": [
+        "金輿旦下綠雲衢，綵殿晴臨碧澗隅。",
+        "溪水泠泠雜行漏，山煙片片繞香爐。",
+        "仙人六膳調神鼎，玉女三漿捧帝壺。",
+        "自惜汾陽紆道駕，無如太室覽真圖。"
+      ],
+      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.5000.json",
+      "matchedCities": [
+        "CN-410100"
+      ],
+      "seedFor": [],
+      "matchScore": 6
+    },
+    {
       "poemId": "tang:5909e17d-a969-44ef-8e09-383f21387492",
       "title": "邙山",
       "author": "沈佺期",
@@ -52866,6 +52558,40 @@
       "matchScore": 6
     },
     {
+      "poemId": "tang:a6fc5b12-6130-47da-8aea-c3778a946943",
+      "title": "嵩山天门歌",
+      "author": "宋之问",
+      "dynasty": "唐",
+      "lines": [
+        "登天门兮坐盘石之磷𥒘，前漎漎兮未半，下漠漠兮无垠。",
+        "纷窈窕兮岩倚披以鹏翅，洞胶葛兮峰棱层以龙鳞。",
+        "松移岫转，左变而右易。",
+        "风生云起，出鬼而入神。",
+        "吾亦不知其灵怪如此，愿游杳冥兮见羽人。",
+        "重曰：天门兮穹崇，回合兮攒藂。",
+        "松万接兮柱日，石千寻兮倚空。",
+        "晚阴兮足风，夕阳兮赩红。",
+        "试一望兮夺魄，况众妙之无穷。"
+      ],
+      "linesTraditional": [
+        "登天門兮坐盤石之磷𥒘，前漎漎兮未半，下漠漠兮無垠。",
+        "紛窈窕兮巖倚披以鵬翅，洞膠葛兮峰稜層以龍鱗。",
+        "松移岫轉，左變而右易。",
+        "風生雲起，出鬼而入神。",
+        "吾亦不知其靈怪如此，願遊杳冥兮見羽人。",
+        "重曰：天門兮穹崇，回合兮攢藂。",
+        "松萬接兮柱日，石千尋兮倚空。",
+        "晚陰兮足風，夕陽兮赩紅。",
+        "試一望兮奪魄，況衆妙之無窮。"
+      ],
+      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.3000.json",
+      "matchedCities": [
+        "CN-410100"
+      ],
+      "seedFor": [],
+      "matchScore": 6
+    },
+    {
       "poemId": "tang:6dbfca05-5622-4e0d-bfb6-67b1898bf537",
       "title": "北邙古墓",
       "author": "宋之问",
@@ -53807,6 +53533,30 @@
       ],
       "seedFor": [],
       "matchScore": 12
+    },
+    {
+      "poemId": "tang:3bb5db63-ce70-4f82-8e40-8aad78ae0f4b",
+      "title": "嵩山石淙侍宴应制",
+      "author": "苏味道",
+      "dynasty": "唐",
+      "lines": [
+        "雕舆藻衞拥千官，仙洞灵溪访九丹。",
+        "隐暧源花迷近路，参差岭竹扫危坛。",
+        "重崖对耸霞文駮，瀑水交飞雨气寒。",
+        "天洛宸襟有余兴，裴回周矖驻归銮。"
+      ],
+      "linesTraditional": [
+        "琱輿藻衞擁千官，仙洞靈谿訪九丹。",
+        "隱曖源花迷近路，參差嶺竹掃危壇。",
+        "重崖對聳霞文駮，瀑水交飛雨氣寒。",
+        "天洛宸襟有餘興，裴回周矖駐歸鑾。"
+      ],
+      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.3000.json",
+      "matchedCities": [
+        "CN-410100"
+      ],
+      "seedFor": [],
+      "matchScore": 6
     },
     {
       "poemId": "tang:67bfae1b-6a28-47f5-a3d8-9c5c52c43b7e",
@@ -55725,6 +55475,34 @@
       "matchScore": 6
     },
     {
+      "poemId": "tang:6fcd37d1-dd53-4dd6-a562-45cd6b346dd6",
+      "title": "嵩山望幸",
+      "author": "王邕",
+      "dynasty": "唐",
+      "lines": [
+        "峻极位何崇，方知造化功。",
+        "降灵逢圣主，望幸表维嵩。",
+        "隐映连青壁，嵯峨向碧空。",
+        "象车因叶瑞，龙驾愿升中。",
+        "万岁声长在，千岩气转雄。",
+        "东都歌盛事，西笑伫皇风。"
+      ],
+      "linesTraditional": [
+        "峻極位何崇，方知造化功。",
+        "降靈逢聖主，望幸表維嵩。",
+        "隱映連青壁，嵯峨向碧空。",
+        "象車因叶瑞，龍駕願升中。",
+        "萬歲聲長在，千巖氣轉雄。",
+        "東都歌盛事，西笑佇皇風。"
+      ],
+      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.10000.json",
+      "matchedCities": [
+        "CN-410100"
+      ],
+      "seedFor": [],
+      "matchScore": 6
+    },
+    {
       "poemId": "tang:4f91c2a3-fa44-439f-85fe-efbfc11f1ecb",
       "title": "冬日与群公泛舟焦山 二",
       "author": "王瓒",
@@ -57178,6 +56956,30 @@
       "matchScore": 6
     },
     {
+      "poemId": "tang:d3aa7334-1431-4eb5-a820-bb73dd42c3f7",
+      "title": "送福州王先辈南归",
+      "author": "韦庄",
+      "dynasty": "唐",
+      "lines": [
+        "豫章城下偶相逢，自说今方遇至公。",
+        "八韵赋吟梁苑雪，六铢衣惹杏园风。",
+        "名标玉籍僊坛上，家寄闽山画障中。",
+        "明日一杯何处别，绿杨烟岸雨蒙蒙。"
+      ],
+      "linesTraditional": [
+        "豫章城下偶相逢，自說今方遇至公。",
+        "八韻賦吟梁苑雪，六銖衣惹杏園風。",
+        "名標玉籍僊壇上，家寄閩山畫障中。",
+        "明日一杯何處別，綠楊煙岸雨濛濛。"
+      ],
+      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.39000.json",
+      "matchedCities": [
+        "CN-350100"
+      ],
+      "seedFor": [],
+      "matchScore": 6
+    },
+    {
       "poemId": "tang:e548022e-08e1-4baf-b6b2-458c030db8c7",
       "title": "南昌晚眺",
       "author": "韦庄",
@@ -58404,30 +58206,6 @@
       "matchScore": 6
     },
     {
-      "poemId": "tang:83b8102d-d1f4-405f-9775-f45730ec96f2",
-      "title": "和皮博士赴上京观中修灵斋赠威仪尊师兼见寄",
-      "author": "吴融",
-      "dynasty": "唐",
-      "lines": [
-        "霓结双旌羽缀裙，七星坛上拜元君。",
-        "精诚有为天应感，章奏无私鬼怕闻。",
-        "鹤驭已从烟际下，凤膏还向月中焚。",
-        "白云乡路看看到，好驻流年翊圣文。"
-      ],
-      "linesTraditional": [
-        "霓結雙旌羽綴裙，七星壇上拜元君。",
-        "精誠有爲天應感，章奏無私鬼怕聞。",
-        "鶴馭已從煙際下，鳳膏還向月中焚。",
-        "白雲鄉路看看到，好駐流年翊聖文。"
-      ],
-      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.38000.json",
-      "matchedCities": [
-        "CN-230100"
-      ],
-      "seedFor": [],
-      "matchScore": 6
-    },
-    {
       "poemId": "tang:1806da88-cfad-40b2-9113-04d952bfc7cc",
       "title": "松江晚泊",
       "author": "吴融",
@@ -58581,8 +58359,7 @@
       ],
       "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.38000.json",
       "matchedCities": [
-        "CN-330100",
-        "CN-350100"
+        "CN-330100"
       ],
       "seedFor": [],
       "matchScore": 6
@@ -60150,6 +59927,30 @@
       "matchScore": 6
     },
     {
+      "poemId": "tang:f0586535-efbf-4b52-8455-90e586bb5c5c",
+      "title": "题福州天王阁",
+      "author": "徐夤",
+      "dynasty": "唐",
+      "lines": [
+        "绝境宜栖独角仙，金张到此亦忘还。",
+        "三门里面千层阁，万井中心一朵山。",
+        "江拗碧湾盘洞府，石排青壁护禅关。",
+        "有时海上看明月，辗出冰轮叠浪间。"
+      ],
+      "linesTraditional": [
+        "絕境宜棲獨角仙，金張到此亦忘還。",
+        "三門裏面千層閣，萬井中心一朵山。",
+        "江拗碧灣盤洞府，石排青壁護禪關。",
+        "有時海上看明月，輾出冰輪疊浪間。"
+      ],
+      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.39000.json",
+      "matchedCities": [
+        "CN-350100"
+      ],
+      "seedFor": [],
+      "matchScore": 6
+    },
+    {
       "poemId": "tang:fec157bb-e22e-4671-8f51-9a1ef41777e1",
       "title": "东京次新安道中",
       "author": "徐夤",
@@ -60617,8 +60418,7 @@
       ],
       "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.29000.json",
       "matchedCities": [
-        "CN-330100",
-        "CN-350100"
+        "CN-330100"
       ],
       "seedFor": [],
       "matchScore": 7
@@ -61856,8 +61656,7 @@
       ],
       "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.31000.json",
       "matchedCities": [
-        "CN-330100",
-        "CN-350100"
+        "CN-330100"
       ],
       "seedFor": [],
       "matchScore": 7
@@ -61882,50 +61681,6 @@
       "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.31000.json",
       "matchedCities": [
         "CN-350500"
-      ],
-      "seedFor": [],
-      "matchScore": 6
-    },
-    {
-      "poemId": "tang:ff8314f9-d177-421a-b9fb-9bc743969b6d",
-      "title": "黄河",
-      "author": "薛能",
-      "dynasty": "唐",
-      "lines": [
-        "何处发昆仑，连干复浸坤。",
-        "波浑经鴈塞，声振自龙门。",
-        "岸裂新冲势，滩余旧落痕。",
-        "横沟通海上，远色尽山根。",
-        "勇逗三峰坼，雄标四渎尊。",
-        "湾中秋景树，阔外夕阳村。",
-        "沫乱知鱼呴，槎来见鸟蹲。",
-        "飞沙当白日，凝雾接黄昏。",
-        "润可资农亩，清能表帝恩。",
-        "雨吟堪极目，风度想惊魂。",
-        "显瑞龟曾出，阴灵伯固存。",
-        "盘涡寒渐急，浅濑暑微温。",
-        "九曲终柔胜，常流可暗吞。",
-        "人间无博望，谁复到穷源。"
-      ],
-      "linesTraditional": [
-        "何處發崑崙，連乾復浸坤。",
-        "波渾經鴈塞，聲振自龍門。",
-        "岸裂新衝勢，灘餘舊落痕。",
-        "橫溝通海上，遠色盡山根。",
-        "勇逗三峰坼，雄標四瀆尊。",
-        "灣中秋景樹，闊外夕陽村。",
-        "沫亂知魚呴，槎來見鳥蹲。",
-        "飛沙當白日，凝霧接黃昏。",
-        "潤可資農畝，清能表帝恩。",
-        "雨吟堪極目，風度想驚魂。",
-        "顯瑞龜曾出，陰靈伯固存。",
-        "盤渦寒漸急，淺瀨暑微溫。",
-        "九曲終柔勝，常流可暗吞。",
-        "人間無博望，誰復到窮源。"
-      ],
-      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.31000.json",
-      "matchedCities": [
-        "CN-410100"
       ],
       "seedFor": [],
       "matchScore": 6
@@ -62267,8 +62022,7 @@
       ],
       "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.25000.json",
       "matchedCities": [
-        "CN-330100",
-        "CN-350100"
+        "CN-330100"
       ],
       "seedFor": [],
       "matchScore": 7
@@ -62292,8 +62046,7 @@
       ],
       "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.25000.json",
       "matchedCities": [
-        "CN-330100",
-        "CN-350100"
+        "CN-330100"
       ],
       "seedFor": [],
       "matchScore": 7
@@ -62429,7 +62182,6 @@
       ],
       "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.15000.json",
       "matchedCities": [
-        "CN-120000",
         "CN-410300"
       ],
       "seedFor": [],
@@ -63204,6 +62956,30 @@
       "matchScore": 6
     },
     {
+      "poemId": "tang:878d2299-db2f-4e38-bcab-f370f637bd6e",
+      "title": "春日洛阳城侍宴",
+      "author": "姚崇",
+      "dynasty": "唐",
+      "lines": [
+        "南山开宝历，北渚对芳蹊。",
+        "的历风梅度，参差露草低。",
+        "尧樽临上席，舜乐下前溪。",
+        "任重由来醉，乘酣志转迷。"
+      ],
+      "linesTraditional": [
+        "南山開寶曆，北渚對芳蹊。",
+        "的歷風梅度，參差露草低。",
+        "堯樽臨上席，舜樂下前溪。",
+        "任重由來醉，乘酣志轉迷。"
+      ],
+      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.3000.json",
+      "matchedCities": [
+        "CN-410300"
+      ],
+      "seedFor": [],
+      "matchScore": 6
+    },
+    {
       "poemId": "tang:19b182ea-c7d2-4b63-9fe0-1a30ce4b7e8c",
       "title": "随州献李侍御二首 二",
       "author": "姚鹄",
@@ -63247,31 +63023,6 @@
       "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.30000.json",
       "matchedCities": [
         "CN-421300"
-      ],
-      "seedFor": [],
-      "matchScore": 6
-    },
-    {
-      "poemId": "tang:9e9919e1-e9a8-4c27-a2a9-dbb7720daeb6",
-      "title": "过天津桥晴望",
-      "author": "姚合",
-      "dynasty": "唐",
-      "lines": [
-        "闲立津桥上，寒光动远林。",
-        "皇宫对嵩顶，清洛贯城心。",
-        "雪路初晴出，人家向晚深。",
-        "自从王在镐，天宝至如今。"
-      ],
-      "linesTraditional": [
-        "閑立津橋上，寒光動遠林。",
-        "皇宮對嵩頂，清洛貫城心。",
-        "雪路初晴出，人家向晚深。",
-        "自從王在鎬，天寶至如今。"
-      ],
-      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.26000.json",
-      "matchedCities": [
-        "CN-120000",
-        "CN-410300"
       ],
       "seedFor": [],
       "matchScore": 6
@@ -63741,6 +63492,28 @@
       "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.26000.json",
       "matchedCities": [
         "CN-341600"
+      ],
+      "seedFor": [],
+      "matchScore": 6
+    },
+    {
+      "poemId": "tang:db310434-bb20-4800-8dac-9fe91f641ecc",
+      "title": "送敬法师归福州",
+      "author": "姚合",
+      "dynasty": "唐",
+      "lines": [
+        "结得随缘伴，蝉鸣方出关。",
+        "新经译旧寺，故国与谁还。",
+        "斋为无钟早，心因罢讲闲。"
+      ],
+      "linesTraditional": [
+        "結得隨緣伴，蟬鳴方出關。",
+        "新經譯舊寺，故國與誰還。",
+        "齋爲無鐘早，心因罷講閑。"
+      ],
+      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.26000.json",
+      "matchedCities": [
+        "CN-350100"
       ],
       "seedFor": [],
       "matchScore": 6
@@ -64483,27 +64256,6 @@
       "matchScore": 6
     },
     {
-      "poemId": "tang:bdf2ae96-0962-451e-a120-f3bbcd1fd167",
-      "title": "天津桥望春",
-      "author": "雍陶",
-      "dynasty": "唐",
-      "lines": [
-        "津桥春水浸红霞，烟柳风丝拂岸斜。",
-        "翠辇不来金殿闭，宫莺衔出上阳花。"
-      ],
-      "linesTraditional": [
-        "津橋春水浸紅霞，煙柳風絲拂岸斜。",
-        "翠輦不來金殿閉，宮鶯銜出上陽花。"
-      ],
-      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.28000.json",
-      "matchedCities": [
-        "CN-120000",
-        "CN-410300"
-      ],
-      "seedFor": [],
-      "matchScore": 6
-    },
-    {
       "poemId": "tang:f8573c60-f0b3-42b8-ab1d-f360c6b5f005",
       "title": "送宜春裴明府之任",
       "author": "雍陶",
@@ -65064,30 +64816,6 @@
       "matchScore": 7
     },
     {
-      "poemId": "tang:0c850801-7809-4363-80a7-2b7012e5c2df",
-      "title": "酬乐天吟张员外诗见寄因思上京每与乐天于居敬兄升平里咏张新诗",
-      "author": "元稹",
-      "dynasty": "唐",
-      "lines": [
-        "乐天书内重封到，居敬堂前共读时。",
-        "四友一为泉路客，三人两咏浙江诗。",
-        "别无远近皆难见，老减心情自各知。",
-        "杯酒与他年少隔，不相酬赠欲何之。"
-      ],
-      "linesTraditional": [
-        "樂天書內重封到，居敬堂前共讀時。",
-        "四友一爲泉路客，三人兩詠浙江詩。",
-        "別無遠近皆難見，老減心情自各知。",
-        "杯酒與他年少隔，不相酬贈欲何之。"
-      ],
-      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.21000.json",
-      "matchedCities": [
-        "CN-230100"
-      ],
-      "seedFor": [],
-      "matchScore": 6
-    },
-    {
       "poemId": "tang:bb82a619-3e41-47f8-979a-a4c7dcdd6ecc",
       "title": "苍溪县寄扬州兄弟",
       "author": "元稹",
@@ -65228,7 +64956,6 @@
       "matchedCities": [
         "CN-330100",
         "CN-330600",
-        "CN-350100",
         "CN-410500"
       ],
       "seedFor": [],
@@ -66386,8 +66113,7 @@
       ],
       "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.50000.json",
       "matchedCities": [
-        "CN-330100",
-        "CN-350100"
+        "CN-330100"
       ],
       "seedFor": [],
       "matchScore": 12
@@ -68009,29 +67735,6 @@
       "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.3000.json",
       "matchedCities": [
         "CN-110000"
-      ],
-      "seedFor": [],
-      "matchScore": 6
-    },
-    {
-      "poemId": "tang:e005d1a3-5710-4762-aa77-b40479deb759",
-      "title": "天津桥东旬宴得歌字韵",
-      "author": "张九龄",
-      "dynasty": "唐",
-      "lines": [
-        "清洛象天河，东流形胜多。",
-        "朝来逢宴喜，春尽却妍和。",
-        "泉鲔欢时跃，林莺醉里歌。"
-      ],
-      "linesTraditional": [
-        "清洛象天河，東流形勝多。",
-        "朝來逢宴喜，春盡却妍和。",
-        "泉鮪歡時躍，林鶯醉裏歌。"
-      ],
-      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.3000.json",
-      "matchedCities": [
-        "CN-120000",
-        "CN-410300"
       ],
       "seedFor": [],
       "matchScore": 6
@@ -71500,56 +71203,6 @@
       "matchScore": 7
     },
     {
-      "poemId": "tang:237b7a55-7821-44b5-b17f-4d30fa311028",
-      "title": "将之上京别淮南书记李侍御",
-      "author": "朱庆余",
-      "dynasty": "唐",
-      "lines": [
-        "心地偶相见，语多为别难。",
-        "诗成公府晚，路入翠微寒。",
-        "逢石自应坐，有花谁共看。",
-        "身为当去鴈，云尽到长安。"
-      ],
-      "linesTraditional": [
-        "心地偶相見，語多爲別難。",
-        "詩成公府晚，路入翠微寒。",
-        "逢石自應坐，有花誰共看。",
-        "身爲當去鴈，雲盡到長安。"
-      ],
-      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.27000.json",
-      "matchedCities": [
-        "CN-230100",
-        "CN-340400"
-      ],
-      "seedFor": [],
-      "matchScore": 6
-    },
-    {
-      "poemId": "tang:b1374f24-b406-4143-9b5c-22e1d3256261",
-      "title": "将之上京留别淮南书记李侍御",
-      "author": "朱庆余",
-      "dynasty": "唐",
-      "lines": [
-        "半似无名位，门当静处开。",
-        "人心皆向德，物色不供才。",
-        "酒兴春边过，军谋意外来。",
-        "取名荣相府，却虑诏书催。"
-      ],
-      "linesTraditional": [
-        "半似無名位，門當靜處開。",
-        "人心皆向德，物色不供才。",
-        "酒興春邊過，軍謀意外來。",
-        "取名榮相府，却慮詔書催。"
-      ],
-      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%A8%E5%94%90%E8%AF%97/poet.tang.27000.json",
-      "matchedCities": [
-        "CN-230100",
-        "CN-340400"
-      ],
-      "seedFor": [],
-      "matchScore": 6
-    },
-    {
       "poemId": "tang:aefce4bf-8330-4f8e-9600-ab3b575b8a02",
       "title": "过苏州晓上人院",
       "author": "朱庆余",
@@ -72076,26 +71729,6 @@
       "matchScore": 2
     },
     {
-      "poemId": "yuanqu:e75f9d7c380859d1",
-      "title": "・应昌南旧日长城，带取上京愁去。又秋风落雁归鸿，怎说到无言语处。至上京",
-      "author": "冯子振",
-      "dynasty": "元",
-      "lines": [
-        "幺澶河西北征鞍住，古道上不见耕父。",
-        "白茫茫细草平沙，日日金莲川雨。"
-      ],
-      "linesTraditional": [
-        "幺澶河西北征鞍住，古道上不见耕父。",
-        "白茫茫细草平沙，日日金莲川雨。"
-      ],
-      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%83%E6%9B%B2/yuanqu.json",
-      "matchedCities": [
-        "CN-230100"
-      ],
-      "seedFor": [],
-      "matchScore": 6
-    },
-    {
       "poemId": "yuanqu:ee01d11eafee389d",
       "title": "・想云霄犬吠鸡鸣，拔宅向青霄去。劝长安热客回头，镜影到流年老处。忆西湖",
       "author": "冯子振",
@@ -72111,7 +71744,6 @@
       "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%83%E6%9B%B2/yuanqu.json",
       "matchedCities": [
         "CN-330100",
-        "CN-350100",
         "CN-610100"
       ],
       "seedFor": [],
@@ -72318,8 +71950,7 @@
       ],
       "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%83%E6%9B%B2/yuanqu.json",
       "matchedCities": [
-        "CN-330100",
-        "CN-350100"
+        "CN-330100"
       ],
       "seedFor": [],
       "matchScore": 6
@@ -72430,8 +72061,7 @@
       ],
       "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%83%E6%9B%B2/yuanqu.json",
       "matchedCities": [
-        "CN-330100",
-        "CN-350100"
+        "CN-330100"
       ],
       "seedFor": [],
       "matchScore": 8
@@ -72611,8 +72241,7 @@
       ],
       "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%83%E6%9B%B2/yuanqu.json",
       "matchedCities": [
-        "CN-330100",
-        "CN-350100"
+        "CN-330100"
       ],
       "seedFor": [],
       "matchScore": 7
@@ -72648,8 +72277,7 @@
       ],
       "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%83%E6%9B%B2/yuanqu.json",
       "matchedCities": [
-        "CN-330100",
-        "CN-350100"
+        "CN-330100"
       ],
       "seedFor": [],
       "matchScore": 6
@@ -72689,7 +72317,26 @@
       ],
       "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%83%E6%9B%B2/yuanqu.json",
       "matchedCities": [
-        "CN-330100",
+        "CN-330100"
+      ],
+      "seedFor": [],
+      "matchScore": 6
+    },
+    {
+      "poemId": "yuanqu:de5f1c7faefce54a",
+      "title": "五・饥时节喂些草，渴时节饮些水。着皮肤休使粗毡屈，三山骨休使鞭来",
+      "author": "马致远",
+      "dynasty": "元",
+      "lines": [
+        "打，砖瓦上休教稳着蹄。",
+        "有口话你明明的记：饱时休走，饮了休驰。"
+      ],
+      "linesTraditional": [
+        "打，砖瓦上休教稳着蹄。",
+        "有口话你明明的记：饱时休走，饮了休驰。"
+      ],
+      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%83%E6%9B%B2/yuanqu.json",
+      "matchedCities": [
         "CN-350100"
       ],
       "seedFor": [],
@@ -73506,28 +73153,6 @@
       "matchScore": 7
     },
     {
-      "poemId": "yuanqu:05e091a22854b2c3",
-      "title": "石榴花・常记得赏花时节看花回，上京马醉扶扫，归来窗半月儿低，真个",
-      "author": "王仲元",
-      "dynasty": "元",
-      "lines": [
-        "醉矣。",
-        "柳青娘虞美人扶只，困腾腾上马娇无力，步步娇弄影儿行迟。",
-        "似凤鸾交配答双鸳鸯对，人都道端正好夫妻。"
-      ],
-      "linesTraditional": [
-        "醉矣。",
-        "柳青娘虞美人扶只，困腾腾上马娇无力，步步娇弄影儿行迟。",
-        "似凤鸾交配答双鸳鸯对，人都道端正好夫妻。"
-      ],
-      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%83%E6%9B%B2/yuanqu.json",
-      "matchedCities": [
-        "CN-230100"
-      ],
-      "seedFor": [],
-      "matchScore": 6
-    },
-    {
       "poemId": "yuanqu:5fe4ad68cc101c89",
       "title": "尾声・壮如霸王来扛鼎，险似韩侯出井陉。悬权岂敢轻相应，切勿食饵兵，",
       "author": "无名氏",
@@ -73589,8 +73214,7 @@
       "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%83%E6%9B%B2/yuanqu.json",
       "matchedCities": [
         "CN-321100",
-        "CN-330100",
-        "CN-350100"
+        "CN-330100"
       ],
       "seedFor": [],
       "matchScore": 6
@@ -73618,437 +73242,25 @@
       "matchScore": 6
     },
     {
-      "poemId": "yuanqu:31f65b4512193bff",
-      "title": "汉钟离度脱蓝采和・收江南",
+      "poemId": "yuanqu:88d1761e753be0f5",
+      "title": "折桂令・望蓝桥远似三山，烟水迷茫，道路艰难。瓶坠簪折，风酸月苦，",
       "author": "无名氏",
       "dynasty": "元",
       "lines": [
-        "呀，原来是开坛阐教汉钟离，有洞宾师父紧相随。",
-        "我这里云阳板撒上阶基，你都来这里，八仙相引赴瑶池。"
+        "雨涩支悭。",
+        "长搀搀连理树柔条尽铲，碜可可比目鱼活水将干。",
+        "他性格奸顽，不寄平安。",
+        "章台柳恣意留连，蟾宫桂未许跻攀。"
       ],
       "linesTraditional": [
-        "呀，原来是开坛阐教汉钟离，有洞宾师父紧相随。",
-        "我这里云阳板撒上阶基，你都来这里，八仙相引赴瑶池。"
+        "雨涩支悭。",
+        "长搀搀连理树柔条尽铲，碜可可比目鱼活水将干。",
+        "他性格奸顽，不寄平安。",
+        "章台柳恣意留连，蟾宫桂未许跻攀。"
       ],
       "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%83%E6%9B%B2/yuanqu.json",
       "matchedCities": [
-        "CN-340300"
-      ],
-      "seedFor": [],
-      "matchScore": 7
-    },
-    {
-      "poemId": "yuanqu:b1dcb19fc8d43d43",
-      "title": "汉钟离度脱蓝采和・朝天子",
-      "author": "无名氏",
-      "dynasty": "元",
-      "lines": [
-        "行院每趱家私过活。",
-        "(旦云)都是一般行院，你多拿了几文钱出来，我务要平分。",
-        "(正末唱)问甚么你死我活。",
-        "(云)见别人朝来暮去，干家做活，瞒心昧己。",
-        "(唱)那一个肯依本分随缘过。",
-        "(云)我如今闲来看一卷道德经，困来睡一觉。",
-        "(唱)但得合处把我这眼皮儿合，得卧处和衣儿卧。",
-        "(旦云)都摆着你看，你那兄弟幼子娇妻许多家眷，怎下的撇了俺去出家！(正末唱)摆列着幼子娇妻，儿孙许多。",
-        "(云)则听得误了官身那一日，扣厅要打四十。",
-        "若不是师父救了我呵！(唱)假若是我无常谁替我。",
-        "(旦云)：既是这等，你也度脱我出家去。",
-        "(正末唱)你待着，不合把你来度脱。",
-        "(旦云)你回去罢，不济事。",
-        "(正末唱)赤紧的我也在壕中坐。"
-      ],
-      "linesTraditional": [
-        "行院每趱家私过活。",
-        "(旦云)都是一般行院，你多拿了几文钱出来，我务要平分。",
-        "(正末唱)问甚么你死我活。",
-        "(云)见别人朝来暮去，干家做活，瞒心昧己。",
-        "(唱)那一个肯依本分随缘过。",
-        "(云)我如今闲来看一卷道德经，困来睡一觉。",
-        "(唱)但得合处把我这眼皮儿合，得卧处和衣儿卧。",
-        "(旦云)都摆着你看，你那兄弟幼子娇妻许多家眷，怎下的撇了俺去出家！(正末唱)摆列着幼子娇妻，儿孙许多。",
-        "(云)则听得误了官身那一日，扣厅要打四十。",
-        "若不是师父救了我呵！(唱)假若是我无常谁替我。",
-        "(旦云)：既是这等，你也度脱我出家去。",
-        "(正末唱)你待着，不合把你来度脱。",
-        "(旦云)你回去罢，不济事。",
-        "(正末唱)赤紧的我也在壕中坐。"
-      ],
-      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%83%E6%9B%B2/yuanqu.json",
-      "matchedCities": [
-        "CN-340300"
-      ],
-      "seedFor": [],
-      "matchScore": 6
-    },
-    {
-      "poemId": "yuanqu:1ae2fabb0d09fc46",
-      "title": "汉钟离度脱蓝采和・川拨棹",
-      "author": "无名氏",
-      "dynasty": "元",
-      "lines": [
-        "你待着我做杂剧，扮兴亡贪是非，待着我擂鼓吹笛，打拍收拾。",
-        "莫消停殷勤在意，快疾忙莫迟疑。"
-      ],
-      "linesTraditional": [
-        "你待着我做杂剧，扮兴亡贪是非，待着我擂鼓吹笛，打拍收拾。",
-        "莫消停殷勤在意，快疾忙莫迟疑。"
-      ],
-      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%83%E6%9B%B2/yuanqu.json",
-      "matchedCities": [
-        "CN-340300"
-      ],
-      "seedFor": [],
-      "matchScore": 6
-    },
-    {
-      "poemId": "yuanqu:306c12dc75bb7793",
-      "title": "汉钟离度脱蓝采和・斗虾蟆",
-      "author": "无名氏",
-      "dynasty": "元",
-      "lines": [
-        "见人家排斋供，请先生念忏经。",
-        "正面儿挂下一幅三清，檀越人家念经。",
-        "荒忙准备斋供，见放一轴老君，挂下十王神幅，待诏他也世情，说着的便决应，画的十分可碜。",
-        "怎觑那般行径，我则见城狱里画何真，油镬油铛，里头札定，偌多生灵，都是俺俗人，元来无一个和尚，先生徐神翁。",
-        "道无干净，这句话不觑听，我这等末尼你这等先生！。"
-      ],
-      "linesTraditional": [
-        "见人家排斋供，请先生念忏经。",
-        "正面儿挂下一幅三清，檀越人家念经。",
-        "荒忙准备斋供，见放一轴老君，挂下十王神幅，待诏他也世情，说着的便决应，画的十分可碜。",
-        "怎觑那般行径，我则见城狱里画何真，油镬油铛，里头札定，偌多生灵，都是俺俗人，元来无一个和尚，先生徐神翁。",
-        "道无干净，这句话不觑听，我这等末尼你这等先生！。"
-      ],
-      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%83%E6%9B%B2/yuanqu.json",
-      "matchedCities": [
-        "CN-340300"
-      ],
-      "seedFor": [],
-      "matchScore": 6
-    },
-    {
-      "poemId": "yuanqu:54eca11ff53bfb37",
-      "title": "汉钟离度脱蓝采和・沽美酒",
-      "author": "无名氏",
-      "dynasty": "元",
-      "lines": [
-        "叹光阴忒紧急，嗟岁月苦奔驰。",
-        "重惜浮生如梦里。",
-        "我如今省得，无生死绝名列。"
-      ],
-      "linesTraditional": [
-        "叹光阴忒紧急，嗟岁月苦奔驰。",
-        "重惜浮生如梦里。",
-        "我如今省得，无生死绝名列。"
-      ],
-      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%83%E6%9B%B2/yuanqu.json",
-      "matchedCities": [
-        "CN-340300"
-      ],
-      "seedFor": [],
-      "matchScore": 6
-    },
-    {
-      "poemId": "yuanqu:d20486be29bcc878",
-      "title": "汉钟离度脱蓝采和・滚绣球",
-      "author": "无名氏",
-      "dynasty": "元",
-      "lines": [
-        "从今后我独自个，休想我做过活。",
-        "再不去乔妆扮打拍撺掇，再不去戏台上信口开合。",
-        "(云)你又着我做场处唤王把色李薄头快疾快疾。",
-        "(唱)又着俺媳妇每，那一火。",
-        "快疾忙去梳裹，不争我又做场又索央众父老每妆喝。",
-        "(净云)自从哥哥去了，勾栏里就没人看。",
-        "(正末唱)为甚么勾栏里看的十分少，则你那话不投机一句多。",
-        "(净云)你说风话哩。",
-        "(正末唱)不是我风魔。"
-      ],
-      "linesTraditional": [
-        "从今后我独自个，休想我做过活。",
-        "再不去乔妆扮打拍撺掇，再不去戏台上信口开合。",
-        "(云)你又着我做场处唤王把色李薄头快疾快疾。",
-        "(唱)又着俺媳妇每，那一火。",
-        "快疾忙去梳裹，不争我又做场又索央众父老每妆喝。",
-        "(净云)自从哥哥去了，勾栏里就没人看。",
-        "(正末唱)为甚么勾栏里看的十分少，则你那话不投机一句多。",
-        "(净云)你说风话哩。",
-        "(正末唱)不是我风魔。"
-      ],
-      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%83%E6%9B%B2/yuanqu.json",
-      "matchedCities": [
-        "CN-340300"
-      ],
-      "seedFor": [],
-      "matchScore": 6
-    },
-    {
-      "poemId": "yuanqu:9200b6a3013569db",
-      "title": "汉钟离度脱蓝采和・贺新郎",
-      "author": "无名氏",
-      "dynasty": "元",
-      "lines": [
-        "是谁人啼天哭地两三声。",
-        "(云)我开开这门，原来是这泼先生，好无道理也呵！(唱)可做的魇镇俺家私，你端的是扇摇百姓。",
-        "(钟云)你去告我去，我不怕你。",
-        "(正末唱)咱告去来到官司呵和你敢无干净。",
-        "(云)我待告你去呵，着老的便道你是个上戏台的末尼，和他那风魔先生一般见识。",
-        "(唱)看着我生辰面不和你相执挣。",
-        "(云)今日我生辰，我是寿星，不和你计较。",
-        "(钟云)谁是寿星？(正末云)我是寿星。",
-        "(钟云)你今日是寿星，明日敢做了灾星也。",
-        "(正末云)这先生好无礼也，说这等不吉利的话。",
-        "(唱)你休这般胡做胡称。",
-        "(钟云)这句话又不曾伤着你。",
-        "(正末唱)这言语也不中使，这言语也不中听。",
-        "你敢化些淡齑汤且把你那皮囊撑。",
-        "(钟云)我见你受用。",
-        "(正末唱)可知可知俺吃的是大馒头阔片粉，你吃的是菜饺馅淡齑羹。",
-        "(云)这泼先生打搅俺吃酒。",
-        "王把色闭上门者。",
-        "众弟兄每坐着，则管里吃酒。",
-        "(钟云)他那里肯省悟，他若不见恶境头，他不肯出家。",
-        "兀那许坚，你若跟贫道出家去呵，逍遥散诞，清闲快乐，倒大来幽哉！(正末云)我知你做神仙的道路。",
-        "(钟云)你既知道，你说来我听。",
-        "(正末唱)。"
-      ],
-      "linesTraditional": [
-        "是谁人啼天哭地两三声。",
-        "(云)我开开这门，原来是这泼先生，好无道理也呵！(唱)可做的魇镇俺家私，你端的是扇摇百姓。",
-        "(钟云)你去告我去，我不怕你。",
-        "(正末唱)咱告去来到官司呵和你敢无干净。",
-        "(云)我待告你去呵，着老的便道你是个上戏台的末尼，和他那风魔先生一般见识。",
-        "(唱)看着我生辰面不和你相执挣。",
-        "(云)今日我生辰，我是寿星，不和你计较。",
-        "(钟云)谁是寿星？(正末云)我是寿星。",
-        "(钟云)你今日是寿星，明日敢做了灾星也。",
-        "(正末云)这先生好无礼也，说这等不吉利的话。",
-        "(唱)你休这般胡做胡称。",
-        "(钟云)这句话又不曾伤着你。",
-        "(正末唱)这言语也不中使，这言语也不中听。",
-        "你敢化些淡齑汤且把你那皮囊撑。",
-        "(钟云)我见你受用。",
-        "(正末唱)可知可知俺吃的是大馒头阔片粉，你吃的是菜饺馅淡齑羹。",
-        "(云)这泼先生打搅俺吃酒。",
-        "王把色闭上门者。",
-        "众弟兄每坐着，则管里吃酒。",
-        "(钟云)他那里肯省悟，他若不见恶境头，他不肯出家。",
-        "兀那许坚，你若跟贫道出家去呵，逍遥散诞，清闲快乐，倒大来幽哉！(正末云)我知你做神仙的道路。",
-        "(钟云)你既知道，你说来我听。",
-        "(正末唱)。"
-      ],
-      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%83%E6%9B%B2/yuanqu.json",
-      "matchedCities": [
-        "CN-340300"
-      ],
-      "seedFor": [],
-      "matchScore": 6
-    },
-    {
-      "poemId": "yuanqu:d7f923e9b98fb45e",
-      "title": "汉钟离度脱蓝采和・混江龙",
-      "author": "无名氏",
-      "dynasty": "元",
-      "lines": [
-        "试看我行针步线，俺在这梁园城一交却又早二十年。",
-        "常则是与人方便，会客周全。",
-        "做一段有憎爱劝贤孝新院本，觅几文济饥寒得温暖养家钱。",
-        "俺这里不比别州县。",
-        "学这几分薄艺，胜似千顷良田。",
-        "(云)来到这勾栏里也。",
-        "兄弟有看的人幺？好时候也，上紧收拾。",
-        "(净云)我方才开了勾栏门，有一个先生坐在乐床上。",
-        "我便道：先生，你去神楼上或是腰棚上那里坐，这里是妇女每做排场的坐处。",
-        "他倒骂俺。",
-        "(正末云)好歹你每冲撞着他来。",
-        "我自看去。",
-        "(做见科，云)稽首，老师父。",
-        "(钟云)你那里散诞去来？(正末云)这先生你与我贴招牌。",
-        "老先生不知，街市上有几个士夫，请我吃了一杯茶。",
-        "因此上来迟。",
-        "(钟云)我在这勾栏里坐了一日，你这早晚才来。",
-        "宁可乐待于宾，不可宾待于乐。",
-        "我特来看你做杂剧，你做一段甚么杂剧我看。",
-        "(正末云)师父要做甚么杂剧？(钟云)但是你记的，数来我听。",
-        "(正末云)我数几段师父听咱。",
-        "(唱)。"
-      ],
-      "linesTraditional": [
-        "试看我行针步线，俺在这梁园城一交却又早二十年。",
-        "常则是与人方便，会客周全。",
-        "做一段有憎爱劝贤孝新院本，觅几文济饥寒得温暖养家钱。",
-        "俺这里不比别州县。",
-        "学这几分薄艺，胜似千顷良田。",
-        "(云)来到这勾栏里也。",
-        "兄弟有看的人么？好时候也，上紧收拾。",
-        "(净云)我方才开了勾栏门，有一个先生坐在乐床上。",
-        "我便道：先生，你去神楼上或是腰棚上那里坐，这里是妇女每做排场的坐处。",
-        "他倒骂俺。",
-        "(正末云)好歹你每冲撞着他来。",
-        "我自看去。",
-        "(做见科，云)稽首，老师父。",
-        "(钟云)你那里散诞去来？(正末云)这先生你与我贴招牌。",
-        "老先生不知，街市上有几个士夫，请我吃了一杯茶。",
-        "因此上来迟。",
-        "(钟云)我在这勾栏里坐了一日，你这早晚才来。",
-        "宁可乐待于宾，不可宾待于乐。",
-        "我特来看你做杂剧，你做一段甚么杂剧我看。",
-        "(正末云)师父要做甚么杂剧？(钟云)但是你记的，数来我听。",
-        "(正末云)我数几段师父听咱。",
-        "(唱)。"
-      ],
-      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%83%E6%9B%B2/yuanqu.json",
-      "matchedCities": [
-        "CN-340300"
-      ],
-      "seedFor": [],
-      "matchScore": 6
-    },
-    {
-      "poemId": "yuanqu:772232c1eca9e6ab",
-      "title": "汉钟离度脱蓝采和・快活三",
-      "author": "无名氏",
-      "dynasty": "元",
-      "lines": [
-        "假若是无常到怎奈何。",
-        "(云)婆婆，你去波。",
-        "(唱)我如今得磨跎处且磨跎，待学庄子鼓盆歌，误了我亡身祸。"
-      ],
-      "linesTraditional": [
-        "假若是无常到怎奈何。",
-        "(云)婆婆，你去波。",
-        "(唱)我如今得磨跎处且磨跎，待学庄子鼓盆歌，误了我亡身祸。"
-      ],
-      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%83%E6%9B%B2/yuanqu.json",
-      "matchedCities": [
-        "CN-340300"
-      ],
-      "seedFor": [],
-      "matchScore": 6
-    },
-    {
-      "poemId": "yuanqu:08d7b806725469a3",
-      "title": "汉钟离度脱蓝采和・梁州",
-      "author": "无名氏",
-      "dynasty": "元",
-      "lines": [
-        "直吃的簌簌的红轮西坠，焱焱的玉兔东生。",
-        "常言五十而后知天命，我年过半百，诸事曾经。",
-        "人有灵性，鸟有飞腾，常言道蠢动含灵，做场处谁敢消停。",
-        "(云)咱行院打识水势(唱)俺、俺、俺做场处见景生情，你、你、你上高处舍身拼命，咱、咱、咱但去处夺利争名。",
-        "若逢，对棚，怎生来妆点的排场盛，倚仗看粉鼻凹五七并，依着这书会社恩官求些好本令。",
-        "(云)君子务本，本立而道生。",
-        "(唱)那的愁甚么前程。",
-        "(净把盏科云)哥哥饮一杯寿酒。",
-        "(钟离上云)今日是蓝采和生辰之日，度脱他走一遭去，早来到门首去。",
-        "(做哭三声、笑三声科，正末云)王把色是听的幺，谁人在门首唱叫？(净云)哥哥也闲管事，知他是谁。",
-        "俺则吃酒。",
-        "(正末唱)。"
-      ],
-      "linesTraditional": [
-        "直吃的簌簌的红轮西坠，焱焱的玉兔东生。",
-        "常言五十而后知天命，我年过半百，诸事曾经。",
-        "人有灵性，鸟有飞腾，常言道蠢动含灵，做场处谁敢消停。",
-        "(云)咱行院打识水势(唱)俺、俺、俺做场处见景生情，你、你、你上高处舍身拚命，咱、咱、咱但去处夺利争名。",
-        "若逢，对棚，怎生来妆点的排场盛，倚仗看粉鼻凹五七并，依着这书会社恩官求些好本令。",
-        "(云)君子务本，本立而道生。",
-        "(唱)那的愁甚么前程。",
-        "(净把盏科云)哥哥饮一杯寿酒。",
-        "(钟离上云)今日是蓝采和生辰之日，度脱他走一遭去，早来到门首去。",
-        "(做哭三声、笑三声科，正末云)王把色是听的么，谁人在门首唱叫？(净云)哥哥也闲管事，知他是谁。",
-        "俺则吃酒。",
-        "(正末唱)。"
-      ],
-      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%83%E6%9B%B2/yuanqu.json",
-      "matchedCities": [
-        "CN-340300"
-      ],
-      "seedFor": [],
-      "matchScore": 6
-    },
-    {
-      "poemId": "yuanqu:246fc1dba4ada852",
-      "title": "汉钟离度脱蓝采和・梅花酒",
-      "author": "无名氏",
-      "dynasty": "元",
-      "lines": [
-        "他每都怎到的，论指点谁及，做手儿无敌，识紧慢迟疾。",
-        "(净云)哥哥，你那做杂剧的衣服等件，不曾坏了。",
-        "哥哥，你揭起帐幔试看咱；(正末唱)听言罢心内喜，不由我笑微微，我揭开帐幔则。",
-        "(做揭科)(钟离洞宾在内坐科，钟云)许坚，你凡心不退哩那！(正末唱)唬的我悠悠魂魄飞，我则道我哥哥我兄弟，我姊妹我姨姨，似南柯梦惊回。"
-      ],
-      "linesTraditional": [
-        "他每都怎到的，论指点谁及，做手儿无敌，识紧慢迟疾。",
-        "(净云)哥哥，你那做杂剧的衣服等件，不曾坏了。",
-        "哥哥，你揭起帐幔试看咱；(正末唱)听言罢心内喜，不由我笑微微，我揭开帐幔则。",
-        "(做揭科)(钟离洞宾在内坐科，钟云)许坚，你凡心不退哩那！(正末唱)唬的我悠悠魂魄飞，我则道我哥哥我兄弟，我姊妹我姨姨，似南柯梦惊回。"
-      ],
-      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%83%E6%9B%B2/yuanqu.json",
-      "matchedCities": [
-        "CN-340300"
-      ],
-      "seedFor": [],
-      "matchScore": 6
-    },
-    {
-      "poemId": "yuanqu:6105a48fc634154c",
-      "title": "汉钟离度脱蓝采和・那咤令",
-      "author": "无名氏",
-      "dynasty": "元",
-      "lines": [
-        "据着你那口食离糟麸膳缘，身遇着薄藤冠驾轩，我则道稳跨着仙鹤上天。",
-        "(钟云)我游遍天下，不曾见你这个末尼。",
-        "(正末唱)太平身插入市楼，将天下都游遍，一对脚背地坚叫声冤。"
-      ],
-      "linesTraditional": [
-        "据着你那口食离糟麸膳缘，身遇着薄藤冠驾轩，我则道稳跨着仙鹤上天。",
-        "(钟云)我游遍天下，不曾见你这个末尼。",
-        "(正末唱)太平身插入市楼，将天下都游遍，一对脚背地坚叫声冤。"
-      ],
-      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%83%E6%9B%B2/yuanqu.json",
-      "matchedCities": [
-        "CN-340300"
-      ],
-      "seedFor": [],
-      "matchScore": 6
-    },
-    {
-      "poemId": "yuanqu:261fe5d15f5a468f",
-      "title": "汉钟离度脱蓝采和・南吕/一枝花",
-      "author": "无名氏",
-      "dynasty": "元",
-      "lines": [
-        "白莲插玉瓶，黄篆焚金鼎，斟一杯长寿酒，挂一幅老人星，来贺长生。",
-        "感承你相钦敬，量小人有甚么能，动劳你火伴邻里街坊，谢承你亲眷相知弟兄。"
-      ],
-      "linesTraditional": [
-        "白莲插玉瓶，黄篆焚金鼎，斟一杯长寿酒，挂一幅老人星，来贺长生。",
-        "感承你相钦敬，量小人有甚么能，动劳你火伴邻里街坊，谢承你亲眷相知弟兄。"
-      ],
-      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%83%E6%9B%B2/yuanqu.json",
-      "matchedCities": [
-        "CN-340300"
-      ],
-      "seedFor": [],
-      "matchScore": 6
-    },
-    {
-      "poemId": "yuanqu:c9ef51625aa07b62",
-      "title": "汉钟离度脱蓝采和・七弟兄",
-      "author": "无名氏",
-      "dynasty": "元",
-      "lines": [
-        "那时，我对敌，不是我说嘴，我着他笑嘻嘻将衣服花帽全新置。",
-        "旧幺么院本我须知，论同场本事我般般会。"
-      ],
-      "linesTraditional": [
-        "那时，我对敌，不是我说嘴，我着他笑嘻嘻将衣服花帽全新置。",
-        "旧么麽院本我须知，论同场本事我般般会。"
-      ],
-      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%83%E6%9B%B2/yuanqu.json",
-      "matchedCities": [
-        "CN-340300"
+        "CN-350100"
       ],
       "seedFor": [],
       "matchScore": 6
@@ -75093,8 +74305,7 @@
       ],
       "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%83%E6%9B%B2/yuanqu.json",
       "matchedCities": [
-        "CN-330100",
-        "CN-350100"
+        "CN-330100"
       ],
       "seedFor": [],
       "matchScore": 8
@@ -75474,8 +74685,7 @@
       ],
       "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%83%E6%9B%B2/yuanqu.json",
       "matchedCities": [
-        "CN-330100",
-        "CN-350100"
+        "CN-330100"
       ],
       "seedFor": [],
       "matchScore": 7
@@ -75527,8 +74737,7 @@
       ],
       "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%83%E6%9B%B2/yuanqu.json",
       "matchedCities": [
-        "CN-330100",
-        "CN-350100"
+        "CN-330100"
       ],
       "seedFor": [],
       "matchScore": 6
@@ -75550,32 +74759,6 @@
       ],
       "seedFor": [],
       "matchScore": 6
-    },
-    {
-      "poemId": "yuanqu:635a0a12e473768c",
-      "title": "钟离春智勇定齐・尾声",
-      "author": "郑光祖",
-      "dynasty": "元",
-      "lines": [
-        "我姓钟离名字春，住苍山原是祖。",
-        "(公子云)我知也，你指与俺临淄去的路儿咱。",
-        "(正旦唱)你如今出桑园便是临淄路。",
-        "我本是齐国无盐邑之女。",
-        "(下)。"
-      ],
-      "linesTraditional": [
-        "我姓钟离名字春，住苍山原是祖。",
-        "(公子云)我知也，你指与俺临淄去的路儿咱。",
-        "(正旦唱)你如今出桑园便是临淄路。",
-        "我本是齐国无盐邑之女。",
-        "(下)。"
-      ],
-      "sourceUrl": "https://raw.githubusercontent.com/chinese-poetry/chinese-poetry/master/%E5%85%83%E6%9B%B2/yuanqu.json",
-      "matchedCities": [
-        "CN-340300"
-      ],
-      "seedFor": [],
-      "matchScore": 7
     },
     {
       "poemId": "yuanqu:bb6f704fee33f82c",

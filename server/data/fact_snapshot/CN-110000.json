@@ -892,10 +892,7 @@
     {
       "entityId": "Q21042913",
       "name": "京杭大运河",
-      "coordinates": [
-        120.580277777,
-        31.276111111
-      ],
+      "coordinates": null,
       "kind": "全国重点文物保护单位",
       "heritageDesignations": [
         "全国重点文物保护单位"
@@ -3178,10 +3175,7 @@
     {
       "entityId": "Q21042913",
       "name": "京杭大运河",
-      "coordinates": [
-        120.580277777,
-        31.276111111
-      ],
+      "coordinates": null,
       "inceptionYear": null,
       "museumOrSite": null,
       "location": null,

@@ -82,6 +82,24 @@ function label(row: Binding, key: string): string | null {
   return value && value.trim() ? value.trim() : null;
 }
 
+/**
+ * 坐标人工校正（与 server/services/cityFactSnapshot.ts 的 COORD_OVERRIDES 保持一致）：
+ * 上游坐标在本城语境不成立时置 null（「待考」），不填替代值。
+ * - CN-110000:Q21042913 京杭大运河：线性遗产，P625 单点落在杭州段（距北京约 1031km）；
+ * - CN-410300:Q10946962 安济桥：该 QID 的 P131 已属衡水（距洛阳约 450km）。
+ */
+const COORD_OVERRIDES: Record<string, null> = {
+  'CN-110000:Q21042913': null,
+  'CN-410300:Q10946962': null,
+};
+
+function overrideCoord<T extends { entityId: string; coordinates: [number, number] | null }>(
+  cityId: string,
+  item: T,
+): T {
+  return `${cityId}:${item.entityId}` in COORD_OVERRIDES ? { ...item, coordinates: null } : item;
+}
+
 function sitelinks(row: Binding): number | null {
   const n = Number(row.sl?.value);
   return Number.isFinite(n) ? n : null;
@@ -283,6 +301,7 @@ async function main(): Promise<void> {
       });
     }
     const landmarks = [...landmarkMap.values()]
+      .map((item) => overrideCoord(city.cityId, item))
       .sort((a, b) => (b.sitelinks ?? 0) - (a.sitelinks ?? 0))
       .slice(0, 120);
 
@@ -308,7 +327,7 @@ async function main(): Promise<void> {
         retrievedAt,
       },
       landmarks,
-      relics: relics.items,
+      relics: relics.items.map((relic) => overrideCoord(city.cityId, relic)),
       figures,
       failures,
     };

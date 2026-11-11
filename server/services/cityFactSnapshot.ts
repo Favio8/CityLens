@@ -20,6 +20,7 @@ import {
   type Binding,
 } from '../../scripts/lib/wikidata';
 import { config } from '../config';
+import type { Coord } from '../../shared/schema';
 import type { CityBrief } from '../db/cityRepo';
 import {
   getFactSnapshot,
@@ -279,6 +280,7 @@ async function buildSnapshot(city: CityBrief, cityQid: string): Promise<FactSnap
     });
   }
   const landmarks = [...landmarkMap.values()]
+    .map((item) => overrideCoord(city.cityId, item))
     .sort((a, b) => b.sitelinks - a.sitelinks)
     .slice(0, 120);
 
@@ -313,7 +315,7 @@ async function buildSnapshot(city: CityBrief, cityQid: string): Promise<FactSnap
       retrievedAt,
     },
     landmarks,
-    relics: relics.items,
+    relics: relics.items.map((relic) => overrideCoord(city.cityId, relic)),
     figures,
     failures,
   };
@@ -386,9 +388,28 @@ const MUSEUM_OVERRIDES: Record<string, string> = {
   'CN-610100:Q806929': '待考',
 };
 
+/**
+ * 坐标人工校正：上游坐标在本城语境下不成立时置 null（「待考」），不填入替代值。
+ * - CN-110000:Q21042913 京杭大运河：线性遗产，Wikidata P625 单点落在杭州段（距北京约 1031km）；
+ * - CN-410300:Q10946962 安济桥：该 QID 的 P131 已属衡水（距洛阳约 450km）。
+ */
+const COORD_OVERRIDES: Record<string, null> = {
+  'CN-110000:Q21042913': null,
+  'CN-410300:Q10946962': null,
+};
+
+/** 按「城市:实体」键应用坐标校正；未登记的条目原样返回。 */
+function overrideCoord<T extends { entityId: string; coordinates: Coord | null }>(
+  cityId: string,
+  item: T,
+): T {
+  return `${cityId}:${item.entityId}` in COORD_OVERRIDES ? { ...item, coordinates: null } : item;
+}
+
 /** 把快照中的文物映射为文物名录条目，供非预置城市复用同一套生成逻辑。 */
 export function snapshotToRegistry(snapshot: FactSnapshot): RegistryRelic[] {
   return snapshot.relics
+    .map((relic) => overrideCoord(snapshot.cityId, relic))
     .filter((relic) => Boolean(relic.name))
     .map((relic) => ({
       registryId: `${snapshot.cityId}:${relic.entityId}`,
