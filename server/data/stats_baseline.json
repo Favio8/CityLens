@@ -1,0 +1,1122 @@
+{
+  "generatedAt": "2026-11-11T05:12:36.185Z",
+  "note": "GDP/人口来自各市统计公报或政府数据页；缺失年份保持 null。气候为 Open-Meteo ERA5 1991–2020 聚合值。",
+  "sources": [
+    {
+      "id": "S-STAT-XA",
+      "type": "gov_stat",
+      "title": "西安市人民政府数据页（来源：西安市国民经济和社会发展统计公报）",
+      "url": "https://www.xa.gov.cn/sj/",
+      "retrievedAt": "2026-11-11T05:12:36.152Z"
+    },
+    {
+      "id": "S-STAT-XA-2025",
+      "type": "gov_stat",
+      "title": "西安市2025年国民经济和社会发展统计公报",
+      "url": "https://tjj.xa.gov.cn/tjsj/tjgb/tjgb/2055106184529166338.html",
+      "retrievedAt": "2026-11-11T05:12:36.152Z"
+    },
+    {
+      "id": "S-STAT-BJ-2021",
+      "type": "gov_stat",
+      "title": "北京市2021年国民经济和社会发展统计公报",
+      "url": "https://tjj.beijing.gov.cn/EnglishSite/SC/202204/P020220406395809040784.pdf",
+      "retrievedAt": "2026-11-11T05:12:36.152Z"
+    },
+    {
+      "id": "S-STAT-BJ-2022",
+      "type": "gov_stat",
+      "title": "北京市2022年国民经济和社会发展统计公报",
+      "url": "https://tjj.beijing.gov.cn/tjsj_31433/tjgb_31445/ndgb_31446/202303/t20230321_2940951.html",
+      "retrievedAt": "2026-11-11T05:12:36.152Z"
+    },
+    {
+      "id": "S-STAT-BJ-2023",
+      "type": "gov_stat",
+      "title": "北京市2023年国民经济和社会发展统计公报",
+      "url": "https://tjj.beijing.gov.cn/zxfbu/202403/t20240319_3594001.html",
+      "retrievedAt": "2026-11-11T05:12:36.152Z"
+    },
+    {
+      "id": "S-STAT-BJ-2024",
+      "type": "gov_stat",
+      "title": "北京市2024年国民经济和社会发展统计公报",
+      "url": "https://tjj.beijing.gov.cn/zxfbu/202503/t20250319_4038768.html",
+      "retrievedAt": "2026-11-11T05:12:36.152Z"
+    },
+    {
+      "id": "S-STAT-BJ-2025",
+      "type": "gov_stat",
+      "title": "北京市2025年国民经济和社会发展统计公报",
+      "url": "http://tjj.beijing.gov.cn/tjsj_31433/tjgb_31445/ndgb_31446/202603/t20260326_4566469.html",
+      "retrievedAt": "2026-11-11T05:12:36.152Z"
+    },
+    {
+      "id": "S-STAT-HZ-2021",
+      "type": "gov_stat",
+      "title": "杭州市2021年国民经济和社会发展统计公报",
+      "url": "https://tjj.hangzhou.gov.cn/art/2022/4/6/art_1229279682_4028665.html",
+      "retrievedAt": "2026-11-11T05:12:36.152Z"
+    },
+    {
+      "id": "S-STAT-HZ-2022",
+      "type": "gov_stat",
+      "title": "杭州市2022年国民经济和社会发展统计公报",
+      "url": "https://tjj.hangzhou.gov.cn/art/2023/3/20/art_1229279682_4149703.html",
+      "retrievedAt": "2026-11-11T05:12:36.152Z"
+    },
+    {
+      "id": "S-STAT-HZ-2022-POP",
+      "type": "gov_stat",
+      "title": "2022年杭州人口主要数据（杭州市统计局）",
+      "url": "https://tjj.hangzhou.gov.cn/art/2023/3/17/art_1229279240_4149695.html",
+      "retrievedAt": "2026-11-11T05:12:36.152Z"
+    },
+    {
+      "id": "S-STAT-HZ-2023",
+      "type": "gov_stat",
+      "title": "杭州市2023年国民经济和社会发展统计公报",
+      "url": "https://tjj.hangzhou.gov.cn/art/2024/3/15/art_1229279682_4246532.html",
+      "retrievedAt": "2026-11-11T05:12:36.152Z"
+    },
+    {
+      "id": "S-STAT-HZ-2025",
+      "type": "gov_stat",
+      "title": "杭州市2025年国民经济和社会发展统计公报",
+      "url": "https://tjj.hangzhou.gov.cn/col/col1229279682/art/2026/art_99cf56b3747b44b492375d4b4d4943d3.html",
+      "retrievedAt": "2026-11-11T05:12:36.152Z"
+    },
+    {
+      "id": "S-STAT-CD-2021",
+      "type": "gov_stat",
+      "title": "成都市2021年国民经济和社会发展统计公报",
+      "url": "https://cdstats.chengdu.gov.cn/cdstjj/uploads/20230222161346k5uiy2uqiaf.pdf",
+      "retrievedAt": "2026-11-11T05:12:36.152Z"
+    },
+    {
+      "id": "S-STAT-CD-2022",
+      "type": "gov_stat",
+      "title": "成都市2022年国民经济和社会发展统计公报",
+      "url": "https://cdstats.chengdu.gov.cn/gkml/uploadfiles/1607625235320909855/10898551684401725442022%20%E5%B9%B4%E6%88%90%E9%83%BD%E5%B8%82%E5%9B%BD%E6%B0%91%E7%BB%8F%E6%B5%8E%E5%92%8C%E7%A4%BE%E4%BC%9A%E5%8F%91%E5%B1%95%E7%BB%9F%E8%AE%A1%E5%85%AC%E6%8A%A5.pdf",
+      "retrievedAt": "2026-11-11T05:12:36.152Z"
+    },
+    {
+      "id": "S-STAT-CD-2023",
+      "type": "gov_stat",
+      "title": "成都市2023年国民经济和社会发展统计公报",
+      "url": "https://cdstats.chengdu.gov.cn/gkml/uploadfiles/1607625235320909855/12235749834820157442023%E5%B9%B4%E6%88%90%E9%83%BD%E5%B8%82%E5%9B%BD%E6%B0%91%E7%BB%8F%E6%B5%8E%E5%92%8C%E7%A4%BE%E4%BC%9A%E5%8F%91%E5%B1%95%E7%BB%9F%E8%AE%A1%E5%85%AC%E6%8A%A5.pdf",
+      "retrievedAt": "2026-11-11T05:12:36.152Z"
+    },
+    {
+      "id": "S-STAT-CD-2024",
+      "type": "gov_stat",
+      "title": "成都市2024年国民经济和社会发展统计公报",
+      "url": "https://cdstats.chengdu.gov.cn/gkml/uploadfiles/1607625235320909855/13573860346224967682024%E5%B9%B4%E6%88%90%E9%83%BD%E5%B8%82%E5%9B%BD%E6%B0%91%E7%BB%8F%E6%B5%8E%E5%92%8C%E7%A4%BE%E4%BC%9A%E5%8F%91%E5%B1%95%E7%BB%9F%E8%AE%A1%E5%85%AC%E6%8A%A5.pdf",
+      "retrievedAt": "2026-11-11T05:12:36.152Z"
+    },
+    {
+      "id": "S-STAT-CD-2025",
+      "type": "gov_stat",
+      "title": "成都市2025年国民经济和社会发展统计公报",
+      "url": "https://www.chengdu.gov.cn/gkml/uploadfiles/1607625235320909855/14939263714648391682025%E5%B9%B4%E6%88%90%E9%83%BD%E5%B8%82%E5%9B%BD%E6%B0%91%E7%BB%8F%E6%B5%8E%E5%92%8C%E7%A4%BE%E4%BC%9A%E5%8F%91%E5%B1%95%E7%BB%9F%E8%AE%A1%E5%85%AC%E6%8A%A5.pdf",
+      "retrievedAt": "2026-11-11T05:12:36.152Z"
+    },
+    {
+      "id": "S-STAT-SZ-2021",
+      "type": "gov_stat",
+      "title": "苏州市2021年国民经济和社会发展概况（统计年鉴）",
+      "url": "https://tjj.suzhou.gov.cn/sztjj/tjnj/2022/zk/html/gb.pdf",
+      "retrievedAt": "2026-11-11T05:12:36.152Z"
+    },
+    {
+      "id": "S-STAT-SZ-2021-POP",
+      "type": "gov_stat",
+      "title": "苏州统计年鉴2022·综合（2021年末常住人口）",
+      "url": "https://tjj.suzhou.gov.cn/sztjj/tjnj/2022/zk/html/sm01.pdf",
+      "retrievedAt": "2026-11-11T05:12:36.152Z"
+    },
+    {
+      "id": "S-STAT-SZ-2022",
+      "type": "gov_stat",
+      "title": "苏州市2022年国民经济和社会发展统计公报",
+      "url": "https://www.suzhou.gov.cn/szsrmzf/ndgmjjhshfztjsjfb/202303/cb4c9f0a234e453f8a2fc19a5049475c.shtml",
+      "retrievedAt": "2026-11-11T05:12:36.152Z"
+    },
+    {
+      "id": "S-STAT-SZ-2022-POP",
+      "type": "gov_stat",
+      "title": "苏州统计年鉴2023·人口劳动力（2022年末常住人口）",
+      "url": "https://tjj.suzhou.gov.cn/sztjj/tjnj/2023/zk/html/sm02.pdf",
+      "retrievedAt": "2026-11-11T05:12:36.152Z"
+    },
+    {
+      "id": "S-STAT-SZ-2023",
+      "type": "gov_stat",
+      "title": "苏州市2023年国民经济和社会发展统计公报",
+      "url": "http://tjj.suzhou.gov.cn/sztjj/tjgb/202403/44c648294e5e4275aa371908e6b199bc.shtml",
+      "retrievedAt": "2026-11-11T05:12:36.152Z"
+    },
+    {
+      "id": "S-STAT-SZ-2023-POP",
+      "type": "gov_stat",
+      "title": "苏州统计年鉴2024·人口劳动力（2023年末常住人口）",
+      "url": "https://tjj.suzhou.gov.cn/sztjj/tjnj/2024/2024/zk/html/sm02.pdf",
+      "retrievedAt": "2026-11-11T05:12:36.152Z"
+    },
+    {
+      "id": "S-STAT-SZ-2024",
+      "type": "gov_stat",
+      "title": "苏州市2024年国民经济和社会发展统计公报",
+      "url": "https://www.suzhou.gov.cn/szsrmzf/ndgmjjhshfztjsjfb/202506/c413b01f30224b7ba5ddbc1768cabe5c.shtml",
+      "retrievedAt": "2026-11-11T05:12:36.152Z"
+    },
+    {
+      "id": "S-STAT-SZ-2025",
+      "type": "gov_stat",
+      "title": "苏州市2025年国民经济和社会发展统计公报",
+      "url": "https://tjj.suzhou.gov.cn/sztjj/tjgb/202604/3dc4b574cabd4e86b36ec5d3280e927c.shtml",
+      "retrievedAt": "2026-11-11T05:12:36.152Z"
+    },
+    {
+      "id": "S-STAT-LY-2021",
+      "type": "gov_stat",
+      "title": "洛阳市2021年国民经济和社会发展统计公报",
+      "url": "http://lytjj.ly.gov.cn/2022/05-11/276288.html",
+      "retrievedAt": "2026-11-11T05:12:36.152Z"
+    },
+    {
+      "id": "S-STAT-LY-2022",
+      "type": "gov_stat",
+      "title": "洛阳市2022年国民经济和社会发展统计公报",
+      "url": "http://www.ly.gov.cn/2023/04-03/28904.html",
+      "retrievedAt": "2026-11-11T05:12:36.152Z"
+    },
+    {
+      "id": "S-STAT-LY-2023",
+      "type": "gov_stat",
+      "title": "洛阳市2023年国民经济和社会发展统计公报",
+      "url": "https://m.ly.gov.cn/2024/05-09/144721.html",
+      "retrievedAt": "2026-11-11T05:12:36.152Z"
+    },
+    {
+      "id": "S-STAT-LY-2024",
+      "type": "gov_stat",
+      "title": "洛阳市2024年国民经济和社会发展统计公报",
+      "url": "http://lytjj.ly.gov.cn/2025/04-24/564507.html",
+      "retrievedAt": "2026-11-11T05:12:36.152Z"
+    },
+    {
+      "id": "S-STAT-LY-2025",
+      "type": "gov_stat",
+      "title": "洛阳市2025年国民经济和社会发展统计公报",
+      "url": "http://www.ly.gov.cn/2026/05-11/1060335.html",
+      "retrievedAt": "2026-11-11T05:12:36.152Z"
+    },
+    {
+      "id": "S-CLIMATE-OPENMETEO",
+      "type": "local_snapshot",
+      "title": "Open-Meteo ERA5 再分析 1991–2020 月均温与月降水",
+      "url": "https://archive-api.open-meteo.com/v1/archive",
+      "retrievedAt": "2026-11-11T05:12:36.152Z"
+    }
+  ],
+  "cities": {
+    "CN-610100": {
+      "gdp": {
+        "unit": "亿元",
+        "caliber": "地区生产总值（现价）",
+        "sourceRefs": [
+          "S-STAT-XA",
+          "S-STAT-XA-2025"
+        ],
+        "values": {
+          "2021": 10688.28,
+          "2022": 11486.51,
+          "2023": 12010.76,
+          "2024": 13317.78,
+          "2025": 13902.67
+        },
+        "series": [
+          {
+            "year": 2021,
+            "value": 10688.28
+          },
+          {
+            "year": 2022,
+            "value": 11486.51
+          },
+          {
+            "year": 2023,
+            "value": 12010.76
+          },
+          {
+            "year": 2024,
+            "value": 13317.78
+          },
+          {
+            "year": 2025,
+            "value": 13902.67
+          }
+        ]
+      },
+      "pop": {
+        "unit": "万人",
+        "caliber": "年末常住人口（2022–2025）",
+        "sourceRefs": [
+          "S-STAT-XA",
+          "S-STAT-XA-2025"
+        ],
+        "values": {
+          "2022": 1299.59,
+          "2023": 1307.82,
+          "2024": 1316.76,
+          "2025": 1323.63
+        },
+        "series": [
+          {
+            "year": 2021,
+            "value": null
+          },
+          {
+            "year": 2022,
+            "value": 1299.59
+          },
+          {
+            "year": 2023,
+            "value": 1307.82
+          },
+          {
+            "year": 2024,
+            "value": 1316.76
+          },
+          {
+            "year": 2025,
+            "value": 1323.63
+          }
+        ]
+      },
+      "climate": {
+        "period": "1991–2020",
+        "station": "ERA5 再分析（城市中心格点）",
+        "sourceRefs": [
+          "S-CLIMATE-OPENMETEO"
+        ],
+        "monthly": [
+          {
+            "month": 1,
+            "tempC": 0.5,
+            "precipMm": 11.6
+          },
+          {
+            "month": 2,
+            "tempC": 3.9,
+            "precipMm": 18.3
+          },
+          {
+            "month": 3,
+            "tempC": 9.4,
+            "precipMm": 31.7
+          },
+          {
+            "month": 4,
+            "tempC": 15.6,
+            "precipMm": 45.4
+          },
+          {
+            "month": 5,
+            "tempC": 20.3,
+            "precipMm": 69.6
+          },
+          {
+            "month": 6,
+            "tempC": 24.7,
+            "precipMm": 88.4
+          },
+          {
+            "month": 7,
+            "tempC": 26.7,
+            "precipMm": 140.4
+          },
+          {
+            "month": 8,
+            "tempC": 25.4,
+            "precipMm": 128.2
+          },
+          {
+            "month": 9,
+            "tempC": 20.2,
+            "precipMm": 130.4
+          },
+          {
+            "month": 10,
+            "tempC": 14.4,
+            "precipMm": 79.5
+          },
+          {
+            "month": 11,
+            "tempC": 7.8,
+            "precipMm": 39.9
+          },
+          {
+            "month": 12,
+            "tempC": 2,
+            "precipMm": 13.4
+          }
+        ]
+      }
+    },
+    "CN-330100": {
+      "gdp": {
+        "unit": "亿元",
+        "caliber": "地区生产总值（现价，初步核算）",
+        "sourceRefs": [
+          "S-STAT-HZ-2021",
+          "S-STAT-HZ-2022",
+          "S-STAT-HZ-2023",
+          "S-STAT-HZ-2025"
+        ],
+        "values": {
+          "2021": 18109,
+          "2022": 18753,
+          "2023": 20059,
+          "2024": 21860,
+          "2025": 23011
+        },
+        "series": [
+          {
+            "year": 2021,
+            "value": 18109
+          },
+          {
+            "year": 2022,
+            "value": 18753
+          },
+          {
+            "year": 2023,
+            "value": 20059
+          },
+          {
+            "year": 2024,
+            "value": 21860
+          },
+          {
+            "year": 2025,
+            "value": 23011
+          }
+        ]
+      },
+      "pop": {
+        "unit": "万人",
+        "caliber": "年末常住人口（人口变动抽样调查推算）",
+        "sourceRefs": [
+          "S-STAT-HZ-2021",
+          "S-STAT-HZ-2022-POP",
+          "S-STAT-HZ-2023",
+          "S-STAT-HZ-2025"
+        ],
+        "values": {
+          "2021": 1220.4,
+          "2022": 1237.6,
+          "2023": 1252.2,
+          "2024": 1262.4,
+          "2025": 1270
+        },
+        "series": [
+          {
+            "year": 2021,
+            "value": 1220.4
+          },
+          {
+            "year": 2022,
+            "value": 1237.6
+          },
+          {
+            "year": 2023,
+            "value": 1252.2
+          },
+          {
+            "year": 2024,
+            "value": 1262.4
+          },
+          {
+            "year": 2025,
+            "value": 1270
+          }
+        ]
+      },
+      "climate": {
+        "period": "1991–2020",
+        "station": "ERA5 再分析（城市中心格点）",
+        "sourceRefs": [
+          "S-CLIMATE-OPENMETEO"
+        ],
+        "monthly": [
+          {
+            "month": 1,
+            "tempC": 4.7,
+            "precipMm": 79.7
+          },
+          {
+            "month": 2,
+            "tempC": 6.7,
+            "precipMm": 74.8
+          },
+          {
+            "month": 3,
+            "tempC": 10.7,
+            "precipMm": 119.3
+          },
+          {
+            "month": 4,
+            "tempC": 16.3,
+            "precipMm": 133.9
+          },
+          {
+            "month": 5,
+            "tempC": 21.3,
+            "precipMm": 157
+          },
+          {
+            "month": 6,
+            "tempC": 24.5,
+            "precipMm": 302.9
+          },
+          {
+            "month": 7,
+            "tempC": 28.7,
+            "precipMm": 180
+          },
+          {
+            "month": 8,
+            "tempC": 28.3,
+            "precipMm": 149.2
+          },
+          {
+            "month": 9,
+            "tempC": 24,
+            "precipMm": 97.7
+          },
+          {
+            "month": 10,
+            "tempC": 18.7,
+            "precipMm": 58
+          },
+          {
+            "month": 11,
+            "tempC": 13,
+            "precipMm": 65.7
+          },
+          {
+            "month": 12,
+            "tempC": 6.8,
+            "precipMm": 59.4
+          }
+        ]
+      }
+    },
+    "CN-510100": {
+      "gdp": {
+        "unit": "亿元",
+        "caliber": "地区生产总值（现价，初步核算）",
+        "sourceRefs": [
+          "S-STAT-CD-2021",
+          "S-STAT-CD-2022",
+          "S-STAT-CD-2023",
+          "S-STAT-CD-2024",
+          "S-STAT-CD-2025"
+        ],
+        "values": {
+          "2021": 19917,
+          "2022": 20817.5,
+          "2023": 22074.7,
+          "2024": 23511.3,
+          "2025": 24763.6
+        },
+        "series": [
+          {
+            "year": 2021,
+            "value": 19917
+          },
+          {
+            "year": 2022,
+            "value": 20817.5
+          },
+          {
+            "year": 2023,
+            "value": 22074.7
+          },
+          {
+            "year": 2024,
+            "value": 23511.3
+          },
+          {
+            "year": 2025,
+            "value": 24763.6
+          }
+        ]
+      },
+      "pop": {
+        "unit": "万人",
+        "caliber": "年末常住人口",
+        "sourceRefs": [
+          "S-STAT-CD-2021",
+          "S-STAT-CD-2022",
+          "S-STAT-CD-2023",
+          "S-STAT-CD-2024",
+          "S-STAT-CD-2025"
+        ],
+        "values": {
+          "2021": 2119.2,
+          "2022": 2126.8,
+          "2023": 2140.3,
+          "2024": 2147.4,
+          "2025": 2153.5
+        },
+        "series": [
+          {
+            "year": 2021,
+            "value": 2119.2
+          },
+          {
+            "year": 2022,
+            "value": 2126.8
+          },
+          {
+            "year": 2023,
+            "value": 2140.3
+          },
+          {
+            "year": 2024,
+            "value": 2147.4
+          },
+          {
+            "year": 2025,
+            "value": 2153.5
+          }
+        ]
+      },
+      "climate": {
+        "period": "1991–2020",
+        "station": "ERA5 再分析（城市中心格点）",
+        "sourceRefs": [
+          "S-CLIMATE-OPENMETEO"
+        ],
+        "monthly": [
+          {
+            "month": 1,
+            "tempC": 6.2,
+            "precipMm": 4.7
+          },
+          {
+            "month": 2,
+            "tempC": 8.6,
+            "precipMm": 8.4
+          },
+          {
+            "month": 3,
+            "tempC": 13,
+            "precipMm": 21.8
+          },
+          {
+            "month": 4,
+            "tempC": 18.4,
+            "precipMm": 45.6
+          },
+          {
+            "month": 5,
+            "tempC": 22.4,
+            "precipMm": 69.6
+          },
+          {
+            "month": 6,
+            "tempC": 24.9,
+            "precipMm": 131.1
+          },
+          {
+            "month": 7,
+            "tempC": 26.1,
+            "precipMm": 291.8
+          },
+          {
+            "month": 8,
+            "tempC": 25.7,
+            "precipMm": 277.9
+          },
+          {
+            "month": 9,
+            "tempC": 22.2,
+            "precipMm": 135.5
+          },
+          {
+            "month": 10,
+            "tempC": 17.6,
+            "precipMm": 41.4
+          },
+          {
+            "month": 11,
+            "tempC": 12.9,
+            "precipMm": 17.4
+          },
+          {
+            "month": 12,
+            "tempC": 7.6,
+            "precipMm": 5.9
+          }
+        ]
+      }
+    },
+    "CN-110000": {
+      "gdp": {
+        "unit": "亿元",
+        "caliber": "地区生产总值（现价，初步核算）",
+        "sourceRefs": [
+          "S-STAT-BJ-2021",
+          "S-STAT-BJ-2022",
+          "S-STAT-BJ-2023",
+          "S-STAT-BJ-2024",
+          "S-STAT-BJ-2025"
+        ],
+        "values": {
+          "2021": 40269.6,
+          "2022": 41610.9,
+          "2023": 43760.7,
+          "2024": 49843.1,
+          "2025": 52073.4
+        },
+        "series": [
+          {
+            "year": 2021,
+            "value": 40269.6
+          },
+          {
+            "year": 2022,
+            "value": 41610.9
+          },
+          {
+            "year": 2023,
+            "value": 43760.7
+          },
+          {
+            "year": 2024,
+            "value": 49843.1
+          },
+          {
+            "year": 2025,
+            "value": 52073.4
+          }
+        ]
+      },
+      "pop": {
+        "unit": "万人",
+        "caliber": "年末常住人口（人口变动情况抽样调查推算数，官方公报发布值）",
+        "sourceRefs": [
+          "S-STAT-BJ-2021",
+          "S-STAT-BJ-2022",
+          "S-STAT-BJ-2023",
+          "S-STAT-BJ-2024",
+          "S-STAT-BJ-2025"
+        ],
+        "values": {
+          "2021": 2188.6,
+          "2022": 2184.3,
+          "2023": 2185.8,
+          "2024": 2183.2,
+          "2025": 2180
+        },
+        "series": [
+          {
+            "year": 2021,
+            "value": 2188.6
+          },
+          {
+            "year": 2022,
+            "value": 2184.3
+          },
+          {
+            "year": 2023,
+            "value": 2185.8
+          },
+          {
+            "year": 2024,
+            "value": 2183.2
+          },
+          {
+            "year": 2025,
+            "value": 2180
+          }
+        ]
+      },
+      "climate": {
+        "period": "1991–2020",
+        "station": "ERA5 再分析（城市中心格点）",
+        "sourceRefs": [
+          "S-CLIMATE-OPENMETEO"
+        ],
+        "monthly": [
+          {
+            "month": 1,
+            "tempC": -3.7,
+            "precipMm": 2.8
+          },
+          {
+            "month": 2,
+            "tempC": -0.3,
+            "precipMm": 5.1
+          },
+          {
+            "month": 3,
+            "tempC": 6.1,
+            "precipMm": 9
+          },
+          {
+            "month": 4,
+            "tempC": 14.3,
+            "precipMm": 19.1
+          },
+          {
+            "month": 5,
+            "tempC": 21.1,
+            "precipMm": 34.9
+          },
+          {
+            "month": 6,
+            "tempC": 25.6,
+            "precipMm": 75.1
+          },
+          {
+            "month": 7,
+            "tempC": 26.9,
+            "precipMm": 165.4
+          },
+          {
+            "month": 8,
+            "tempC": 25.4,
+            "precipMm": 125.7
+          },
+          {
+            "month": 9,
+            "tempC": 20.6,
+            "precipMm": 55.8
+          },
+          {
+            "month": 10,
+            "tempC": 13.1,
+            "precipMm": 33.6
+          },
+          {
+            "month": 11,
+            "tempC": 3.9,
+            "precipMm": 14.9
+          },
+          {
+            "month": 12,
+            "tempC": -2.4,
+            "precipMm": 3.5
+          }
+        ]
+      }
+    },
+    "CN-320500": {
+      "gdp": {
+        "unit": "亿元",
+        "caliber": "地区生产总值（现价，初步核算；2023 年初步数后经经济普查修订为 25513.4 亿元，未逐年替换）",
+        "sourceRefs": [
+          "S-STAT-SZ-2021",
+          "S-STAT-SZ-2022",
+          "S-STAT-SZ-2023",
+          "S-STAT-SZ-2024",
+          "S-STAT-SZ-2025"
+        ],
+        "values": {
+          "2021": 22718.3,
+          "2022": 23958.34,
+          "2023": 24653.4,
+          "2024": 26727,
+          "2025": 27695.1
+        },
+        "series": [
+          {
+            "year": 2021,
+            "value": 22718.3
+          },
+          {
+            "year": 2022,
+            "value": 23958.34
+          },
+          {
+            "year": 2023,
+            "value": 24653.4
+          },
+          {
+            "year": 2024,
+            "value": 26727
+          },
+          {
+            "year": 2025,
+            "value": 27695.1
+          }
+        ]
+      },
+      "pop": {
+        "unit": "万人",
+        "caliber": "年末常住人口（统计年鉴）",
+        "sourceRefs": [
+          "S-STAT-SZ-2021-POP",
+          "S-STAT-SZ-2022-POP",
+          "S-STAT-SZ-2023-POP",
+          "S-STAT-SZ-2024",
+          "S-STAT-SZ-2025"
+        ],
+        "values": {
+          "2021": 1284.78,
+          "2022": 1291.06,
+          "2023": 1295.8,
+          "2024": 1298.7,
+          "2025": 1304.77
+        },
+        "series": [
+          {
+            "year": 2021,
+            "value": 1284.78
+          },
+          {
+            "year": 2022,
+            "value": 1291.06
+          },
+          {
+            "year": 2023,
+            "value": 1295.8
+          },
+          {
+            "year": 2024,
+            "value": 1298.7
+          },
+          {
+            "year": 2025,
+            "value": 1304.77
+          }
+        ]
+      },
+      "climate": {
+        "period": "1991–2020",
+        "station": "ERA5 再分析（城市中心格点）",
+        "sourceRefs": [
+          "S-CLIMATE-OPENMETEO"
+        ],
+        "monthly": [
+          {
+            "month": 1,
+            "tempC": 4.3,
+            "precipMm": 75.6
+          },
+          {
+            "month": 2,
+            "tempC": 6.2,
+            "precipMm": 80
+          },
+          {
+            "month": 3,
+            "tempC": 10.2,
+            "precipMm": 114.9
+          },
+          {
+            "month": 4,
+            "tempC": 15.8,
+            "precipMm": 119.2
+          },
+          {
+            "month": 5,
+            "tempC": 20.9,
+            "precipMm": 141
+          },
+          {
+            "month": 6,
+            "tempC": 24.3,
+            "precipMm": 269.2
+          },
+          {
+            "month": 7,
+            "tempC": 28.4,
+            "precipMm": 174.3
+          },
+          {
+            "month": 8,
+            "tempC": 28,
+            "precipMm": 163.9
+          },
+          {
+            "month": 9,
+            "tempC": 23.9,
+            "precipMm": 97.6
+          },
+          {
+            "month": 10,
+            "tempC": 18.7,
+            "precipMm": 61.9
+          },
+          {
+            "month": 11,
+            "tempC": 13,
+            "precipMm": 67.1
+          },
+          {
+            "month": 12,
+            "tempC": 6.6,
+            "precipMm": 53.7
+          }
+        ]
+      }
+    },
+    "CN-410300": {
+      "gdp": {
+        "unit": "亿元",
+        "caliber": "地区生产总值（现价，初步核算；2024 年最终核实为 5825.86 亿元）",
+        "sourceRefs": [
+          "S-STAT-LY-2021",
+          "S-STAT-LY-2022",
+          "S-STAT-LY-2023",
+          "S-STAT-LY-2024",
+          "S-STAT-LY-2025"
+        ],
+        "values": {
+          "2021": 5447.1,
+          "2022": 5675.2,
+          "2023": 5481.6,
+          "2024": 5818.6,
+          "2025": 6164.52
+        },
+        "series": [
+          {
+            "year": 2021,
+            "value": 5447.1
+          },
+          {
+            "year": 2022,
+            "value": 5675.2
+          },
+          {
+            "year": 2023,
+            "value": 5481.6
+          },
+          {
+            "year": 2024,
+            "value": 5818.6
+          },
+          {
+            "year": 2025,
+            "value": 6164.52
+          }
+        ]
+      },
+      "pop": {
+        "unit": "万人",
+        "caliber": "年末常住人口",
+        "sourceRefs": [
+          "S-STAT-LY-2021",
+          "S-STAT-LY-2022",
+          "S-STAT-LY-2023",
+          "S-STAT-LY-2024",
+          "S-STAT-LY-2025"
+        ],
+        "values": {
+          "2021": 706.9,
+          "2022": 707.9,
+          "2023": 707.9,
+          "2024": 708.1,
+          "2025": 708.3
+        },
+        "series": [
+          {
+            "year": 2021,
+            "value": 706.9
+          },
+          {
+            "year": 2022,
+            "value": 707.9
+          },
+          {
+            "year": 2023,
+            "value": 707.9
+          },
+          {
+            "year": 2024,
+            "value": 708.1
+          },
+          {
+            "year": 2025,
+            "value": 708.3
+          }
+        ]
+      },
+      "climate": {
+        "period": "1991–2020",
+        "station": "ERA5 再分析（城市中心格点）",
+        "sourceRefs": [
+          "S-CLIMATE-OPENMETEO"
+        ],
+        "monthly": [
+          {
+            "month": 1,
+            "tempC": 0.9,
+            "precipMm": 11.1
+          },
+          {
+            "month": 2,
+            "tempC": 4.2,
+            "precipMm": 14.7
+          },
+          {
+            "month": 3,
+            "tempC": 9.9,
+            "precipMm": 23.4
+          },
+          {
+            "month": 4,
+            "tempC": 16.4,
+            "precipMm": 38.3
+          },
+          {
+            "month": 5,
+            "tempC": 21.8,
+            "precipMm": 57.4
+          },
+          {
+            "month": 6,
+            "tempC": 26.4,
+            "precipMm": 71
+          },
+          {
+            "month": 7,
+            "tempC": 27.4,
+            "precipMm": 159.2
+          },
+          {
+            "month": 8,
+            "tempC": 25.8,
+            "precipMm": 127.1
+          },
+          {
+            "month": 9,
+            "tempC": 21.4,
+            "precipMm": 94.6
+          },
+          {
+            "month": 10,
+            "tempC": 15.9,
+            "precipMm": 46.9
+          },
+          {
+            "month": 11,
+            "tempC": 8.8,
+            "precipMm": 32.1
+          },
+          {
+            "month": 12,
+            "tempC": 2.7,
+            "precipMm": 9.9
+          }
+        ]
+      }
+    }
+  }
+}

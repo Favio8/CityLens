@@ -93,7 +93,8 @@ const WHITELIST: Array<{ code: string; name: string; province: string }> = [
 
 const MUNICIPALITIES: Array<{ qid: string; code: string; name: string; province: string }> = [
   { qid: 'Q956', code: '110000', name: '北京', province: '北京市' },
-  { qid: 'Q7083', code: '120000', name: '天津', province: '天津市' },
+  // 天津 = Q11736；历史笔误曾误用 Q7083（德国罗滕堡），2026-11-11 审计 342 城 QID 标签后修正
+  { qid: 'Q11736', code: '120000', name: '天津', province: '天津市' },
   { qid: 'Q8686', code: '310000', name: '上海', province: '上海市' },
   { qid: 'Q11725', code: '500000', name: '重庆', province: '重庆市' },
 ];

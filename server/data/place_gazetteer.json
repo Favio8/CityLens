@@ -22,12 +22,12 @@
     {
       "name": "天津",
       "coordinates": [
-        8.271666666,
-        47.093888888
+        117.205555556,
+        39.146666667
       ],
       "cityId": "CN-120000",
       "kind": "city_center",
-      "entityId": "Q7083",
+      "entityId": "Q11736",
       "sourceRef": "S-DICT"
     },
     {

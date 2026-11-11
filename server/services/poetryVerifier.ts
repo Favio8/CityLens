@@ -136,12 +136,31 @@ const GENERIC_IMAGERY: ReadonlyArray<{ word: string; note: string }> = [
 /**
  * 人工核对的「诗中简称 → 本城地名库条目」映射。
  * 只收录语义明确、不会误配的简称；不在表内的写法一律不做简称推导。
+ * manualNote：地名库暂无该条目时，仍可给出地理意象（坐标为 null，注明待人工核对），
+ * 绝不填入没有出处的坐标。
  */
-const PLACE_SHORT_NAMES: Record<string, ReadonlyArray<{ word: string; entryName: string }>> = {
+const PLACE_SHORT_NAMES: Record<
+  string,
+  ReadonlyArray<{ word: string; entryName: string; manualNote?: string }>
+> = {
   'CN-330100': [{ word: '灵隐', entryName: '灵隐寺' }],
   'CN-410300': [
     { word: '龙门', entryName: '龙门石窟' },
     { word: '邙山', entryName: '邙山陵墓群' },
+  ],
+  'CN-320500': [
+    {
+      word: '太湖',
+      entryName: '太湖',
+      manualNote: '人工词表：太湖横跨苏州/无锡，地名库暂无条目，坐标待人工核对。',
+    },
+  ],
+  'CN-610100': [
+    {
+      word: '终南',
+      entryName: '终南山',
+      manualNote: '人工词表：终南山位于西安境内，地名库暂无条目，坐标待人工核对。',
+    },
   ],
 };
 
@@ -181,15 +200,26 @@ export function deriveImagery(
       if (imagery.length >= 2) break;
       if (!plain.includes(normalizeForImagery(short.word)) || used.includes(short.word)) continue;
       const entry = entries.find((item) => item.name === short.entryName);
-      if (!entry) continue;
-      used.push(short.word);
-      imagery.push({
-        word: short.word,
-        note: '诗中出现的地名，坐标取自本地地名库（WGS84）。',
-        isGeographic: true,
-        placeName: short.entryName,
-        coordinates: entry.coordinates,
-      });
+      if (entry) {
+        used.push(short.word);
+        imagery.push({
+          word: short.word,
+          note: '诗中出现的地名，坐标取自本地地名库（WGS84）。',
+          isGeographic: true,
+          placeName: short.entryName,
+          coordinates: entry.coordinates,
+        });
+      } else if (short.manualNote) {
+        // 地名库暂无条目：只给地名与说明，坐标留空待人工核对，不臆造坐标。
+        used.push(short.word);
+        imagery.push({
+          word: short.word,
+          note: short.manualNote,
+          isGeographic: true,
+          placeName: short.entryName,
+          coordinates: null,
+        });
+      }
     }
   }
 

@@ -1,0 +1,1452 @@
+{
+  "cityId": "CN-450300",
+  "cityName": "桂林",
+  "cityQid": "Q189633",
+  "center": [
+    110.286388888,
+    25.281944444
+  ],
+  "retrievedAt": "2026-11-11T05:36:56.841Z",
+  "sourceRef": {
+    "id": "S-WD-CN-450300",
+    "type": "wikidata",
+    "title": "Wikidata 事实快照 · 桂林",
+    "url": "https://query.wikidata.org/sparql",
+    "retrievedAt": "2026-11-11T05:36:56.841Z"
+  },
+  "landmarks": [
+    {
+      "entityId": "Q966140",
+      "name": "灵渠",
+      "coordinates": [
+        110.662479,
+        25.6215045
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 21
+    },
+    {
+      "entityId": "Q189538",
+      "name": "甑皮岩遗址",
+      "coordinates": [
+        110.277778055,
+        25.215556111
+      ],
+      "kind": "考古遗址",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 6
+    },
+    {
+      "entityId": "Q6202332",
+      "name": "靖江王府",
+      "coordinates": [
+        110.1731,
+        25.1614
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 5
+    },
+    {
+      "entityId": "Q63870537",
+      "name": "府学文庙石刻",
+      "coordinates": [
+        110.287617,
+        25.282663
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q17040099",
+      "name": "独秀峰摩崖石刻",
+      "coordinates": [
+        110.294833,
+        25.285919
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q99456960",
+      "name": "桂林城墙",
+      "coordinates": [
+        110.28602,
+        25.27895
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q11096041",
+      "name": "李宗仁官邸",
+      "coordinates": [
+        110.289188888,
+        25.274556944
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q11096042",
+      "name": "李宗仁故居",
+      "coordinates": [
+        109.996579,
+        25.171177
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q10892415",
+      "name": "八路军桂林办事处旧址",
+      "coordinates": [
+        110.295,
+        25.28972222
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q17039415",
+      "name": "百寿岩石刻",
+      "coordinates": [
+        109.77834,
+        25.17223
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q11089907",
+      "name": "普陀山石刻",
+      "coordinates": [
+        110.306774,
+        25.277073
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q10908620",
+      "name": "南溪山摩崖石刻",
+      "coordinates": [
+        110.28236,
+        25.251775
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q11073076",
+      "name": "恭城古建筑群",
+      "coordinates": [
+        110.822654,
+        24.83445
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q11089509",
+      "name": "晓锦遗址",
+      "coordinates": [
+        110.6982,
+        26.08367
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q10912943",
+      "name": "叠彩山摩崖造像及石刻",
+      "coordinates": [
+        110.297745,
+        25.293043
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q17030422",
+      "name": "秦城遗址",
+      "coordinates": [
+        110.47416,
+        25.57964
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q17163573",
+      "name": "燕窝楼",
+      "coordinates": [
+        111.14916667,
+        26.03722222
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q11134147",
+      "name": "江头村和长岗岭村古建筑群",
+      "coordinates": [
+        110.2674,
+        25.53415
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q17035199",
+      "name": "隐山石刻",
+      "coordinates": [
+        110.277114,
+        25.283489
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q10935154",
+      "name": "大岩遗址",
+      "coordinates": [
+        110.18945,
+        25.20838
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q11111594",
+      "name": "桂林石刻",
+      "coordinates": [
+        110.30153,
+        25.27457
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q17038478",
+      "name": "象鼻山石刻",
+      "coordinates": [
+        110.292054,
+        25.270303
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q11062481",
+      "name": "广西省立艺术馆",
+      "coordinates": [
+        110.28717535,
+        25.28214809
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q123160738",
+      "name": "伏波山摩崖造像及石刻",
+      "coordinates": [
+        110.299355,
+        25.286338
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q15932821",
+      "name": "湘江战役旧址",
+      "coordinates": [
+        110.76694,
+        25.72377
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q17036615",
+      "name": "虞山石刻",
+      "coordinates": [
+        110.296887,
+        25.30146
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q11131494",
+      "name": "永宁州城",
+      "coordinates": [
+        109.77441,
+        25.16761
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q123160755",
+      "name": "琴潭岩石刻",
+      "coordinates": [
+        110.247883,
+        25.262284
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q123160753",
+      "name": "中隐山石刻",
+      "coordinates": [
+        110.24438,
+        25.281901
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q123160754",
+      "name": "轿子岩摩崖造像及石刻",
+      "coordinates": [
+        110.247518,
+        25.263448
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q133309352",
+      "name": "父子岩遗址",
+      "coordinates": [
+        110.34586,
+        25.20155
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q133274774",
+      "name": "靖江王府及王陵",
+      "coordinates": [
+        110.29451,
+        25.28429
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q123160745",
+      "name": "铁封山石刻",
+      "coordinates": [
+        110.293341,
+        25.295908
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q123160741",
+      "name": "骝马山摩崖造像",
+      "coordinates": [
+        110.284211,
+        25.288644
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q123160749",
+      "name": "穿山石刻",
+      "coordinates": [
+        110.298652,
+        25.25553
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q123160751",
+      "name": "雉山石刻",
+      "coordinates": [
+        110.286319,
+        25.261967
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q123160735",
+      "name": "鹦鹉山石刻",
+      "coordinates": [
+        110.291297,
+        25.295559
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q133306888",
+      "name": "湘山寺塔群与石刻",
+      "coordinates": [
+        111.05663,
+        25.93899
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q123160739",
+      "name": "西山摩崖造像与石刻",
+      "coordinates": [
+        110.272779,
+        25.287716
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q123160756",
+      "name": "回龙山石刻",
+      "coordinates": [
+        110.294387,
+        25.301213
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q123160757",
+      "name": "会仙岩石刻",
+      "coordinates": [
+        110.312852,
+        25.269917
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q123160750",
+      "name": "宝积山石刻",
+      "coordinates": [
+        110.293255,
+        25.290737
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q123160737",
+      "name": "龙隐岩、龙隐洞、月牙山石刻",
+      "coordinates": [
+        110.300905,
+        25.273769
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q123160752",
+      "name": "清秀山石刻",
+      "coordinates": [
+        110.273799,
+        25.299196
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q133309535",
+      "name": "乐湾村古建筑群",
+      "coordinates": [
+        110.80351,
+        24.80957
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    }
+  ],
+  "relics": [
+    {
+      "entityId": "Q63870537",
+      "name": "府学文庙石刻",
+      "coordinates": [
+        110.287617,
+        25.282663
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": "桂林中学",
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q123160755",
+      "name": "琴潭岩石刻",
+      "coordinates": [
+        110.247883,
+        25.262284
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q123160753",
+      "name": "中隐山石刻",
+      "coordinates": [
+        110.24438,
+        25.281901
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q17039415",
+      "name": "百寿岩石刻",
+      "coordinates": [
+        109.77834,
+        25.17223
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q123160754",
+      "name": "轿子岩摩崖造像及石刻",
+      "coordinates": [
+        110.247518,
+        25.263448
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q11089907",
+      "name": "普陀山石刻",
+      "coordinates": [
+        110.306774,
+        25.277073
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q10908620",
+      "name": "南溪山摩崖石刻",
+      "coordinates": [
+        110.28236,
+        25.251775
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q133309352",
+      "name": "父子岩遗址",
+      "coordinates": [
+        110.34586,
+        25.20155
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q17040099",
+      "name": "独秀峰摩崖石刻",
+      "coordinates": [
+        110.294833,
+        25.285919
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q133274774",
+      "name": "靖江王府及王陵",
+      "coordinates": [
+        110.29451,
+        25.28429
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q123160745",
+      "name": "铁封山石刻",
+      "coordinates": [
+        110.293341,
+        25.295908
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q123160741",
+      "name": "骝马山摩崖造像",
+      "coordinates": [
+        110.284211,
+        25.288644
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q11073076",
+      "name": "恭城古建筑群",
+      "coordinates": [
+        110.822654,
+        24.83445
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q99456960",
+      "name": "桂林城墙",
+      "coordinates": [
+        110.28602,
+        25.27895
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q11089509",
+      "name": "晓锦遗址",
+      "coordinates": [
+        110.6982,
+        26.08367
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q10912943",
+      "name": "叠彩山摩崖造像及石刻",
+      "coordinates": [
+        110.297745,
+        25.293043
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q123160749",
+      "name": "穿山石刻",
+      "coordinates": [
+        110.298652,
+        25.25553
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q966140",
+      "name": "灵渠",
+      "coordinates": [
+        110.662479,
+        25.6215045
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 21
+    },
+    {
+      "entityId": "Q17030422",
+      "name": "秦城遗址",
+      "coordinates": [
+        110.47416,
+        25.57964
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q17163573",
+      "name": "燕窝楼",
+      "coordinates": [
+        111.14916667,
+        26.03722222
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q11134147",
+      "name": "江头村和长岗岭村古建筑群",
+      "coordinates": [
+        110.2674,
+        25.53415
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q6202332",
+      "name": "靖江王府",
+      "coordinates": [
+        110.1731,
+        25.1614
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 5
+    },
+    {
+      "entityId": "Q123160751",
+      "name": "雉山石刻",
+      "coordinates": [
+        110.286319,
+        25.261967
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q189538",
+      "name": "甑皮岩遗址",
+      "coordinates": [
+        110.277778055,
+        25.215556111
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 6
+    },
+    {
+      "entityId": "Q17035199",
+      "name": "隐山石刻",
+      "coordinates": [
+        110.277114,
+        25.283489
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q123160735",
+      "name": "鹦鹉山石刻",
+      "coordinates": [
+        110.291297,
+        25.295559
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q10935154",
+      "name": "大岩遗址",
+      "coordinates": [
+        110.18945,
+        25.20838
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q133306888",
+      "name": "湘山寺塔群与石刻",
+      "coordinates": [
+        111.05663,
+        25.93899
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q123160739",
+      "name": "西山摩崖造像与石刻",
+      "coordinates": [
+        110.272779,
+        25.287716
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q123160756",
+      "name": "回龙山石刻",
+      "coordinates": [
+        110.294387,
+        25.301213
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q11111594",
+      "name": "桂林石刻",
+      "coordinates": [
+        110.30153,
+        25.27457
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q123160757",
+      "name": "会仙岩石刻",
+      "coordinates": [
+        110.312852,
+        25.269917
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q17038478",
+      "name": "象鼻山石刻",
+      "coordinates": [
+        110.292054,
+        25.270303
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q123160750",
+      "name": "宝积山石刻",
+      "coordinates": [
+        110.293255,
+        25.290737
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q11096041",
+      "name": "李宗仁官邸",
+      "coordinates": [
+        110.289188888,
+        25.274556944
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q11062481",
+      "name": "广西省立艺术馆",
+      "coordinates": [
+        110.28717535,
+        25.28214809
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q123160738",
+      "name": "伏波山摩崖造像及石刻",
+      "coordinates": [
+        110.299355,
+        25.286338
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q123160737",
+      "name": "龙隐岩、龙隐洞、月牙山石刻",
+      "coordinates": [
+        110.300905,
+        25.273769
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q15932821",
+      "name": "湘江战役旧址",
+      "coordinates": [
+        110.76694,
+        25.72377
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q11096042",
+      "name": "李宗仁故居",
+      "coordinates": [
+        109.996579,
+        25.171177
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q17036615",
+      "name": "虞山石刻",
+      "coordinates": [
+        110.296887,
+        25.30146
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q123160752",
+      "name": "清秀山石刻",
+      "coordinates": [
+        110.273799,
+        25.299196
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q133309535",
+      "name": "乐湾村古建筑群",
+      "coordinates": [
+        110.80351,
+        24.80957
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q11131494",
+      "name": "永宁州城",
+      "coordinates": [
+        109.77441,
+        25.16761
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q10892415",
+      "name": "八路军桂林办事处旧址",
+      "coordinates": [
+        110.295,
+        25.28972222
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    }
+  ],
+  "figures": [
+    {
+      "entityId": "Q20297",
+      "name": "李宗仁",
+      "birthYear": 1890,
+      "deathYear": 1969,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "临桂区"
+      },
+      "sitelinks": 33,
+      "description": "中华民国第1任副总统、代理总统，新桂系首领"
+    },
+    {
+      "entityId": "Q706491",
+      "name": "白崇禧",
+      "birthYear": 1893,
+      "deathYear": 1966,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "临桂区"
+      },
+      "sitelinks": 28,
+      "description": "中华民国高级将领 (1893-1966)"
+    },
+    {
+      "entityId": "Q701499",
+      "name": "唐景嵩",
+      "birthYear": 1841,
+      "deathYear": 1903,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "灌阳县"
+      },
+      "sitelinks": 20,
+      "description": null
+    },
+    {
+      "entityId": "Q5973808",
+      "name": "马君武",
+      "birthYear": 1881,
+      "deathYear": 1940,
+      "relationType": "native",
+      "evidence": {
+        "property": "position",
+        "value": "桂林市人（维基百科分类）"
+      },
+      "sitelinks": 8,
+      "description": null
+    },
+    {
+      "entityId": "Q11143011",
+      "name": "况周颐",
+      "birthYear": 1859,
+      "deathYear": 1926,
+      "relationType": "native",
+      "evidence": {
+        "property": "position",
+        "value": "桂林市人（维基百科分类）"
+      },
+      "sitelinks": 3,
+      "description": null
+    },
+    {
+      "entityId": "Q16857044",
+      "name": "周子昆",
+      "birthYear": 1901,
+      "deathYear": 1941,
+      "relationType": "native",
+      "evidence": {
+        "property": "position",
+        "value": "桂林市人（维基百科分类）"
+      },
+      "sitelinks": 3,
+      "description": null
+    }
+  ],
+  "failures": []
+}

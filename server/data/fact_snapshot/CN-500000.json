@@ -1,0 +1,3314 @@
+{
+  "cityId": "CN-500000",
+  "cityName": "重庆",
+  "cityQid": "Q11725",
+  "center": [
+    106.506944444,
+    29.55
+  ],
+  "retrievedAt": "2026-11-11T05:40:27.400Z",
+  "sourceRef": {
+    "id": "S-WD-CN-500000",
+    "type": "wikidata",
+    "title": "Wikidata 事实快照 · 重庆",
+    "url": "https://query.wikidata.org/sparql",
+    "retrievedAt": "2026-11-11T05:40:27.400Z"
+  },
+  "landmarks": [
+    {
+      "entityId": "Q803709",
+      "name": "白帝城",
+      "coordinates": [
+        109.570541373,
+        31.043489997
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": "三国刘备逝世的地方",
+      "sitelinks": 20
+    },
+    {
+      "entityId": "Q195821",
+      "name": "钓鱼城遗址",
+      "coordinates": [
+        106.310431059,
+        30.005610387
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 11
+    },
+    {
+      "entityId": "Q803748",
+      "name": "白鹤梁",
+      "coordinates": [
+        107.3875,
+        29.715
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 10
+    },
+    {
+      "entityId": "Q10563872",
+      "name": "重庆市人民大礼堂",
+      "coordinates": [
+        106.550293055,
+        29.564458888
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": "重庆市建筑",
+      "sitelinks": 8
+    },
+    {
+      "entityId": "Q16078575",
+      "name": "重庆湖广会馆",
+      "coordinates": [
+        106.583469721,
+        29.560831908
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 6
+    },
+    {
+      "entityId": "Q830926",
+      "name": "石宝寨",
+      "coordinates": [
+        108.183649904,
+        30.42169992
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 6
+    },
+    {
+      "entityId": "Q197144",
+      "name": "张桓侯庙",
+      "coordinates": [
+        108.699044018,
+        30.912496413
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 5
+    },
+    {
+      "entityId": "Q6683399",
+      "name": "抗战胜利纪功碑暨人民解放纪念碑",
+      "coordinates": [
+        106.573361111,
+        29.560166666
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 5
+    },
+    {
+      "entityId": "Q9593846",
+      "name": "史迪威博物馆",
+      "coordinates": [
+        106.52921454,
+        29.55357343
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q1407451",
+      "name": "龙骨坡遗址",
+      "coordinates": [
+        109.665769612,
+        30.863076943
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q1627056",
+      "name": "八路军重庆办事处旧址",
+      "coordinates": [
+        106.49321,
+        29.55463
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q10912097",
+      "name": "双桂堂",
+      "coordinates": [
+        107.701850708,
+        30.607557867
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q1493793",
+      "name": "高家镇遗址",
+      "coordinates": [
+        107.848353339,
+        30.01029392
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q15942304",
+      "name": "保卫中国同盟总部旧址",
+      "coordinates": [
+        106.545221058,
+        29.556940514
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q21051561",
+      "name": "中英联络处旧址",
+      "coordinates": [
+        106.57208,
+        29.56264
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q11111399",
+      "name": "桂园",
+      "coordinates": [
+        106.54326882,
+        29.565763255
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q21017141",
+      "name": "丁房阙",
+      "coordinates": [
+        108.017972588,
+        30.28654113
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q19851354",
+      "name": "重庆黄山抗战旧址群",
+      "coordinates": [
+        106.617075,
+        29.571768888
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q16963742",
+      "name": "国民政府立法院、司法院及蒙藏委员会旧址",
+      "coordinates": [
+        106.555513848,
+        29.558875188
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q17156504",
+      "name": "交通银行旧址",
+      "coordinates": [
+        106.580848055,
+        29.562728055
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q17149551",
+      "name": "川康平民商业银行旧址",
+      "coordinates": [
+        106.58055556,
+        29.56277778
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q19798417",
+      "name": "聚兴诚银行旧址",
+      "coordinates": [
+        106.580198055,
+        29.558786111
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q19851418",
+      "name": "同盟国驻渝外交机构旧址群",
+      "coordinates": [
+        106.532514,
+        29.551667
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q21051694",
+      "name": "法国水师兵营旧址",
+      "coordinates": [
+        106.58064,
+        29.58209
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q21051678",
+      "name": "杨氏民宅",
+      "coordinates": [
+        105.7440275,
+        30.218317124
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q21051736",
+      "name": "世界佛学苑汉藏教理院旧址",
+      "coordinates": [
+        106.391949177,
+        29.838616578
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q21017442",
+      "name": "天生城遗址",
+      "coordinates": [
+        108.364728625,
+        30.829173785
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q21051756",
+      "name": "西山钟楼",
+      "coordinates": [
+        108.382592312,
+        30.806178113
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q10949515",
+      "name": "宝顶山摩崖造像",
+      "coordinates": [
+        105.794066303,
+        29.754370242
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q19850119",
+      "name": "嘉陵江三峡乡村建设旧址群",
+      "coordinates": [
+        106.434903462,
+        29.836149645
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q21017997",
+      "name": "石门山摩崖造像",
+      "coordinates": [
+        105.862005,
+        29.650308
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q21051573",
+      "name": "北碚红楼",
+      "coordinates": [
+        106.437875,
+        29.831223
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q19850001",
+      "name": "重庆抗战兵器工业旧址群",
+      "coordinates": [
+        106.516668412,
+        29.525726151
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q21017995",
+      "name": "石门大佛寺摩崖造像",
+      "coordinates": [
+        106.027323075,
+        29.101412018
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q21051709",
+      "name": "特园",
+      "coordinates": [
+        106.542048536,
+        29.563738332
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q21051782",
+      "name": "国民政府外交部旧址",
+      "coordinates": [
+        106.577753099,
+        29.557552672
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": "全国重点文物保护单位",
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q21017139",
+      "name": "㽏井沟无铭阙",
+      "coordinates": [
+        108.017969444,
+        30.286538888
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q22101457",
+      "name": "老鼓楼衙署遗址",
+      "coordinates": [
+        106.578523357,
+        29.556729516
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q21051713",
+      "name": "独柏寺正殿",
+      "coordinates": [
+        105.957105828,
+        30.14185651
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q21018091",
+      "name": "聂荣臻故居",
+      "coordinates": [
+        106.071140677,
+        29.238725972
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q17038861",
+      "name": "重庆城墙",
+      "coordinates": [
+        106.564558641,
+        29.558937719
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q21051552",
+      "name": "中共代表团驻地旧址",
+      "coordinates": [
+        106.54534,
+        29.55981
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q21017792",
+      "name": "《新华日报》营业部旧址",
+      "coordinates": [
+        106.567077,
+        29.56062
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q24832521",
+      "name": "中央银行旧址",
+      "coordinates": [
+        106.58008,
+        29.562128055
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q21051737",
+      "name": "罗斯福图书馆旧址",
+      "coordinates": [
+        106.542662322,
+        29.554055147
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q21051721",
+      "name": "瞿塘峡摩崖石刻",
+      "coordinates": [
+        109.57811458,
+        31.037168909
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q21051774",
+      "name": "国民政府行政院旧址",
+      "coordinates": [
+        106.545509102,
+        29.565302125
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q21017603",
+      "name": "弹子石摩崖造像",
+      "coordinates": [
+        106.58600484,
+        29.60673983
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q117436773",
+      "name": "玉米洞遗址",
+      "coordinates": [
+        109.634893555,
+        30.845154947
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q21017610",
+      "name": "彭氏宗祠",
+      "coordinates": [
+        108.800405115,
+        30.858684081
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q19850002",
+      "name": "重庆谈判旧址群",
+      "coordinates": [
+        106.53032023,
+        29.553448295
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q22099003",
+      "name": "千佛寺摩崖造像",
+      "coordinates": [
+        105.62494,
+        30.16621
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q21017867",
+      "name": "潼南大佛寺摩崖造像",
+      "coordinates": [
+        105.807510662,
+        30.189703834
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q21051772",
+      "name": "国民政府军事委员会政治部第三厅暨文化工作委员会旧址",
+      "coordinates": [
+        106.381032085,
+        29.599249118
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": "遗址",
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q21051592",
+      "name": "国民参政会旧址",
+      "coordinates": [
+        106.57114989,
+        29.559929045
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q17061553",
+      "name": "重庆抗战金融机构旧址群",
+      "coordinates": [
+        106.580623419,
+        29.562741711
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q21018135",
+      "name": "荆竹坝岩棺群",
+      "coordinates": [
+        109.63991185,
+        31.551689413
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q21051620",
+      "name": "大宁盐场遗址",
+      "coordinates": [
+        109.609718987,
+        31.464017861
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q21051769",
+      "name": "农庄",
+      "coordinates": [
+        106.411927,
+        29.860142
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q16868536",
+      "name": "林园",
+      "coordinates": [
+        106.417311978,
+        29.534843283
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q21017176",
+      "name": "中国西部科学院旧址",
+      "coordinates": [
+        106.432359973,
+        29.835309748
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q21017991",
+      "name": "石篆山摩崖造像",
+      "coordinates": [
+        105.574359,
+        29.595366
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q11067591",
+      "name": "张自忠将军墓",
+      "coordinates": [
+        106.406269311,
+        29.81161125
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q55695962",
+      "name": "刘伯承故居",
+      "coordinates": [
+        108.421126858,
+        31.07723672
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q10902846",
+      "name": "北山摩崖造像",
+      "coordinates": [
+        105.707353382,
+        29.714134359
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q21018117",
+      "name": "舒成岩摩崖造像",
+      "coordinates": [
+        105.670506,
+        29.759329
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q21017457",
+      "name": "妙高山摩崖造像",
+      "coordinates": [
+        105.5185,
+        29.633775
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q21051775",
+      "name": "重庆大学早期建筑",
+      "coordinates": [
+        106.462973588,
+        29.568944953
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q21018244",
+      "name": "赵世炎故居",
+      "coordinates": [
+        108.970954744,
+        28.764135761
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q21051773",
+      "name": "重庆冶锌遗址群",
+      "coordinates": [
+        107.845021,
+        29.999183
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q21017189",
+      "name": "“中美合作所”集中营旧址",
+      "coordinates": [
+        106.438541218,
+        29.573982848
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q134935027",
+      "name": "澳大利亚公使馆旧址",
+      "coordinates": [
+        106.53251,
+        29.55167
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q21051703",
+      "name": "瀼渡电厂",
+      "coordinates": [
+        108.287009986,
+        30.621827823
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q21051579",
+      "name": "中央政治学校研究部旧址",
+      "coordinates": [
+        106.590868,
+        29.424471
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q21017303",
+      "name": "汇南墓群",
+      "coordinates": [
+        107.727173609,
+        29.873559506
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q21051676",
+      "name": "林森别墅旧址",
+      "coordinates": [
+        106.581196,
+        29.422143
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q21018036",
+      "name": "南腰界红三军司令部旧址",
+      "coordinates": [
+        108.646250725,
+        28.398960036
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q19851352",
+      "name": "南泉抗战旧址群",
+      "coordinates": [
+        106.579758492,
+        29.422121334
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q134935018",
+      "name": "英国大使馆旧址",
+      "coordinates": [
+        106.5968,
+        29.53972
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q21051654",
+      "name": "晏阳初旧居",
+      "coordinates": [
+        106.382811,
+        29.759061
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q21051593",
+      "name": "国民政府军事委员会政治部旧址",
+      "coordinates": [
+        106.368695925,
+        29.610059526
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q21017844",
+      "name": "涞滩二佛寺摩崖造像",
+      "coordinates": [
+        106.490943809,
+        30.177446026
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q21018094",
+      "name": "育才学校旧址",
+      "coordinates": [
+        106.409980694,
+        29.909564342
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q133275017",
+      "name": "丁房阙—无铭阙",
+      "coordinates": [
+        108.01797,
+        30.28654
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q118030970",
+      "name": "白帝城遗址",
+      "coordinates": [
+        109.568782,
+        31.045639
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q123037010",
+      "name": "美丰银行旧址",
+      "coordinates": [
+        106.580193055,
+        29.563886944
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q123037009",
+      "name": "中国银行旧址",
+      "coordinates": [
+        106.58089,
+        29.564423888
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q134935017",
+      "name": "美军招待所旧址",
+      "coordinates": [
+        106.61713,
+        29.56012
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q134954078",
+      "name": "清凉亭",
+      "coordinates": [
+        106.439887,
+        29.831153
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q134935026",
+      "name": "印度专员公署旧址",
+      "coordinates": [
+        106.62219,
+        29.55777
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q134935015",
+      "name": "美国大使馆海军武官处旧址",
+      "coordinates": [
+        106.59147,
+        29.55817
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q134935012",
+      "name": "南山36号苏联大使馆旧址",
+      "coordinates": [
+        106.62169,
+        29.55853
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q134954081",
+      "name": "竹楼旧址",
+      "coordinates": [
+        106.411541,
+        29.861902
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q123037042",
+      "name": "孔祥熙官邸旧址",
+      "coordinates": [
+        106.579705268,
+        29.421994081
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q134935021",
+      "name": "法国领事馆旧址",
+      "coordinates": [
+        106.56739,
+        29.55285
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q134935028",
+      "name": "土耳其公使馆旧址",
+      "coordinates": [
+        106.5315,
+        29.55173
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q134935014",
+      "name": "苏联大使馆武官处旧址",
+      "coordinates": [
+        106.57618,
+        29.56457
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q134954083",
+      "name": "数帆楼",
+      "coordinates": [
+        106.412539,
+        29.859413
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q134935011",
+      "name": "苏联大使馆旧址",
+      "coordinates": [
+        106.55084,
+        29.55628
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q118030971",
+      "name": "湾底谭氏民居",
+      "coordinates": [
+        108.398819287,
+        30.539547
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q123037043",
+      "name": "校长官邸旧址",
+      "coordinates": [
+        106.561578888,
+        29.428913055
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q134954080",
+      "name": "磐室",
+      "coordinates": [
+        106.41174,
+        29.861484
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q123037044",
+      "name": "陈立夫、陈果夫官邸旧址",
+      "coordinates": [
+        106.561438888,
+        29.426466944
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q134954082",
+      "name": "柏林楼",
+      "coordinates": [
+        106.41226,
+        29.858705
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q134954085",
+      "name": "梁漱溟旧居",
+      "coordinates": [
+        106.406581,
+        29.863063
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q134935023",
+      "name": "法国大使馆旧址",
+      "coordinates": [
+        106.62374,
+        29.55794
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q134954076",
+      "name": "峡防局旧址",
+      "coordinates": [
+        106.434968,
+        29.836046
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    }
+  ],
+  "relics": [
+    {
+      "entityId": "Q15942304",
+      "name": "保卫中国同盟总部旧址",
+      "coordinates": [
+        106.545221058,
+        29.556940514
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q19850001",
+      "name": "重庆抗战兵器工业旧址群",
+      "coordinates": [
+        106.516668412,
+        29.525726151
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q21017995",
+      "name": "石门大佛寺摩崖造像",
+      "coordinates": [
+        106.027323075,
+        29.101412018
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q21051561",
+      "name": "中英联络处旧址",
+      "coordinates": [
+        106.57208,
+        29.56264
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q9593846",
+      "name": "史迪威博物馆",
+      "coordinates": [
+        106.52921454,
+        29.55357343
+      ],
+      "inceptionYear": 1991,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q11111399",
+      "name": "桂园",
+      "coordinates": [
+        106.54326882,
+        29.565763255
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q21051709",
+      "name": "特园",
+      "coordinates": [
+        106.542048536,
+        29.563738332
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q21017141",
+      "name": "丁房阙",
+      "coordinates": [
+        108.017972588,
+        30.28654113
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q21051782",
+      "name": "国民政府外交部旧址",
+      "coordinates": [
+        106.577753099,
+        29.557552672
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": "全国重点文物保护单位",
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q21017139",
+      "name": "㽏井沟无铭阙",
+      "coordinates": [
+        108.017969444,
+        30.286538888
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q803748",
+      "name": "白鹤梁",
+      "coordinates": [
+        107.3875,
+        29.715
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 10
+    },
+    {
+      "entityId": "Q22101457",
+      "name": "老鼓楼衙署遗址",
+      "coordinates": [
+        106.578523357,
+        29.556729516
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q21051713",
+      "name": "独柏寺正殿",
+      "coordinates": [
+        105.957105828,
+        30.14185651
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q21018091",
+      "name": "聂荣臻故居",
+      "coordinates": [
+        106.071140677,
+        29.238725972
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q17038861",
+      "name": "重庆城墙",
+      "coordinates": [
+        106.564558641,
+        29.558937719
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q133275017",
+      "name": "丁房阙—无铭阙",
+      "coordinates": [
+        108.01797,
+        30.28654
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q10563872",
+      "name": "重庆市人民大礼堂",
+      "coordinates": [
+        106.550293055,
+        29.564458888
+      ],
+      "inceptionYear": 1954,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": "重庆市建筑",
+      "sitelinks": 8
+    },
+    {
+      "entityId": "Q19851354",
+      "name": "重庆黄山抗战旧址群",
+      "coordinates": [
+        106.617075,
+        29.571768888
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q118030970",
+      "name": "白帝城遗址",
+      "coordinates": [
+        109.568782,
+        31.045639
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q123037010",
+      "name": "美丰银行旧址",
+      "coordinates": [
+        106.580193055,
+        29.563886944
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q16963742",
+      "name": "国民政府立法院、司法院及蒙藏委员会旧址",
+      "coordinates": [
+        106.555513848,
+        29.558875188
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q21051552",
+      "name": "中共代表团驻地旧址",
+      "coordinates": [
+        106.54534,
+        29.55981
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q197144",
+      "name": "张桓侯庙",
+      "coordinates": [
+        108.699044018,
+        30.912496413
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 5
+    },
+    {
+      "entityId": "Q21017792",
+      "name": "《新华日报》营业部旧址",
+      "coordinates": [
+        106.567077,
+        29.56062
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q17156504",
+      "name": "交通银行旧址",
+      "coordinates": [
+        106.580848055,
+        29.562728055
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q24832521",
+      "name": "中央银行旧址",
+      "coordinates": [
+        106.58008,
+        29.562128055
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q21051737",
+      "name": "罗斯福图书馆旧址",
+      "coordinates": [
+        106.542662322,
+        29.554055147
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q17149551",
+      "name": "川康平民商业银行旧址",
+      "coordinates": [
+        106.58055556,
+        29.56277778
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q21051721",
+      "name": "瞿塘峡摩崖石刻",
+      "coordinates": [
+        109.57811458,
+        31.037168909
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q21051774",
+      "name": "国民政府行政院旧址",
+      "coordinates": [
+        106.545509102,
+        29.565302125
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q19798417",
+      "name": "聚兴诚银行旧址",
+      "coordinates": [
+        106.580198055,
+        29.558786111
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q21017603",
+      "name": "弹子石摩崖造像",
+      "coordinates": [
+        106.58600484,
+        29.60673983
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q803709",
+      "name": "白帝城",
+      "coordinates": [
+        109.570541373,
+        31.043489997
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": "三国刘备逝世的地方",
+      "sitelinks": 20
+    },
+    {
+      "entityId": "Q117436773",
+      "name": "玉米洞遗址",
+      "coordinates": [
+        109.634893555,
+        30.845154947
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q21017610",
+      "name": "彭氏宗祠",
+      "coordinates": [
+        108.800405115,
+        30.858684081
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q19850002",
+      "name": "重庆谈判旧址群",
+      "coordinates": [
+        106.53032023,
+        29.553448295
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q22099003",
+      "name": "千佛寺摩崖造像",
+      "coordinates": [
+        105.62494,
+        30.16621
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q123037009",
+      "name": "中国银行旧址",
+      "coordinates": [
+        106.58089,
+        29.564423888
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q21017867",
+      "name": "潼南大佛寺摩崖造像",
+      "coordinates": [
+        105.807510662,
+        30.189703834
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q16078575",
+      "name": "重庆湖广会馆",
+      "coordinates": [
+        106.583469721,
+        29.560831908
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 6
+    },
+    {
+      "entityId": "Q1407451",
+      "name": "龙骨坡遗址",
+      "coordinates": [
+        109.665769612,
+        30.863076943
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q21051772",
+      "name": "国民政府军事委员会政治部第三厅暨文化工作委员会旧址",
+      "coordinates": [
+        106.381032085,
+        29.599249118
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": "遗址",
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q19851418",
+      "name": "同盟国驻渝外交机构旧址群",
+      "coordinates": [
+        106.532514,
+        29.551667
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q21051592",
+      "name": "国民参政会旧址",
+      "coordinates": [
+        106.57114989,
+        29.559929045
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": "中华路",
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q6683399",
+      "name": "抗战胜利纪功碑暨人民解放纪念碑",
+      "coordinates": [
+        106.573361111,
+        29.560166666
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 5
+    },
+    {
+      "entityId": "Q17061553",
+      "name": "重庆抗战金融机构旧址群",
+      "coordinates": [
+        106.580623419,
+        29.562741711
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q21018135",
+      "name": "荆竹坝岩棺群",
+      "coordinates": [
+        109.63991185,
+        31.551689413
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q21051694",
+      "name": "法国水师兵营旧址",
+      "coordinates": [
+        106.58064,
+        29.58209
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q21051620",
+      "name": "大宁盐场遗址",
+      "coordinates": [
+        109.609718987,
+        31.464017861
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q1627056",
+      "name": "八路军重庆办事处旧址",
+      "coordinates": [
+        106.49321,
+        29.55463
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q21051678",
+      "name": "杨氏民宅",
+      "coordinates": [
+        105.7440275,
+        30.218317124
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q830926",
+      "name": "石宝寨",
+      "coordinates": [
+        108.183649904,
+        30.42169992
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 6
+    },
+    {
+      "entityId": "Q134935017",
+      "name": "美军招待所旧址",
+      "coordinates": [
+        106.61713,
+        29.56012
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q21051769",
+      "name": "农庄",
+      "coordinates": [
+        106.411927,
+        29.860142
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q134954078",
+      "name": "清凉亭",
+      "coordinates": [
+        106.439887,
+        29.831153
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q134935026",
+      "name": "印度专员公署旧址",
+      "coordinates": [
+        106.62219,
+        29.55777
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q16868536",
+      "name": "林园",
+      "coordinates": [
+        106.417311978,
+        29.534843283
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q21017176",
+      "name": "中国西部科学院旧址",
+      "coordinates": [
+        106.432359973,
+        29.835309748
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q134935015",
+      "name": "美国大使馆海军武官处旧址",
+      "coordinates": [
+        106.59147,
+        29.55817
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q21017991",
+      "name": "石篆山摩崖造像",
+      "coordinates": [
+        105.574359,
+        29.595366
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q134935012",
+      "name": "南山36号苏联大使馆旧址",
+      "coordinates": [
+        106.62169,
+        29.55853
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q11067591",
+      "name": "张自忠将军墓",
+      "coordinates": [
+        106.406269311,
+        29.81161125
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q134954081",
+      "name": "竹楼旧址",
+      "coordinates": [
+        106.411541,
+        29.861902
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q55695962",
+      "name": "刘伯承故居",
+      "coordinates": [
+        108.421126858,
+        31.07723672
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q123037042",
+      "name": "孔祥熙官邸旧址",
+      "coordinates": [
+        106.579705268,
+        29.421994081
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q134935021",
+      "name": "法国领事馆旧址",
+      "coordinates": [
+        106.56739,
+        29.55285
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q10902846",
+      "name": "北山摩崖造像",
+      "coordinates": [
+        105.707353382,
+        29.714134359
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q134935028",
+      "name": "土耳其公使馆旧址",
+      "coordinates": [
+        106.5315,
+        29.55173
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q134935014",
+      "name": "苏联大使馆武官处旧址",
+      "coordinates": [
+        106.57618,
+        29.56457
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q21018117",
+      "name": "舒成岩摩崖造像",
+      "coordinates": [
+        105.670506,
+        29.759329
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q134954083",
+      "name": "数帆楼",
+      "coordinates": [
+        106.412539,
+        29.859413
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q21017457",
+      "name": "妙高山摩崖造像",
+      "coordinates": [
+        105.5185,
+        29.633775
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q21051775",
+      "name": "重庆大学早期建筑",
+      "coordinates": [
+        106.462973588,
+        29.568944953
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q21018244",
+      "name": "赵世炎故居",
+      "coordinates": [
+        108.970954744,
+        28.764135761
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q21051773",
+      "name": "重庆冶锌遗址群",
+      "coordinates": [
+        107.845021,
+        29.999183
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q21017189",
+      "name": "“中美合作所”集中营旧址",
+      "coordinates": [
+        106.438541218,
+        29.573982848
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q134935011",
+      "name": "苏联大使馆旧址",
+      "coordinates": [
+        106.55084,
+        29.55628
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q134935027",
+      "name": "澳大利亚公使馆旧址",
+      "coordinates": [
+        106.53251,
+        29.55167
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q21051736",
+      "name": "世界佛学苑汉藏教理院旧址",
+      "coordinates": [
+        106.391949177,
+        29.838616578
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q21051703",
+      "name": "瀼渡电厂",
+      "coordinates": [
+        108.287009986,
+        30.621827823
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q21051579",
+      "name": "中央政治学校研究部旧址",
+      "coordinates": [
+        106.590868,
+        29.424471
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q21017303",
+      "name": "汇南墓群",
+      "coordinates": [
+        107.727173609,
+        29.873559506
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q118030971",
+      "name": "湾底谭氏民居",
+      "coordinates": [
+        108.398819287,
+        30.539547
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q10912097",
+      "name": "双桂堂",
+      "coordinates": [
+        107.701850708,
+        30.607557867
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q21051676",
+      "name": "林森别墅旧址",
+      "coordinates": [
+        106.581196,
+        29.422143
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q21018036",
+      "name": "南腰界红三军司令部旧址",
+      "coordinates": [
+        108.646250725,
+        28.398960036
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q123037043",
+      "name": "校长官邸旧址",
+      "coordinates": [
+        106.561578888,
+        29.428913055
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q21017442",
+      "name": "天生城遗址",
+      "coordinates": [
+        108.364728625,
+        30.829173785
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q134954080",
+      "name": "磐室",
+      "coordinates": [
+        106.41174,
+        29.861484
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q19851352",
+      "name": "南泉抗战旧址群",
+      "coordinates": [
+        106.579758492,
+        29.422121334
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q21051756",
+      "name": "西山钟楼",
+      "coordinates": [
+        108.382592312,
+        30.806178113
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q10949515",
+      "name": "宝顶山摩崖造像",
+      "coordinates": [
+        105.794066303,
+        29.754370242
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q123037044",
+      "name": "陈立夫、陈果夫官邸旧址",
+      "coordinates": [
+        106.561438888,
+        29.426466944
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q134954082",
+      "name": "柏林楼",
+      "coordinates": [
+        106.41226,
+        29.858705
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q19850119",
+      "name": "嘉陵江三峡乡村建设旧址群",
+      "coordinates": [
+        106.434903462,
+        29.836149645
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q134935018",
+      "name": "英国大使馆旧址",
+      "coordinates": [
+        106.5968,
+        29.53972
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q1493793",
+      "name": "高家镇遗址",
+      "coordinates": [
+        107.848353339,
+        30.01029392
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q134954085",
+      "name": "梁漱溟旧居",
+      "coordinates": [
+        106.406581,
+        29.863063
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q21017997",
+      "name": "石门山摩崖造像",
+      "coordinates": [
+        105.862005,
+        29.650308
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q21051654",
+      "name": "晏阳初旧居",
+      "coordinates": [
+        106.382811,
+        29.759061
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q134935023",
+      "name": "法国大使馆旧址",
+      "coordinates": [
+        106.62374,
+        29.55794
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q21051573",
+      "name": "北碚红楼",
+      "coordinates": [
+        106.437875,
+        29.831223
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q21051593",
+      "name": "国民政府军事委员会政治部旧址",
+      "coordinates": [
+        106.368695925,
+        29.610059526
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q134954076",
+      "name": "峡防局旧址",
+      "coordinates": [
+        106.434968,
+        29.836046
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q21017844",
+      "name": "涞滩二佛寺摩崖造像",
+      "coordinates": [
+        106.490943809,
+        30.177446026
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q21018094",
+      "name": "育才学校旧址",
+      "coordinates": [
+        106.409980694,
+        29.909564342
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q195821",
+      "name": "钓鱼城遗址",
+      "coordinates": [
+        106.310431059,
+        30.005610387
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 11
+    }
+  ],
+  "figures": [
+    {
+      "entityId": "Q7521",
+      "name": "蒙哥",
+      "birthYear": 1209,
+      "deathYear": 1259,
+      "relationType": "sojourner",
+      "evidence": {
+        "property": "deathplace",
+        "value": "钓鱼城遗址"
+      },
+      "sitelinks": 56,
+      "description": null
+    },
+    {
+      "entityId": "Q245315",
+      "name": "刘备",
+      "birthYear": 161,
+      "deathYear": 223,
+      "relationType": "sojourner",
+      "evidence": {
+        "property": "deathplace",
+        "value": "白帝城"
+      },
+      "sitelinks": 46,
+      "description": "三国时期蜀汉开国皇帝 (161–223)"
+    },
+    {
+      "entityId": "Q377935",
+      "name": "杨尚昆",
+      "birthYear": 1907,
+      "deathYear": 1998,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "潼南区"
+      },
+      "sitelinks": 43,
+      "description": "第四任中华人民共和国主席"
+    },
+    {
+      "entityId": "Q369681",
+      "name": "陈独秀",
+      "birthYear": 1879,
+      "deathYear": 1942,
+      "relationType": "sojourner",
+      "evidence": {
+        "property": "deathplace",
+        "value": "江津区"
+      },
+      "sitelinks": 43,
+      "description": "首任中国共产党中央委员会总书记"
+    },
+    {
+      "entityId": "Q701507",
+      "name": "刘伯承",
+      "birthYear": 1892,
+      "deathYear": 1986,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "开州区"
+      },
+      "sitelinks": 28,
+      "description": "中华人民共和国元帅"
+    },
+    {
+      "entityId": "Q701453",
+      "name": "聂荣臻",
+      "birthYear": 1899,
+      "deathYear": 1992,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "吴滩镇"
+      },
+      "sitelinks": 21,
+      "description": "中华人民共和国元帅"
+    }
+  ],
+  "failures": [
+    "景点查询失败：Wikidata 查询失败：This operation was aborted"
+  ]
+}

@@ -79,14 +79,14 @@
       "cityId": "CN-120000",
       "standardName": "天津",
       "province": "天津市",
-      "wikidataQid": "Q7083",
+      "wikidataQid": "Q11736",
       "adminLevel": "municipality",
       "countryCode": "CN",
       "pinyin": "tianjin",
       "englishName": "Tianjin",
       "center": [
-        8.271666666,
-        47.093888888
+        117.205555556,
+        39.146666667
       ],
       "summary": "直辖市 · 天津市",
       "hotRank": null,

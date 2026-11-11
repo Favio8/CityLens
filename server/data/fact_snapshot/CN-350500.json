@@ -1,0 +1,1502 @@
+{
+  "cityId": "CN-350500",
+  "cityName": "泉州",
+  "cityQid": "Q68695",
+  "center": [
+    118.58583,
+    24.91389
+  ],
+  "retrievedAt": "2026-11-11T05:57:49.631Z",
+  "sourceRef": {
+    "id": "S-WD-CN-350500",
+    "type": "wikidata",
+    "title": "Wikidata 事实快照 · 泉州",
+    "url": "https://query.wikidata.org/sparql",
+    "retrievedAt": "2026-11-11T05:57:49.631Z"
+  },
+  "landmarks": [
+    {
+      "entityId": "Q2121628",
+      "name": "清净寺",
+      "coordinates": [
+        118.58694444,
+        24.90555556
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 14
+    },
+    {
+      "entityId": "Q1721819",
+      "name": "开元寺",
+      "coordinates": [
+        118.581,
+        24.91717
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 14
+    },
+    {
+      "entityId": "Q568461",
+      "name": "安平桥",
+      "coordinates": [
+        118.44366667,
+        24.71013889
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 11
+    },
+    {
+      "entityId": "Q5034282",
+      "name": "草庵",
+      "coordinates": [
+        118.52972222,
+        24.77361111
+      ],
+      "kind": "庙",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 9
+    },
+    {
+      "entityId": "Q1877576",
+      "name": "洛阳桥",
+      "coordinates": [
+        118.675243,
+        24.953236
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 8
+    },
+    {
+      "entityId": "Q11089283",
+      "name": "晉江龍山寺",
+      "coordinates": [
+        118.46138,
+        24.72553
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 5
+    },
+    {
+      "entityId": "Q15916405",
+      "name": "灵山伊斯兰教圣墓",
+      "coordinates": [
+        118.61555556,
+        24.91055556
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 5
+    },
+    {
+      "entityId": "Q17163836",
+      "name": "泉州海外交通史博物馆",
+      "coordinates": [
+        118.606941666,
+        24.912927777
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q51116958",
+      "name": "解放軍廟",
+      "coordinates": [
+        118.919444444,
+        24.883333333
+      ],
+      "kind": "庙",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q11071754",
+      "name": "德济门遗址",
+      "coordinates": [
+        118.58416667,
+        24.89722222
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q15934119",
+      "name": "通淮关岳庙",
+      "coordinates": [
+        118.58833313,
+        24.90472221
+      ],
+      "kind": "庙",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q15934367",
+      "name": "郑成功墓",
+      "coordinates": [
+        118.39361111,
+        24.72027778
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q16078052",
+      "name": "蔡氏古民居建筑群",
+      "coordinates": [
+        118.40916667,
+        24.81583333
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q15904563",
+      "name": "清源山石造像群",
+      "coordinates": [
+        118.59333333,
+        24.94777778
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q11143136",
+      "name": "泉州天后宫",
+      "coordinates": [
+        118.58444444,
+        24.89833333
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": "位于中国福建泉州的妈祖庙，始建于南宋",
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q10946975",
+      "name": "安溪清水岩",
+      "coordinates": [
+        118.1139,
+        25.1271
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q15938251",
+      "name": "泉州府文庙",
+      "coordinates": [
+        118.58555556,
+        24.90888889
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q17025239",
+      "name": "惠安青山宫",
+      "coordinates": [
+        118.86738,
+        24.91013
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": "位于中华人民共和国福建省惠安县的庙宇，主祀青山灵安尊王",
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q10946974",
+      "name": "安溪文庙",
+      "coordinates": [
+        118.18277778,
+        25.05666667
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q17498509",
+      "name": "崇武古城",
+      "coordinates": [
+        118.93055556,
+        24.87916667
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q1094563",
+      "name": "磁灶窑址",
+      "coordinates": [
+        118.46746,
+        24.85351
+      ],
+      "kind": "考古遗址",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q133309435",
+      "name": "永春福兴堂",
+      "coordinates": [
+        118.24363,
+        25.27725
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q11132269",
+      "name": "永春文庙",
+      "coordinates": [
+        118.29032,
+        25.32432
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q133306721",
+      "name": "李光地宅和祠",
+      "coordinates": [
+        118.03394,
+        25.23565
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q133309436",
+      "name": "景胜别墅",
+      "coordinates": [
+        118.65703,
+        24.71815
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q133309396",
+      "name": "泉港土坑村古建筑群",
+      "coordinates": [
+        118.9387,
+        25.16384
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q11143159",
+      "name": "泉州港古建筑",
+      "coordinates": [
+        118.672547,
+        24.722574
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q133309432",
+      "name": "观山李氏民居",
+      "coordinates": [
+        118.32605,
+        25.07074
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q11063517",
+      "name": "庵山沙丘遗址",
+      "coordinates": [
+        118.65477,
+        24.60876
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q17066797",
+      "name": "安溪土楼",
+      "coordinates": [
+        117.87893,
+        24.97069
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q17062172",
+      "name": "南安桃源宫陀罗尼经幢",
+      "coordinates": [
+        118.53301,
+        24.96129
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q10907176",
+      "name": "南坑窑址",
+      "coordinates": [
+        118.282108,
+        24.943503
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q10907325",
+      "name": "南天寺石佛造像和摩崖石刻",
+      "coordinates": [
+        118.49421,
+        24.68445
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q10925491",
+      "name": "百崎郭氏墓群",
+      "coordinates": [
+        118.70789,
+        24.86741
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q16078784",
+      "name": "陈埭丁氏宗祠",
+      "coordinates": [
+        118.60555556,
+        24.82666667
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q133309397",
+      "name": "坂埔古厝",
+      "coordinates": [
+        118.22259,
+        24.96952
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q133453184",
+      "name": "九日山摩崖石刻",
+      "coordinates": [
+        118.52126,
+        24.9525
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q11085255",
+      "name": "施琅宅、祠和墓",
+      "coordinates": [
+        118.640789,
+        24.672076
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q10907394",
+      "name": "南安林氏民居",
+      "coordinates": [
+        118.39292,
+        25.06303
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q17009184",
+      "name": "西资寺石佛",
+      "coordinates": [
+        118.58939,
+        24.54607
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q11102240",
+      "name": "亭店杨氏民居",
+      "coordinates": [
+        118.54912,
+        24.88568
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q10907385",
+      "name": "南安中宪第",
+      "coordinates": [
+        118.42669,
+        24.63003
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q10881660",
+      "name": "五塔岩石塔",
+      "coordinates": [
+        118.46903,
+        24.90151
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q17035913",
+      "name": "魁星岩摩崖造像",
+      "coordinates": [
+        118.25846,
+        25.32259
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q10947127",
+      "name": "安礼逊图书楼",
+      "coordinates": [
+        118.57969,
+        24.92028
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q130602140",
+      "name": "崇福寺",
+      "coordinates": [
+        118.596747,
+        24.920244
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q108028151",
+      "name": "安溪下草埔遗址",
+      "coordinates": [
+        117.957316,
+        25.18302
+      ],
+      "kind": "考古遗址",
+      "heritageDesignations": [
+        "世界遗产组成部分"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q133309292",
+      "name": "苦寨坑窑遗址",
+      "coordinates": [
+        118.29689,
+        25.44077
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q133227650",
+      "name": "屈斗宫德化窑遗址",
+      "coordinates": [
+        118.25099,
+        25.48962
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    }
+  ],
+  "relics": [
+    {
+      "entityId": "Q133309435",
+      "name": "永春福兴堂",
+      "coordinates": [
+        118.24363,
+        25.27725
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q11132269",
+      "name": "永春文庙",
+      "coordinates": [
+        118.29032,
+        25.32432
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q5034282",
+      "name": "草庵",
+      "coordinates": [
+        118.52972222,
+        24.77361111
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 9
+    },
+    {
+      "entityId": "Q133306721",
+      "name": "李光地宅和祠",
+      "coordinates": [
+        118.03394,
+        25.23565
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q133309436",
+      "name": "景胜别墅",
+      "coordinates": [
+        118.65703,
+        24.71815
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q133309396",
+      "name": "泉港土坑村古建筑群",
+      "coordinates": [
+        118.9387,
+        25.16384
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q15934367",
+      "name": "郑成功墓",
+      "coordinates": [
+        118.39361111,
+        24.72027778
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q1877576",
+      "name": "洛阳桥",
+      "coordinates": [
+        118.675243,
+        24.953236
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 8
+    },
+    {
+      "entityId": "Q11143159",
+      "name": "泉州港古建筑",
+      "coordinates": [
+        118.672547,
+        24.722574
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q16078052",
+      "name": "蔡氏古民居建筑群",
+      "coordinates": [
+        118.40916667,
+        24.81583333
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q133309432",
+      "name": "观山李氏民居",
+      "coordinates": [
+        118.32605,
+        25.07074
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q2121628",
+      "name": "清净寺",
+      "coordinates": [
+        118.58694444,
+        24.90555556
+      ],
+      "inceptionYear": 1009,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 14
+    },
+    {
+      "entityId": "Q11063517",
+      "name": "庵山沙丘遗址",
+      "coordinates": [
+        118.65477,
+        24.60876
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q17066797",
+      "name": "安溪土楼",
+      "coordinates": [
+        117.87893,
+        24.97069
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q568461",
+      "name": "安平桥",
+      "coordinates": [
+        118.44366667,
+        24.71013889
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 11
+    },
+    {
+      "entityId": "Q133309292",
+      "name": "苦寨坑窑遗址",
+      "coordinates": [
+        118.29689,
+        25.44077
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q17062172",
+      "name": "南安桃源宫陀罗尼经幢",
+      "coordinates": [
+        118.53301,
+        24.96129
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q10907176",
+      "name": "南坑窑址",
+      "coordinates": [
+        118.282108,
+        24.943503
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q10907325",
+      "name": "南天寺石佛造像和摩崖石刻",
+      "coordinates": [
+        118.49421,
+        24.68445
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q10925491",
+      "name": "百崎郭氏墓群",
+      "coordinates": [
+        118.70789,
+        24.86741
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q16078784",
+      "name": "陈埭丁氏宗祠",
+      "coordinates": [
+        118.60555556,
+        24.82666667
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q133309397",
+      "name": "坂埔古厝",
+      "coordinates": [
+        118.22259,
+        24.96952
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q133453184",
+      "name": "九日山摩崖石刻",
+      "coordinates": [
+        118.52126,
+        24.9525
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q11085255",
+      "name": "施琅宅、祠和墓",
+      "coordinates": [
+        118.640789,
+        24.672076
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q1094563",
+      "name": "磁灶窑址",
+      "coordinates": [
+        118.46746,
+        24.85351
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q10907394",
+      "name": "南安林氏民居",
+      "coordinates": [
+        118.39292,
+        25.06303
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q17009184",
+      "name": "西资寺石佛",
+      "coordinates": [
+        118.58939,
+        24.54607
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q11102240",
+      "name": "亭店杨氏民居",
+      "coordinates": [
+        118.54912,
+        24.88568
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q133227650",
+      "name": "屈斗宫德化窑遗址",
+      "coordinates": [
+        118.25099,
+        25.48962
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q10907385",
+      "name": "南安中宪第",
+      "coordinates": [
+        118.42669,
+        24.63003
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q15904563",
+      "name": "清源山石造像群",
+      "coordinates": [
+        118.59333333,
+        24.94777778
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q10881660",
+      "name": "五塔岩石塔",
+      "coordinates": [
+        118.46903,
+        24.90151
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q1721819",
+      "name": "开元寺",
+      "coordinates": [
+        118.581,
+        24.91717
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 14
+    },
+    {
+      "entityId": "Q17035913",
+      "name": "魁星岩摩崖造像",
+      "coordinates": [
+        118.25846,
+        25.32259
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q11143136",
+      "name": "泉州天后宫",
+      "coordinates": [
+        118.58444444,
+        24.89833333
+      ],
+      "inceptionYear": 1196,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": "位于中国福建泉州的妈祖庙，始建于南宋",
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q10946975",
+      "name": "安溪清水岩",
+      "coordinates": [
+        118.1139,
+        25.1271
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q15938251",
+      "name": "泉州府文庙",
+      "coordinates": [
+        118.58555556,
+        24.90888889
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q17025239",
+      "name": "惠安青山宫",
+      "coordinates": [
+        118.86738,
+        24.91013
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": "位于中华人民共和国福建省惠安县的庙宇，主祀青山灵安尊王",
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q11071754",
+      "name": "德济门遗址",
+      "coordinates": [
+        118.58416667,
+        24.89722222
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q10947127",
+      "name": "安礼逊图书楼",
+      "coordinates": [
+        118.57969,
+        24.92028
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q130602140",
+      "name": "崇福寺",
+      "coordinates": [
+        118.596747,
+        24.920244
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q10946974",
+      "name": "安溪文庙",
+      "coordinates": [
+        118.18277778,
+        25.05666667
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q11089283",
+      "name": "晉江龍山寺",
+      "coordinates": [
+        118.46138,
+        24.72553
+      ],
+      "inceptionYear": 1708,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 5
+    },
+    {
+      "entityId": "Q17498509",
+      "name": "崇武古城",
+      "coordinates": [
+        118.93055556,
+        24.87916667
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q15916405",
+      "name": "灵山伊斯兰教圣墓",
+      "coordinates": [
+        118.61555556,
+        24.91055556
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 5
+    }
+  ],
+  "figures": [
+    {
+      "entityId": "Q698177",
+      "name": "李贽",
+      "birthYear": 1527,
+      "deathYear": 1602,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "晋江市"
+      },
+      "sitelinks": 26,
+      "description": "明朝中期思想家、史学家、文学家"
+    },
+    {
+      "entityId": "Q47677",
+      "name": "陈伯达",
+      "birthYear": 1904,
+      "deathYear": 1989,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "惠安县"
+      },
+      "sitelinks": 25,
+      "description": "中国政治人物"
+    },
+    {
+      "entityId": "Q701449",
+      "name": "施琅",
+      "birthYear": 1621,
+      "deathYear": 1696,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "晋江市"
+      },
+      "sitelinks": 21,
+      "description": "清朝将领 (1621-1696)"
+    },
+    {
+      "entityId": "Q84018",
+      "name": "郑经",
+      "birthYear": 1642,
+      "deathYear": 1681,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "南安市"
+      },
+      "sitelinks": 19,
+      "description": "延平王"
+    },
+    {
+      "entityId": "Q652211",
+      "name": "郑芝龙",
+      "birthYear": 1604,
+      "deathYear": 1661,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "南安市"
+      },
+      "sitelinks": 19,
+      "description": "明末海盗、武将"
+    },
+    {
+      "entityId": "Q5154455",
+      "name": "蒲寿庚",
+      "birthYear": 1245,
+      "deathYear": 1284,
+      "relationType": "native",
+      "evidence": {
+        "property": "position",
+        "value": "泉州市人（维基百科分类）"
+      },
+      "sitelinks": 6,
+      "description": "宋末元初的海商、官员"
+    }
+  ],
+  "failures": []
+}

@@ -1,0 +1,1005 @@
+{
+  "cityId": "CN-350100",
+  "cityName": "福州",
+  "cityQid": "Q68481",
+  "center": [
+    119.291666666,
+    26.076944444
+  ],
+  "retrievedAt": "2026-11-11T05:55:11.501Z",
+  "sourceRef": {
+    "id": "S-WD-CN-350100",
+    "type": "wikidata",
+    "title": "Wikidata 事实快照 · 福州",
+    "url": "https://query.wikidata.org/sparql",
+    "retrievedAt": "2026-11-11T05:55:11.501Z"
+  },
+  "landmarks": [
+    {
+      "entityId": "Q10963197",
+      "name": "福州文庙",
+      "coordinates": [
+        119.2972,
+        26.081
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 5
+    },
+    {
+      "entityId": "Q17039674",
+      "name": "金山寺",
+      "coordinates": [
+        119.22629,
+        26.07561
+      ],
+      "kind": "庙",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q132982635",
+      "name": "显应宫",
+      "coordinates": [
+        119.64388,
+        25.91852
+      ],
+      "kind": "庙",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q14528000",
+      "name": "罗星塔",
+      "coordinates": [
+        119.452445,
+        25.983283
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q7239812",
+      "name": "崇妙保圣坚牢塔",
+      "coordinates": [
+        119.29558039,
+        26.08044863
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q15906277",
+      "name": "福州閩王祠",
+      "coordinates": [
+        119.301,
+        26.092
+      ],
+      "kind": "庙",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q15912994",
+      "name": "福建都城隍庙",
+      "coordinates": [
+        119.298280555,
+        26.093197222
+      ],
+      "kind": "庙",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q120204664",
+      "name": "福州市博物馆",
+      "coordinates": [
+        119.321447222,
+        26.06665
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q11089064",
+      "name": "显应宫泥塑",
+      "coordinates": [
+        119.64361111,
+        25.91861111
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q15941314",
+      "name": "瑞岩弥勒造像",
+      "coordinates": [
+        119.45916667,
+        25.71305556
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q10878757",
+      "name": "九头马民居",
+      "coordinates": [
+        119.555653,
+        25.95482
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q11181335",
+      "name": "龙江桥",
+      "coordinates": [
+        119.45277778,
+        25.69416667
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q15950538",
+      "name": "陈太尉宫",
+      "coordinates": [
+        119.426708,
+        26.599611
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q10878154",
+      "name": "乌石山摩崖刻石",
+      "coordinates": [
+        119.29015,
+        26.07802
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q102331941",
+      "name": "严复故居",
+      "coordinates": [
+        119.27602,
+        25.99693
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q11088379",
+      "name": "昙石山遗址",
+      "coordinates": [
+        119.15001,
+        26.146329
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q133277054",
+      "name": "鼓山摩崖石刻",
+      "coordinates": [
+        119.39201,
+        26.05744
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q10931596",
+      "name": "壳丘头遗址群",
+      "coordinates": [
+        119.749476,
+        25.62372
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q10871562",
+      "name": "严复墓",
+      "coordinates": [
+        119.27426,
+        26.00377
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q15941583",
+      "name": "名山室",
+      "coordinates": [
+        118.79249,
+        25.8819
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q10865634",
+      "name": "三坊七巷和朱紫坊建筑群",
+      "coordinates": [
+        119.29131,
+        26.08654
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q10883295",
+      "name": "亭江炮台",
+      "coordinates": [
+        119.50884,
+        26.06289
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q15945039",
+      "name": "灵济宫碑",
+      "coordinates": [
+        119.3875,
+        25.89416667
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q122293034",
+      "name": "林则徐墓",
+      "coordinates": [
+        119.27526,
+        26.12114
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q10927991",
+      "name": "圣寿宝塔",
+      "coordinates": [
+        119.51444444,
+        25.96472222
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q11110594",
+      "name": "栖云洞造像",
+      "coordinates": [
+        119.54329,
+        26.48387
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q133309398",
+      "name": "永泰庄寨建筑群",
+      "coordinates": [
+        118.78801,
+        25.82058
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q112796510",
+      "name": "福州怀安",
+      "coordinates": [
+        119.222134,
+        26.100244
+      ],
+      "kind": "考古遗址",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q133275462",
+      "name": "严复故居和墓",
+      "coordinates": [
+        119.27426,
+        26.00377
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q133460605",
+      "name": "马江海战炮台、烈士墓及昭忠祠",
+      "coordinates": [
+        119.44741,
+        25.98763
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q133305767",
+      "name": "海坛海峡水下遗址",
+      "coordinates": [
+        119.68424,
+        25.63764
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q133232744",
+      "name": "福建船政建筑",
+      "coordinates": [
+        119.44319,
+        25.99047
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q133465880",
+      "name": "乌石山、于山摩崖石刻及造像",
+      "coordinates": [
+        119.29015,
+        26.07802
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q133307071",
+      "name": "林则徐宅与祠",
+      "coordinates": [
+        119.29268,
+        26.08185
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q61054639",
+      "name": "华林寺大殿",
+      "coordinates": [
+        119.29201,
+        26.10359
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    }
+  ],
+  "relics": [
+    {
+      "entityId": "Q133277054",
+      "name": "鼓山摩崖石刻",
+      "coordinates": [
+        119.39201,
+        26.05744
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q133275462",
+      "name": "严复故居和墓",
+      "coordinates": [
+        119.27426,
+        26.00377
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q133460605",
+      "name": "马江海战炮台、烈士墓及昭忠祠",
+      "coordinates": [
+        119.44741,
+        25.98763
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q133305767",
+      "name": "海坛海峡水下遗址",
+      "coordinates": [
+        119.68424,
+        25.63764
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q11089064",
+      "name": "显应宫泥塑",
+      "coordinates": [
+        119.64361111,
+        25.91861111
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q133232744",
+      "name": "福建船政建筑",
+      "coordinates": [
+        119.44319,
+        25.99047
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q10931596",
+      "name": "壳丘头遗址群",
+      "coordinates": [
+        119.749476,
+        25.62372
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q10871562",
+      "name": "严复墓",
+      "coordinates": [
+        119.27426,
+        26.00377
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q15941583",
+      "name": "名山室",
+      "coordinates": [
+        118.79249,
+        25.8819
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q10865634",
+      "name": "三坊七巷和朱紫坊建筑群",
+      "coordinates": [
+        119.29131,
+        26.08654
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q15941314",
+      "name": "瑞岩弥勒造像",
+      "coordinates": [
+        119.45916667,
+        25.71305556
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q10883295",
+      "name": "亭江炮台",
+      "coordinates": [
+        119.50884,
+        26.06289
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q15945039",
+      "name": "灵济宫碑",
+      "coordinates": [
+        119.3875,
+        25.89416667
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q10878757",
+      "name": "九头马民居",
+      "coordinates": [
+        119.555653,
+        25.95482
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q14528000",
+      "name": "罗星塔",
+      "coordinates": [
+        119.452445,
+        25.983283
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q7239812",
+      "name": "崇妙保圣坚牢塔",
+      "coordinates": [
+        119.29558039,
+        26.08044863
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q10963197",
+      "name": "福州文庙",
+      "coordinates": [
+        119.2972,
+        26.081
+      ],
+      "inceptionYear": 1851,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 5
+    },
+    {
+      "entityId": "Q122293034",
+      "name": "林则徐墓",
+      "coordinates": [
+        119.27526,
+        26.12114
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q133465880",
+      "name": "乌石山、于山摩崖石刻及造像",
+      "coordinates": [
+        119.29015,
+        26.07802
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q11181335",
+      "name": "龙江桥",
+      "coordinates": [
+        119.45277778,
+        25.69416667
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q10927991",
+      "name": "圣寿宝塔",
+      "coordinates": [
+        119.51444444,
+        25.96472222
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q15950538",
+      "name": "陈太尉宫",
+      "coordinates": [
+        119.426708,
+        26.599611
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q11110594",
+      "name": "栖云洞造像",
+      "coordinates": [
+        119.54329,
+        26.48387
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q10878154",
+      "name": "乌石山摩崖刻石",
+      "coordinates": [
+        119.29015,
+        26.07802
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q133307071",
+      "name": "林则徐宅与祠",
+      "coordinates": [
+        119.29268,
+        26.08185
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q102331941",
+      "name": "严复故居",
+      "coordinates": [
+        119.27602,
+        25.99693
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q133309398",
+      "name": "永泰庄寨建筑群",
+      "coordinates": [
+        118.78801,
+        25.82058
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q61054639",
+      "name": "华林寺大殿",
+      "coordinates": [
+        119.29201,
+        26.10359
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q11088379",
+      "name": "昙石山遗址",
+      "coordinates": [
+        119.15001,
+        26.146329
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    }
+  ],
+  "figures": [
+    {
+      "entityId": "Q204077",
+      "name": "曹操",
+      "birthYear": 155,
+      "deathYear": 220,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "卜洲村"
+      },
+      "sitelinks": 70,
+      "description": "东汉末年政治军事人物"
+    },
+    {
+      "entityId": "Q374757",
+      "name": "冰心",
+      "birthYear": 1900,
+      "deathYear": 1999,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "鼓楼区"
+      },
+      "sitelinks": 28,
+      "description": null
+    },
+    {
+      "entityId": "Q705872",
+      "name": "林森",
+      "birthYear": 1868,
+      "deathYear": 1943,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "闽侯县"
+      },
+      "sitelinks": 27,
+      "description": null
+    }
+  ],
+  "failures": []
+}

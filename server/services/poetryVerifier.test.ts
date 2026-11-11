@@ -78,6 +78,34 @@ describe('离线意象推导', () => {
     const imagery = deriveImagery(poem, 'CN-610100');
     expect(imagery.some((item) => item.word === '长安')).toBe(false);
   });
+
+  it('苏州「太湖」：人工词表给出地理意象，坐标留空待核对，不臆造', () => {
+    const poem = seed('王贞白', '太湖石');
+    const imagery = deriveImagery(poem, 'CN-320500');
+    const taihu = imagery.find((item) => item.word === '太湖');
+    expect(taihu).toBeDefined();
+    expect(taihu?.isGeographic).toBe(true);
+    expect(taihu?.placeName).toBe('太湖');
+    expect(taihu?.coordinates).toBeNull();
+    expect(taihu?.note).toContain('待人工核对');
+    expect(poem.lines.join('').includes('太湖')).toBe(true);
+  });
+
+  it('西安「终南」：人工词表给出地理意象，坐标留空待核对', () => {
+    const poem = seed('王维', '荅裴迪辋口遇雨忆终南山之作');
+    const imagery = deriveImagery(poem, 'CN-610100');
+    const zhongnan = imagery.find((item) => item.word === '终南');
+    expect(zhongnan).toBeDefined();
+    expect(zhongnan?.isGeographic).toBe(true);
+    expect(zhongnan?.coordinates).toBeNull();
+    expect(zhongnan?.note).toContain('待人工核对');
+  });
+
+  it('不含「终南」的本城诗不会误配该意象', () => {
+    const poem = seed('孟郊', '登科后');
+    const imagery = deriveImagery(poem, 'CN-610100');
+    expect(imagery.some((item) => item.word === '终南')).toBe(false);
+  });
 });
 
 describe('诗词逐字校验', () => {

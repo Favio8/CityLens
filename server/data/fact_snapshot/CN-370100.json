@@ -1,0 +1,957 @@
+{
+  "cityId": "CN-370100",
+  "cityName": "济南",
+  "cityQid": "Q170247",
+  "center": [
+    116.983333333,
+    36.666666666
+  ],
+  "retrievedAt": "2026-11-11T05:49:50.472Z",
+  "sourceRef": {
+    "id": "S-WD-CN-370100",
+    "type": "wikidata",
+    "title": "Wikidata 事实快照 · 济南",
+    "url": "https://query.wikidata.org/sparql",
+    "retrievedAt": "2026-11-11T05:49:50.472Z"
+  },
+  "landmarks": [
+    {
+      "entityId": "Q117690",
+      "name": "灵岩寺",
+      "coordinates": [
+        116.979722,
+        36.364722
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 11
+    },
+    {
+      "entityId": "Q2615258",
+      "name": "洪家楼教堂",
+      "coordinates": [
+        117.05955,
+        36.685775
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 10
+    },
+    {
+      "entityId": "Q1070056",
+      "name": "城子崖遗址",
+      "coordinates": [
+        117.35415,
+        36.7358
+      ],
+      "kind": "考古遗址",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 8
+    },
+    {
+      "entityId": "Q825323",
+      "name": "四门塔",
+      "coordinates": [
+        117.12982,
+        36.45294
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 6
+    },
+    {
+      "entityId": "Q7797033",
+      "name": "千佛崖造像",
+      "coordinates": [
+        117.127236,
+        36.45418
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 6
+    },
+    {
+      "entityId": "Q10938119",
+      "name": "大辛庄遗址",
+      "coordinates": [
+        117.1065,
+        36.71125
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 5
+    },
+    {
+      "entityId": "Q14629204",
+      "name": "济南泺口黄河铁路大桥",
+      "coordinates": [
+        117.000629402,
+        36.726582849
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q1574075",
+      "name": "济北王墓",
+      "coordinates": [
+        116.63931,
+        36.4452
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q8044297",
+      "name": "孝堂山郭氏墓石祠",
+      "coordinates": [
+        116.601779,
+        36.398335
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q15939062",
+      "name": "焦家遗址",
+      "coordinates": [
+        117.33167,
+        36.77962
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q15918408",
+      "name": "胶济铁路济南车站旧址",
+      "coordinates": [
+        116.98607,
+        36.66813
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q41427396",
+      "name": "汶阳遗址",
+      "coordinates": [
+        117.71565,
+        36.17161
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q10897207",
+      "name": "刘台子遗址",
+      "coordinates": [
+        117.26706,
+        37.15474
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q113022025",
+      "name": "济南曲山艺海博物馆",
+      "coordinates": [
+        116.999189,
+        36.665036
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q10926141",
+      "name": "国民政府驻山东特派员办事处旧址",
+      "coordinates": [
+        116.98058,
+        36.6594
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q113468932",
+      "name": "小荆山遗址",
+      "coordinates": [
+        117.532558,
+        36.845183
+      ],
+      "kind": "考古遗址",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q67933089",
+      "name": "龙山文化博物馆",
+      "coordinates": [
+        117.36,
+        36.73
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q17032479",
+      "name": "莲花洞石窟造像",
+      "coordinates": [
+        116.83127,
+        36.44996
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q21041716",
+      "name": "济南纬二路近现代建筑群",
+      "coordinates": [
+        116.98996,
+        36.66293
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q17026241",
+      "name": "翠屏山多佛塔",
+      "coordinates": [
+        116.36883,
+        36.22125
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q10933553",
+      "name": "老庄大佛寺石刻造像",
+      "coordinates": [
+        117.12055,
+        36.53621
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q21051847",
+      "name": "西河遗址",
+      "coordinates": [
+        117.33577,
+        36.73722
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q10865148",
+      "name": "济南万竹园",
+      "coordinates": [
+        117.00825,
+        36.66015
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q17032262",
+      "name": "莱芜战役指挥所旧址",
+      "coordinates": [
+        117.90789,
+        36.22533
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q17036635",
+      "name": "牟国故城遗址",
+      "coordinates": [
+        117.76009,
+        36.18492
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q11087855",
+      "name": "明德王墓地",
+      "coordinates": [
+        116.83081,
+        36.43374
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q10944039",
+      "name": "嬴城遗址",
+      "coordinates": [
+        117.5707,
+        36.327
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q11061357",
+      "name": "平阴永济桥",
+      "coordinates": [
+        116.26061,
+        36.16983
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q133261010",
+      "name": "东平陵故城",
+      "coordinates": [
+        117.37311,
+        36.74717
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q133261142",
+      "name": "万字会旧址",
+      "coordinates": [
+        117.0074,
+        36.65544
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q133307078",
+      "name": "原齐鲁大学近现代建筑群",
+      "coordinates": [
+        117.01369,
+        36.65332
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    }
+  ],
+  "relics": [
+    {
+      "entityId": "Q17032479",
+      "name": "莲花洞石窟造像",
+      "coordinates": [
+        116.83127,
+        36.44996
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q1070056",
+      "name": "城子崖遗址",
+      "coordinates": [
+        117.35415,
+        36.7358
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 8
+    },
+    {
+      "entityId": "Q21041716",
+      "name": "济南纬二路近现代建筑群",
+      "coordinates": [
+        116.98996,
+        36.66293
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q14629204",
+      "name": "济南泺口黄河铁路大桥",
+      "coordinates": [
+        117.000629402,
+        36.726582849
+      ],
+      "inceptionYear": 1913,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q117690",
+      "name": "灵岩寺",
+      "coordinates": [
+        116.979722,
+        36.364722
+      ],
+      "inceptionYear": 300,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 11
+    },
+    {
+      "entityId": "Q15939062",
+      "name": "焦家遗址",
+      "coordinates": [
+        117.33167,
+        36.77962
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q15918408",
+      "name": "胶济铁路济南车站旧址",
+      "coordinates": [
+        116.98607,
+        36.66813
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q17026241",
+      "name": "翠屏山多佛塔",
+      "coordinates": [
+        116.36883,
+        36.22125
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q133261010",
+      "name": "东平陵故城",
+      "coordinates": [
+        117.37311,
+        36.74717
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q10933553",
+      "name": "老庄大佛寺石刻造像",
+      "coordinates": [
+        117.12055,
+        36.53621
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q21051847",
+      "name": "西河遗址",
+      "coordinates": [
+        117.33577,
+        36.73722
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q2615258",
+      "name": "洪家楼教堂",
+      "coordinates": [
+        117.05955,
+        36.685775
+      ],
+      "inceptionYear": 1901,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 10
+    },
+    {
+      "entityId": "Q10865148",
+      "name": "济南万竹园",
+      "coordinates": [
+        117.00825,
+        36.66015
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q8044297",
+      "name": "孝堂山郭氏墓石祠",
+      "coordinates": [
+        116.601779,
+        36.398335
+      ],
+      "inceptionYear": 100,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q113468932",
+      "name": "小荆山遗址",
+      "coordinates": [
+        117.532558,
+        36.845183
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q41427396",
+      "name": "汶阳遗址",
+      "coordinates": [
+        117.71565,
+        36.17161
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q825323",
+      "name": "四门塔",
+      "coordinates": [
+        117.12982,
+        36.45294
+      ],
+      "inceptionYear": 611,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 6
+    },
+    {
+      "entityId": "Q17032262",
+      "name": "莱芜战役指挥所旧址",
+      "coordinates": [
+        117.90789,
+        36.22533
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q17036635",
+      "name": "牟国故城遗址",
+      "coordinates": [
+        117.76009,
+        36.18492
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q133261142",
+      "name": "万字会旧址",
+      "coordinates": [
+        117.0074,
+        36.65544
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q10897207",
+      "name": "刘台子遗址",
+      "coordinates": [
+        117.26706,
+        37.15474
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q7797033",
+      "name": "千佛崖造像",
+      "coordinates": [
+        117.127236,
+        36.45418
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 6
+    },
+    {
+      "entityId": "Q10926141",
+      "name": "国民政府驻山东特派员办事处旧址",
+      "coordinates": [
+        116.98058,
+        36.6594
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q11087855",
+      "name": "明德王墓地",
+      "coordinates": [
+        116.83081,
+        36.43374
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q1574075",
+      "name": "济北王墓",
+      "coordinates": [
+        116.63931,
+        36.4452
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q10944039",
+      "name": "嬴城遗址",
+      "coordinates": [
+        117.5707,
+        36.327
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q11061357",
+      "name": "平阴永济桥",
+      "coordinates": [
+        116.26061,
+        36.16983
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q10938119",
+      "name": "大辛庄遗址",
+      "coordinates": [
+        117.1065,
+        36.71125
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 5
+    },
+    {
+      "entityId": "Q133307078",
+      "name": "原齐鲁大学近现代建筑群",
+      "coordinates": [
+        117.01369,
+        36.65332
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    }
+  ],
+  "figures": [
+    {
+      "entityId": "Q464470",
+      "name": "李清照",
+      "birthYear": 1084,
+      "deathYear": 1155,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "章丘区"
+      },
+      "sitelinks": 46,
+      "description": null
+    },
+    {
+      "entityId": "Q1155987",
+      "name": "辛弃疾",
+      "birthYear": 1140,
+      "deathYear": 1207,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "历城区"
+      },
+      "sitelinks": 25,
+      "description": null
+    },
+    {
+      "entityId": "Q700554",
+      "name": "孙传芳",
+      "birthYear": 1885,
+      "deathYear": 1935,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "历城区"
+      },
+      "sitelinks": 19,
+      "description": null
+    }
+  ],
+  "failures": []
+}

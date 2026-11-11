@@ -30,7 +30,11 @@ export function sleep(ms: number): Promise<void> {
  * 这样断网或 Wikidata 限流时仍能离线重建；REFRESH_WIKIDATA=1 可强制刷新。
  * 失败时抛出真实错误（绝不伪造数据）。
  */
-export async function sparql(query: string, retries = 2): Promise<Binding[]> {
+export async function sparql(
+  query: string,
+  retries = 2,
+  timeoutMs = 60000,
+): Promise<Binding[]> {
   const path = cachePath(query);
   if (!REFRESH_CACHE) {
     try {
@@ -43,6 +47,8 @@ export async function sparql(query: string, retries = 2): Promise<Binding[]> {
 
   let lastError: unknown;
   for (let attempt = 0; attempt <= retries; attempt += 1) {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), timeoutMs);
     try {
       const res = await fetch(WIKIDATA_ENDPOINT, {
         method: 'POST',
@@ -52,6 +58,7 @@ export async function sparql(query: string, retries = 2): Promise<Binding[]> {
           'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: new URLSearchParams({ query, format: 'json' }).toString(),
+        signal: controller.signal,
       });
       if (!res.ok) throw new Error(`HTTP ${res.status} ${res.statusText}`);
       const json = (await res.json()) as { results: { bindings: Binding[] } };
@@ -74,6 +81,8 @@ export async function sparql(query: string, retries = 2): Promise<Binding[]> {
     } catch (error) {
       lastError = error;
       if (attempt < retries) await sleep(2000 * (attempt + 1));
+    } finally {
+      clearTimeout(timer);
     }
   }
   throw new Error(`Wikidata 查询失败：${(lastError as Error).message}`);

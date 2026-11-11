@@ -1,0 +1,736 @@
+{
+  "cityId": "CN-620500",
+  "cityName": "天水",
+  "cityQid": "Q533157",
+  "center": [
+    105.73115,
+    34.58093
+  ],
+  "retrievedAt": "2026-11-10T14:49:25.300Z",
+  "sourceRef": {
+    "id": "S-WD-CN-620500",
+    "type": "wikidata",
+    "title": "Wikidata 事实快照 · 天水",
+    "url": "https://query.wikidata.org/sparql",
+    "retrievedAt": "2026-11-10T14:49:25.300Z"
+  },
+  "landmarks": [
+    {
+      "entityId": "Q1885375",
+      "name": "麦积山石窟",
+      "coordinates": [
+        106.005973,
+        34.350136
+      ],
+      "kind": "考古遗址",
+      "heritageDesignations": [
+        "全国重点文物保护单位",
+        "世界遗产组成部分"
+      ],
+      "description": null,
+      "sitelinks": 21
+    },
+    {
+      "entityId": "Q10917975",
+      "name": "后街清真寺",
+      "coordinates": [
+        105.7149,
+        34.58399
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 9
+    },
+    {
+      "entityId": "Q5433839",
+      "name": "放马滩墓群",
+      "coordinates": [
+        106.100042,
+        34.412902
+      ],
+      "kind": "考古遗址",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q1478269",
+      "name": "玉泉观",
+      "coordinates": [
+        105.70805556,
+        34.58527778
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q1955861",
+      "name": "木梯寺石窟",
+      "coordinates": [
+        104.6903,
+        34.68945
+      ],
+      "kind": "庙",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q10933579",
+      "name": "大像山石窟",
+      "coordinates": [
+        105.31219,
+        34.73212
+      ],
+      "kind": "考古遗址",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q10894126",
+      "name": "兴国寺",
+      "coordinates": [
+        105.6677,
+        34.8611
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q17001690",
+      "name": "胡氏古民居建筑",
+      "coordinates": [
+        105.71916667,
+        34.58166667
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q10934386",
+      "name": "大地湾遗址",
+      "coordinates": [
+        105.90445,
+        35.01239
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q10885321",
+      "name": "伏羲庙",
+      "coordinates": [
+        105.70305556,
+        34.58055556
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q11129883",
+      "name": "水帘洞石窟",
+      "coordinates": [
+        104.95075,
+        34.83224
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q10884164",
+      "name": "仙人崖石窟",
+      "coordinates": [
+        106.04785,
+        34.39744
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q11126904",
+      "name": "毛家坪遗址",
+      "coordinates": [
+        105.09256,
+        34.75692
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q17030440",
+      "name": "秦安文庙",
+      "coordinates": [
+        105.6686,
+        34.85864
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q17033139",
+      "name": "天水纪信祠",
+      "coordinates": [
+        105.72187,
+        34.58207
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q11173071",
+      "name": "鲁恭姬造像碑",
+      "coordinates": [
+        106.12929,
+        34.76168
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q17040225",
+      "name": "狼叫屲遗址",
+      "coordinates": [
+        104.74271,
+        34.78993
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q113050485",
+      "name": "Liuping Site",
+      "coordinates": [
+        105.98648,
+        34.840285
+      ],
+      "kind": "考古遗址",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q133275099",
+      "name": "水帘洞—大像山石窟",
+      "coordinates": [
+        104.95075,
+        34.83224
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q133306275",
+      "name": "马家塬遗址",
+      "coordinates": [
+        106.16724,
+        35.04641
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q133309547",
+      "name": "武山圣寿寺",
+      "coordinates": [
+        104.88613,
+        34.72254
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q133306273",
+      "name": "李崖遗址",
+      "coordinates": [
+        106.1316,
+        34.76679
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q133309557",
+      "name": "河峪摩崖石刻",
+      "coordinates": [
+        106.38191,
+        34.98744
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    }
+  ],
+  "relics": [
+    {
+      "entityId": "Q10894126",
+      "name": "兴国寺",
+      "coordinates": [
+        105.6677,
+        34.8611
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q133275099",
+      "name": "水帘洞—大像山石窟",
+      "coordinates": [
+        104.95075,
+        34.83224
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q10884164",
+      "name": "仙人崖石窟",
+      "coordinates": [
+        106.04785,
+        34.39744
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q10933579",
+      "name": "大像山石窟",
+      "coordinates": [
+        105.31219,
+        34.73212
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q133306275",
+      "name": "马家塬遗址",
+      "coordinates": [
+        106.16724,
+        35.04641
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q11126904",
+      "name": "毛家坪遗址",
+      "coordinates": [
+        105.09256,
+        34.75692
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q17001690",
+      "name": "胡氏古民居建筑",
+      "coordinates": [
+        105.71916667,
+        34.58166667
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q133309547",
+      "name": "武山圣寿寺",
+      "coordinates": [
+        104.88613,
+        34.72254
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q1955861",
+      "name": "木梯寺石窟",
+      "coordinates": [
+        104.6903,
+        34.68945
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q17030440",
+      "name": "秦安文庙",
+      "coordinates": [
+        105.6686,
+        34.85864
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q17033139",
+      "name": "天水纪信祠",
+      "coordinates": [
+        105.72187,
+        34.58207
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q1478269",
+      "name": "玉泉观",
+      "coordinates": [
+        105.70805556,
+        34.58527778
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q10934386",
+      "name": "大地湾遗址",
+      "coordinates": [
+        105.90445,
+        35.01239
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q133306273",
+      "name": "李崖遗址",
+      "coordinates": [
+        106.1316,
+        34.76679
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q1885375",
+      "name": "麦积山石窟",
+      "coordinates": [
+        106.005973,
+        34.350136
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 21
+    },
+    {
+      "entityId": "Q10885321",
+      "name": "伏羲庙",
+      "coordinates": [
+        105.70305556,
+        34.58055556
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q11173071",
+      "name": "鲁恭姬造像碑",
+      "coordinates": [
+        106.12929,
+        34.76168
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q11129883",
+      "name": "水帘洞石窟",
+      "coordinates": [
+        104.95075,
+        34.83224
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q5433839",
+      "name": "放马滩墓群",
+      "coordinates": [
+        106.100042,
+        34.412902
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q133309557",
+      "name": "河峪摩崖石刻",
+      "coordinates": [
+        106.38191,
+        34.98744
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q17040225",
+      "name": "狼叫屲遗址",
+      "coordinates": [
+        104.74271,
+        34.78993
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q10917975",
+      "name": "后街清真寺",
+      "coordinates": [
+        105.7149,
+        34.58399
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 9
+    }
+  ],
+  "figures": [
+    {
+      "entityId": "Q280866",
+      "name": "姜维",
+      "birthYear": 202,
+      "deathYear": 264,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "甘谷县"
+      },
+      "sitelinks": 24,
+      "description": "三國時期蜀漢將領 (202-264)"
+    },
+    {
+      "entityId": "Q197191",
+      "name": "张郃",
+      "birthYear": 167,
+      "deathYear": 231,
+      "relationType": "sojourner",
+      "evidence": {
+        "property": "deathplace",
+        "value": "秦州区"
+      },
+      "sitelinks": 21,
+      "description": "曹魏名将"
+    },
+    {
+      "entityId": "Q704673",
+      "name": "李陵",
+      "birthYear": -149,
+      "deathYear": -72,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "秦安县"
+      },
+      "sitelinks": 17,
+      "description": null
+    }
+  ],
+  "failures": []
+}

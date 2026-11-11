@@ -1,0 +1,1562 @@
+{
+  "cityId": "CN-310000",
+  "cityName": "上海",
+  "cityQid": "Q8686",
+  "center": [
+    121.469166666,
+    31.2325
+  ],
+  "retrievedAt": "2026-11-11T05:35:34.242Z",
+  "sourceRef": {
+    "id": "S-WD-CN-310000",
+    "type": "wikidata",
+    "title": "Wikidata 事实快照 · 上海",
+    "url": "https://query.wikidata.org/sparql",
+    "retrievedAt": "2026-11-11T05:35:34.242Z"
+  },
+  "landmarks": [
+    {
+      "entityId": "Q1328025",
+      "name": "豫园",
+      "coordinates": [
+        121.4875,
+        31.22916667
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 30
+    },
+    {
+      "entityId": "Q49633",
+      "name": "徐家汇圣依纳爵主教座堂",
+      "coordinates": [
+        121.431389,
+        31.193056
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 20
+    },
+    {
+      "entityId": "Q23812",
+      "name": "国际饭店",
+      "coordinates": [
+        121.467083333,
+        31.235555555
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 17
+    },
+    {
+      "entityId": "Q41728",
+      "name": "中国共产党第一次全国代表大会会址",
+      "coordinates": [
+        121.470694444,
+        31.222083333
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 12
+    },
+    {
+      "entityId": "Q4578297",
+      "name": "圣约翰大学",
+      "coordinates": [
+        121.41315,
+        31.22786
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 11
+    },
+    {
+      "entityId": "Q5196503",
+      "name": "江海关",
+      "coordinates": [
+        121.485416666,
+        31.238611111
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 10
+    },
+    {
+      "entityId": "Q23161",
+      "name": "马勒住宅",
+      "coordinates": [
+        121.45197778,
+        31.22497222
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 8
+    },
+    {
+      "entityId": "Q19825547",
+      "name": "徐光启墓",
+      "coordinates": [
+        121.430166666,
+        31.191527777
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 7
+    },
+    {
+      "entityId": "Q10886470",
+      "name": "佘山天文台",
+      "coordinates": [
+        121.1885,
+        31.0963
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 7
+    },
+    {
+      "entityId": "Q41841",
+      "name": "兴圣教寺塔",
+      "coordinates": [
+        121.24166,
+        31.00655
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 7
+    },
+    {
+      "entityId": "Q10927926",
+      "name": "圣三一堂 (上海)",
+      "coordinates": [
+        121.481944444,
+        31.238472222
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 7
+    },
+    {
+      "entityId": "Q23126",
+      "name": "上海总会大楼",
+      "coordinates": [
+        121.486666666,
+        31.235833333
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 6
+    },
+    {
+      "entityId": "Q4165412",
+      "name": "上海宋庆龄故居",
+      "coordinates": [
+        121.43405,
+        31.205891
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 6
+    },
+    {
+      "entityId": "Q11139200",
+      "name": "沉香阁",
+      "coordinates": [
+        121.48559,
+        31.22925
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 6
+    },
+    {
+      "entityId": "Q41712",
+      "name": "上海中山故居",
+      "coordinates": [
+        121.463194444,
+        31.218055555
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 6
+    },
+    {
+      "entityId": "Q36102",
+      "name": "上海市提篮桥监狱",
+      "coordinates": [
+        121.134763,
+        31.126507
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 6
+    },
+    {
+      "entityId": "Q11056843",
+      "name": "工部局宰牲場",
+      "coordinates": [
+        121.48785,
+        31.25663333
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 6
+    },
+    {
+      "entityId": "Q10868085",
+      "name": "上海邮政总局",
+      "coordinates": [
+        121.48,
+        31.2464
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 6
+    },
+    {
+      "entityId": "Q23170",
+      "name": "鲁迅墓",
+      "coordinates": [
+        121.47809,
+        31.27391
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 6
+    },
+    {
+      "entityId": "Q30136",
+      "name": "杨树浦水厂",
+      "coordinates": [
+        121.5236,
+        31.2539
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 5
+    },
+    {
+      "entityId": "Q10867624",
+      "name": "上海东方汇理银行大楼",
+      "coordinates": [
+        121.4855,
+        31.2431
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 5
+    },
+    {
+      "entityId": "Q19854145",
+      "name": "龙华塔",
+      "coordinates": [
+        121.44731903,
+        31.17557716
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 5
+    },
+    {
+      "entityId": "Q7896293",
+      "name": "沪江大学",
+      "coordinates": [
+        121.55192,
+        31.29554
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 5
+    },
+    {
+      "entityId": "Q10867695",
+      "name": "上海元代水闸遗址博物馆",
+      "coordinates": [
+        121.42565668,
+        31.2614733
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q18226437",
+      "name": "广富林遗址",
+      "coordinates": [
+        121.193838888,
+        31.06385
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q11133012",
+      "name": "汇中饭店大楼",
+      "coordinates": [
+        121.485,
+        31.240638888
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q10924201",
+      "name": "嘉道理爵士公馆",
+      "coordinates": [
+        121.43889,
+        31.22302
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q11143451",
+      "name": "法国学堂",
+      "coordinates": [
+        121.46416,
+        31.22079
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q41743",
+      "name": "宋庆龄墓",
+      "coordinates": [
+        121.410777,
+        31.195127
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q41818",
+      "name": "松江唐经幢",
+      "coordinates": [
+        121.23722222,
+        31.00777778
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q53377",
+      "name": "张闻天故居",
+      "coordinates": [
+        121.758643,
+        31.133839
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q41896",
+      "name": "福泉山遗址",
+      "coordinates": [
+        121.177287367,
+        31.200994574
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q18192727",
+      "name": "崧泽遗址",
+      "coordinates": [
+        121.1589,
+        31.14834
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q41695",
+      "name": "中国社会主义青年团中央机关旧址",
+      "coordinates": [
+        121.46361111,
+        31.22194444
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q10923985",
+      "name": "嘉定孔庙",
+      "coordinates": [
+        121.2484,
+        31.3835
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q85885230",
+      "name": "青龙镇遗址",
+      "coordinates": [
+        121.16054,
+        31.25401
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q10925316",
+      "name": "四行仓库",
+      "coordinates": [
+        121.46694444,
+        31.24207778
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q10867765",
+      "name": "上海周公馆",
+      "coordinates": [
+        121.4685365,
+        31.214186
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q56701198",
+      "name": "华亭海塘奉贤段",
+      "coordinates": [
+        121.473796,
+        30.830681
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q10873229",
+      "name": "中国共产党第二次全国代表大会会址",
+      "coordinates": [
+        121.462,
+        31.226153
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q19852026",
+      "name": "博文女校",
+      "coordinates": [
+        121.4712,
+        31.2235
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q10566619",
+      "name": "马桥遗址",
+      "coordinates": [
+        121.38667,
+        31.03625
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q19841426",
+      "name": "龙华革命烈士纪念地",
+      "coordinates": [
+        121.447288888,
+        31.179828888
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q133309569",
+      "name": "上海交通大学早期建筑",
+      "coordinates": [
+        121.43132,
+        31.2008
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q133276695",
+      "name": "上海外滩建筑群",
+      "coordinates": [
+        121.48538,
+        31.24625
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q19853224",
+      "name": "真如寺大殿",
+      "coordinates": [
+        121.39666748,
+        31.25138855
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    }
+  ],
+  "relics": [
+    {
+      "entityId": "Q19825547",
+      "name": "徐光启墓",
+      "coordinates": [
+        121.430166666,
+        31.191527777
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": "光启公园",
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 7
+    },
+    {
+      "entityId": "Q10867695",
+      "name": "上海元代水闸遗址博物馆",
+      "coordinates": [
+        121.42565668,
+        31.2614733
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q19841426",
+      "name": "龙华革命烈士纪念地",
+      "coordinates": [
+        121.447288888,
+        31.179828888
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q23126",
+      "name": "上海总会大楼",
+      "coordinates": [
+        121.486666666,
+        31.235833333
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 6
+    },
+    {
+      "entityId": "Q18226437",
+      "name": "广富林遗址",
+      "coordinates": [
+        121.193838888,
+        31.06385
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q30136",
+      "name": "杨树浦水厂",
+      "coordinates": [
+        121.5236,
+        31.2539
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 5
+    },
+    {
+      "entityId": "Q49633",
+      "name": "徐家汇圣依纳爵主教座堂",
+      "coordinates": [
+        121.431389,
+        31.193056
+      ],
+      "inceptionYear": 1910,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 20
+    },
+    {
+      "entityId": "Q1328025",
+      "name": "豫园",
+      "coordinates": [
+        121.4875,
+        31.22916667
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 30
+    },
+    {
+      "entityId": "Q41896",
+      "name": "福泉山遗址",
+      "coordinates": [
+        121.177287367,
+        31.200994574
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q4165412",
+      "name": "上海宋庆龄故居",
+      "coordinates": [
+        121.43405,
+        31.205891
+      ],
+      "inceptionYear": 1981,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 6
+    },
+    {
+      "entityId": "Q133309569",
+      "name": "上海交通大学早期建筑",
+      "coordinates": [
+        121.43132,
+        31.2008
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q11139200",
+      "name": "沉香阁",
+      "coordinates": [
+        121.48559,
+        31.22925
+      ],
+      "inceptionYear": 1815,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 6
+    },
+    {
+      "entityId": "Q10867624",
+      "name": "上海东方汇理银行大楼",
+      "coordinates": [
+        121.4855,
+        31.2431
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 5
+    },
+    {
+      "entityId": "Q18192727",
+      "name": "崧泽遗址",
+      "coordinates": [
+        121.1589,
+        31.14834
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q41728",
+      "name": "中国共产党第一次全国代表大会会址",
+      "coordinates": [
+        121.470694444,
+        31.222083333
+      ],
+      "inceptionYear": 1920,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 12
+    },
+    {
+      "entityId": "Q41695",
+      "name": "中国社会主义青年团中央机关旧址",
+      "coordinates": [
+        121.46361111,
+        31.22194444
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q19854145",
+      "name": "龙华塔",
+      "coordinates": [
+        121.44731903,
+        31.17557716
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 5
+    },
+    {
+      "entityId": "Q23812",
+      "name": "国际饭店",
+      "coordinates": [
+        121.467083333,
+        31.235555555
+      ],
+      "inceptionYear": 1934,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 17
+    },
+    {
+      "entityId": "Q5196503",
+      "name": "江海关",
+      "coordinates": [
+        121.485416666,
+        31.238611111
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 10
+    },
+    {
+      "entityId": "Q11133012",
+      "name": "汇中饭店大楼",
+      "coordinates": [
+        121.485,
+        31.240638888
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q10923985",
+      "name": "嘉定孔庙",
+      "coordinates": [
+        121.2484,
+        31.3835
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q85885230",
+      "name": "青龙镇遗址",
+      "coordinates": [
+        121.16054,
+        31.25401
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q10925316",
+      "name": "四行仓库",
+      "coordinates": [
+        121.46694444,
+        31.24207778
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q10566619",
+      "name": "马桥遗址",
+      "coordinates": [
+        121.38667,
+        31.03625
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q41712",
+      "name": "上海中山故居",
+      "coordinates": [
+        121.463194444,
+        31.218055555
+      ],
+      "inceptionYear": 1945,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 6
+    },
+    {
+      "entityId": "Q10867765",
+      "name": "上海周公馆",
+      "coordinates": [
+        121.4685365,
+        31.214186
+      ],
+      "inceptionYear": 1979,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q133276695",
+      "name": "上海外滩建筑群",
+      "coordinates": [
+        121.48538,
+        31.24625
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q23161",
+      "name": "马勒住宅",
+      "coordinates": [
+        121.45197778,
+        31.22497222
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 8
+    },
+    {
+      "entityId": "Q56701198",
+      "name": "华亭海塘奉贤段",
+      "coordinates": [
+        121.473796,
+        30.830681
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q10886470",
+      "name": "佘山天文台",
+      "coordinates": [
+        121.1885,
+        31.0963
+      ],
+      "inceptionYear": 1899,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 7
+    },
+    {
+      "entityId": "Q10924201",
+      "name": "嘉道理爵士公馆",
+      "coordinates": [
+        121.43889,
+        31.22302
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q10873229",
+      "name": "中国共产党第二次全国代表大会会址",
+      "coordinates": [
+        121.462,
+        31.226153
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q36102",
+      "name": "上海市提篮桥监狱",
+      "coordinates": [
+        121.134763,
+        31.126507
+      ],
+      "inceptionYear": 1901,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 6
+    },
+    {
+      "entityId": "Q41841",
+      "name": "兴圣教寺塔",
+      "coordinates": [
+        121.24166,
+        31.00655
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 7
+    },
+    {
+      "entityId": "Q19852026",
+      "name": "博文女校",
+      "coordinates": [
+        121.4712,
+        31.2235
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q7896293",
+      "name": "沪江大学",
+      "coordinates": [
+        121.55192,
+        31.29554
+      ],
+      "inceptionYear": 1906,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 5
+    },
+    {
+      "entityId": "Q19853224",
+      "name": "真如寺大殿",
+      "coordinates": [
+        121.39666748,
+        31.25138855
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q11056843",
+      "name": "工部局宰牲場",
+      "coordinates": [
+        121.48785,
+        31.25663333
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 6
+    },
+    {
+      "entityId": "Q10868085",
+      "name": "上海邮政总局",
+      "coordinates": [
+        121.48,
+        31.2464
+      ],
+      "inceptionYear": 1924,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 6
+    },
+    {
+      "entityId": "Q11143451",
+      "name": "法国学堂",
+      "coordinates": [
+        121.46416,
+        31.22079
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q41743",
+      "name": "宋庆龄墓",
+      "coordinates": [
+        121.410777,
+        31.195127
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": "中华人民共和国名誉主席宋庆龄陵园",
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q10927926",
+      "name": "圣三一堂 (上海)",
+      "coordinates": [
+        121.481944444,
+        31.238472222
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 7
+    },
+    {
+      "entityId": "Q23170",
+      "name": "鲁迅墓",
+      "coordinates": [
+        121.47809,
+        31.27391
+      ],
+      "inceptionYear": 1956,
+      "museumOrSite": null,
+      "location": "鲁迅公园",
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 6
+    },
+    {
+      "entityId": "Q4578297",
+      "name": "圣约翰大学",
+      "coordinates": [
+        121.41315,
+        31.22786
+      ],
+      "inceptionYear": 1879,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 11
+    },
+    {
+      "entityId": "Q41818",
+      "name": "松江唐经幢",
+      "coordinates": [
+        121.23722222,
+        31.00777778
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q53377",
+      "name": "张闻天故居",
+      "coordinates": [
+        121.758643,
+        31.133839
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    }
+  ],
+  "figures": [
+    {
+      "entityId": "Q17135",
+      "name": "宋美龄",
+      "birthYear": 1898,
+      "deathYear": 2003,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "浦东新区"
+      },
+      "sitelinks": 57,
+      "description": "蒋介石夫人，前中华民国第一夫人"
+    },
+    {
+      "entityId": "Q317462",
+      "name": "顾维钧",
+      "birthYear": 1888,
+      "deathYear": 1985,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "嘉定区"
+      },
+      "sitelinks": 40,
+      "description": null
+    },
+    {
+      "entityId": "Q333500",
+      "name": "钱学森",
+      "birthYear": 1911,
+      "deathYear": 2009,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "上海县"
+      },
+      "sitelinks": 39,
+      "description": null
+    },
+    {
+      "entityId": "Q557233",
+      "name": "陈云",
+      "birthYear": 1905,
+      "deathYear": 1995,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "青浦区"
+      },
+      "sitelinks": 30,
+      "description": null
+    },
+    {
+      "entityId": "Q537211",
+      "name": "董其昌",
+      "birthYear": 1555,
+      "deathYear": 1636,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "松江区"
+      },
+      "sitelinks": 28,
+      "description": "明朝政治人物、书法艺术家"
+    },
+    {
+      "entityId": "Q700939",
+      "name": "张闻天",
+      "birthYear": 1900,
+      "deathYear": 1976,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "南汇区"
+      },
+      "sitelinks": 25,
+      "description": null
+    },
+    {
+      "entityId": "Q504007",
+      "name": "龚品梅",
+      "birthYear": 1901,
+      "deathYear": 2000,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "浦东新区"
+      },
+      "sitelinks": 24,
+      "description": null
+    },
+    {
+      "entityId": "Q709890",
+      "name": "唐绍仪",
+      "birthYear": 1862,
+      "deathYear": 1938,
+      "relationType": "sojourner",
+      "evidence": {
+        "property": "deathplace",
+        "value": "武康路40弄1号住宅"
+      },
+      "sitelinks": 23,
+      "description": "中华民国第一任内阁总理"
+    },
+    {
+      "entityId": "Q699442",
+      "name": "杜月笙",
+      "birthYear": 1888,
+      "deathYear": 1951,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "高桥镇"
+      },
+      "sitelinks": 21,
+      "description": null
+    },
+    {
+      "entityId": "Q1005462",
+      "name": "陈继儒",
+      "birthYear": 1558,
+      "deathYear": 1639,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "松江区"
+      },
+      "sitelinks": 19,
+      "description": null
+    },
+    {
+      "entityId": "Q847740",
+      "name": "曹汝霖",
+      "birthYear": 1877,
+      "deathYear": 1966,
+      "relationType": "native",
+      "evidence": {
+        "property": "position",
+        "value": "上海市人（维基百科分类）"
+      },
+      "sitelinks": 13,
+      "description": null
+    },
+    {
+      "entityId": "Q15921590",
+      "name": "蔡威廉",
+      "birthYear": 1904,
+      "deathYear": 1939,
+      "relationType": "native",
+      "evidence": {
+        "property": "position",
+        "value": "上海市人（维基百科分类）"
+      },
+      "sitelinks": 3,
+      "description": null
+    }
+  ],
+  "failures": [
+    "景点查询失败：Wikidata 查询失败：This operation was aborted"
+  ]
+}

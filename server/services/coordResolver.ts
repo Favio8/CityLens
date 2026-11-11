@@ -75,14 +75,28 @@ export function findGazetteerEntry(
 }
 
 /** 天地图 v2 地名搜索（GCJ-02 与 WGS84 在一期误差范围内，统一按 WGS84 记录来源）。 */
-export async function tiandituSearch(name: string, cityId: string): Promise<CoordCandidate[]> {
+export async function tiandituSearch(
+  name: string,
+  cityId: string,
+  center: Coord = [116.4, 39.9],
+): Promise<CoordCandidate[]> {
   const map = getActiveMapConfig();
   const key = map.serverKey || map.browserKey;
   if (!key) return [];
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), REMOTE_TIMEOUT_MS);
   try {
-    const postStr = JSON.stringify({ keyWord: name, queryType: 1, start: 0, count: 10 });
+    // 天地图 v2 检索要求 level 与 mapBound；以城市中心 ±0.6° 作为检索范围。
+    const pad = 0.6;
+    const mapBound = `${center[0] - pad},${center[1] - pad},${center[0] + pad},${center[1] + pad}`;
+    const postStr = JSON.stringify({
+      keyWord: name,
+      level: 12,
+      mapBound,
+      queryType: 1,
+      start: 0,
+      count: 10,
+    });
     const url = `https://api.tianditu.gov.cn/v2/search?postStr=${encodeURIComponent(postStr)}&type=query&tk=${encodeURIComponent(key)}`;
     const res = await fetch(url, { signal: controller.signal });
     if (!res.ok) return [];
@@ -176,7 +190,7 @@ export async function resolveCoord(
   }
 
   if (allowRemote) {
-    const remote = deps.remoteSearch ?? (() => tiandituSearch(placeName, cityId));
+    const remote = deps.remoteSearch ?? (() => tiandituSearch(placeName, cityId, center));
     const candidates = await remote(placeName);
     for (const candidate of candidates) {
       const result = evaluate(candidate, placeName, center, maxKm);

@@ -1,5 +1,5 @@
 /**
- * 构建期脚本：从 chinese-poetry 抽取与 6 座预置城市相关的诗词，建立逐字校验用本地库。
+ * 构建期脚本：从 chinese-poetry 抽取与预置城市及重点非预置城市相关的诗词，建立逐字校验用本地库。
  *
  * 数据源：https://github.com/chinese-poetry/chinese-poetry（MIT）
  * - 全唐诗/poet.tang.*.json
@@ -34,6 +34,53 @@ const toSimplified: Converter = (OpenCC as unknown as {
 
 const PRESET_IDS = ['CN-610100', 'CN-330100', 'CN-510100', 'CN-110000', 'CN-320500', 'CN-410300'];
 
+/** 额外覆盖的非预置城市：每城保留较少篇目，用于非预置城市的诗词卷。 */
+const EXTRA_CITY_IDS = [
+  'CN-320100', // 南京
+  'CN-310000', // 上海
+  'CN-440100', // 广州
+  'CN-420100', // 武汉
+  'CN-500000', // 重庆
+  'CN-430100', // 长沙
+  'CN-410100', // 郑州
+  'CN-120000', // 天津
+  'CN-370200', // 青岛
+  'CN-350200', // 厦门
+  'CN-530100', // 昆明
+  'CN-321000', // 扬州
+  'CN-330600', // 绍兴
+  'CN-410200', // 开封
+  'CN-140100', // 太原
+  'CN-340100', // 合肥
+  'CN-360100', // 南昌
+  'CN-350100', // 福州
+  'CN-350500', // 泉州
+  'CN-320200', // 无锡
+  'CN-321100', // 镇江
+  'CN-330200', // 宁波
+  'CN-320300', // 徐州
+  'CN-450300', // 桂林
+];
+const ALL_CITY_IDS = [...PRESET_IDS, ...EXTRA_CITY_IDS];
+/** 通用词/现代地名做城市名时极易误配，自动扩展时跳过。 */
+const AUTO_KEYWORD_STOPLIST = new Set([
+  '白银',
+  '东方',
+  '中山',
+  '北海',
+  '三沙',
+  '三明',
+  '双河',
+  '新星',
+  '白杨',
+  '胡杨河',
+]);
+/** 预置城市保留 150 首，人工扩展城市 50 首，其余城市 20 首。 */
+const POEMS_PER_CITY = new Map<string, number>([
+  ...PRESET_IDS.map((id) => [id, 150] as const),
+  ...EXTRA_CITY_IDS.map((id) => [id, 50] as const),
+]);
+
 /** 人工整理的城市相关地名关键词（仅用于筛选，不参与事实生成）。 */
 const CITY_KEYWORDS: Record<string, string[]> = {
   'CN-610100': [
@@ -59,6 +106,63 @@ const CITY_KEYWORDS: Record<string, string[]> = {
     '洛阳', '洛水', '洛城', '龙门', '邙山', '金谷', '天津桥', '洛邑', '神都', '东都',
     '伊水', '北邙',
   ],
+  'CN-320100': [
+    '金陵', '秦淮', '钟山', '石头城', '建康', '建邺', '乌衣巷', '玄武湖', '莫愁湖',
+    '栖霞', '台城', '凤凰台', '白下', '秣陵',
+  ],
+  'CN-310000': ['松江', '华亭', '沪渎', '申城', '黄浦', '歇浦', '龙华', '淀山', '云间'],
+  'CN-440100': [
+    '羊城', '穗城', '番禺', '珠江', '越秀', '白云山', '五羊', '花城', '南海', '尉佗',
+  ],
+  'CN-420100': [
+    '黄鹤楼', '武昌', '汉阳', '江夏', '汉口', '鹦鹉洲', '晴川', '东湖', '龟山', '蛇山',
+    '夏口',
+  ],
+  'CN-500000': [
+    '渝州', '巴山', '巴渝', '山城', '瞿塘', '巫山', '白帝城', '嘉陵', '涪陵', '夔州',
+    '江州',
+  ],
+  'CN-430100': ['湘江', '岳麓', '潭州', '星城', '橘子洲', '贾谊', '长沙', '浏阳', '湘水'],
+  'CN-410100': ['管城', '商城', '圃田', '荥阳', '嵩山', '黄河', '中岳', '新郑', '郑国'],
+  'CN-120000': ['直沽', '津门', '海河', '沽上', '盘山', '大沽', '天津', '三岔'],
+  'CN-370200': ['胶澳', '琴岛', '崂山', '胶州', '即墨', '琅琊', '田横'],
+  'CN-350200': ['鹭岛', '鹭江', '同安', '鼓浪屿', '嘉禾', '思明', '沧海'],
+  'CN-530100': ['滇池', '春城', '昆州', '拓东', '金马', '碧鸡', '西山', '大观楼', '盘龙'],
+  'CN-321000': [
+    '广陵', '维扬', '江都', '瘦西湖', '二十四桥', '瓜洲', '平山堂', '竹西', '邗沟', '隋堤',
+  ],
+  'CN-330600': [
+    '会稽', '越州', '山阴', '鉴湖', '兰亭', '若耶', '镜湖', '剡溪', '禹陵', '沈园', '越中',
+  ],
+  'CN-410200': ['汴京', '汴梁', '大梁', '东京', '夷门', '汴河', '相国寺', '龙亭', '金明', '陈留'],
+  'CN-140100': ['并州', '晋阳', '龙城', '汾河', '晋祠', '天龙山', '双塔', '太原'],
+  'CN-340100': ['庐州', '庐阳', '包河', '巢湖', '逍遥津', '淝水', '合肥'],
+  'CN-360100': ['洪州', '豫章', '滕王阁', '赣江', '西山', '青云谱', '百花洲', '南昌'],
+  'CN-350100': ['榕城', '三山', '闽江', '冶城', '西湖', '鼓山', '乌山', '于山', '福州'],
+  'CN-350500': [
+    '刺桐', '鲤城', '温陵', '清源山', '洛阳桥', '开元寺', '晋江', '安溪', '泉州',
+  ],
+  'CN-320200': ['梁溪', '金匮', '太湖', '惠山', '锡山', '鼋头渚', '梅里', '二泉', '无锡'],
+  'CN-321100': ['京口', '润州', '北固', '金山', '焦山', '西津渡', '甘露', '镇江'],
+  'CN-330200': ['明州', '鄞州', '四明', '甬江', '天一阁', '东钱湖', '招宝山', '宁波'],
+  'CN-320300': ['彭城', '云龙', '泗水', '戏马台', '燕子楼', '九里山', '徐州'],
+  'CN-450300': ['桂林', '漓江', '象鼻', '叠彩', '独秀', '阳朔', '苍梧', '桂州'],
+  // 常见旅游城市补覆盖（古称 / 属地古迹；仅用于筛选，不参与事实生成）。
+  'CN-130100': ['石家庄', '常山', '真定', '石邑', '井陉'],
+  'CN-130300': ['秦皇岛', '碣石', '卢龙', '榆关', '昌黎'],
+  'CN-130600': ['保定', '博陵', '范阳', '督亢', '涞水'],
+  'CN-130700': ['张家口', '宣化', '武州', '涿鹿', '怀来'],
+  'CN-130800': ['承德', '热河', '避暑山庄', '滦平'],
+  'CN-210100': ['沈阳', '盛京', '奉天', '沈州'],
+  'CN-210200': ['大连', '旅顺', '金州', '复州'],
+  'CN-230100': ['哈尔滨', '上京', '会宁府', '阿勒锦'],
+  'CN-320600': ['南通', '紫琅', '狼山'],
+  'CN-320700': ['连云港', '海州', '朐山', '郁洲'],
+  'CN-321300': ['宿迁', '下相', '钟吾'],
+  'CN-330900': ['舟山', '昌国', '翁山'],
+  'CN-331100': ['丽水', '处州', '栝州', '莲城'],
+  'CN-340300': ['蚌埠', '钟离', '涂山'],
+  'CN-340500': ['马鞍山', '当涂', '采石', '姑孰', '牛渚'],
 };
 
 /** 必须入库的经典名篇（入库后仍逐字比对原文）。 */
@@ -263,16 +367,19 @@ function makePoem(
 
 async function main(): Promise<void> {
   const dict = loadDictionary();
+  const allCities = dict.cities.filter(
+    (city) => !AUTO_KEYWORD_STOPLIST.has(city.standardName),
+  );
+  const allCityIds = allCities.map((city) => city.cityId);
+  const manualIds = new Set(ALL_CITY_IDS);
   const cityKeywords = new Map<string, string[]>();
-  for (const cityId of PRESET_IDS) {
-    const city = dict.cities.find((c) => c.cityId === cityId);
-    if (!city) throw new Error(`词典缺少预置城市 ${cityId}`);
-    const keywords = new Set(CITY_KEYWORDS[cityId] ?? []);
+  for (const city of allCities) {
+    const keywords = new Set(CITY_KEYWORDS[city.cityId] ?? []);
     keywords.add(city.standardName);
     for (const alias of city.aliases) {
       if (alias.matchType === 'ancient') keywords.add(alias.display);
     }
-    cityKeywords.set(cityId, [...keywords]);
+    cityKeywords.set(city.cityId, [...keywords]);
   }
 
   const failures: string[] = [];
@@ -294,7 +401,7 @@ async function main(): Promise<void> {
   }
   jobs.push({ dir: '元曲', name: 'yuanqu.json', dynasty: '元' });
 
-  const byCity = new Map<string, CorpusPoem[]>(PRESET_IDS.map((id) => [id, []]));
+  const byCity = new Map<string, CorpusPoem[]>(allCityIds.map((id) => [id, []]));
   const byContent = new Map<string, CorpusPoem>();
   let processedFiles = 0;
 
@@ -354,10 +461,10 @@ async function main(): Promise<void> {
     if (!list.includes(found)) list.push(found);
   }
 
-  // 每城保留 150 首：名篇优先，其后按匹配分与文本长度排序
+  // 预置城市 150 首、人工扩展城市 50 首、其余城市 20 首：名篇优先，其后按匹配分与标题排序
   const selected = new Map<string, CorpusPoem>();
   const cityStats: Record<string, number> = {};
-  for (const cityId of PRESET_IDS) {
+  for (const cityId of allCityIds) {
     const list = byCity.get(cityId) ?? [];
     const deduped = [...new Set(list)].sort((a, b) => {
       const seedDiff = Number(b.seedFor.includes(cityId)) - Number(a.seedFor.includes(cityId));
@@ -365,10 +472,12 @@ async function main(): Promise<void> {
       if (b.matchScore !== a.matchScore) return b.matchScore - a.matchScore;
       return a.title.localeCompare(b.title, 'zh-Hans-CN');
     });
-    const top = deduped.slice(0, 150);
+    const top = deduped.slice(0, POEMS_PER_CITY.get(cityId) ?? 20);
     cityStats[cityId] = top.length;
     top.forEach((poem) => selected.set(poem.poemId, poem));
-    if (top.length === 0) failures.push(`${cityId} 没有检索到任何诗词`);
+    if (top.length === 0 && manualIds.has(cityId)) {
+      failures.push(`${cityId} 没有检索到任何诗词`);
+    }
   }
 
   const poems = [...selected.values()].sort(

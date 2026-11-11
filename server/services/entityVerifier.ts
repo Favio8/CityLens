@@ -108,12 +108,14 @@ export function resolveEntityPlace(
     entity.name,
     center,
   );
-  if (local.coordinates) {
+  // 城市中心条目只是兜底；实体自带 Wikidata 坐标时优先使用实体坐标，
+  // 避免非预置城市的景点全部落到城市中心。
+  if (local.coordinates && local.coordSource !== 'city_center') {
     return {
       name: entity.name,
       placeName: local.matchedName ?? entity.name,
       coordinates: local.coordinates,
-      coordSource: local.coordSource === 'city_center' ? 'city_center' : 'local_gazetteer',
+      coordSource: 'local_gazetteer',
       distanceKm: local.distanceKm,
       reasons: [],
     };
@@ -137,6 +139,16 @@ export function resolveEntityPlace(
       coordSource: 'wikidata',
       distanceKm: check.distanceKm,
       reasons: check.reasons,
+    };
+  }
+  if (local.coordinates) {
+    return {
+      name: entity.name,
+      placeName: local.matchedName ?? entity.name,
+      coordinates: local.coordinates,
+      coordSource: 'city_center',
+      distanceKm: local.distanceKm,
+      reasons: [],
     };
   }
   return {

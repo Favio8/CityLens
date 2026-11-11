@@ -1,0 +1,1189 @@
+{
+  "cityId": "CN-430100",
+  "cityName": "长沙",
+  "cityQid": "Q174091",
+  "center": [
+    112.97087,
+    28.19874
+  ],
+  "retrievedAt": "2026-11-11T05:44:59.243Z",
+  "sourceRef": {
+    "id": "S-WD-CN-430100",
+    "type": "wikidata",
+    "title": "Wikidata 事实快照 · 长沙",
+    "url": "https://query.wikidata.org/sparql",
+    "retrievedAt": "2026-11-11T05:44:59.243Z"
+  },
+  "landmarks": [
+    {
+      "entityId": "Q2037593",
+      "name": "岳麓书院",
+      "coordinates": [
+        112.936,
+        28.1839
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 17
+    },
+    {
+      "entityId": "Q5942029",
+      "name": "湖南博物院",
+      "coordinates": [
+        112.98784,
+        28.21526
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 12
+    },
+    {
+      "entityId": "Q28837838",
+      "name": "长沙博物馆",
+      "coordinates": [
+        112.986445,
+        28.248679
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 6
+    },
+    {
+      "entityId": "Q1275633",
+      "name": "炭河里遗址",
+      "coordinates": [
+        112.1063,
+        28.156
+      ],
+      "kind": "考古遗址",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 6
+    },
+    {
+      "entityId": "Q28824296",
+      "name": "长沙简牍博物馆",
+      "coordinates": [
+        112.9776,
+        28.1883
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 5
+    },
+    {
+      "entityId": "Q125253422",
+      "name": "谢子龙影像艺术馆",
+      "coordinates": [
+        112.953783,
+        28.123757
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 5
+    },
+    {
+      "entityId": "Q28855041",
+      "name": "李自健美术馆",
+      "coordinates": [
+        112.95676,
+        28.125309
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 5
+    },
+    {
+      "entityId": "Q117450091",
+      "name": "洪山寺",
+      "coordinates": [
+        113.036554,
+        28.265585
+      ],
+      "kind": "庙",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q65552884",
+      "name": "玉泉寺 (长沙市)",
+      "coordinates": [
+        112.976114,
+        28.161941
+      ],
+      "kind": "庙",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q10886062",
+      "name": "何叔衡故居",
+      "coordinates": [
+        112.037386,
+        28.054442
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q15950635",
+      "name": "爱晚亭",
+      "coordinates": [
+        112.932045,
+        28.184113
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q17030227",
+      "name": "秋收起义文家市会师旧址",
+      "coordinates": [
+        113.925557,
+        28.046725
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q16924601",
+      "name": "胡耀邦故居",
+      "coordinates": [
+        113.883274028,
+        28.081898206
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q7482443",
+      "name": "曾国藩墓",
+      "coordinates": [
+        112.895894,
+        28.082029
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q15940453",
+      "name": "谢觉哉故居",
+      "coordinates": [
+        112.058779,
+        28.08287
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q10897415",
+      "name": "刘少奇故居",
+      "coordinates": [
+        112.64351,
+        28.037839
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q17007593",
+      "name": "谭嗣同故居",
+      "coordinates": [
+        113.625478,
+        28.144751
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q11177085",
+      "name": "黄兴故居",
+      "coordinates": [
+        113.09891,
+        28.12016
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q11148323",
+      "name": "浏阳文庙",
+      "coordinates": [
+        113.6285,
+        28.1475
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q1062099",
+      "name": "长沙铜官窑遗址",
+      "coordinates": [
+        112.821716,
+        28.420771
+      ],
+      "kind": "考古遗址",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q67934830",
+      "name": "湖南辛亥革命人物纪念馆",
+      "coordinates": [
+        113.110833333,
+        28.121944444
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q106684577",
+      "name": "湖南省科学技术馆",
+      "coordinates": [
+        112.992521,
+        28.113364
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q14543323",
+      "name": "徐特立故居",
+      "coordinates": [
+        113.280631,
+        28.072568
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q11066638",
+      "name": "张南轩墓",
+      "coordinates": [
+        112.02216,
+        28.13535
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q14192022",
+      "name": "蔡锷墓",
+      "coordinates": [
+        112.92778,
+        28.18391
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q11177083",
+      "name": "黄兴墓",
+      "coordinates": [
+        112.92625,
+        28.18385
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q10394649",
+      "name": "湖南雷锋纪念馆",
+      "coordinates": [
+        112.83964,
+        28.20737
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q99864808",
+      "name": "桃树湾清代民居",
+      "coordinates": [
+        113.67662,
+        27.92617
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q11083063",
+      "name": "新民学会成立会旧址",
+      "coordinates": [
+        112.94676,
+        28.19687
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q18704273",
+      "name": "岳麓山禹王碑",
+      "coordinates": [
+        112.92861111,
+        28.18833333
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q126952101",
+      "name": "湖南省立第一师范学校旧址",
+      "coordinates": [
+        112.96665,
+        28.17948
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q134490465",
+      "name": "芒果美术馆",
+      "coordinates": [
+        113.04795,
+        28.23661
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q134450755",
+      "name": "炭河里青铜博物馆",
+      "coordinates": [
+        112.10691,
+        28.15621
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q17030693",
+      "name": "长沙城墙",
+      "coordinates": [
+        112.97579,
+        28.187
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q133306530",
+      "name": "汉代长沙王陵墓群",
+      "coordinates": [
+        112.94746,
+        28.21397
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q109348224",
+      "name": "锦绶堂",
+      "coordinates": [
+        114.02697,
+        28.46124
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q15940144",
+      "name": "湖南大学早期建筑群",
+      "coordinates": [
+        112.93706,
+        28.18356
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q133309235",
+      "name": "程潜公馆",
+      "coordinates": [
+        112.97203,
+        28.19223
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q10871834",
+      "name": "中共湘区委员会旧址",
+      "coordinates": [
+        112.983607,
+        28.203718
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q133309266",
+      "name": "湘雅医院及医学院早期建筑",
+      "coordinates": [
+        112.97788,
+        28.21645
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q133274574",
+      "name": "黄兴故居、墓",
+      "coordinates": [
+        113.09891,
+        28.12016
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q133275566",
+      "name": "蔡锷故居、公馆和墓",
+      "coordinates": [
+        111.52341,
+        27.15527
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q133309460",
+      "name": "浏阳红一方面军活动旧址",
+      "coordinates": [
+        113.84303,
+        28.30447
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    }
+  ],
+  "relics": [
+    {
+      "entityId": "Q10886062",
+      "name": "何叔衡故居",
+      "coordinates": [
+        112.037386,
+        28.054442
+      ],
+      "inceptionYear": 1785,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q17030693",
+      "name": "长沙城墙",
+      "coordinates": [
+        112.97579,
+        28.187
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q15950635",
+      "name": "爱晚亭",
+      "coordinates": [
+        112.932045,
+        28.184113
+      ],
+      "inceptionYear": 1792,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q1275633",
+      "name": "炭河里遗址",
+      "coordinates": [
+        112.1063,
+        28.156
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 6
+    },
+    {
+      "entityId": "Q133306530",
+      "name": "汉代长沙王陵墓群",
+      "coordinates": [
+        112.94746,
+        28.21397
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q109348224",
+      "name": "锦绶堂",
+      "coordinates": [
+        114.02697,
+        28.46124
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q17030227",
+      "name": "秋收起义文家市会师旧址",
+      "coordinates": [
+        113.925557,
+        28.046725
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q16924601",
+      "name": "胡耀邦故居",
+      "coordinates": [
+        113.883274028,
+        28.081898206
+      ],
+      "inceptionYear": 1851,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q15940144",
+      "name": "湖南大学早期建筑群",
+      "coordinates": [
+        112.93706,
+        28.18356
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q99864808",
+      "name": "桃树湾清代民居",
+      "coordinates": [
+        113.67662,
+        27.92617
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q7482443",
+      "name": "曾国藩墓",
+      "coordinates": [
+        112.895894,
+        28.082029
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q11083063",
+      "name": "新民学会成立会旧址",
+      "coordinates": [
+        112.94676,
+        28.19687
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q133309235",
+      "name": "程潜公馆",
+      "coordinates": [
+        112.97203,
+        28.19223
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q18704273",
+      "name": "岳麓山禹王碑",
+      "coordinates": [
+        112.92861111,
+        28.18833333
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q133274574",
+      "name": "黄兴故居、墓",
+      "coordinates": [
+        113.09891,
+        28.12016
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q15940453",
+      "name": "谢觉哉故居",
+      "coordinates": [
+        112.058779,
+        28.08287
+      ],
+      "inceptionYear": 1821,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q10897415",
+      "name": "刘少奇故居",
+      "coordinates": [
+        112.64351,
+        28.037839
+      ],
+      "inceptionYear": 1796,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q2037593",
+      "name": "岳麓书院",
+      "coordinates": [
+        112.936,
+        28.1839
+      ],
+      "inceptionYear": 976,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 17
+    },
+    {
+      "entityId": "Q133275566",
+      "name": "蔡锷故居、公馆和墓",
+      "coordinates": [
+        111.52341,
+        27.15527
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q10871834",
+      "name": "中共湘区委员会旧址",
+      "coordinates": [
+        112.983607,
+        28.203718
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q1062099",
+      "name": "长沙铜官窑遗址",
+      "coordinates": [
+        112.821716,
+        28.420771
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q17007593",
+      "name": "谭嗣同故居",
+      "coordinates": [
+        113.625478,
+        28.144751
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q14543323",
+      "name": "徐特立故居",
+      "coordinates": [
+        113.280631,
+        28.072568
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q133309460",
+      "name": "浏阳红一方面军活动旧址",
+      "coordinates": [
+        113.84303,
+        28.30447
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q11177085",
+      "name": "黄兴故居",
+      "coordinates": [
+        113.09891,
+        28.12016
+      ],
+      "inceptionYear": 1862,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q11066638",
+      "name": "张南轩墓",
+      "coordinates": [
+        112.02216,
+        28.13535
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q126952101",
+      "name": "湖南省立第一师范学校旧址",
+      "coordinates": [
+        112.96665,
+        28.17948
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q11148323",
+      "name": "浏阳文庙",
+      "coordinates": [
+        113.6285,
+        28.1475
+      ],
+      "inceptionYear": 1843,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q133309266",
+      "name": "湘雅医院及医学院早期建筑",
+      "coordinates": [
+        112.97788,
+        28.21645
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q14192022",
+      "name": "蔡锷墓",
+      "coordinates": [
+        112.92778,
+        28.18391
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": "岳麓区",
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q11177083",
+      "name": "黄兴墓",
+      "coordinates": [
+        112.92625,
+        28.18385
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    }
+  ],
+  "figures": [
+    {
+      "entityId": "Q16988",
+      "name": "刘少奇",
+      "birthYear": 1898,
+      "deathYear": 1969,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "宁乡市"
+      },
+      "sitelinks": 62,
+      "description": "第二任中华人民共和国主席，第一任全国人民代表大会常务委员会委员长"
+    },
+    {
+      "entityId": "Q513976",
+      "name": "王震",
+      "birthYear": 1908,
+      "deathYear": 1993,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "浏阳市"
+      },
+      "sitelinks": 30,
+      "description": null
+    },
+    {
+      "entityId": "Q434207",
+      "name": "田汉",
+      "birthYear": 1898,
+      "deathYear": 1968,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "长沙县"
+      },
+      "sitelinks": 29,
+      "description": null
+    },
+    {
+      "entityId": "Q284278",
+      "name": "杨开慧",
+      "birthYear": 1901,
+      "deathYear": 1930,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "开慧镇"
+      },
+      "sitelinks": 26,
+      "description": null
+    },
+    {
+      "entityId": "Q704889",
+      "name": "宋任穷",
+      "birthYear": 1909,
+      "deathYear": 2005,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "浏阳市"
+      },
+      "sitelinks": 22,
+      "description": null
+    },
+    {
+      "entityId": "Q714824",
+      "name": "陈寅恪",
+      "birthYear": 1890,
+      "deathYear": 1969,
+      "relationType": "native",
+      "evidence": {
+        "property": "position",
+        "value": "长沙市人（维基百科分类）"
+      },
+      "sitelinks": 14,
+      "description": null
+    },
+    {
+      "entityId": "Q11643292",
+      "name": "郭宗熙",
+      "birthYear": 1878,
+      "deathYear": 1934,
+      "relationType": "native",
+      "evidence": {
+        "property": "position",
+        "value": "长沙市人（维基百科分类）"
+      },
+      "sitelinks": 3,
+      "description": null
+    }
+  ],
+  "failures": []
+}

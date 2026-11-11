@@ -1,0 +1,222 @@
+{
+  "cityId": "CN-320300",
+  "cityName": "徐州",
+  "cityQid": "Q57719",
+  "center": [
+    117.18587,
+    34.26104
+  ],
+  "retrievedAt": "2026-11-11T04:08:39.489Z",
+  "sourceRef": {
+    "id": "S-WD-CN-320300",
+    "type": "wikidata",
+    "title": "Wikidata 事实快照 · 徐州",
+    "url": "https://query.wikidata.org/sparql",
+    "retrievedAt": "2026-11-11T04:08:39.489Z"
+  },
+  "landmarks": [
+    {
+      "entityId": "Q11114255",
+      "name": "梁王城遗址",
+      "coordinates": [
+        117.802681,
+        34.508343
+      ],
+      "kind": "考古遗址",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q1157029",
+      "name": "大墩子遗址",
+      "coordinates": [
+        117.96211,
+        34.66036
+      ],
+      "kind": "考古遗址",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    }
+  ],
+  "relics": [],
+  "figures": [
+    {
+      "entityId": "Q7210",
+      "name": "刘邦",
+      "birthYear": -255,
+      "deathYear": -194,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "沛县"
+      },
+      "sitelinks": 71,
+      "description": "西汉开国皇帝"
+    },
+    {
+      "entityId": "Q7214",
+      "name": "汉惠帝",
+      "birthYear": -212,
+      "deathYear": -187,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "沛县"
+      },
+      "sitelinks": 38,
+      "description": null
+    },
+    {
+      "entityId": "Q317846",
+      "name": "吕布",
+      "birthYear": 160,
+      "deathYear": null,
+      "relationType": "sojourner",
+      "evidence": {
+        "property": "deathplace",
+        "value": "邳州市"
+      },
+      "sitelinks": 35,
+      "description": null
+    },
+    {
+      "entityId": "Q465282",
+      "name": "刘向",
+      "birthYear": -76,
+      "deathYear": -5,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "沛县"
+      },
+      "sitelinks": 28,
+      "description": null
+    },
+    {
+      "entityId": "Q378528",
+      "name": "李煜",
+      "birthYear": 937,
+      "deathYear": 978,
+      "relationType": "native",
+      "evidence": {
+        "property": "position",
+        "value": "徐州市人（维基百科分类）"
+      },
+      "sitelinks": 27,
+      "description": null
+    },
+    {
+      "entityId": "Q1368034",
+      "name": "萧何",
+      "birthYear": -256,
+      "deathYear": -192,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "丰县"
+      },
+      "sitelinks": 21,
+      "description": null
+    },
+    {
+      "entityId": "Q197259",
+      "name": "张鲁",
+      "birthYear": 101,
+      "deathYear": 216,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "丰县"
+      },
+      "sitelinks": 18,
+      "description": null
+    },
+    {
+      "entityId": "Q180920",
+      "name": "献穆皇后",
+      "birthYear": 200,
+      "deathYear": 237,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "沛县"
+      },
+      "sitelinks": 15,
+      "description": null
+    },
+    {
+      "entityId": "Q709867",
+      "name": "李可染",
+      "birthYear": 1907,
+      "deathYear": 1989,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "铜山区"
+      },
+      "sitelinks": 15,
+      "description": null
+    },
+    {
+      "entityId": "Q549690",
+      "name": "陳登",
+      "birthYear": 170,
+      "deathYear": 209,
+      "relationType": "native",
+      "evidence": {
+        "property": "position",
+        "value": "徐州市人（维基百科分类）"
+      },
+      "sitelinks": 13,
+      "description": null
+    },
+    {
+      "entityId": "Q7499182",
+      "name": "胡秀英",
+      "birthYear": 1910,
+      "deathYear": 2012,
+      "relationType": "native",
+      "evidence": {
+        "property": "position",
+        "value": "徐州市人（维基百科分类）"
+      },
+      "sitelinks": 13,
+      "description": null
+    },
+    {
+      "entityId": "Q701523",
+      "name": "刘濞",
+      "birthYear": -215,
+      "deathYear": -153,
+      "relationType": "native",
+      "evidence": {
+        "property": "position",
+        "value": "徐州市人（维基百科分类）"
+      },
+      "sitelinks": 8,
+      "description": null
+    },
+    {
+      "entityId": "Q2899196",
+      "name": "陈师道",
+      "birthYear": 1053,
+      "deathYear": 1102,
+      "relationType": "native",
+      "evidence": {
+        "property": "position",
+        "value": "徐州市人（维基百科分类）"
+      },
+      "sitelinks": 7,
+      "description": null
+    }
+  ],
+  "failures": [
+    "文物查询失败：Wikidata 查询失败：fetch failed"
+  ]
+}

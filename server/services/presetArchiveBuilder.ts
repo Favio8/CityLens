@@ -3,7 +3,8 @@
  * 与人工资讯整理稿组装成六座城市的完整档案。
  *
  * 说明：统计数值（面积/人口）与气候、行政区划暂无本地可核验来源，一律填「待考」；
- * 数据脉搏缺少可核验的统计序列，暂不生成该模块，档案状态为 partial。
+ * 数据脉搏由 scripts/build_stats_baseline.ts 产出的官方统计序列与 ERA5 气候基线生成，
+ * 缺失年份保持 null，绝不估算。
  */
 import type {
   ModuleName,
@@ -19,6 +20,7 @@ import { MockGenerator, type GeneratedModule, validateModuleData } from './llmGe
 import { DYNASTY_SOURCE, getDynasties, getGazetteer, type Gazetteer } from './presetData';
 import { PRESET_CURATIONS } from './presetCurations';
 import { resolveChronicleAnchor } from './entityVerifier';
+import { getCityStats } from './statsBaseline';
 
 export const PRESET_MANUAL_SOURCE: SourceRef = {
   id: 'S-PRESET-MANUAL',
@@ -122,6 +124,40 @@ function buildChronicle(city: CityBrief, gazetteer: Gazetteer | null): PresetMod
   };
 }
 
+function buildDataPulse(cityId: string): PresetModule | null {
+  const stats = getCityStats(cityId);
+  if (!stats) return null;
+  const { city, sources } = stats;
+  return {
+    name: 'dataPulse',
+    status: 'degraded',
+    verification: 'pending_human_review',
+    sources,
+    data: {
+      gdpSeries: city.gdp.series,
+      popSeries: city.pop.series,
+      statMeta: {
+        gdp: {
+          unit: city.gdp.unit,
+          caliber: city.gdp.caliber,
+          sourceRefs: city.gdp.sourceRefs,
+        },
+        pop: {
+          unit: city.pop.unit,
+          caliber: city.pop.caliber,
+          sourceRefs: city.pop.sourceRefs,
+        },
+      },
+      climateMonthly: city.climate.monthly,
+      climateMeta: {
+        period: city.climate.period,
+        station: city.climate.station,
+        sourceRefs: city.climate.sourceRefs,
+      },
+    },
+  };
+}
+
 function buildLocalSoul(cityId: string): PresetModule {
   const soul = assertCuration(cityId).localSoul;
   return {
@@ -158,7 +194,10 @@ export async function buildPresetBundle(
     buildChronicle(city, getGazetteer()),
     buildLocalSoul(city.cityId),
   ];
-  const missing: ModuleName[] = ['dataPulse'];
+  const missing: ModuleName[] = [];
+  const dataPulse = buildDataPulse(city.cityId);
+  if (dataPulse) modules.push(dataPulse);
+  else missing.push('dataPulse');
 
   for (const name of FACT_MODULES) {
     try {

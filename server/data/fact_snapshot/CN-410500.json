@@ -1,0 +1,917 @@
+{
+  "cityId": "CN-410500",
+  "cityName": "安阳",
+  "cityQid": "Q324293",
+  "center": [
+    114.34614,
+    36.09561
+  ],
+  "retrievedAt": "2026-11-10T15:29:55.052Z",
+  "sourceRef": {
+    "id": "S-WD-CN-410500",
+    "type": "wikidata",
+    "title": "Wikidata 事实快照 · 安阳",
+    "url": "https://query.wikidata.org/sparql",
+    "retrievedAt": "2026-11-10T15:29:55.052Z"
+  },
+  "landmarks": [
+    {
+      "entityId": "Q464904",
+      "name": "殷墟",
+      "coordinates": [
+        114.318611111,
+        36.1225
+      ],
+      "kind": "考古遗址",
+      "heritageDesignations": [
+        "世界遗产",
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 48
+    },
+    {
+      "entityId": "Q825310",
+      "name": "红旗渠",
+      "coordinates": [
+        113.75953,
+        36.35241
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 11
+    },
+    {
+      "entityId": "Q11091115",
+      "name": "曹操高陵",
+      "coordinates": [
+        114.25972222,
+        36.24083333
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": "曹操墓",
+      "sitelinks": 10
+    },
+    {
+      "entityId": "Q10888082",
+      "name": "修定寺塔",
+      "coordinates": [
+        113.99833333,
+        36.19583333
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q17025983",
+      "name": "羑里城遗址",
+      "coordinates": [
+        114.34934,
+        35.955325
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": "文化遗址",
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q10947282",
+      "name": "安阳天宁寺塔",
+      "coordinates": [
+        114.343471,
+        36.098047
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q18657517",
+      "name": "白营遗址",
+      "coordinates": [
+        114.43168,
+        35.9399
+      ],
+      "kind": "考古遗址",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q11136317",
+      "name": "汤阴岳飞庙",
+      "coordinates": [
+        114.34861111,
+        35.92
+      ],
+      "kind": "庙",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q133306774",
+      "name": "彰德府城隍庙",
+      "coordinates": [
+        114.34898,
+        36.09571
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q17004091",
+      "name": "灵泉寺石窟",
+      "coordinates": [
+        114.07305556,
+        36.04222222
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q133306765",
+      "name": "韩王庙与昼锦堂",
+      "coordinates": [
+        114.35423,
+        36.09162
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q133306772",
+      "name": "高阁寺",
+      "coordinates": [
+        114.35158,
+        36.09657
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q15910570",
+      "name": "袁林",
+      "coordinates": [
+        114.34886,
+        36.12436
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q11088167",
+      "name": "明福寺塔",
+      "coordinates": [
+        114.54861111,
+        35.55388889
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q10957976",
+      "name": "小南海石窟",
+      "coordinates": [
+        114.10638889,
+        36.03916667
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q130483400",
+      "name": "殷墟博物馆",
+      "coordinates": [
+        114.324375,
+        36.120574
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q133306809",
+      "name": "西蒋村马氏庄园",
+      "coordinates": [
+        114.14549,
+        36.15137
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q133306743",
+      "name": "大兴寺塔",
+      "coordinates": [
+        114.72388,
+        35.91649
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q133306744",
+      "name": "兴阳禅寺塔",
+      "coordinates": [
+        114.04513,
+        36.02681
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q133306738",
+      "name": "阳台寺双石塔",
+      "coordinates": [
+        113.89959,
+        35.79911
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q133306511",
+      "name": "固岸墓地",
+      "coordinates": [
+        114.31082,
+        36.2311
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q133306970",
+      "name": "洪谷寺塔与千佛洞石窟",
+      "coordinates": [
+        113.70224,
+        36.00803
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q133309403",
+      "name": "安阳永和桥",
+      "coordinates": [
+        114.56595,
+        36.10016
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q133306777",
+      "name": "林州惠明寺",
+      "coordinates": [
+        113.86307,
+        36.15079
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q133261021",
+      "name": "三杨庄遗址",
+      "coordinates": [
+        114.76212,
+        35.73081
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q133309451",
+      "name": "滑县县委县政府早期建筑",
+      "coordinates": [
+        114.51347,
+        35.57565
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    }
+  ],
+  "relics": [
+    {
+      "entityId": "Q133306970",
+      "name": "洪谷寺塔与千佛洞石窟",
+      "coordinates": [
+        113.70224,
+        36.00803
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q464904",
+      "name": "殷墟",
+      "coordinates": [
+        114.318611111,
+        36.1225
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 48
+    },
+    {
+      "entityId": "Q133309403",
+      "name": "安阳永和桥",
+      "coordinates": [
+        114.56595,
+        36.10016
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q825310",
+      "name": "红旗渠",
+      "coordinates": [
+        113.75953,
+        36.35241
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 11
+    },
+    {
+      "entityId": "Q133306774",
+      "name": "彰德府城隍庙",
+      "coordinates": [
+        114.34898,
+        36.09571
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q133306777",
+      "name": "林州惠明寺",
+      "coordinates": [
+        113.86307,
+        36.15079
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q11091115",
+      "name": "曹操高陵",
+      "coordinates": [
+        114.25972222,
+        36.24083333
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": "曹操墓",
+      "sitelinks": 10
+    },
+    {
+      "entityId": "Q17004091",
+      "name": "灵泉寺石窟",
+      "coordinates": [
+        114.07305556,
+        36.04222222
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q10888082",
+      "name": "修定寺塔",
+      "coordinates": [
+        113.99833333,
+        36.19583333
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q17025983",
+      "name": "羑里城遗址",
+      "coordinates": [
+        114.34934,
+        35.955325
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": "文化遗址",
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q133306765",
+      "name": "韩王庙与昼锦堂",
+      "coordinates": [
+        114.35423,
+        36.09162
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q18657517",
+      "name": "白营遗址",
+      "coordinates": [
+        114.43168,
+        35.9399
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q133261021",
+      "name": "三杨庄遗址",
+      "coordinates": [
+        114.76212,
+        35.73081
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q133306772",
+      "name": "高阁寺",
+      "coordinates": [
+        114.35158,
+        36.09657
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q133306809",
+      "name": "西蒋村马氏庄园",
+      "coordinates": [
+        114.14549,
+        36.15137
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q11136317",
+      "name": "汤阴岳飞庙",
+      "coordinates": [
+        114.34861111,
+        35.92
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q15910570",
+      "name": "袁林",
+      "coordinates": [
+        114.34886,
+        36.12436
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": "北关区",
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q11088167",
+      "name": "明福寺塔",
+      "coordinates": [
+        114.54861111,
+        35.55388889
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q133306743",
+      "name": "大兴寺塔",
+      "coordinates": [
+        114.72388,
+        35.91649
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q10957976",
+      "name": "小南海石窟",
+      "coordinates": [
+        114.10638889,
+        36.03916667
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q10947282",
+      "name": "安阳天宁寺塔",
+      "coordinates": [
+        114.343471,
+        36.098047
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q133309451",
+      "name": "滑县县委县政府早期建筑",
+      "coordinates": [
+        114.51347,
+        35.57565
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q133306744",
+      "name": "兴阳禅寺塔",
+      "coordinates": [
+        114.04513,
+        36.02681
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q133306738",
+      "name": "阳台寺双石塔",
+      "coordinates": [
+        113.89959,
+        35.79911
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q133306511",
+      "name": "固岸墓地",
+      "coordinates": [
+        114.31082,
+        36.2311
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    }
+  ],
+  "figures": [
+    {
+      "entityId": "Q470072",
+      "name": "纣王",
+      "birthYear": -1104,
+      "deathYear": -1045,
+      "relationType": "sojourner",
+      "evidence": {
+        "property": "deathplace",
+        "value": "殷墟"
+      },
+      "sitelinks": 37,
+      "description": "商朝君主"
+    },
+    {
+      "entityId": "Q334398",
+      "name": "岳飞",
+      "birthYear": 1103,
+      "deathYear": 1142,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "汤阴县"
+      },
+      "sitelinks": 33,
+      "description": null
+    },
+    {
+      "entityId": "Q736654",
+      "name": "盘庚",
+      "birthYear": -1500,
+      "deathYear": -1373,
+      "relationType": "sojourner",
+      "evidence": {
+        "property": "deathplace",
+        "value": "殷墟"
+      },
+      "sitelinks": 29,
+      "description": "商朝君主"
+    },
+    {
+      "entityId": "Q708637",
+      "name": "韩侂冑",
+      "birthYear": 1152,
+      "deathYear": 1207,
+      "relationType": "native",
+      "evidence": {
+        "property": "position",
+        "value": "安阳市人（维基百科分类）"
+      },
+      "sitelinks": 10,
+      "description": null
+    },
+    {
+      "entityId": "Q5374553",
+      "name": "李凤娘",
+      "birthYear": 1144,
+      "deathYear": 1200,
+      "relationType": "native",
+      "evidence": {
+        "property": "position",
+        "value": "安阳市人（维基百科分类）"
+      },
+      "sitelinks": 8,
+      "description": null
+    },
+    {
+      "entityId": "Q1004339",
+      "name": "傅奕",
+      "birthYear": 555,
+      "deathYear": 639,
+      "relationType": "native",
+      "evidence": {
+        "property": "position",
+        "value": "安阳市人（维基百科分类）"
+      },
+      "sitelinks": 6,
+      "description": "隋末唐初政治人物"
+    },
+    {
+      "entityId": "Q11663960",
+      "name": "韩琦",
+      "birthYear": 1008,
+      "deathYear": 1075,
+      "relationType": "native",
+      "evidence": {
+        "property": "position",
+        "value": "安阳市人（维基百科分类）"
+      },
+      "sitelinks": 6,
+      "description": null
+    },
+    {
+      "entityId": "Q1567109",
+      "name": "戴胄",
+      "birthYear": 573,
+      "deathYear": 633,
+      "relationType": "native",
+      "evidence": {
+        "property": "position",
+        "value": "安阳市人（维基百科分类）"
+      },
+      "sitelinks": 5,
+      "description": null
+    },
+    {
+      "entityId": "Q1562417",
+      "name": "李大师",
+      "birthYear": 570,
+      "deathYear": 628,
+      "relationType": "native",
+      "evidence": {
+        "property": "position",
+        "value": "安阳市人（维基百科分类）"
+      },
+      "sitelinks": 5,
+      "description": null
+    },
+    {
+      "entityId": "Q7967473",
+      "name": "王嘉",
+      "birthYear": 400,
+      "deathYear": 390,
+      "relationType": "native",
+      "evidence": {
+        "property": "position",
+        "value": "安阳市人（维基百科分类）"
+      },
+      "sitelinks": 5,
+      "description": null
+    }
+  ],
+  "failures": []
+}

@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-11-10T06:56:02.352Z",
+  "generatedAt": "2026-11-11T05:22:32.145Z",
   "source": {
     "name": "Wikidata（全国重点文物保护单位 Q1188574 / 禁止出境展览文物 Q11155976）",
     "note": "仅收录带官方遗产身份标记且位于该市行政范围内的实体；缺失字段填「待考」。"
   },
   "failures": [],
   "stats": {
-    "relics": 427
+    "relics": 671
   },
   "sources": [
     {
@@ -17,11 +17,39 @@
       "retrievedAt": "2026-11-10T06:55:23.202Z"
     },
     {
+      "id": "S-WD-CN-320100",
+      "type": "wikidata",
+      "title": "Wikidata 事实快照 · 南京",
+      "url": "https://query.wikidata.org/sparql",
+      "retrievedAt": "2026-11-10T14:45:09.246Z"
+    },
+    {
+      "id": "S-WD-CN-320300",
+      "type": "wikidata",
+      "title": "Wikidata 事实快照 · 徐州",
+      "url": "https://query.wikidata.org/sparql",
+      "retrievedAt": "2026-11-11T04:08:39.489Z"
+    },
+    {
       "id": "S-WD-CN-320500",
       "type": "wikidata",
       "title": "Wikidata 事实快照 · 苏州",
       "url": "https://query.wikidata.org/sparql",
       "retrievedAt": "2026-11-10T06:55:30.916Z"
+    },
+    {
+      "id": "S-WD-CN-321000",
+      "type": "wikidata",
+      "title": "Wikidata 事实快照 · 扬州",
+      "url": "https://query.wikidata.org/sparql",
+      "retrievedAt": "2026-11-10T13:08:47.483Z"
+    },
+    {
+      "id": "S-WD-CN-321100",
+      "type": "wikidata",
+      "title": "Wikidata 事实快照 · 镇江",
+      "url": "https://query.wikidata.org/sparql",
+      "retrievedAt": "2026-11-11T04:11:38.010Z"
     },
     {
       "id": "S-WD-CN-330100",
@@ -31,11 +59,25 @@
       "retrievedAt": "2026-11-10T06:55:03.873Z"
     },
     {
+      "id": "S-WD-CN-330200",
+      "type": "wikidata",
+      "title": "Wikidata 事实快照 · 宁波",
+      "url": "https://query.wikidata.org/sparql",
+      "retrievedAt": "2026-11-11T04:15:01.311Z"
+    },
+    {
       "id": "S-WD-CN-410300",
       "type": "wikidata",
       "title": "Wikidata 事实快照 · 洛阳",
       "url": "https://query.wikidata.org/sparql",
       "retrievedAt": "2026-11-10T06:55:37.677Z"
+    },
+    {
+      "id": "S-WD-CN-410500",
+      "type": "wikidata",
+      "title": "Wikidata 事实快照 · 安阳",
+      "url": "https://query.wikidata.org/sparql",
+      "retrievedAt": "2026-11-10T15:29:55.052Z"
     },
     {
       "id": "S-WD-CN-510100",
@@ -50,6 +92,13 @@
       "title": "Wikidata 事实快照 · 西安",
       "url": "https://query.wikidata.org/sparql",
       "retrievedAt": "2026-11-10T06:54:58.509Z"
+    },
+    {
+      "id": "S-WD-CN-620500",
+      "type": "wikidata",
+      "title": "Wikidata 事实快照 · 天水",
+      "url": "https://query.wikidata.org/sparql",
+      "retrievedAt": "2026-11-10T14:49:25.300Z"
     }
   ],
   "relics": [
@@ -2664,6 +2713,1500 @@
       ]
     },
     {
+      "registryId": "CN-320100:Q10892417",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "八路军驻京办事处旧址",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.77616,
+        32.06748
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q4881088",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "北极阁",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.78538,
+        32.06237
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q7818652",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "浡泥国王墓",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.752371,
+        31.978879
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q24841252",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "初宁陵",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.921965,
+        32.064264
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q113147257",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "大报恩寺",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.77693,
+        32.01135
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q123037921",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "方旗庙失考墓石刻",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.595771,
+        31.849912
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q5470130",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "甘熙故居",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.77642,
+        32.02816
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q123037925",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "耿岗失考墓石刻",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.903506,
+        31.945302
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q10925851",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "固城遗址",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.97586,
+        31.31239
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q51183148",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "国立中央研究院旧址",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.78947,
+        32.06099
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q133278158",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "国民党中央党史史料陈列馆旧址",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.8088,
+        32.04206
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q55694462",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "国民党中央监察委员会办公楼旧址",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.816468,
+        32.041503
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q10926150",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "国民革命军阵亡将士公墓",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.861658,
+        32.057043
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q10926134",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "国民政府交通部旧址",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.752315,
+        32.082803
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q10926138",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "国民政府考试院旧址",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.791277,
+        32.060578
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q10926136",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "国民政府外交部旧址",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.773413,
+        32.066603
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q10926139",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "国民政府行政院旧址",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.75401,
+        32.083281
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q48899582",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "国民政府中央广播电台旧址",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.72695,
+        32.03969
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q11609487",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "国民政府主席官邸旧址",
+      "era": "1934年",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.841521,
+        32.047608
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q18652224",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "国民政府最高法院旧址",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.769792,
+        32.06789
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q123037922",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "侯村失考墓石刻",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.892793,
+        31.943489
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q11135032",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "江苏省美术馆",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.78837222,
+        32.04594722
+      ],
+      "description": "江苏省南京市的一间公立美术馆",
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q50374615",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "金陵兵工厂旧址",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.78297,
+        32.00894
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q18236420",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "金陵大学旧址",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.77578,
+        32.05885
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q15931693",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "金陵刻经处",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.78558,
+        32.03894
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q126371363",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "金陵女子大学旧址",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.7637,
+        32.05571
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q1699038",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "拉贝故居",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.778154,
+        32.052624
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q21449332",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "利济巷慰安所旧址",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.792367,
+        32.041076
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q10906660",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "励志社旧址",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.80638889,
+        32.04277778
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q123037908",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "梁安成康王萧秀墓石刻",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.917271,
+        32.143829
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q123037905",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "梁桂阳简王萧融墓石刻",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.92535,
+        32.153077
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q123037918",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "梁建安郡王萧伟墓石刻",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.891645,
+        32.153699
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q123037913",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "梁建安敏侯萧正立墓石刻",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.906054,
+        31.922439
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q123038209",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "梁临川靖惠王萧宏墓石刻",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.91625,
+        32.08767
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q123037909",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "梁鄱阳忠烈王萧恢墓石刻",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.912727,
+        32.141914
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q123037911",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "梁始兴忠武王萧憺墓石刻",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.912035,
+        32.141351
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q123037906",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "梁吴平忠侯萧景墓石刻",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.903205,
+        32.135074
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q123037912",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "梁新渝宽侯萧暎墓石刻",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.90924,
+        32.149386
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q10877071",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "临时政府参议院旧址",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.775108,
+        32.071854
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q11180556",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "龍江船廠",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.7275,
+        32.061944
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q133854608",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "马林医院旧址",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.77819,
+        32.05891
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q838028",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "明故宫",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.812385,
+        32.03957
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q28769",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "明孝陵",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.834569444,
+        32.060305555
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q5072829",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "南京朝天宫",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.769121,
+        32.035234
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q927701",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "南京城墙",
+      "era": "1368年",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.77669,
+        32.01504
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q5309075",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "南京鼓楼",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.7769,
+        32.0607
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q3117190",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "南京人化石地点",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        119.041,
+        32.0576
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q6963660",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "南京人民大会堂",
+      "era": "1936年",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.788,
+        32.0458
+      ],
+      "description": "南京建筑",
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q1065016",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "南京中国近代史遗址博物馆",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.79222222,
+        32.04527778
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q232074",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "南唐二陵",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.73361111,
+        31.89055556
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q15914972",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "蒲塘桥",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.990012,
+        31.561085
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q133307032",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "浦口火车站旧址",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.71596,
+        32.09832
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q10864670",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "七桥瓮",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.825,
+        32.009
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q11110616",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "栖霞寺舍利塔",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.95468,
+        32.1539
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q10904809",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "千佛崖石窟 (南京)",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.95805556,
+        32.15361111
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q133275061",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "千佛崖石窟及明征君碑",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.95573,
+        32.15385
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q133277036",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "侵华日军南京大屠杀死难同胞丛葬地",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.73787,
+        32.03734
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q85880533",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "日本驻南京大使馆旧址",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.77498,
+        32.06078
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q56271743",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "上坊孙吴墓",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.90942,
+        31.96592
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q10375177",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "狮子冲南朝大墓",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.926181,
+        32.137359
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q123037924",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "宋墅失考墓石刻",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.904021,
+        31.93666
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q133275801",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "太平天国天王府遗址",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.79243,
+        32.04498
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q116259230",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "谭延闿墓",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.8651,
+        32.06139
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q10930511",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "堂子街太平天国壁画",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.76344,
+        32.04152
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q24841251",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "万安陵",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.880401,
+        31.967082
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q15933911",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "仙鹤观六朝墓地",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.89942,
+        32.10292
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q22100005",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "象山王氏家族墓地",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.7584,
+        32.1033
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q123037919",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "徐家村失考墓石刻",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.840501,
+        32.144258
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q55707570",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "薛城遗址",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.85009,
+        31.36325
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q986628",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "阳山碑材",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        119.00074,
+        32.06851
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q55694488",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "杨柳村古建筑群",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.9226,
+        31.85975
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q18658281",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "英国驻中华民国大使馆旧址",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.74802,
+        32.08489
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q8060463",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "雨花台烈士陵园",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.776111111,
+        32.000555555
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q10911200",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "原国民政府旧址",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.84152,
+        32.04761
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q2494098",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "瞻园",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.78,
+        32.0224
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q10873186",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "中国共产党代表团梅园新村纪念馆",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.796459,
+        32.04469
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q1338405",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "中山陵",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.848269444,
+        32.064416666
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q133312753",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "中山陵附属革命历史图书馆旧址",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.8556,
+        32.06221
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q15906410",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "中央大学旧址",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.7889,
+        32.05752
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q10875132",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "中央陆军军官学校旧址",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.80656,
+        32.05183
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q10875035",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "中央体育场",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.86286,
+        32.04543
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q15938631",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "钟山建筑遗址",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.83995,
+        32.06889
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
+      "registryId": "CN-320100:Q714352",
+      "cityId": "CN-320100",
+      "cityName": "南京",
+      "name": "紫金山天文台",
+      "era": "1928年",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        118.824972222,
+        32.066916666
+      ],
+      "description": "位于南京的天文台",
+      "sourceRefs": [
+        "S-WD-CN-320100"
+      ]
+    },
+    {
       "registryId": "CN-320500:Q807059",
       "cityId": "CN-320500",
       "cityName": "苏州",
@@ -3816,6 +5359,834 @@
       ]
     },
     {
+      "registryId": "CN-321000:Q16078790",
+      "cityId": "CN-321000",
+      "cityName": "扬州",
+      "name": "高邮当铺",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        119.42888889,
+        32.79388889
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-321000"
+      ]
+    },
+    {
+      "registryId": "CN-321000:Q3277018",
+      "cityId": "CN-321000",
+      "cityName": "扬州",
+      "name": "个园",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        119.438148,
+        32.402015
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-321000"
+      ]
+    },
+    {
+      "registryId": "CN-321000:Q10886081",
+      "cityId": "CN-321000",
+      "cityName": "扬州",
+      "name": "何园",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        119.44332,
+        32.388188
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-321000"
+      ]
+    },
+    {
+      "registryId": "CN-321000:Q21051892",
+      "cityId": "CN-321000",
+      "cityName": "扬州",
+      "name": "贾氏盐商住宅",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        119.44024,
+        32.38965
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-321000"
+      ]
+    },
+    {
+      "registryId": "CN-321000:Q133275337",
+      "cityId": "CN-321000",
+      "cityName": "扬州",
+      "name": "莲花桥和白塔",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        119.41611,
+        32.40977
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-321000"
+      ]
+    },
+    {
+      "registryId": "CN-321000:Q1869570",
+      "cityId": "CN-321000",
+      "cityName": "扬州",
+      "name": "龙虬庄遗址",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        119.508279,
+        32.831885
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-321000"
+      ]
+    },
+    {
+      "registryId": "CN-321000:Q17498521",
+      "cityId": "CN-321000",
+      "cityName": "扬州",
+      "name": "卢氏盐商住宅",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        119.44641,
+        32.38587
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-321000"
+      ]
+    },
+    {
+      "registryId": "CN-321000:Q11063189",
+      "cityId": "CN-321000",
+      "cityName": "扬州",
+      "name": "庙山汉墓",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        119.28864,
+        32.39985
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-321000"
+      ]
+    },
+    {
+      "registryId": "CN-321000:Q3391115",
+      "cityId": "CN-321000",
+      "cityName": "扬州",
+      "name": "普哈丁墓",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        119.44861111,
+        32.39666667
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-321000"
+      ]
+    },
+    {
+      "registryId": "CN-321000:Q10916009",
+      "cityId": "CN-321000",
+      "cityName": "扬州",
+      "name": "史可法纪念馆",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        119.43444444,
+        32.40305556
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-321000"
+      ]
+    },
+    {
+      "registryId": "CN-321000:Q15932513",
+      "cityId": "CN-321000",
+      "cityName": "扬州",
+      "name": "汪氏小苑",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        119.44204,
+        32.39755
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-321000"
+      ]
+    },
+    {
+      "registryId": "CN-321000:Q11136948",
+      "cityId": "CN-321000",
+      "cityName": "扬州",
+      "name": "汪氏盐商住宅",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        119.43522,
+        32.38556
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-321000"
+      ]
+    },
+    {
+      "registryId": "CN-321000:Q10919594",
+      "cityId": "CN-321000",
+      "cityName": "扬州",
+      "name": "吴氏宅第",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        119.44666667,
+        32.39555556
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-321000"
+      ]
+    },
+    {
+      "registryId": "CN-321000:Q15933139",
+      "cityId": "CN-321000",
+      "cityName": "扬州",
+      "name": "西方寺大殿",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        119.42599,
+        32.40088
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-321000"
+      ]
+    },
+    {
+      "registryId": "CN-321000:Q776883",
+      "cityId": "CN-321000",
+      "cityName": "扬州",
+      "name": "仙鹤寺",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        119.428098,
+        32.391887
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-321000"
+      ]
+    },
+    {
+      "registryId": "CN-321000:Q10959805",
+      "cityId": "CN-321000",
+      "cityName": "扬州",
+      "name": "小盘谷",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        119.44083333,
+        32.38888889
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-321000"
+      ]
+    },
+    {
+      "registryId": "CN-321000:Q19851519",
+      "cityId": "CN-321000",
+      "cityName": "扬州",
+      "name": "扬州城遗址",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        119.42231,
+        32.39926
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-321000"
+      ]
+    },
+    {
+      "registryId": "CN-321000:Q5212552",
+      "cityId": "CN-321000",
+      "cityName": "扬州",
+      "name": "扬州大明寺",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        119.40833333,
+        32.42166667
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-321000"
+      ]
+    },
+    {
+      "registryId": "CN-321000:Q15935843",
+      "cityId": "CN-321000",
+      "cityName": "扬州",
+      "name": "煬帝陵",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        119.39239,
+        32.42266
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-321000"
+      ]
+    },
+    {
+      "registryId": "CN-321000:Q15932499",
+      "cityId": "CN-321000",
+      "cityName": "扬州",
+      "name": "逸圃",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        119.43727,
+        32.4002
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-321000"
+      ]
+    },
+    {
+      "registryId": "CN-321000:Q8060179",
+      "cityId": "CN-321000",
+      "cityName": "扬州",
+      "name": "盂城驿",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        119.433,
+        32.7725
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-321000"
+      ]
+    },
+    {
+      "registryId": "CN-321000:Q15933484",
+      "cityId": "CN-321000",
+      "cityName": "扬州",
+      "name": "重宁寺",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        119.43257,
+        32.40506
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-321000"
+      ]
+    },
+    {
+      "registryId": "CN-321000:Q16947272",
+      "cityId": "CN-321000",
+      "cityName": "扬州",
+      "name": "朱自清旧居",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        119.44431,
+        32.39574
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-321000"
+      ]
+    },
+    {
+      "registryId": "CN-321100:Q10929238",
+      "cityId": "CN-321100",
+      "cityName": "镇江",
+      "name": "城上村遗址",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        119.17439,
+        31.98547
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-321100"
+      ]
+    },
+    {
+      "registryId": "CN-321100:Q11088757",
+      "cityId": "CN-321100",
+      "cityName": "镇江",
+      "name": "春城土墩墓群",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        119.22358,
+        31.87939
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-321100"
+      ]
+    },
+    {
+      "registryId": "CN-321100:Q15932144",
+      "cityId": "CN-321100",
+      "cityName": "镇江",
+      "name": "甘露寺 (镇江)",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        119.452758,
+        32.219436
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-321100"
+      ]
+    },
+    {
+      "registryId": "CN-321100:Q15932581",
+      "cityId": "CN-321100",
+      "cityName": "镇江",
+      "name": "葛城遗址",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        119.61871,
+        31.8374
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-321100"
+      ]
+    },
+    {
+      "registryId": "CN-321100:Q24839137",
+      "cityId": "CN-321100",
+      "cityName": "镇江",
+      "name": "建陵",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        119.6529232,
+        32.0136471
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-321100"
+      ]
+    },
+    {
+      "registryId": "CN-321100:Q19841438",
+      "cityId": "CN-321100",
+      "cityName": "镇江",
+      "name": "焦山碑林",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        119.4799,
+        32.23943
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-321100"
+      ]
+    },
+    {
+      "registryId": "CN-321100:Q123038125",
+      "cityId": "CN-321100",
+      "cityName": "镇江",
+      "name": "金王陈南齐失名陵石刻",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        119.696935,
+        32.054887
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-321100"
+      ]
+    },
+    {
+      "registryId": "CN-321100:Q10321085",
+      "cityId": "CN-321100",
+      "cityName": "镇江",
+      "name": "景安陵",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        119.68721,
+        32.014686
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-321100"
+      ]
+    },
+    {
+      "registryId": "CN-321100:Q123038130",
+      "cityId": "CN-321100",
+      "cityName": "镇江",
+      "name": "烂石弄南朝失名墓石刻",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        119.693797,
+        32.078458
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-321100"
+      ]
+    },
+    {
+      "registryId": "CN-321100:Q123038131",
+      "cityId": "CN-321100",
+      "cityName": "镇江",
+      "name": "梁南康简王萧绩墓石刻",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        119.08544,
+        31.969233
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-321100"
+      ]
+    },
+    {
+      "registryId": "CN-321100:Q123038126",
+      "cityId": "CN-321100",
+      "cityName": "镇江",
+      "name": "陵口石刻",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        119.656252,
+        31.9474
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-321100"
+      ]
+    },
+    {
+      "registryId": "CN-321100:Q11658887",
+      "cityId": "CN-321100",
+      "cityName": "镇江",
+      "name": "隆昌寺",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        119.08999,
+        32.12959
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-321100"
+      ]
+    },
+    {
+      "registryId": "CN-321100:Q123038129",
+      "cityId": "CN-321100",
+      "cityName": "镇江",
+      "name": "水经山村南朝失名墓石刻",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        119.695117,
+        32.084633
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-321100"
+      ]
+    },
+    {
+      "registryId": "CN-321100:Q133305750",
+      "cityId": "CN-321100",
+      "cityName": "镇江",
+      "name": "宋元粮仓遗址",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        119.44224,
+        32.21398
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-321100"
+      ]
+    },
+    {
+      "registryId": "CN-321100:Q133305737",
+      "cityId": "CN-321100",
+      "cityName": "镇江",
+      "name": "铁瓮城遗址",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        119.45391,
+        32.2157
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-321100"
+      ]
+    },
+    {
+      "registryId": "CN-321100:Q24839074",
+      "cityId": "CN-321100",
+      "cityName": "镇江",
+      "name": "万安陵",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        119.678831111,
+        32.061855
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-321100"
+      ]
+    },
+    {
+      "registryId": "CN-321100:Q24839112",
+      "cityId": "CN-321100",
+      "cityName": "镇江",
+      "name": "兴安陵",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        119.652958,
+        32.012556
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-321100"
+      ]
+    },
+    {
+      "registryId": "CN-321100:Q24839109",
+      "cityId": "CN-321100",
+      "cityName": "镇江",
+      "name": "修安陵",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        119.660581111,
+        32.071446944
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-321100"
+      ]
+    },
+    {
+      "registryId": "CN-321100:Q9394038",
+      "cityId": "CN-321100",
+      "cityName": "镇江",
+      "name": "修陵",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        119.652947,
+        32.017443
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-321100"
+      ]
+    },
+    {
+      "registryId": "CN-321100:Q15932570",
+      "cityId": "CN-321100",
+      "cityName": "镇江",
+      "name": "烟墩山墓地",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        119.67452,
+        32.20793
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-321100"
+      ]
+    },
+    {
+      "registryId": "CN-321100:Q11088908",
+      "cityId": "CN-321100",
+      "cityName": "镇江",
+      "name": "昭关石塔",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        119.42562,
+        32.21657
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-321100"
+      ]
+    },
+    {
+      "registryId": "CN-321100:Q5470080",
+      "cityId": "CN-321100",
+      "cityName": "镇江",
+      "name": "镇江英国领事馆旧址",
+      "era": "1864年",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        119.42676,
+        32.21567
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-321100"
+      ]
+    },
+    {
+      "registryId": "CN-321100:Q17031993",
+      "cityId": "CN-321100",
+      "cityName": "镇江",
+      "name": "庄陵",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        119.652615,
+        32.018194
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-321100"
+      ]
+    },
+    {
       "registryId": "CN-330100:Q10949410",
       "cityId": "CN-330100",
       "cityName": "杭州",
@@ -4749,6 +7120,1230 @@
       "description": null,
       "sourceRefs": [
         "S-WD-CN-330100"
+      ]
+    },
+    {
+      "registryId": "CN-330200:Q726233",
+      "cityId": "CN-330200",
+      "cityName": "宁波",
+      "name": "阿育王寺",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        121.739166,
+        29.849165
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-330200"
+      ]
+    },
+    {
+      "registryId": "CN-330200:Q15941262",
+      "cityId": "CN-330200",
+      "cityName": "宁波",
+      "name": "安远炮台",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        121.722806666,
+        29.960987777
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-330200"
+      ]
+    },
+    {
+      "registryId": "CN-330200:Q76520100",
+      "cityId": "CN-330200",
+      "cityName": "宁波",
+      "name": "岙胡胡氏宗祠",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        121.414302777,
+        29.361769444
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-330200"
+      ]
+    },
+    {
+      "registryId": "CN-330200:Q15931169",
+      "cityId": "CN-330200",
+      "cityName": "宁波",
+      "name": "白云庄",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        121.52027778,
+        29.87722222
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-330200"
+      ]
+    },
+    {
+      "registryId": "CN-330200:Q133275347",
+      "cityId": "CN-330200",
+      "cityName": "宁波",
+      "name": "白云庄和黄宗羲、万斯同、全祖望墓",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        121.52029,
+        29.87703
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-330200"
+      ]
+    },
+    {
+      "registryId": "CN-330200:Q252819",
+      "cityId": "CN-330200",
+      "cityName": "宁波",
+      "name": "保国寺",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        121.516056,
+        29.982659
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-330200"
+      ]
+    },
+    {
+      "registryId": "CN-330200:Q15956054",
+      "cityId": "CN-330200",
+      "cityName": "宁波",
+      "name": "北渔山灯塔",
+      "era": "1895年",
+      "museumOrSite": "渔山列岛",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        122.260538,
+        28.884231
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-330200"
+      ]
+    },
+    {
+      "registryId": "CN-330200:Q76581204",
+      "cityId": "CN-330200",
+      "cityName": "宁波",
+      "name": "崇兴庙",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        121.402575,
+        29.501608333
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-330200"
+      ]
+    },
+    {
+      "registryId": "CN-330200:Q11073985",
+      "cityId": "CN-330200",
+      "cityName": "宁波",
+      "name": "慈城古建筑群",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        121.44617,
+        29.98588
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-330200"
+      ]
+    },
+    {
+      "registryId": "CN-330200:Q76581938",
+      "cityId": "CN-330200",
+      "cityName": "宁波",
+      "name": "大蔡胡氏宗祠",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        121.330361111,
+        29.474972222
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-330200"
+      ]
+    },
+    {
+      "registryId": "CN-330200:Q15935388",
+      "cityId": "CN-330200",
+      "cityName": "宁波",
+      "name": "东门灯塔",
+      "era": "1916年",
+      "museumOrSite": "象山县",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        121.967157,
+        29.196738
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-330200"
+      ]
+    },
+    {
+      "registryId": "CN-330200:Q10871027",
+      "cityId": "CN-330200",
+      "cityName": "宁波",
+      "name": "东钱湖墓葬群",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        121.68418056,
+        29.74858611
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-330200"
+      ]
+    },
+    {
+      "registryId": "CN-330200:Q10880272",
+      "cityId": "CN-330200",
+      "cityName": "宁波",
+      "name": "二灵塔",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        121.677027777,
+        29.774805555
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-330200"
+      ]
+    },
+    {
+      "registryId": "CN-330200:Q55471564",
+      "cityId": "CN-330200",
+      "cityName": "宁波",
+      "name": "丰镐房",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        121.27775,
+        29.684466
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-330200"
+      ]
+    },
+    {
+      "registryId": "CN-330200:Q11142035",
+      "cityId": "CN-330200",
+      "cityName": "宁波",
+      "name": "河姆渡遗址",
+      "era": "公元前5500年",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        121.345725,
+        29.96259722
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-330200"
+      ]
+    },
+    {
+      "registryId": "CN-330200:Q11121625",
+      "cityId": "CN-330200",
+      "cityName": "宁波",
+      "name": "横省石牌坊",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        121.70636,
+        29.85728
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-330200"
+      ]
+    },
+    {
+      "registryId": "CN-330200:Q17023871",
+      "cityId": "CN-330200",
+      "cityName": "宁波",
+      "name": "宏远炮台",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        121.75844167,
+        29.97423889
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-330200"
+      ]
+    },
+    {
+      "registryId": "CN-330200:Q15935894",
+      "cityId": "CN-330200",
+      "cityName": "宁波",
+      "name": "花岙兵营遗址",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        121.81083333,
+        29.07916667
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-330200"
+      ]
+    },
+    {
+      "registryId": "CN-330200:Q11177324",
+      "cityId": "CN-330200",
+      "cityName": "宁波",
+      "name": "黄宗羲墓",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        121.21105,
+        29.98294
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-330200"
+      ]
+    },
+    {
+      "registryId": "CN-330200:Q85920617",
+      "cityId": "CN-330200",
+      "cityName": "宁波",
+      "name": "冀国夫人叶氏太君墓",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        121.699222222,
+        29.771033333
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-330200"
+      ]
+    },
+    {
+      "registryId": "CN-330200:Q76581741",
+      "cityId": "CN-330200",
+      "cityName": "宁波",
+      "name": "加爵科林氏宗祠",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        121.477280555,
+        29.467063888
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-330200"
+      ]
+    },
+    {
+      "registryId": "CN-330200:Q55715734",
+      "cityId": "CN-330200",
+      "cityName": "宁波",
+      "name": "蒋母墓",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        121.257777777,
+        29.683611111
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-330200"
+      ]
+    },
+    {
+      "registryId": "CN-330200:Q10942283",
+      "cityId": "CN-330200",
+      "cityName": "宁波",
+      "name": "蒋氏故居",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        121.27887778,
+        29.68440278
+      ],
+      "description": "中华民国前总统蒋中正在浙江奉化溪口的故居",
+      "sourceRefs": [
+        "S-WD-CN-330200"
+      ]
+    },
+    {
+      "registryId": "CN-330200:Q56022506",
+      "cityId": "CN-330200",
+      "cityName": "宁波",
+      "name": "蒋氏宗祠",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        121.278722222,
+        29.684972222
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-330200"
+      ]
+    },
+    {
+      "registryId": "CN-330200:Q15919472",
+      "cityId": "CN-330200",
+      "cityName": "宁波",
+      "name": "锦堂师范",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        121.421255,
+        30.188754
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-330200"
+      ]
+    },
+    {
+      "registryId": "CN-330200:Q11065676",
+      "cityId": "CN-330200",
+      "cityName": "宁波",
+      "name": "开刀山窑址",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        121.29379,
+        30.10657
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-330200"
+      ]
+    },
+    {
+      "registryId": "CN-330200:Q76580848",
+      "cityId": "CN-330200",
+      "cityName": "宁波",
+      "name": "龙宫陈氏宗祠",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        121.274861111,
+        29.374594444
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-330200"
+      ]
+    },
+    {
+      "registryId": "CN-330200:Q11181121",
+      "cityId": "CN-330200",
+      "cityName": "宁波",
+      "name": "龙山虞氏旧宅建筑群",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        121.54896667,
+        30.08928611
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-330200"
+      ]
+    },
+    {
+      "registryId": "CN-330200:Q76581676",
+      "cityId": "CN-330200",
+      "cityName": "宁波",
+      "name": "马岙俞氏宗祠",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        121.244383333,
+        29.370580555
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-330200"
+      ]
+    },
+    {
+      "registryId": "CN-330200:Q133274928",
+      "cityId": "CN-330200",
+      "cityName": "宁波",
+      "name": "庙沟后、横省石牌坊",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        121.70636,
+        29.85728
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-330200"
+      ]
+    },
+    {
+      "registryId": "CN-330200:Q11063211",
+      "cityId": "CN-330200",
+      "cityName": "宁波",
+      "name": "庙沟后石牌坊",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        121.66905,
+        29.73566
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-330200"
+      ]
+    },
+    {
+      "registryId": "CN-330200:Q56256997",
+      "cityId": "CN-330200",
+      "cityName": "宁波",
+      "name": "摩诃殿",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        121.276527777,
+        29.686166666
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-330200"
+      ]
+    },
+    {
+      "registryId": "CN-330200:Q17009740",
+      "cityId": "CN-330200",
+      "cityName": "宁波",
+      "name": "南渡广济桥",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        121.433581,
+        29.710556
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-330200"
+      ]
+    },
+    {
+      "registryId": "CN-330200:Q1736231",
+      "cityId": "CN-330200",
+      "cityName": "宁波",
+      "name": "宁波耶稣圣心堂",
+      "era": "1872年",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        121.556277777,
+        29.877038888
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-330200"
+      ]
+    },
+    {
+      "registryId": "CN-330200:Q15935701",
+      "cityId": "CN-330200",
+      "cityName": "宁波",
+      "name": "宁海城隍庙",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        121.426766666,
+        29.288538888
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-330200"
+      ]
+    },
+    {
+      "registryId": "CN-330200:Q10946048",
+      "cityId": "CN-330200",
+      "cityName": "宁波",
+      "name": "宁海古戏台",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        121.40266,
+        29.50158
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-330200"
+      ]
+    },
+    {
+      "registryId": "CN-330200:Q76581882",
+      "cityId": "CN-330200",
+      "cityName": "宁波",
+      "name": "潘家岙潘氏宗祠",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        121.469011111,
+        29.441672222
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-330200"
+      ]
+    },
+    {
+      "registryId": "CN-330200:Q17006047",
+      "cityId": "CN-330200",
+      "cityName": "宁波",
+      "name": "七里屿灯塔",
+      "era": "1997年",
+      "museumOrSite": "镇海区",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        121.760327,
+        30.00065
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-330200"
+      ]
+    },
+    {
+      "registryId": "CN-330200:Q15950144",
+      "cityId": "CN-330200",
+      "cityName": "宁波",
+      "name": "钱业会馆",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        121.5525,
+        29.875
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-330200"
+      ]
+    },
+    {
+      "registryId": "CN-330200:Q15938226",
+      "cityId": "CN-330200",
+      "cityName": "宁波",
+      "name": "秦氏支祠",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        121.53555556,
+        29.87277778
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-330200"
+      ]
+    },
+    {
+      "registryId": "CN-330200:Q11062726",
+      "cityId": "CN-330200",
+      "cityName": "宁波",
+      "name": "庆安会馆",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        121.55888889,
+        29.87472222
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-330200"
+      ]
+    },
+    {
+      "registryId": "CN-330200:Q10891684",
+      "cityId": "CN-330200",
+      "cityName": "宁波",
+      "name": "全祖望墓",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        121.52537,
+        29.86159
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-330200"
+      ]
+    },
+    {
+      "registryId": "CN-330200:Q8060249",
+      "cityId": "CN-330200",
+      "cityName": "宁波",
+      "name": "上林湖越窑遗址",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        121.337,
+        30.1228
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-330200"
+      ]
+    },
+    {
+      "registryId": "CN-330200:Q55698179",
+      "cityId": "CN-330200",
+      "cityName": "宁波",
+      "name": "史弥远墓",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        121.69502778,
+        29.74783333
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-330200"
+      ]
+    },
+    {
+      "registryId": "CN-330200:Q76582223",
+      "cityId": "CN-330200",
+      "cityName": "宁波",
+      "name": "双枝庙",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        121.2921056,
+        29.4325806
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-330200"
+      ]
+    },
+    {
+      "registryId": "CN-330200:Q10956868",
+      "cityId": "CN-330200",
+      "cityName": "宁波",
+      "name": "寺龙口窑址",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        121.29966,
+        30.10995
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-330200"
+      ]
+    },
+    {
+      "registryId": "CN-330200:Q10946122",
+      "cityId": "CN-330200",
+      "cityName": "宁波",
+      "name": "它山堰",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        121.34722222,
+        29.76958333
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-330200"
+      ]
+    },
+    {
+      "registryId": "CN-330200:Q10930795",
+      "cityId": "CN-330200",
+      "cityName": "宁波",
+      "name": "塔山遗址",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        121.879611111,
+        29.481416666
+      ],
+      "description": "中国浙江象山古遗址",
+      "sourceRefs": [
+        "S-WD-CN-330200"
+      ]
+    },
+    {
+      "registryId": "CN-330200:Q10945976",
+      "cityId": "CN-330200",
+      "cityName": "宁波",
+      "name": "天宁寺",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        121.53916667,
+        29.87666667
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-330200"
+      ]
+    },
+    {
+      "registryId": "CN-330200:Q10940602",
+      "cityId": "CN-330200",
+      "cityName": "宁波",
+      "name": "天童寺",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        121.790833333,
+        29.806666666
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-330200"
+      ]
+    },
+    {
+      "registryId": "CN-330200:Q2066117",
+      "cityId": "CN-330200",
+      "cityName": "宁波",
+      "name": "天一阁",
+      "era": "1560年",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        121.53583333,
+        29.87361111
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-330200"
+      ]
+    },
+    {
+      "registryId": "CN-330200:Q15912996",
+      "cityId": "CN-330200",
+      "cityName": "宁波",
+      "name": "田螺山遗址",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        121.379166666,
+        30.024111111
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-330200"
+      ]
+    },
+    {
+      "registryId": "CN-330200:Q7821094",
+      "cityId": "CN-330200",
+      "cityName": "宁波",
+      "name": "通济桥",
+      "era": "待考",
+      "museumOrSite": "余姚市",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        121.152944444,
+        30.049111111
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-330200"
+      ]
+    },
+    {
+      "registryId": "CN-330200:Q10865071",
+      "cityId": "CN-330200",
+      "cityName": "宁波",
+      "name": "万斯同墓",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        121.53468,
+        29.5827
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-330200"
+      ]
+    },
+    {
+      "registryId": "CN-330200:Q15937092",
+      "cityId": "CN-330200",
+      "cityName": "宁波",
+      "name": "王守仁故居",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        121.14819,
+        30.05297
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-330200"
+      ]
+    },
+    {
+      "registryId": "CN-330200:Q133275361",
+      "cityId": "CN-330200",
+      "cityName": "宁波",
+      "name": "王守仁故居和墓",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        121.14819,
+        30.05297
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-330200"
+      ]
+    },
+    {
+      "registryId": "CN-330200:Q17023797",
+      "cityId": "CN-330200",
+      "cityName": "宁波",
+      "name": "威远城",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        121.720914722,
+        29.9623075
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-330200"
+      ]
+    },
+    {
+      "registryId": "CN-330200:Q56256995",
+      "cityId": "CN-330200",
+      "cityName": "宁波",
+      "name": "文昌阁",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        121.279805555,
+        29.68425
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-330200"
+      ]
+    },
+    {
+      "registryId": "CN-330200:Q56022480",
+      "cityId": "CN-330200",
+      "cityName": "宁波",
+      "name": "武山庙",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        121.280888888,
+        29.685361111
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-330200"
+      ]
+    },
+    {
+      "registryId": "CN-330200:Q76581804",
+      "cityId": "CN-330200",
+      "cityName": "宁波",
+      "name": "下蒲魏氏宗祠",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        121.490786111,
+        29.449544444
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-330200"
+      ]
+    },
+    {
+      "registryId": "CN-330200:Q55510107",
+      "cityId": "CN-330200",
+      "cityName": "宁波",
+      "name": "小洋房",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        121.28027778,
+        29.68430556
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-330200"
+      ]
+    },
+    {
+      "registryId": "CN-330200:Q11130886",
+      "cityId": "CN-330200",
+      "cityName": "宁波",
+      "name": "永丰库遗址",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        121.54308611,
+        29.87634167
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-330200"
+      ]
+    },
+    {
+      "registryId": "CN-330200:Q55471555",
+      "cityId": "CN-330200",
+      "cityName": "宁波",
+      "name": "玉泰盐铺",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        121.274791,
+        29.683026
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-330200"
+      ]
+    },
+    {
+      "registryId": "CN-330200:Q11148453",
+      "cityId": "CN-330200",
+      "cityName": "宁波",
+      "name": "浙东抗日根据地旧址",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        121.07695,
+        29.88624
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-330200"
+      ]
+    },
+    {
+      "registryId": "CN-330200:Q15912425",
+      "cityId": "CN-330200",
+      "cityName": "宁波",
+      "name": "浙东沿海灯塔",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        122.67321,
+        30.86109
+      ],
+      "description": "维基媒体列表条目",
+      "sourceRefs": [
+        "S-WD-CN-330200"
+      ]
+    },
+    {
+      "registryId": "CN-330200:Q15938312",
+      "cityId": "CN-330200",
+      "cityName": "宁波",
+      "name": "镇海口海防遗址",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        121.72246389,
+        29.96104722
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-330200"
+      ]
+    },
+    {
+      "registryId": "CN-330200:Q11173419",
+      "cityId": "CN-330200",
+      "cityName": "宁波",
+      "name": "鲻山遗址",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        121.26075,
+        30.038694444
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-330200"
+      ]
+    },
+    {
+      "registryId": "CN-330200:Q11105958",
+      "cityId": "CN-330200",
+      "cityName": "宁波",
+      "name": "紫金街林宅",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        121.54083252,
+        29.86499977
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-330200"
       ]
     },
     {
@@ -5703,6 +9298,456 @@
       "description": null,
       "sourceRefs": [
         "S-WD-CN-410300"
+      ]
+    },
+    {
+      "registryId": "CN-410500:Q10947282",
+      "cityId": "CN-410500",
+      "cityName": "安阳",
+      "name": "安阳天宁寺塔",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        114.343471,
+        36.098047
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-410500"
+      ]
+    },
+    {
+      "registryId": "CN-410500:Q133309403",
+      "cityId": "CN-410500",
+      "cityName": "安阳",
+      "name": "安阳永和桥",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        114.56595,
+        36.10016
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-410500"
+      ]
+    },
+    {
+      "registryId": "CN-410500:Q18657517",
+      "cityId": "CN-410500",
+      "cityName": "安阳",
+      "name": "白营遗址",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        114.43168,
+        35.9399
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-410500"
+      ]
+    },
+    {
+      "registryId": "CN-410500:Q11091115",
+      "cityId": "CN-410500",
+      "cityName": "安阳",
+      "name": "曹操高陵",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        114.25972222,
+        36.24083333
+      ],
+      "description": "曹操墓",
+      "sourceRefs": [
+        "S-WD-CN-410500"
+      ]
+    },
+    {
+      "registryId": "CN-410500:Q133306743",
+      "cityId": "CN-410500",
+      "cityName": "安阳",
+      "name": "大兴寺塔",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        114.72388,
+        35.91649
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-410500"
+      ]
+    },
+    {
+      "registryId": "CN-410500:Q133306772",
+      "cityId": "CN-410500",
+      "cityName": "安阳",
+      "name": "高阁寺",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        114.35158,
+        36.09657
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-410500"
+      ]
+    },
+    {
+      "registryId": "CN-410500:Q133306511",
+      "cityId": "CN-410500",
+      "cityName": "安阳",
+      "name": "固岸墓地",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        114.31082,
+        36.2311
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-410500"
+      ]
+    },
+    {
+      "registryId": "CN-410500:Q133306765",
+      "cityId": "CN-410500",
+      "cityName": "安阳",
+      "name": "韩王庙与昼锦堂",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        114.35423,
+        36.09162
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-410500"
+      ]
+    },
+    {
+      "registryId": "CN-410500:Q825310",
+      "cityId": "CN-410500",
+      "cityName": "安阳",
+      "name": "红旗渠",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        113.75953,
+        36.35241
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-410500"
+      ]
+    },
+    {
+      "registryId": "CN-410500:Q133306970",
+      "cityId": "CN-410500",
+      "cityName": "安阳",
+      "name": "洪谷寺塔与千佛洞石窟",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        113.70224,
+        36.00803
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-410500"
+      ]
+    },
+    {
+      "registryId": "CN-410500:Q133309451",
+      "cityId": "CN-410500",
+      "cityName": "安阳",
+      "name": "滑县县委县政府早期建筑",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        114.51347,
+        35.57565
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-410500"
+      ]
+    },
+    {
+      "registryId": "CN-410500:Q133306777",
+      "cityId": "CN-410500",
+      "cityName": "安阳",
+      "name": "林州惠明寺",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        113.86307,
+        36.15079
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-410500"
+      ]
+    },
+    {
+      "registryId": "CN-410500:Q17004091",
+      "cityId": "CN-410500",
+      "cityName": "安阳",
+      "name": "灵泉寺石窟",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        114.07305556,
+        36.04222222
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-410500"
+      ]
+    },
+    {
+      "registryId": "CN-410500:Q11088167",
+      "cityId": "CN-410500",
+      "cityName": "安阳",
+      "name": "明福寺塔",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        114.54861111,
+        35.55388889
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-410500"
+      ]
+    },
+    {
+      "registryId": "CN-410500:Q133261021",
+      "cityId": "CN-410500",
+      "cityName": "安阳",
+      "name": "三杨庄遗址",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        114.76212,
+        35.73081
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-410500"
+      ]
+    },
+    {
+      "registryId": "CN-410500:Q11136317",
+      "cityId": "CN-410500",
+      "cityName": "安阳",
+      "name": "汤阴岳飞庙",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        114.34861111,
+        35.92
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-410500"
+      ]
+    },
+    {
+      "registryId": "CN-410500:Q133306809",
+      "cityId": "CN-410500",
+      "cityName": "安阳",
+      "name": "西蒋村马氏庄园",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        114.14549,
+        36.15137
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-410500"
+      ]
+    },
+    {
+      "registryId": "CN-410500:Q10957976",
+      "cityId": "CN-410500",
+      "cityName": "安阳",
+      "name": "小南海石窟",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        114.10638889,
+        36.03916667
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-410500"
+      ]
+    },
+    {
+      "registryId": "CN-410500:Q133306744",
+      "cityId": "CN-410500",
+      "cityName": "安阳",
+      "name": "兴阳禅寺塔",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        114.04513,
+        36.02681
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-410500"
+      ]
+    },
+    {
+      "registryId": "CN-410500:Q10888082",
+      "cityId": "CN-410500",
+      "cityName": "安阳",
+      "name": "修定寺塔",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        113.99833333,
+        36.19583333
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-410500"
+      ]
+    },
+    {
+      "registryId": "CN-410500:Q133306738",
+      "cityId": "CN-410500",
+      "cityName": "安阳",
+      "name": "阳台寺双石塔",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        113.89959,
+        35.79911
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-410500"
+      ]
+    },
+    {
+      "registryId": "CN-410500:Q464904",
+      "cityId": "CN-410500",
+      "cityName": "安阳",
+      "name": "殷墟",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        114.318611111,
+        36.1225
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-410500"
+      ]
+    },
+    {
+      "registryId": "CN-410500:Q17025983",
+      "cityId": "CN-410500",
+      "cityName": "安阳",
+      "name": "羑里城遗址",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        114.34934,
+        35.955325
+      ],
+      "description": "文化遗址",
+      "sourceRefs": [
+        "S-WD-CN-410500"
+      ]
+    },
+    {
+      "registryId": "CN-410500:Q15910570",
+      "cityId": "CN-410500",
+      "cityName": "安阳",
+      "name": "袁林",
+      "era": "待考",
+      "museumOrSite": "北关区",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        114.34886,
+        36.12436
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-410500"
+      ]
+    },
+    {
+      "registryId": "CN-410500:Q133306774",
+      "cityId": "CN-410500",
+      "cityName": "安阳",
+      "name": "彰德府城隍庙",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        114.34898,
+        36.09571
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-410500"
       ]
     },
     {
@@ -6737,7 +10782,7 @@
       "cityName": "西安",
       "name": "半坡遗址",
       "era": "待考",
-      "museumOrSite": "和田市",
+      "museumOrSite": "待考",
       "protectionLevel": "全国重点文物保护单位",
       "findSpot": "待考",
       "coordinates": [
@@ -7737,6 +11782,402 @@
       "description": null,
       "sourceRefs": [
         "S-WD-CN-610100"
+      ]
+    },
+    {
+      "registryId": "CN-620500:Q10934386",
+      "cityId": "CN-620500",
+      "cityName": "天水",
+      "name": "大地湾遗址",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        105.90445,
+        35.01239
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-620500"
+      ]
+    },
+    {
+      "registryId": "CN-620500:Q10933579",
+      "cityId": "CN-620500",
+      "cityName": "天水",
+      "name": "大像山石窟",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        105.31219,
+        34.73212
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-620500"
+      ]
+    },
+    {
+      "registryId": "CN-620500:Q5433839",
+      "cityId": "CN-620500",
+      "cityName": "天水",
+      "name": "放马滩墓群",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        106.100042,
+        34.412902
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-620500"
+      ]
+    },
+    {
+      "registryId": "CN-620500:Q10885321",
+      "cityId": "CN-620500",
+      "cityName": "天水",
+      "name": "伏羲庙",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        105.70305556,
+        34.58055556
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-620500"
+      ]
+    },
+    {
+      "registryId": "CN-620500:Q133309557",
+      "cityId": "CN-620500",
+      "cityName": "天水",
+      "name": "河峪摩崖石刻",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        106.38191,
+        34.98744
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-620500"
+      ]
+    },
+    {
+      "registryId": "CN-620500:Q10917975",
+      "cityId": "CN-620500",
+      "cityName": "天水",
+      "name": "后街清真寺",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        105.7149,
+        34.58399
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-620500"
+      ]
+    },
+    {
+      "registryId": "CN-620500:Q17001690",
+      "cityId": "CN-620500",
+      "cityName": "天水",
+      "name": "胡氏古民居建筑",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        105.71916667,
+        34.58166667
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-620500"
+      ]
+    },
+    {
+      "registryId": "CN-620500:Q17040225",
+      "cityId": "CN-620500",
+      "cityName": "天水",
+      "name": "狼叫屲遗址",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        104.74271,
+        34.78993
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-620500"
+      ]
+    },
+    {
+      "registryId": "CN-620500:Q133306273",
+      "cityId": "CN-620500",
+      "cityName": "天水",
+      "name": "李崖遗址",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        106.1316,
+        34.76679
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-620500"
+      ]
+    },
+    {
+      "registryId": "CN-620500:Q11173071",
+      "cityId": "CN-620500",
+      "cityName": "天水",
+      "name": "鲁恭姬造像碑",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        106.12929,
+        34.76168
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-620500"
+      ]
+    },
+    {
+      "registryId": "CN-620500:Q133306275",
+      "cityId": "CN-620500",
+      "cityName": "天水",
+      "name": "马家塬遗址",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        106.16724,
+        35.04641
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-620500"
+      ]
+    },
+    {
+      "registryId": "CN-620500:Q1885375",
+      "cityId": "CN-620500",
+      "cityName": "天水",
+      "name": "麦积山石窟",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        106.005973,
+        34.350136
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-620500"
+      ]
+    },
+    {
+      "registryId": "CN-620500:Q11126904",
+      "cityId": "CN-620500",
+      "cityName": "天水",
+      "name": "毛家坪遗址",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        105.09256,
+        34.75692
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-620500"
+      ]
+    },
+    {
+      "registryId": "CN-620500:Q1955861",
+      "cityId": "CN-620500",
+      "cityName": "天水",
+      "name": "木梯寺石窟",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        104.6903,
+        34.68945
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-620500"
+      ]
+    },
+    {
+      "registryId": "CN-620500:Q17030440",
+      "cityId": "CN-620500",
+      "cityName": "天水",
+      "name": "秦安文庙",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        105.6686,
+        34.85864
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-620500"
+      ]
+    },
+    {
+      "registryId": "CN-620500:Q133275099",
+      "cityId": "CN-620500",
+      "cityName": "天水",
+      "name": "水帘洞—大像山石窟",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        104.95075,
+        34.83224
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-620500"
+      ]
+    },
+    {
+      "registryId": "CN-620500:Q11129883",
+      "cityId": "CN-620500",
+      "cityName": "天水",
+      "name": "水帘洞石窟",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        104.95075,
+        34.83224
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-620500"
+      ]
+    },
+    {
+      "registryId": "CN-620500:Q17033139",
+      "cityId": "CN-620500",
+      "cityName": "天水",
+      "name": "天水纪信祠",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        105.72187,
+        34.58207
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-620500"
+      ]
+    },
+    {
+      "registryId": "CN-620500:Q133309547",
+      "cityId": "CN-620500",
+      "cityName": "天水",
+      "name": "武山圣寿寺",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        104.88613,
+        34.72254
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-620500"
+      ]
+    },
+    {
+      "registryId": "CN-620500:Q10884164",
+      "cityId": "CN-620500",
+      "cityName": "天水",
+      "name": "仙人崖石窟",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        106.04785,
+        34.39744
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-620500"
+      ]
+    },
+    {
+      "registryId": "CN-620500:Q10894126",
+      "cityId": "CN-620500",
+      "cityName": "天水",
+      "name": "兴国寺",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        105.6677,
+        34.8611
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-620500"
+      ]
+    },
+    {
+      "registryId": "CN-620500:Q1478269",
+      "cityId": "CN-620500",
+      "cityName": "天水",
+      "name": "玉泉观",
+      "era": "待考",
+      "museumOrSite": "待考",
+      "protectionLevel": "全国重点文物保护单位",
+      "findSpot": "待考",
+      "coordinates": [
+        105.70805556,
+        34.58527778
+      ],
+      "description": null,
+      "sourceRefs": [
+        "S-WD-CN-620500"
       ]
     }
   ]

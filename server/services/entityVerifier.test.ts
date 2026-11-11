@@ -133,6 +133,52 @@ describe('实体坐标回填', () => {
     expect(place.coordinates).toEqual([108.95, 34.26]);
   });
 
+  it('地名库只有城市中心条目时，优先使用实体自带坐标', () => {
+    const cityCenterGazetteer: Gazetteer = {
+      generatedAt: '',
+      entries: [
+        {
+          name: '西安',
+          coordinates: XIAN_CENTER,
+          cityId: 'CN-610100',
+          kind: 'city_center',
+          sourceRef: 'test',
+        },
+      ],
+    };
+    const place = resolveEntityPlace(
+      { name: '西安某塔', coordinates: [108.95, 34.26] },
+      'CN-610100',
+      XIAN_CENTER,
+      cityCenterGazetteer,
+    );
+    expect(place.coordSource).toBe('wikidata');
+    expect(place.coordinates).toEqual([108.95, 34.26]);
+  });
+
+  it('实体无坐标时城市中心条目仍可兜底', () => {
+    const cityCenterGazetteer: Gazetteer = {
+      generatedAt: '',
+      entries: [
+        {
+          name: '西安',
+          coordinates: XIAN_CENTER,
+          cityId: 'CN-610100',
+          kind: 'city_center',
+          sourceRef: 'test',
+        },
+      ],
+    };
+    const place = resolveEntityPlace(
+      { name: '西安某地', coordinates: null },
+      'CN-610100',
+      XIAN_CENTER,
+      cityCenterGazetteer,
+    );
+    expect(place.coordSource).toBe('city_center');
+    expect(place.coordinates).toEqual(XIAN_CENTER);
+  });
+
   it('实体坐标超出 180km 时丢弃为 null', () => {
     const syntheticGazetteer: Gazetteer = { generatedAt: '', entries: [] };
     const place = resolveEntityPlace(

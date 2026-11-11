@@ -40,6 +40,14 @@ async function main(): Promise<void> {
   const files = (await readdir(SNAPSHOT_DIR)).filter((f) => f.endsWith('.json') && !f.startsWith('_'));
   if (files.length === 0) throw new Error('没有找到事实快照，请先运行 npm run data:snapshot');
 
+  /**
+   * 人工校正：上游 Wikidata 属性错误（如 Q806929 半坡遗址的 P276 误标为「和田市」）。
+   * 只把明显与坐标/本城矛盾的上游值改为「待考」，绝不填入无法核验的替代值。
+   */
+  const MUSEUM_OVERRIDES: Record<string, string> = {
+    'CN-610100:Q806929': '待考',
+  };
+
   const registry: Array<{
     registryId: string;
     cityId: string;
@@ -69,13 +77,18 @@ async function main(): Promise<void> {
       const protectionLevel = relic.designations.length
         ? relic.designations.join('、')
         : '待考';
+      const museumOrSite =
+        MUSEUM_OVERRIDES[`${snapshot.cityId}:${relic.entityId}`] ??
+        relic.museumOrSite ??
+        relic.location ??
+        '待考';
       registry.push({
         registryId: `${snapshot.cityId}:${relic.entityId}`,
         cityId: snapshot.cityId,
         cityName,
         name: relic.name,
         era: relic.inceptionYear === null ? '待考' : formatYear(relic.inceptionYear),
-        museumOrSite: relic.museumOrSite ?? relic.location ?? '待考',
+        museumOrSite,
         protectionLevel,
         findSpot: '待考',
         coordinates: relic.coordinates,

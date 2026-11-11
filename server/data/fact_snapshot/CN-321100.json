@@ -1,0 +1,946 @@
+{
+  "cityId": "CN-321100",
+  "cityName": "镇江",
+  "cityQid": "Q57958",
+  "center": [
+    119.45508,
+    32.21086
+  ],
+  "retrievedAt": "2026-11-11T04:11:38.010Z",
+  "sourceRef": {
+    "id": "S-WD-CN-321100",
+    "type": "wikidata",
+    "title": "Wikidata 事实快照 · 镇江",
+    "url": "https://query.wikidata.org/sparql",
+    "retrievedAt": "2026-11-11T04:11:38.010Z"
+  },
+  "landmarks": [
+    {
+      "entityId": "Q11658887",
+      "name": "隆昌寺",
+      "coordinates": [
+        119.08999,
+        32.12959
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 5
+    },
+    {
+      "entityId": "Q15932144",
+      "name": "甘露寺 (镇江)",
+      "coordinates": [
+        119.452758,
+        32.219436
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 5
+    },
+    {
+      "entityId": "Q106440978",
+      "name": "中国醋文化博物馆",
+      "coordinates": [
+        119.474380555,
+        32.104852777
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q10321085",
+      "name": "景安陵",
+      "coordinates": [
+        119.68721,
+        32.014686
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q5470080",
+      "name": "镇江英国领事馆旧址",
+      "coordinates": [
+        119.42676,
+        32.21567
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q24839074",
+      "name": "万安陵",
+      "coordinates": [
+        119.678831111,
+        32.061855
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q9394038",
+      "name": "修陵",
+      "coordinates": [
+        119.652947,
+        32.017443
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q24839137",
+      "name": "建陵",
+      "coordinates": [
+        119.6529232,
+        32.0136471
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q24839109",
+      "name": "修安陵",
+      "coordinates": [
+        119.660581111,
+        32.071446944
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q11088908",
+      "name": "昭关石塔",
+      "coordinates": [
+        119.42562,
+        32.21657
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q19841438",
+      "name": "焦山碑林",
+      "coordinates": [
+        119.4799,
+        32.23943
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q24839112",
+      "name": "兴安陵",
+      "coordinates": [
+        119.652958,
+        32.012556
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q17031993",
+      "name": "庄陵",
+      "coordinates": [
+        119.652615,
+        32.018194
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q133305737",
+      "name": "铁瓮城遗址",
+      "coordinates": [
+        119.45391,
+        32.2157
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q15932581",
+      "name": "葛城遗址",
+      "coordinates": [
+        119.61871,
+        31.8374
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q10929238",
+      "name": "城上村遗址",
+      "coordinates": [
+        119.17439,
+        31.98547
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q15932570",
+      "name": "烟墩山墓地",
+      "coordinates": [
+        119.67452,
+        32.20793
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q11088757",
+      "name": "春城土墩墓群",
+      "coordinates": [
+        119.22358,
+        31.87939
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q123038131",
+      "name": "梁南康简王萧绩墓石刻",
+      "coordinates": [
+        119.08544,
+        31.969233
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q133305750",
+      "name": "宋元粮仓遗址",
+      "coordinates": [
+        119.44224,
+        32.21398
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q113089968",
+      "name": "Jurong Emaogang Mound Tomb",
+      "coordinates": [
+        119.217518,
+        31.763213
+      ],
+      "kind": "考古遗址",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q123038126",
+      "name": "陵口石刻",
+      "coordinates": [
+        119.656252,
+        31.9474
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q123038129",
+      "name": "水经山村南朝失名墓石刻",
+      "coordinates": [
+        119.695117,
+        32.084633
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q123038130",
+      "name": "烂石弄南朝失名墓石刻",
+      "coordinates": [
+        119.693797,
+        32.078458
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q123038125",
+      "name": "金王陈南齐失名陵石刻",
+      "coordinates": [
+        119.696935,
+        32.054887
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    }
+  ],
+  "relics": [
+    {
+      "entityId": "Q10321085",
+      "name": "景安陵",
+      "coordinates": [
+        119.68721,
+        32.014686
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q133305737",
+      "name": "铁瓮城遗址",
+      "coordinates": [
+        119.45391,
+        32.2157
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q15932581",
+      "name": "葛城遗址",
+      "coordinates": [
+        119.61871,
+        31.8374
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q5470080",
+      "name": "镇江英国领事馆旧址",
+      "coordinates": [
+        119.42676,
+        32.21567
+      ],
+      "inceptionYear": 1864,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q10929238",
+      "name": "城上村遗址",
+      "coordinates": [
+        119.17439,
+        31.98547
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q123038126",
+      "name": "陵口石刻",
+      "coordinates": [
+        119.656252,
+        31.9474
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q24839074",
+      "name": "万安陵",
+      "coordinates": [
+        119.678831111,
+        32.061855
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q11658887",
+      "name": "隆昌寺",
+      "coordinates": [
+        119.08999,
+        32.12959
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 5
+    },
+    {
+      "entityId": "Q123038129",
+      "name": "水经山村南朝失名墓石刻",
+      "coordinates": [
+        119.695117,
+        32.084633
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q9394038",
+      "name": "修陵",
+      "coordinates": [
+        119.652947,
+        32.017443
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q15932570",
+      "name": "烟墩山墓地",
+      "coordinates": [
+        119.67452,
+        32.20793
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q24839137",
+      "name": "建陵",
+      "coordinates": [
+        119.6529232,
+        32.0136471
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q11088757",
+      "name": "春城土墩墓群",
+      "coordinates": [
+        119.22358,
+        31.87939
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q123038130",
+      "name": "烂石弄南朝失名墓石刻",
+      "coordinates": [
+        119.693797,
+        32.078458
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q24839109",
+      "name": "修安陵",
+      "coordinates": [
+        119.660581111,
+        32.071446944
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q15932144",
+      "name": "甘露寺 (镇江)",
+      "coordinates": [
+        119.452758,
+        32.219436
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 5
+    },
+    {
+      "entityId": "Q11088908",
+      "name": "昭关石塔",
+      "coordinates": [
+        119.42562,
+        32.21657
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q19841438",
+      "name": "焦山碑林",
+      "coordinates": [
+        119.4799,
+        32.23943
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q123038131",
+      "name": "梁南康简王萧绩墓石刻",
+      "coordinates": [
+        119.08544,
+        31.969233
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q24839112",
+      "name": "兴安陵",
+      "coordinates": [
+        119.652958,
+        32.012556
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q17031993",
+      "name": "庄陵",
+      "coordinates": [
+        119.652615,
+        32.018194
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q133305750",
+      "name": "宋元粮仓遗址",
+      "coordinates": [
+        119.44224,
+        32.21398
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q123038125",
+      "name": "金王陈南齐失名陵石刻",
+      "coordinates": [
+        119.696935,
+        32.054887
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    }
+  ],
+  "figures": [
+    {
+      "entityId": "Q553678",
+      "name": "葛洪",
+      "birthYear": 284,
+      "deathYear": 364,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "句容市"
+      },
+      "sitelinks": 34,
+      "description": null
+    },
+    {
+      "entityId": "Q380598",
+      "name": "孙策",
+      "birthYear": 175,
+      "deathYear": 200,
+      "relationType": "sojourner",
+      "evidence": {
+        "property": "deathplace",
+        "value": "丹徒区"
+      },
+      "sitelinks": 26,
+      "description": null
+    },
+    {
+      "entityId": "Q49699",
+      "name": "刘裕",
+      "birthYear": 363,
+      "deathYear": 422,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "京口区"
+      },
+      "sitelinks": 21,
+      "description": null
+    },
+    {
+      "entityId": "Q49702",
+      "name": "刘义隆",
+      "birthYear": 407,
+      "deathYear": 453,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "京口区"
+      },
+      "sitelinks": 21,
+      "description": "南朝刘宋皇帝"
+    },
+    {
+      "entityId": "Q702301",
+      "name": "刘鹗",
+      "birthYear": 1857,
+      "deathYear": 1909,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "丹徒区"
+      },
+      "sitelinks": 17,
+      "description": null
+    },
+    {
+      "entityId": "Q704558",
+      "name": "刘勰",
+      "birthYear": 465,
+      "deathYear": 522,
+      "relationType": "native",
+      "evidence": {
+        "property": "position",
+        "value": "镇江市人（维基百科分类）"
+      },
+      "sitelinks": 14,
+      "description": null
+    },
+    {
+      "entityId": "Q2697411",
+      "name": "道宣",
+      "birthYear": 596,
+      "deathYear": 667,
+      "relationType": "native",
+      "evidence": {
+        "property": "position",
+        "value": "镇江市人（维基百科分类）"
+      },
+      "sitelinks": 13,
+      "description": null
+    },
+    {
+      "entityId": "Q11075245",
+      "name": "戴叔伦",
+      "birthYear": 732,
+      "deathYear": 789,
+      "relationType": "native",
+      "evidence": {
+        "property": "position",
+        "value": "镇江市人（维基百科分类）"
+      },
+      "sitelinks": 10,
+      "description": null
+    },
+    {
+      "entityId": "Q6753608",
+      "name": "茅以昇",
+      "birthYear": 1896,
+      "deathYear": 1989,
+      "relationType": "native",
+      "evidence": {
+        "property": "position",
+        "value": "镇江市人（维基百科分类）"
+      },
+      "sitelinks": 8,
+      "description": null
+    },
+    {
+      "entityId": "Q3267877",
+      "name": "马建忠",
+      "birthYear": 1845,
+      "deathYear": 1900,
+      "relationType": "native",
+      "evidence": {
+        "property": "position",
+        "value": "镇江市人（维基百科分类）"
+      },
+      "sitelinks": 7,
+      "description": null
+    },
+    {
+      "entityId": "Q4857422",
+      "name": "鲍观澄",
+      "birthYear": 1898,
+      "deathYear": 1975,
+      "relationType": "native",
+      "evidence": {
+        "property": "position",
+        "value": "镇江市人（维基百科分类）"
+      },
+      "sitelinks": 5,
+      "description": null
+    },
+    {
+      "entityId": "Q11110049",
+      "name": "柳诒徵",
+      "birthYear": 1880,
+      "deathYear": 1956,
+      "relationType": "native",
+      "evidence": {
+        "property": "position",
+        "value": "镇江市人（维基百科分类）"
+      },
+      "sitelinks": 5,
+      "description": null
+    },
+    {
+      "entityId": "Q15932740",
+      "name": "陈东",
+      "birthYear": 1086,
+      "deathYear": 1127,
+      "relationType": "native",
+      "evidence": {
+        "property": "position",
+        "value": "镇江市人（维基百科分类）"
+      },
+      "sitelinks": 4,
+      "description": "宋朝政治人物"
+    },
+    {
+      "entityId": "Q4794036",
+      "name": "丁懋英",
+      "birthYear": 1891,
+      "deathYear": 1969,
+      "relationType": "native",
+      "evidence": {
+        "property": "position",
+        "value": "镇江市人（维基百科分类）"
+      },
+      "sitelinks": 4,
+      "description": null
+    },
+    {
+      "entityId": "Q10566505",
+      "name": "马怀素",
+      "birthYear": 659,
+      "deathYear": 718,
+      "relationType": "native",
+      "evidence": {
+        "property": "position",
+        "value": "镇江市人（维基百科分类）"
+      },
+      "sitelinks": 4,
+      "description": null
+    },
+    {
+      "entityId": "Q18235430",
+      "name": "程锡庚",
+      "birthYear": 1893,
+      "deathYear": 1939,
+      "relationType": "native",
+      "evidence": {
+        "property": "position",
+        "value": "镇江市人（维基百科分类）"
+      },
+      "sitelinks": 3,
+      "description": null
+    }
+  ],
+  "failures": []
+}

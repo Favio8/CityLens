@@ -1,0 +1,1533 @@
+{
+  "cityId": "CN-440100",
+  "cityName": "广州",
+  "cityQid": "Q16572",
+  "center": [
+    113.26,
+    23.13
+  ],
+  "retrievedAt": "2026-11-11T05:38:28.901Z",
+  "sourceRef": {
+    "id": "S-WD-CN-440100",
+    "type": "wikidata",
+    "title": "Wikidata 事实快照 · 广州",
+    "url": "https://query.wikidata.org/sparql",
+    "retrievedAt": "2026-11-11T05:38:28.901Z"
+  },
+  "landmarks": [
+    {
+      "entityId": "Q1195445",
+      "name": "石室圣心大教堂",
+      "coordinates": [
+        113.254833333,
+        23.117316666
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 15
+    },
+    {
+      "entityId": "Q683127",
+      "name": "六榕寺",
+      "coordinates": [
+        113.254788888,
+        23.130880555
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 14
+    },
+    {
+      "entityId": "Q985779",
+      "name": "光孝寺",
+      "coordinates": [
+        113.251,
+        23.1321
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 13
+    },
+    {
+      "entityId": "Q1051254",
+      "name": "中山纪念堂",
+      "coordinates": [
+        113.259358333,
+        23.136080555
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 12
+    },
+    {
+      "entityId": "Q15944460",
+      "name": "清真先贤古墓",
+      "coordinates": [
+        113.25548,
+        23.14822
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 10
+    },
+    {
+      "entityId": "Q5613636",
+      "name": "广东省博物馆",
+      "coordinates": [
+        113.32138889,
+        23.11722222
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 9
+    },
+    {
+      "entityId": "Q11177237",
+      "name": "黄埔军校旧址",
+      "coordinates": [
+        113.42028611,
+        23.0893
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 7
+    },
+    {
+      "entityId": "Q9373800",
+      "name": "镇海楼",
+      "coordinates": [
+        113.26,
+        23.1407
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 7
+    },
+    {
+      "entityId": "Q5613635",
+      "name": "广东革命历史博物馆",
+      "coordinates": [
+        113.265,
+        23.1243
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 5
+    },
+    {
+      "entityId": "Q5090739",
+      "name": "陈家祠",
+      "coordinates": [
+        113.240107,
+        23.12984
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": "中国祠堂建筑群，广东民间工艺博物馆",
+      "sitelinks": 5
+    },
+    {
+      "entityId": "Q7253495",
+      "name": "南越文王墓",
+      "coordinates": [
+        113.25574444,
+        23.14039722
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 5
+    },
+    {
+      "entityId": "Q10865342",
+      "name": "三元宮",
+      "coordinates": [
+        113.258,
+        23.1375
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 5
+    },
+    {
+      "entityId": "Q6685171",
+      "name": "莲花山 (番禺)",
+      "coordinates": [
+        113.505,
+        22.9789
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 5
+    },
+    {
+      "entityId": "Q26996788",
+      "name": "广东科学中心",
+      "coordinates": [
+        113.3625,
+        23.036666666
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q32159297",
+      "name": "三元里平英团遗址",
+      "coordinates": [
+        113.254704,
+        23.163426
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q10909038",
+      "name": "南越国木构水闸遗址",
+      "coordinates": [
+        113.26198611,
+        23.12516667
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q10881501",
+      "name": "五仙观",
+      "coordinates": [
+        113.25451,
+        23.12305
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q10874494",
+      "name": "中國國民黨第一次全國代表大會舊址",
+      "coordinates": [
+        113.27166748,
+        23.12666702
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q124682045",
+      "name": "南越王博物院",
+      "coordinates": [
+        113.255555555,
+        23.140277777
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q139268329",
+      "name": "雪蕾香氛博物馆",
+      "coordinates": [
+        113.3132,
+        23.2982
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q232014",
+      "name": "南汉二陵",
+      "coordinates": [
+        113.37789,
+        23.05073
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q27670238",
+      "name": "粵劇藝術博物館",
+      "coordinates": [
+        113.23265,
+        23.11852
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q10908467",
+      "name": "南海神庙",
+      "coordinates": [
+        113.492843587,
+        23.084601807
+      ],
+      "kind": "庙",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q10945435",
+      "name": "孫中山大元帥府紀念館",
+      "coordinates": [
+        113.27385278,
+        23.11236944
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q10865086",
+      "name": "万木草堂",
+      "coordinates": [
+        113.26638889,
+        23.12805556
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q7185933",
+      "name": "黄花岗公园",
+      "coordinates": [
+        113.289236111,
+        23.143266666
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q10886663",
+      "name": "余荫山房",
+      "coordinates": [
+        113.390113888,
+        23.013730555
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q10872227",
+      "name": "中华全国总工会旧址",
+      "coordinates": [
+        113.2725,
+        23.12194444
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q15908709",
+      "name": "粤海关",
+      "coordinates": [
+        113.24586111,
+        23.10998889
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q10873223",
+      "name": "中国共产党第三次全国代表大会会址",
+      "coordinates": [
+        113.29083252,
+        23.12138939
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q15911960",
+      "name": "留耕堂",
+      "coordinates": [
+        113.32829,
+        22.90727
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q7158412",
+      "name": "农民运动讲习所",
+      "coordinates": [
+        113.27133333,
+        23.13033889
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q11062199",
+      "name": "广州起义纪念馆",
+      "coordinates": [
+        113.25905609,
+        23.12711143
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q30941307",
+      "name": "廣州博物館",
+      "coordinates": [
+        113.26030433,
+        23.14064562
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q55719518",
+      "name": "廣東華僑博物館",
+      "coordinates": [
+        113.30048,
+        23.11116
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q99575674",
+      "name": "南越王博物院王宫展区",
+      "coordinates": [
+        113.264722222,
+        23.128888888
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q128032252",
+      "name": "广东省非物质文化遗产馆",
+      "coordinates": [
+        113.23393,
+        23.10425
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q17393898",
+      "name": "莲花山古采石场",
+      "coordinates": [
+        113.50222222,
+        22.98611111
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q11062361",
+      "name": "广裕祠",
+      "coordinates": [
+        113.53983,
+        23.433
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q111799851",
+      "name": "中国共产党广东区执行委员会旧址",
+      "coordinates": [
+        113.26969,
+        23.12525
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q137396654",
+      "name": "广州华侨博物馆",
+      "coordinates": [
+        113.2594,
+        23.1156
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q133274615",
+      "name": "南越国宫署遗址",
+      "coordinates": [
+        113.26555,
+        23.12878
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q141801008",
+      "name": "群英会 (俱乐部)",
+      "coordinates": [
+        113.2370171,
+        23.110165
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q11061749",
+      "name": "广东省农民协会旧址",
+      "coordinates": [
+        113.27527,
+        23.13104
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q98074583",
+      "name": "天祥洋行舊址",
+      "coordinates": [
+        113.23751628,
+        23.10964465
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q133453222",
+      "name": "怀圣寺光塔",
+      "coordinates": [
+        113.25353,
+        23.12549
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q11147235",
+      "name": "洪秀全故居",
+      "coordinates": [
+        113.16787,
+        23.41962
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q133277512",
+      "name": "广州沙面建筑群",
+      "coordinates": [
+        113.24236,
+        23.11002
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q15952675",
+      "name": "秦汉造船工场遗址",
+      "coordinates": [
+        113.26499,
+        23.12904
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q133277309",
+      "name": "广东咨议局旧址",
+      "coordinates": [
+        113.27799,
+        23.13091
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q133274608",
+      "name": "秦代造船遗址、南越国宫署遗址及南越文王墓",
+      "coordinates": [
+        113.25561,
+        23.14038
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q133306887",
+      "name": "镇海楼与广州明城墙",
+      "coordinates": [
+        113.26023,
+        23.14064
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q133312795",
+      "name": "黄埔军校燕塘分校旧址",
+      "coordinates": [
+        113.31512,
+        23.15187
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    }
+  ],
+  "relics": [
+    {
+      "entityId": "Q32159297",
+      "name": "三元里平英团遗址",
+      "coordinates": [
+        113.254704,
+        23.163426
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q133274615",
+      "name": "南越国宫署遗址",
+      "coordinates": [
+        113.26555,
+        23.12878
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q11177237",
+      "name": "黄埔军校旧址",
+      "coordinates": [
+        113.42028611,
+        23.0893
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 7
+    },
+    {
+      "entityId": "Q10865086",
+      "name": "万木草堂",
+      "coordinates": [
+        113.26638889,
+        23.12805556
+      ],
+      "inceptionYear": 1804,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q141801008",
+      "name": "群英会 (俱乐部)",
+      "coordinates": [
+        113.2370171,
+        23.110165
+      ],
+      "inceptionYear": 1868,
+      "museumOrSite": null,
+      "location": "广州英租界",
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q7185933",
+      "name": "黄花岗公园",
+      "coordinates": [
+        113.289236111,
+        23.143266666
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q10886663",
+      "name": "余荫山房",
+      "coordinates": [
+        113.390113888,
+        23.013730555
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q10945435",
+      "name": "孫中山大元帥府紀念館",
+      "coordinates": [
+        113.27385278,
+        23.11236944
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q683127",
+      "name": "六榕寺",
+      "coordinates": [
+        113.254788888,
+        23.130880555
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 14
+    },
+    {
+      "entityId": "Q15944460",
+      "name": "清真先贤古墓",
+      "coordinates": [
+        113.25548,
+        23.14822
+      ],
+      "inceptionYear": 642,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 10
+    },
+    {
+      "entityId": "Q10908467",
+      "name": "南海神庙",
+      "coordinates": [
+        113.492843587,
+        23.084601807
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q1195445",
+      "name": "石室圣心大教堂",
+      "coordinates": [
+        113.254833333,
+        23.117316666
+      ],
+      "inceptionYear": 1888,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 15
+    },
+    {
+      "entityId": "Q10872227",
+      "name": "中华全国总工会旧址",
+      "coordinates": [
+        113.2725,
+        23.12194444
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q15908709",
+      "name": "粤海关",
+      "coordinates": [
+        113.24586111,
+        23.10998889
+      ],
+      "inceptionYear": 1916,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q10873223",
+      "name": "中国共产党第三次全国代表大会会址",
+      "coordinates": [
+        113.29083252,
+        23.12138939
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q17393898",
+      "name": "莲花山古采石场",
+      "coordinates": [
+        113.50222222,
+        22.98611111
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q11062361",
+      "name": "广裕祠",
+      "coordinates": [
+        113.53983,
+        23.433
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q232014",
+      "name": "南汉二陵",
+      "coordinates": [
+        113.37789,
+        23.05073
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": "广州市",
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q15911960",
+      "name": "留耕堂",
+      "coordinates": [
+        113.32829,
+        22.90727
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q11061749",
+      "name": "广东省农民协会旧址",
+      "coordinates": [
+        113.27527,
+        23.13104
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q985779",
+      "name": "光孝寺",
+      "coordinates": [
+        113.251,
+        23.1321
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 13
+    },
+    {
+      "entityId": "Q7158412",
+      "name": "农民运动讲习所",
+      "coordinates": [
+        113.27133333,
+        23.13033889
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q111799851",
+      "name": "中国共产党广东区执行委员会旧址",
+      "coordinates": [
+        113.26969,
+        23.12525
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q7253495",
+      "name": "南越文王墓",
+      "coordinates": [
+        113.25574444,
+        23.14039722
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 5
+    },
+    {
+      "entityId": "Q5090739",
+      "name": "陈家祠",
+      "coordinates": [
+        113.240107,
+        23.12984
+      ],
+      "inceptionYear": 1894,
+      "museumOrSite": null,
+      "location": "广州市",
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": "中国祠堂建筑群，广东民间工艺博物馆",
+      "sitelinks": 5
+    },
+    {
+      "entityId": "Q11062199",
+      "name": "广州起义纪念馆",
+      "coordinates": [
+        113.25905609,
+        23.12711143
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q98074583",
+      "name": "天祥洋行舊址",
+      "coordinates": [
+        113.23751628,
+        23.10964465
+      ],
+      "inceptionYear": 1924,
+      "museumOrSite": null,
+      "location": "沙面岛",
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q133274608",
+      "name": "秦代造船遗址、南越国宫署遗址及南越文王墓",
+      "coordinates": [
+        113.25561,
+        23.14038
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q10909038",
+      "name": "南越国木构水闸遗址",
+      "coordinates": [
+        113.26198611,
+        23.12516667
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q10865342",
+      "name": "三元宮",
+      "coordinates": [
+        113.258,
+        23.1375
+      ],
+      "inceptionYear": 319,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 5
+    },
+    {
+      "entityId": "Q133306887",
+      "name": "镇海楼与广州明城墙",
+      "coordinates": [
+        113.26023,
+        23.14064
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q133453222",
+      "name": "怀圣寺光塔",
+      "coordinates": [
+        113.25353,
+        23.12549
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q11147235",
+      "name": "洪秀全故居",
+      "coordinates": [
+        113.16787,
+        23.41962
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q9373800",
+      "name": "镇海楼",
+      "coordinates": [
+        113.26,
+        23.1407
+      ],
+      "inceptionYear": 1380,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 7
+    },
+    {
+      "entityId": "Q10881501",
+      "name": "五仙观",
+      "coordinates": [
+        113.25451,
+        23.12305
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q133277512",
+      "name": "广州沙面建筑群",
+      "coordinates": [
+        113.24236,
+        23.11002
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q6685171",
+      "name": "莲花山 (番禺)",
+      "coordinates": [
+        113.505,
+        22.9789
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 5
+    },
+    {
+      "entityId": "Q15952675",
+      "name": "秦汉造船工场遗址",
+      "coordinates": [
+        113.26499,
+        23.12904
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q133312795",
+      "name": "黄埔军校燕塘分校旧址",
+      "coordinates": [
+        113.31512,
+        23.15187
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q10874494",
+      "name": "中國國民黨第一次全國代表大會舊址",
+      "coordinates": [
+        113.27166748,
+        23.12666702
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q1051254",
+      "name": "中山纪念堂",
+      "coordinates": [
+        113.259358333,
+        23.136080555
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 12
+    },
+    {
+      "entityId": "Q133277309",
+      "name": "广东咨议局旧址",
+      "coordinates": [
+        113.27799,
+        23.13091
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    }
+  ],
+  "figures": [
+    {
+      "entityId": "Q334732",
+      "name": "洪秀全",
+      "birthYear": 1814,
+      "deathYear": 1864,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "花都区"
+      },
+      "sitelinks": 43,
+      "description": null
+    },
+    {
+      "entityId": "Q709979",
+      "name": "胡汉民",
+      "birthYear": 1879,
+      "deathYear": 1936,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "番禺区"
+      },
+      "sitelinks": 31,
+      "description": null
+    },
+    {
+      "entityId": "Q707858",
+      "name": "洪天贵福",
+      "birthYear": 1849,
+      "deathYear": 1864,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "花都区"
+      },
+      "sitelinks": 20,
+      "description": null
+    },
+    {
+      "entityId": "Q709518",
+      "name": "洪仁玕",
+      "birthYear": 1822,
+      "deathYear": 1864,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "花都区"
+      },
+      "sitelinks": 15,
+      "description": null
+    },
+    {
+      "entityId": "Q11658289",
+      "name": "陈澧",
+      "birthYear": 1810,
+      "deathYear": 1882,
+      "relationType": "native",
+      "evidence": {
+        "property": "position",
+        "value": "广州市人（维基百科分类）"
+      },
+      "sitelinks": 6,
+      "description": null
+    },
+    {
+      "entityId": "Q5072748",
+      "name": "趙少昂",
+      "birthYear": 1905,
+      "deathYear": 1998,
+      "relationType": "native",
+      "evidence": {
+        "property": "position",
+        "value": "广州市人（维基百科分类）"
+      },
+      "sitelinks": 5,
+      "description": null
+    },
+    {
+      "entityId": "Q8273387",
+      "name": "古应芬",
+      "birthYear": 1873,
+      "deathYear": 1931,
+      "relationType": "native",
+      "evidence": {
+        "property": "position",
+        "value": "广州市人（维基百科分类）"
+      },
+      "sitelinks": 4,
+      "description": null
+    },
+    {
+      "entityId": "Q10886071",
+      "name": "何善衡",
+      "birthYear": 1900,
+      "deathYear": 1997,
+      "relationType": "native",
+      "evidence": {
+        "property": "position",
+        "value": "广州市人（维基百科分类）"
+      },
+      "sitelinks": 4,
+      "description": null
+    },
+    {
+      "entityId": "Q18658123",
+      "name": "胡璇泽",
+      "birthYear": 1816,
+      "deathYear": 1880,
+      "relationType": "native",
+      "evidence": {
+        "property": "position",
+        "value": "广州市人（维基百科分类）"
+      },
+      "sitelinks": 4,
+      "description": null
+    }
+  ],
+  "failures": []
+}

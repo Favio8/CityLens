@@ -1,7 +1,9 @@
 {
   "source": "DataV.GeoAtlas",
+  "sourceMode": "datav",
   "sourceTemplate": "https://geo.datav.aliyun.com/areas_v3/bound/{adcode}_full.json",
-  "fetchedAt": "2026-11-10T11:49:43.758Z",
+  "coordSystem": "WGS84",
+  "fetchedAt": "2026-11-11T05:19:57.494Z",
   "licenseNote": "DataV.GeoAtlas 公开轮廓的授权条款与审图号尚未完成人工确认；公开上线前必须合规审校，或替换为天地图/自然资源部标准地图来源。",
   "cities": [
     {

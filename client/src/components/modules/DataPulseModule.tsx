@@ -41,6 +41,8 @@ export function DataPulseModule({ data, sources, palette }: DataPulseModuleProps
 
   const gdpAllNull = data.gdpSeries.every((point) => point.value === null);
   const popAllNull = data.popSeries.every((point) => point.value === null);
+  const gdpValid = data.gdpSeries.filter((point) => point.value !== null).length;
+  const popValid = data.popSeries.filter((point) => point.value !== null).length;
   const climateAllNull = data.climateMonthly.every(
     (point) => point.tempC === null && point.precipMm === null,
   );
@@ -196,7 +198,13 @@ export function DataPulseModule({ data, sources, palette }: DataPulseModuleProps
           sourceRefs={data.statMeta.gdp.sourceRefs}
           sources={sources}
         >
-          {gdpAllNull ? <PendingBlock /> : <EChart option={gdpOption} ariaLabel="地区生产总值趋势图" />}
+          {gdpAllNull ? (
+            <PendingBlock />
+          ) : gdpValid < 3 ? (
+            <SeriesList points={data.gdpSeries} unit={data.statMeta.gdp.unit} />
+          ) : (
+            <EChart option={gdpOption} ariaLabel="地区生产总值趋势图" />
+          )}
         </ChartCard>
         <ChartCard
           title="常住人口"
@@ -204,7 +212,13 @@ export function DataPulseModule({ data, sources, palette }: DataPulseModuleProps
           sourceRefs={data.statMeta.pop.sourceRefs}
           sources={sources}
         >
-          {popAllNull ? <PendingBlock /> : <EChart option={popOption} ariaLabel="常住人口趋势图" />}
+          {popAllNull ? (
+            <PendingBlock />
+          ) : popValid < 3 ? (
+            <SeriesList points={data.popSeries} unit={data.statMeta.pop.unit} />
+          ) : (
+            <EChart option={popOption} ariaLabel="常住人口趋势图" />
+          )}
         </ChartCard>
       </div>
 
@@ -247,6 +261,32 @@ function ChartCard({
         <SourceBadge sourceRefs={sourceRefs} sources={sources} />
       </div>
       {children}
+    </div>
+  );
+}
+
+function SeriesList({
+  points,
+  unit,
+}: {
+  points: Array<{ year: number; value: number | null }>;
+  unit: string;
+}) {
+  return (
+    <div>
+      <div className="divide-y border hairline" style={{ borderColor: 'var(--border-subtle)' }}>
+        {points.map((point) => (
+          <div key={point.year} className="flex items-center justify-between px-3 py-2 text-[11px]">
+            <span className="mono text-[var(--text-secondary)]">{point.year}</span>
+            <span className="mono">
+              {point.value === null ? '待考' : `${point.value} ${unit}`}
+            </span>
+          </div>
+        ))}
+      </div>
+      <p className="mt-2 text-[10px] text-[var(--text-secondary)]">
+        有效点不足 3 个，按文字列表展示；缺失年份不做估算。
+      </p>
     </div>
   );
 }

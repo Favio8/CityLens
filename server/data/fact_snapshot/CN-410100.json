@@ -1,0 +1,3082 @@
+{
+  "cityId": "CN-410100",
+  "cityName": "郑州",
+  "cityQid": "Q30340",
+  "center": [
+    113.66051,
+    34.74919
+  ],
+  "retrievedAt": "2026-11-11T05:47:29.613Z",
+  "sourceRef": {
+    "id": "S-WD-CN-410100",
+    "type": "wikidata",
+    "title": "Wikidata 事实快照 · 郑州",
+    "url": "https://query.wikidata.org/sparql",
+    "retrievedAt": "2026-11-11T05:47:29.613Z"
+  },
+  "landmarks": [
+    {
+      "entityId": "Q232771",
+      "name": "少林寺",
+      "coordinates": [
+        112.93569,
+        34.50709
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 61
+    },
+    {
+      "entityId": "Q2046262",
+      "name": "嵩岳寺塔",
+      "coordinates": [
+        113.01591667,
+        34.50161111
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 22
+    },
+    {
+      "entityId": "Q675482",
+      "name": "登封观星台",
+      "coordinates": [
+        113.14071111,
+        34.40240556
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 18
+    },
+    {
+      "entityId": "Q1081096",
+      "name": "少林寺塔林",
+      "coordinates": [
+        112.938611111,
+        34.505277777
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 12
+    },
+    {
+      "entityId": "Q1013774",
+      "name": "法王寺",
+      "coordinates": [
+        113.0206,
+        34.5035
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 9
+    },
+    {
+      "entityId": "Q4353771",
+      "name": "二七纪念塔",
+      "coordinates": [
+        113.666,
+        34.752
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 9
+    },
+    {
+      "entityId": "Q39358573",
+      "name": "新砦遗址",
+      "coordinates": [
+        113.556209,
+        34.442258
+      ],
+      "kind": "考古遗址",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 8
+    },
+    {
+      "entityId": "Q203132",
+      "name": "郑州商城遗址",
+      "coordinates": [
+        113.68305556,
+        34.74527778
+      ],
+      "kind": "考古遗址",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 8
+    },
+    {
+      "entityId": "Q1574080",
+      "name": "打虎亭汉墓",
+      "coordinates": [
+        113.28666667,
+        34.51305556
+      ],
+      "kind": "考古遗址",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 7
+    },
+    {
+      "entityId": "Q1329558",
+      "name": "中岳庙",
+      "coordinates": [
+        113.06777778,
+        34.45916667
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 7
+    },
+    {
+      "entityId": "Q15935528",
+      "name": "郑州博物馆",
+      "coordinates": [
+        113.540683333,
+        34.740755555
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 5
+    },
+    {
+      "entityId": "Q1157409",
+      "name": "大河村遗址",
+      "coordinates": [
+        113.69396,
+        34.84366
+      ],
+      "kind": "考古遗址",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q1387840",
+      "name": "巩县石窟",
+      "coordinates": [
+        113.02388889,
+        34.81333333
+      ],
+      "kind": "考古遗址",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q1721528",
+      "name": "宋陵",
+      "coordinates": [
+        112.95455,
+        34.66542
+      ],
+      "kind": "考古遗址",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": "北宋皇陵，位于河南省巩义市",
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q10958009",
+      "name": "小双桥遗址",
+      "coordinates": [
+        113.55804,
+        34.85298
+      ],
+      "kind": "考古遗址",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q15938189",
+      "name": "王城岗及阳城遗址",
+      "coordinates": [
+        113.14645,
+        34.415314
+      ],
+      "kind": "考古遗址",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q197784",
+      "name": "织机洞遗址",
+      "coordinates": [
+        113.323985,
+        34.645322
+      ],
+      "kind": "考古遗址",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q10918558",
+      "name": "启母阙",
+      "coordinates": [
+        113.04131167,
+        34.474172309
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q10895701",
+      "name": "净藏禅师塔",
+      "coordinates": [
+        112.995458,
+        34.493457
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q2145669",
+      "name": "康百万庄园",
+      "coordinates": [
+        112.947189,
+        34.764285
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": "河南省巩义市古建筑",
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q10941219",
+      "name": "太室阙",
+      "coordinates": [
+        113.067801955,
+        34.451870407
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q11091804",
+      "name": "会善寺",
+      "coordinates": [
+        112.998866666,
+        34.493388888
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q11036331",
+      "name": "少室阙",
+      "coordinates": [
+        112.977024374,
+        34.493047509
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q17026198",
+      "name": "郑韩故城",
+      "coordinates": [
+        113.72227,
+        34.412314
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": "先秦时期郑国和韩国首都",
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q110835251",
+      "name": "新郑轩辕庙",
+      "coordinates": [
+        113.72095,
+        34.40238
+      ],
+      "kind": "庙",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q130267773",
+      "name": "登封南岳庙",
+      "coordinates": [
+        112.97628,
+        34.37351
+      ],
+      "kind": "庙",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q116983147",
+      "name": "大师姑城址",
+      "coordinates": [
+        113.48172,
+        34.84385
+      ],
+      "kind": "考古遗址",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q19853826",
+      "name": "郑州城隍庙",
+      "coordinates": [
+        113.680825,
+        34.7531056
+      ],
+      "kind": "庙",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q108584168",
+      "name": "慈云寺 (巩义)",
+      "coordinates": [
+        113.06774,
+        34.66822
+      ],
+      "kind": "庙",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q15900656",
+      "name": "西山遗址",
+      "coordinates": [
+        113.5312333,
+        34.9103139
+      ],
+      "kind": "考古遗址",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q10305055",
+      "name": "李家沟遗址",
+      "coordinates": [
+        113.524,
+        34.56533
+      ],
+      "kind": "考古遗址",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q108533088",
+      "name": "京城古城址",
+      "coordinates": [
+        113.435163888,
+        34.721169444
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q130602301",
+      "name": "登封崇福宫",
+      "coordinates": [
+        113.038611,
+        34.475272
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q128875114",
+      "name": "登封城隍庙",
+      "coordinates": [
+        113.02603,
+        34.45859
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q133307082",
+      "name": "张祜庄园",
+      "coordinates": [
+        113.19098,
+        34.69704
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q133305802",
+      "name": "青台遗址",
+      "coordinates": [
+        113.40625,
+        34.88915
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q18652341",
+      "name": "大唐嵩阳观纪圣德感应之颂碑",
+      "coordinates": [
+        113.02711,
+        34.48148
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q24841497",
+      "name": "永昭陵",
+      "coordinates": [
+        112.97989,
+        34.74213
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": "宋仁宗赵祯的陵墓",
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q108525942",
+      "name": "密县县衙",
+      "coordinates": [
+        113.361666666,
+        34.515277777
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q133309414",
+      "name": "登封玉溪宫",
+      "coordinates": [
+        113.15163,
+        34.52982
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q133306092",
+      "name": "密县瓷窑遗址",
+      "coordinates": [
+        113.35516,
+        34.5111
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q24841495",
+      "name": "永裕陵",
+      "coordinates": [
+        112.916,
+        34.64939
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": "宋神宗赵顼的陵墓",
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q108606529",
+      "name": "苑陵故城",
+      "coordinates": [
+        113.845713888,
+        34.476519444
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q24841500",
+      "name": "永昌陵",
+      "coordinates": [
+        112.95455,
+        34.66542
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": "宋太祖赵匡胤的陵墓",
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q115189400",
+      "name": "郑州第二砂轮厂旧址",
+      "coordinates": [
+        113.5898,
+        34.7446
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q110548384",
+      "name": "欧阳修墓",
+      "coordinates": [
+        113.600625,
+        34.4021667
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q11098017",
+      "name": "李诫墓",
+      "coordinates": [
+        113.6122139,
+        34.6097806
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q133305859",
+      "name": "曲梁遗址",
+      "coordinates": [
+        113.59598,
+        34.53536
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q10917832",
+      "name": "后周皇陵",
+      "coordinates": [
+        113.69644,
+        34.56237
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q130305545",
+      "name": "华阳故城",
+      "coordinates": [
+        113.712422222,
+        34.561333333
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q24841501",
+      "name": "宋永安陵",
+      "coordinates": [
+        112.96179,
+        34.6639
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": "宋宣祖赵弘殷的陵墓",
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q119045666",
+      "name": "二七纪念堂",
+      "coordinates": [
+        113.66004,
+        34.74727
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q133309404",
+      "name": "三祖庵塔",
+      "coordinates": [
+        113.0138,
+        34.512
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q24841499",
+      "name": "永熙陵",
+      "coordinates": [
+        112.94454,
+        34.67167
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": "宋太宗赵炅的陵墓",
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q24841498",
+      "name": "永定陵",
+      "coordinates": [
+        112.97437,
+        34.70176
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": "宋真宗赵恒的陵墓",
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q24841494",
+      "name": "永泰陵",
+      "coordinates": [
+        112.9079,
+        34.65156
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": "宋哲宗赵煦的陵墓",
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q18651893",
+      "name": "千尺塔",
+      "coordinates": [
+        113.3806889,
+        34.6301028
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q11132375",
+      "name": "永泰寺塔",
+      "coordinates": [
+        112.97555556,
+        34.52222222
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": "中华人民共和国境内的一个全国重点文物保护单位",
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q130272173",
+      "name": "汉霸二王城",
+      "coordinates": [
+        113.45438,
+        34.95207
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q18652577",
+      "name": "寿圣寺双塔",
+      "coordinates": [
+        113.9927361,
+        34.4967667
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q133232667",
+      "name": "古城寨城址",
+      "coordinates": [
+        113.64952,
+        34.46591
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q24841496",
+      "name": "永厚陵",
+      "coordinates": [
+        112.97261,
+        34.74545
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": "宋英宗赵曙的陵墓",
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q108579658",
+      "name": "郑州清真寺",
+      "coordinates": [
+        113.6727028,
+        34.7562889
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q133307084",
+      "name": "刘镇华庄园",
+      "coordinates": [
+        113.05182,
+        34.82702
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q18651698",
+      "name": "凤台寺塔",
+      "coordinates": [
+        113.717272222,
+        34.389672222
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q137554697",
+      "name": "王城岗遗址",
+      "coordinates": [
+        113.128669444,
+        34.398419444
+      ],
+      "kind": "考古遗址",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q137554930",
+      "name": "大周封祀坛遗址",
+      "coordinates": [
+        113.011161111,
+        34.461158333
+      ],
+      "kind": "考古遗址",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q137554752",
+      "name": "阳城遗址",
+      "coordinates": [
+        113.139138888,
+        34.410266666
+      ],
+      "kind": "考古遗址",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q11141658",
+      "name": "河南自然博物馆",
+      "coordinates": [
+        113.752462033,
+        34.765261334
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q133261125",
+      "name": "崇唐观造像",
+      "coordinates": [
+        113.03418,
+        34.49225
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q133305805",
+      "name": "秦王寨遗址",
+      "coordinates": [
+        113.34346,
+        34.9478
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q133305845",
+      "name": "花地嘴遗址",
+      "coordinates": [
+        113.0703,
+        34.80352
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q133453234",
+      "name": "初祖庵及少林寺塔林",
+      "coordinates": [
+        112.93097,
+        34.50473
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q133305808",
+      "name": "人和寨遗址",
+      "coordinates": [
+        113.6408,
+        34.43188
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q117437320",
+      "name": "清凉寺",
+      "coordinates": [
+        112.92685,
+        34.45313
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q133311167",
+      "name": "古荥冶铁遗址",
+      "coordinates": [
+        113.52751,
+        34.8766
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q133275813",
+      "name": "裴李岗遗址",
+      "coordinates": [
+        113.64851,
+        34.43669
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q133305876",
+      "name": "娘娘寨遗址",
+      "coordinates": [
+        113.43051,
+        34.83287
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q113303588",
+      "name": "铁生沟冶铁遗址",
+      "coordinates": [
+        113.041423695,
+        34.619526871
+      ],
+      "kind": "考古遗址",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q107178197",
+      "name": "大师姑城址",
+      "coordinates": [
+        113.481888,
+        34.840897
+      ],
+      "kind": "考古遗址",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q133309320",
+      "name": "窑沟遗址",
+      "coordinates": [
+        113.47037,
+        34.43036
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q133306039",
+      "name": "祭伯城遗址",
+      "coordinates": [
+        113.74445,
+        34.78011
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q133261172",
+      "name": "韩王陵",
+      "coordinates": [
+        113.6766,
+        34.40181
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q133261015",
+      "name": "唐户遗址",
+      "coordinates": [
+        113.68817,
+        34.30512
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q133275553",
+      "name": "郑州二七罢工纪念塔和纪念堂",
+      "coordinates": [
+        113.6604,
+        34.75335
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q133305800",
+      "name": "后庄王遗址",
+      "coordinates": [
+        113.54335,
+        34.85418
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q133306514",
+      "name": "后士郭壁画墓",
+      "coordinates": [
+        113.31979,
+        34.5381
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q133306082",
+      "name": "铁生沟冶铁遗址",
+      "coordinates": [
+        113.0359,
+        34.61576
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q133309553",
+      "name": "佛顶尊胜陀罗尼经幢",
+      "coordinates": [
+        113.40484,
+        34.78364
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q133305799",
+      "name": "尚岗杨遗址",
+      "coordinates": [
+        113.72376,
+        34.71411
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q133305895",
+      "name": "稍柴遗址",
+      "coordinates": [
+        112.92007,
+        34.70339
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q133309314",
+      "name": "官庄遗址",
+      "coordinates": [
+        113.37602,
+        34.85742
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q133306512",
+      "name": "苌村汉墓",
+      "coordinates": [
+        113.2347,
+        34.85725
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q133261127",
+      "name": "刘碑寺碑",
+      "coordinates": [
+        113.18974,
+        34.40963
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q133309302",
+      "name": "老奶奶庙遗址",
+      "coordinates": [
+        113.57144,
+        34.63236
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q133261023",
+      "name": "大周封祀坛遗址",
+      "coordinates": [
+        113.01043,
+        34.46193
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q133306014",
+      "name": "南洼遗址",
+      "coordinates": [
+        112.81271,
+        34.40579
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q133309311",
+      "name": "西史村遗址",
+      "coordinates": [
+        113.31583,
+        34.82001
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q133311169",
+      "name": "黄冶三彩窑址",
+      "coordinates": [
+        113.0369,
+        34.76809
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q133306017",
+      "name": "望京楼遗址",
+      "coordinates": [
+        113.72242,
+        34.45109
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    }
+  ],
+  "relics": [
+    {
+      "entityId": "Q108533088",
+      "name": "京城古城址",
+      "coordinates": [
+        113.435163888,
+        34.721169444
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q130602301",
+      "name": "登封崇福宫",
+      "coordinates": [
+        113.038611,
+        34.475272
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q1329558",
+      "name": "中岳庙",
+      "coordinates": [
+        113.06777778,
+        34.45916667
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 7
+    },
+    {
+      "entityId": "Q1081096",
+      "name": "少林寺塔林",
+      "coordinates": [
+        112.938611111,
+        34.505277777
+      ],
+      "inceptionYear": 791,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 12
+    },
+    {
+      "entityId": "Q232771",
+      "name": "少林寺",
+      "coordinates": [
+        112.93569,
+        34.50709
+      ],
+      "inceptionYear": 495,
+      "museumOrSite": null,
+      "location": "嵩山",
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 61
+    },
+    {
+      "entityId": "Q10918558",
+      "name": "启母阙",
+      "coordinates": [
+        113.04131167,
+        34.474172309
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q133309320",
+      "name": "窑沟遗址",
+      "coordinates": [
+        113.47037,
+        34.43036
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q133306039",
+      "name": "祭伯城遗址",
+      "coordinates": [
+        113.74445,
+        34.78011
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q133261172",
+      "name": "韩王陵",
+      "coordinates": [
+        113.6766,
+        34.40181
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q133261125",
+      "name": "崇唐观造像",
+      "coordinates": [
+        113.03418,
+        34.49225
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q197784",
+      "name": "织机洞遗址",
+      "coordinates": [
+        113.323985,
+        34.645322
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q15900656",
+      "name": "西山遗址",
+      "coordinates": [
+        113.5312333,
+        34.9103139
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q133261015",
+      "name": "唐户遗址",
+      "coordinates": [
+        113.68817,
+        34.30512
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q128875114",
+      "name": "登封城隍庙",
+      "coordinates": [
+        113.02603,
+        34.45859
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q133307082",
+      "name": "张祜庄园",
+      "coordinates": [
+        113.19098,
+        34.69704
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q133275553",
+      "name": "郑州二七罢工纪念塔和纪念堂",
+      "coordinates": [
+        113.6604,
+        34.75335
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q133305802",
+      "name": "青台遗址",
+      "coordinates": [
+        113.40625,
+        34.88915
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q18652341",
+      "name": "大唐嵩阳观纪圣德感应之颂碑",
+      "coordinates": [
+        113.02711,
+        34.48148
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q1013774",
+      "name": "法王寺",
+      "coordinates": [
+        113.0206,
+        34.5035
+      ],
+      "inceptionYear": 71,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 9
+    },
+    {
+      "entityId": "Q24841497",
+      "name": "永昭陵",
+      "coordinates": [
+        112.97989,
+        34.74213
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": "宋仁宗赵祯的陵墓",
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q133305800",
+      "name": "后庄王遗址",
+      "coordinates": [
+        113.54335,
+        34.85418
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q133306514",
+      "name": "后士郭壁画墓",
+      "coordinates": [
+        113.31979,
+        34.5381
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q108525942",
+      "name": "密县县衙",
+      "coordinates": [
+        113.361666666,
+        34.515277777
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q133309414",
+      "name": "登封玉溪宫",
+      "coordinates": [
+        113.15163,
+        34.52982
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q133306092",
+      "name": "密县瓷窑遗址",
+      "coordinates": [
+        113.35516,
+        34.5111
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q2046262",
+      "name": "嵩岳寺塔",
+      "coordinates": [
+        113.01591667,
+        34.50161111
+      ],
+      "inceptionYear": 523,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 22
+    },
+    {
+      "entityId": "Q133305805",
+      "name": "秦王寨遗址",
+      "coordinates": [
+        113.34346,
+        34.9478
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q24841495",
+      "name": "永裕陵",
+      "coordinates": [
+        112.916,
+        34.64939
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": "宋神宗赵顼的陵墓",
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q133306082",
+      "name": "铁生沟冶铁遗址",
+      "coordinates": [
+        113.0359,
+        34.61576
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q10895701",
+      "name": "净藏禅师塔",
+      "coordinates": [
+        112.995458,
+        34.493457
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q133309553",
+      "name": "佛顶尊胜陀罗尼经幢",
+      "coordinates": [
+        113.40484,
+        34.78364
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q108606529",
+      "name": "苑陵故城",
+      "coordinates": [
+        113.845713888,
+        34.476519444
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q133305799",
+      "name": "尚岗杨遗址",
+      "coordinates": [
+        113.72376,
+        34.71411
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q133305895",
+      "name": "稍柴遗址",
+      "coordinates": [
+        112.92007,
+        34.70339
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q24841500",
+      "name": "永昌陵",
+      "coordinates": [
+        112.95455,
+        34.66542
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": "宋太祖赵匡胤的陵墓",
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q115189400",
+      "name": "郑州第二砂轮厂旧址",
+      "coordinates": [
+        113.5898,
+        34.7446
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q133305845",
+      "name": "花地嘴遗址",
+      "coordinates": [
+        113.0703,
+        34.80352
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q4353771",
+      "name": "二七纪念塔",
+      "coordinates": [
+        113.666,
+        34.752
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 9
+    },
+    {
+      "entityId": "Q15938189",
+      "name": "王城岗及阳城遗址",
+      "coordinates": [
+        113.14645,
+        34.415314
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q39358573",
+      "name": "新砦遗址",
+      "coordinates": [
+        113.556209,
+        34.442258
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": "新密市",
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 8
+    },
+    {
+      "entityId": "Q130267773",
+      "name": "登封南岳庙",
+      "coordinates": [
+        112.97628,
+        34.37351
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q133453234",
+      "name": "初祖庵及少林寺塔林",
+      "coordinates": [
+        112.93097,
+        34.50473
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q110548384",
+      "name": "欧阳修墓",
+      "coordinates": [
+        113.600625,
+        34.4021667
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q11098017",
+      "name": "李诫墓",
+      "coordinates": [
+        113.6122139,
+        34.6097806
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q133309314",
+      "name": "官庄遗址",
+      "coordinates": [
+        113.37602,
+        34.85742
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q133305808",
+      "name": "人和寨遗址",
+      "coordinates": [
+        113.6408,
+        34.43188
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q133305859",
+      "name": "曲梁遗址",
+      "coordinates": [
+        113.59598,
+        34.53536
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q137554930",
+      "name": "大周封祀坛遗址",
+      "coordinates": [
+        113.011161111,
+        34.461158333
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q2145669",
+      "name": "康百万庄园",
+      "coordinates": [
+        112.947189,
+        34.764285
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": "河南省巩义市古建筑",
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q108584168",
+      "name": "慈云寺 (巩义)",
+      "coordinates": [
+        113.06774,
+        34.66822
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q10917832",
+      "name": "后周皇陵",
+      "coordinates": [
+        113.69644,
+        34.56237
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q117437320",
+      "name": "清凉寺",
+      "coordinates": [
+        112.92685,
+        34.45313
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q133306512",
+      "name": "苌村汉墓",
+      "coordinates": [
+        113.2347,
+        34.85725
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q133261127",
+      "name": "刘碑寺碑",
+      "coordinates": [
+        113.18974,
+        34.40963
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q133309302",
+      "name": "老奶奶庙遗址",
+      "coordinates": [
+        113.57144,
+        34.63236
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q130305545",
+      "name": "华阳故城",
+      "coordinates": [
+        113.712422222,
+        34.561333333
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q133261023",
+      "name": "大周封祀坛遗址",
+      "coordinates": [
+        113.01043,
+        34.46193
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q24841501",
+      "name": "宋永安陵",
+      "coordinates": [
+        112.96179,
+        34.6639
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": "宋宣祖赵弘殷的陵墓",
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q119045666",
+      "name": "二七纪念堂",
+      "coordinates": [
+        113.66004,
+        34.74727
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q10958009",
+      "name": "小双桥遗址",
+      "coordinates": [
+        113.55804,
+        34.85298
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q133306014",
+      "name": "南洼遗址",
+      "coordinates": [
+        112.81271,
+        34.40579
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q10941219",
+      "name": "太室阙",
+      "coordinates": [
+        113.067801955,
+        34.451870407
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q133309404",
+      "name": "三祖庵塔",
+      "coordinates": [
+        113.0138,
+        34.512
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q137554697",
+      "name": "王城岗遗址",
+      "coordinates": [
+        113.128669444,
+        34.398419444
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q24841499",
+      "name": "永熙陵",
+      "coordinates": [
+        112.94454,
+        34.67167
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": "宋太宗赵炅的陵墓",
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q11091804",
+      "name": "会善寺",
+      "coordinates": [
+        112.998866666,
+        34.493388888
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q24841498",
+      "name": "永定陵",
+      "coordinates": [
+        112.97437,
+        34.70176
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": "宋真宗赵恒的陵墓",
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q24841494",
+      "name": "永泰陵",
+      "coordinates": [
+        112.9079,
+        34.65156
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": "宋哲宗赵煦的陵墓",
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q18651893",
+      "name": "千尺塔",
+      "coordinates": [
+        113.3806889,
+        34.6301028
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q11132375",
+      "name": "永泰寺塔",
+      "coordinates": [
+        112.97555556,
+        34.52222222
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": "中华人民共和国境内的一个全国重点文物保护单位",
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q1387840",
+      "name": "巩县石窟",
+      "coordinates": [
+        113.02388889,
+        34.81333333
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q675482",
+      "name": "登封观星台",
+      "coordinates": [
+        113.14071111,
+        34.40240556
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 18
+    },
+    {
+      "entityId": "Q10305055",
+      "name": "李家沟遗址",
+      "coordinates": [
+        113.524,
+        34.56533
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q110835251",
+      "name": "新郑轩辕庙",
+      "coordinates": [
+        113.72095,
+        34.40238
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q11036331",
+      "name": "少室阙",
+      "coordinates": [
+        112.977024374,
+        34.493047509
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q116983147",
+      "name": "大师姑城址",
+      "coordinates": [
+        113.48172,
+        34.84385
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q133309311",
+      "name": "西史村遗址",
+      "coordinates": [
+        113.31583,
+        34.82001
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q1721528",
+      "name": "宋陵",
+      "coordinates": [
+        112.95455,
+        34.66542
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": "北宋皇陵，位于河南省巩义市",
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q17026198",
+      "name": "郑韩故城",
+      "coordinates": [
+        113.72227,
+        34.412314
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": "先秦时期郑国和韩国首都",
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q19853826",
+      "name": "郑州城隍庙",
+      "coordinates": [
+        113.680825,
+        34.7531056
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q130272173",
+      "name": "汉霸二王城",
+      "coordinates": [
+        113.45438,
+        34.95207
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q18652577",
+      "name": "寿圣寺双塔",
+      "coordinates": [
+        113.9927361,
+        34.4967667
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q133311167",
+      "name": "古荥冶铁遗址",
+      "coordinates": [
+        113.52751,
+        34.8766
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q133232667",
+      "name": "古城寨城址",
+      "coordinates": [
+        113.64952,
+        34.46591
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q203132",
+      "name": "郑州商城遗址",
+      "coordinates": [
+        113.68305556,
+        34.74527778
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 8
+    },
+    {
+      "entityId": "Q133311169",
+      "name": "黄冶三彩窑址",
+      "coordinates": [
+        113.0369,
+        34.76809
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q133275813",
+      "name": "裴李岗遗址",
+      "coordinates": [
+        113.64851,
+        34.43669
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q1574080",
+      "name": "打虎亭汉墓",
+      "coordinates": [
+        113.28666667,
+        34.51305556
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 7
+    },
+    {
+      "entityId": "Q24841496",
+      "name": "永厚陵",
+      "coordinates": [
+        112.97261,
+        34.74545
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": "宋英宗赵曙的陵墓",
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q108579658",
+      "name": "郑州清真寺",
+      "coordinates": [
+        113.6727028,
+        34.7562889
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q133306017",
+      "name": "望京楼遗址",
+      "coordinates": [
+        113.72242,
+        34.45109
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q133305876",
+      "name": "娘娘寨遗址",
+      "coordinates": [
+        113.43051,
+        34.83287
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q1157409",
+      "name": "大河村遗址",
+      "coordinates": [
+        113.69396,
+        34.84366
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q137554752",
+      "name": "阳城遗址",
+      "coordinates": [
+        113.139138888,
+        34.410266666
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q133307084",
+      "name": "刘镇华庄园",
+      "coordinates": [
+        113.05182,
+        34.82702
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q18651698",
+      "name": "凤台寺塔",
+      "coordinates": [
+        113.717272222,
+        34.389672222
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    }
+  ],
+  "figures": [
+    {
+      "entityId": "Q33772",
+      "name": "杜甫",
+      "birthYear": 712,
+      "deathYear": 770,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "巩义市"
+      },
+      "sitelinks": 139,
+      "description": "唐代诗人"
+    },
+    {
+      "entityId": "Q28959",
+      "name": "韓非",
+      "birthYear": -279,
+      "deathYear": -232,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "新郑市"
+      },
+      "sitelinks": 74,
+      "description": null
+    },
+    {
+      "entityId": "Q187172",
+      "name": "菩提达摩",
+      "birthYear": 483,
+      "deathYear": 540,
+      "relationType": "sojourner",
+      "evidence": {
+        "property": "deathplace",
+        "value": "少林寺"
+      },
+      "sitelinks": 66,
+      "description": "中国禅宗创始人"
+    },
+    {
+      "entityId": "Q313324",
+      "name": "白居易",
+      "birthYear": 772,
+      "deathYear": 846,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "新郑市"
+      },
+      "sitelinks": 59,
+      "description": "唐代文学家"
+    },
+    {
+      "entityId": "Q203782",
+      "name": "李商隐",
+      "birthYear": 813,
+      "deathYear": 858,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "荥阳市"
+      },
+      "sitelinks": 32,
+      "description": null
+    },
+    {
+      "entityId": "Q2984064",
+      "name": "列御寇",
+      "birthYear": -449,
+      "deathYear": -374,
+      "relationType": "native",
+      "evidence": {
+        "property": "position",
+        "value": "郑州市人（维基百科分类）"
+      },
+      "sitelinks": 24,
+      "description": null
+    },
+    {
+      "entityId": "Q559421",
+      "name": "申不害",
+      "birthYear": -384,
+      "deathYear": -336,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "荥阳市"
+      },
+      "sitelinks": 22,
+      "description": "战国时期法家人物"
+    },
+    {
+      "entityId": "Q541023",
+      "name": "慧可",
+      "birthYear": 487,
+      "deathYear": 593,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "荥阳市"
+      },
+      "sitelinks": 17,
+      "description": null
+    },
+    {
+      "entityId": "Q6538931",
+      "name": "李揆",
+      "birthYear": 713,
+      "deathYear": 784,
+      "relationType": "native",
+      "evidence": {
+        "property": "position",
+        "value": "郑州市人（维基百科分类）"
+      },
+      "sitelinks": 4,
+      "description": null
+    },
+    {
+      "entityId": "Q16240092",
+      "name": "郑肃",
+      "birthYear": 701,
+      "deathYear": 801,
+      "relationType": "native",
+      "evidence": {
+        "property": "position",
+        "value": "郑州市人（维基百科分类）"
+      },
+      "sitelinks": 4,
+      "description": null
+    }
+  ],
+  "failures": []
+}

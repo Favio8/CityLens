@@ -1,0 +1,791 @@
+{
+  "cityId": "CN-321000",
+  "cityName": "扬州",
+  "cityQid": "Q57906",
+  "center": [
+    119.43625,
+    32.39117
+  ],
+  "retrievedAt": "2026-11-10T13:08:47.483Z",
+  "sourceRef": {
+    "id": "S-WD-CN-321000",
+    "type": "wikidata",
+    "title": "Wikidata 事实快照 · 扬州",
+    "url": "https://query.wikidata.org/sparql",
+    "retrievedAt": "2026-11-10T13:08:47.483Z"
+  },
+  "landmarks": [
+    {
+      "entityId": "Q776883",
+      "name": "仙鹤寺",
+      "coordinates": [
+        119.428098,
+        32.391887
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 7
+    },
+    {
+      "entityId": "Q5212552",
+      "name": "扬州大明寺",
+      "coordinates": [
+        119.40833333,
+        32.42166667
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 6
+    },
+    {
+      "entityId": "Q3277018",
+      "name": "个园",
+      "coordinates": [
+        119.438148,
+        32.402015
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 5
+    },
+    {
+      "entityId": "Q10886081",
+      "name": "何园",
+      "coordinates": [
+        119.44332,
+        32.388188
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q12073312",
+      "name": "揚州博物館",
+      "coordinates": [
+        119.366,
+        32.3928
+      ],
+      "kind": "博物馆",
+      "heritageDesignations": [],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q1869570",
+      "name": "龙虬庄遗址",
+      "coordinates": [
+        119.508279,
+        32.831885
+      ],
+      "kind": "考古遗址",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q8060179",
+      "name": "盂城驿",
+      "coordinates": [
+        119.433,
+        32.7725
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q3391115",
+      "name": "普哈丁墓",
+      "coordinates": [
+        119.44861111,
+        32.39666667
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q19851519",
+      "name": "扬州城遗址",
+      "coordinates": [
+        119.42231,
+        32.39926
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q10959805",
+      "name": "小盘谷",
+      "coordinates": [
+        119.44083333,
+        32.38888889
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q15933139",
+      "name": "西方寺大殿",
+      "coordinates": [
+        119.42599,
+        32.40088
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q16078790",
+      "name": "高邮当铺",
+      "coordinates": [
+        119.42888889,
+        32.79388889
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q10916009",
+      "name": "史可法纪念馆",
+      "coordinates": [
+        119.43444444,
+        32.40305556
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q15932513",
+      "name": "汪氏小苑",
+      "coordinates": [
+        119.44204,
+        32.39755
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q17498521",
+      "name": "卢氏盐商住宅",
+      "coordinates": [
+        119.44641,
+        32.38587
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q16947272",
+      "name": "朱自清旧居",
+      "coordinates": [
+        119.44431,
+        32.39574
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q15935843",
+      "name": "煬帝陵",
+      "coordinates": [
+        119.39239,
+        32.42266
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q15932499",
+      "name": "逸圃",
+      "coordinates": [
+        119.43727,
+        32.4002
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q10919594",
+      "name": "吴氏宅第",
+      "coordinates": [
+        119.44666667,
+        32.39555556
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q11136948",
+      "name": "汪氏盐商住宅",
+      "coordinates": [
+        119.43522,
+        32.38556
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q11063189",
+      "name": "庙山汉墓",
+      "coordinates": [
+        119.28864,
+        32.39985
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q21051892",
+      "name": "贾氏盐商住宅",
+      "coordinates": [
+        119.44024,
+        32.38965
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q15933484",
+      "name": "重宁寺",
+      "coordinates": [
+        119.43257,
+        32.40506
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q133275337",
+      "name": "莲花桥和白塔",
+      "coordinates": [
+        119.41611,
+        32.40977
+      ],
+      "kind": "全国重点文物保护单位",
+      "heritageDesignations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    }
+  ],
+  "relics": [
+    {
+      "entityId": "Q8060179",
+      "name": "盂城驿",
+      "coordinates": [
+        119.433,
+        32.7725
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q10919594",
+      "name": "吴氏宅第",
+      "coordinates": [
+        119.44666667,
+        32.39555556
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q3391115",
+      "name": "普哈丁墓",
+      "coordinates": [
+        119.44861111,
+        32.39666667
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q11136948",
+      "name": "汪氏盐商住宅",
+      "coordinates": [
+        119.43522,
+        32.38556
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q19851519",
+      "name": "扬州城遗址",
+      "coordinates": [
+        119.42231,
+        32.39926
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q10886081",
+      "name": "何园",
+      "coordinates": [
+        119.44332,
+        32.388188
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 4
+    },
+    {
+      "entityId": "Q10959805",
+      "name": "小盘谷",
+      "coordinates": [
+        119.44083333,
+        32.38888889
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q15933139",
+      "name": "西方寺大殿",
+      "coordinates": [
+        119.42599,
+        32.40088
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q11063189",
+      "name": "庙山汉墓",
+      "coordinates": [
+        119.28864,
+        32.39985
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q1869570",
+      "name": "龙虬庄遗址",
+      "coordinates": [
+        119.508279,
+        32.831885
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 3
+    },
+    {
+      "entityId": "Q16078790",
+      "name": "高邮当铺",
+      "coordinates": [
+        119.42888889,
+        32.79388889
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q10916009",
+      "name": "史可法纪念馆",
+      "coordinates": [
+        119.43444444,
+        32.40305556
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q15932513",
+      "name": "汪氏小苑",
+      "coordinates": [
+        119.44204,
+        32.39755
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q17498521",
+      "name": "卢氏盐商住宅",
+      "coordinates": [
+        119.44641,
+        32.38587
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q3277018",
+      "name": "个园",
+      "coordinates": [
+        119.438148,
+        32.402015
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 5
+    },
+    {
+      "entityId": "Q16947272",
+      "name": "朱自清旧居",
+      "coordinates": [
+        119.44431,
+        32.39574
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q5212552",
+      "name": "扬州大明寺",
+      "coordinates": [
+        119.40833333,
+        32.42166667
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 6
+    },
+    {
+      "entityId": "Q21051892",
+      "name": "贾氏盐商住宅",
+      "coordinates": [
+        119.44024,
+        32.38965
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q15935843",
+      "name": "煬帝陵",
+      "coordinates": [
+        119.39239,
+        32.42266
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q15933484",
+      "name": "重宁寺",
+      "coordinates": [
+        119.43257,
+        32.40506
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 1
+    },
+    {
+      "entityId": "Q15932499",
+      "name": "逸圃",
+      "coordinates": [
+        119.43727,
+        32.4002
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 2
+    },
+    {
+      "entityId": "Q133275337",
+      "name": "莲花桥和白塔",
+      "coordinates": [
+        119.41611,
+        32.40977
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 0
+    },
+    {
+      "entityId": "Q776883",
+      "name": "仙鹤寺",
+      "coordinates": [
+        119.428098,
+        32.391887
+      ],
+      "inceptionYear": null,
+      "museumOrSite": null,
+      "location": null,
+      "designations": [
+        "全国重点文物保护单位"
+      ],
+      "description": null,
+      "sitelinks": 7
+    }
+  ],
+  "figures": [
+    {
+      "entityId": "Q148400",
+      "name": "潘玉良",
+      "birthYear": 1899,
+      "deathYear": 1977,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "江都区"
+      },
+      "sitelinks": 30,
+      "description": null
+    },
+    {
+      "entityId": "Q197249",
+      "name": "張遼",
+      "birthYear": 169,
+      "deathYear": 222,
+      "relationType": "sojourner",
+      "evidence": {
+        "property": "deathplace",
+        "value": "江都区"
+      },
+      "sitelinks": 25,
+      "description": "曹魏著名名将"
+    },
+    {
+      "entityId": "Q714061",
+      "name": "鉴真",
+      "birthYear": 688,
+      "deathYear": 763,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "邗江区"
+      },
+      "sitelinks": 17,
+      "description": null
+    },
+    {
+      "entityId": "Q6852590",
+      "name": "刘师培",
+      "birthYear": 1884,
+      "deathYear": 1919,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "仪征市"
+      },
+      "sitelinks": 16,
+      "description": null
+    },
+    {
+      "entityId": "Q710004",
+      "name": "陈琳",
+      "birthYear": 160,
+      "deathYear": 217,
+      "relationType": "native",
+      "evidence": {
+        "property": "birthplace",
+        "value": "宝应县"
+      },
+      "sitelinks": 15,
+      "description": null
+    }
+  ],
+  "failures": []
+}

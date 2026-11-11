@@ -180,6 +180,11 @@ export function getFactSnapshot(cityId: string): FactSnapshot | null {
   return data;
 }
 
+/** 运行时按需生成快照后写回缓存，避免同一进程反复读空文件。 */
+export function setFactSnapshot(cityId: string, snapshot: FactSnapshot): void {
+  snapshotCache.set(cityId, snapshot);
+}
+
 export function getRelicsRegistry(): RelicsRegistry | null {
   if (relicsCache === undefined) relicsCache = loadJson<RelicsRegistry>('relics_registry.json');
   return relicsCache;

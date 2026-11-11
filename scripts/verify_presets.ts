@@ -49,7 +49,7 @@ import {
   getRelicsRegistry,
 } from '../server/services/presetData';
 
-const EXPECTED_MISSING: ModuleName[] = ['dataPulse'];
+const EXPECTED_MISSING: ModuleName[] = [];
 
 function collectSourceIds(value: unknown, out: Set<string>): void {
   if (Array.isArray(value)) {
