@@ -22,20 +22,25 @@
     "setup": "npm run seed && npm run data:presets",
     "data:presets": "tsx scripts/build_preset_archives.ts",
     "verify": "tsx scripts/verify_presets.ts",
+    "test:llm": "tsx scripts/test_llm_provider.ts",
+    "archives:clean-unpublished": "tsx scripts/clean_unpublished_archives.ts",
     "test": "vitest run",
     "typecheck": "tsc -p server/tsconfig.json --noEmit && tsc -p client/tsconfig.json --noEmit",
     "data:dictionary": "tsx scripts/build_city_dictionary.ts",
     "data:poetry": "tsx scripts/build_poetry_corpus.ts",
+    "data:stats": "tsx scripts/build_stats_baseline.ts",
     "data:snapshot": "tsx scripts/build_fact_snapshot.ts",
     "data:relics": "tsx scripts/build_relics_registry.ts",
     "data:gazetteer": "tsx scripts/build_place_gazetteer.ts",
     "data:geo": "tsx scripts/build_geo_boundaries.ts",
     "data:images": "tsx scripts/build_relic_images.ts",
-    "data:refresh": "npm run data:dictionary && npm run data:snapshot && npm run data:relics && npm run data:gazetteer && npm run data:poetry && npm run data:geo && npm run data:images && npm run seed && npm run data:presets"
+    "data:refresh": "npm run data:dictionary && npm run data:snapshot && npm run data:relics && npm run data:gazetteer && npm run data:poetry && npm run data:stats && npm run data:geo && npm run data:images && npm run seed && npm run data:presets"
   },
   "devDependencies": {
     "@types/node": "^22.10.2",
+    "axe-core": "^4.14.0",
     "concurrently": "^9.1.2",
+    "lighthouse": "^13.6.0",
     "tsx": "^4.19.2",
     "typescript": "^5.7.2",
     "vitest": "^2.1.8"

@@ -34,6 +34,8 @@ import {
   getRelicImages,
   getRelicsRegistry,
 } from './presetData';
+import { loadCitySnapshot, snapshotToRegistry } from './cityFactSnapshot';
+import type { CityRecon } from './cityRecon';
 import {
   figureYear,
   formatRelicEra,
@@ -79,6 +81,8 @@ export interface GenerateInput {
   registry?: RelicsRegistry | null;
   gazetteer?: Gazetteer | null;
   poetryCorpus?: PoetryCorpus | null;
+  /** 城市侦察结果（由 jobManager 统一加载，避免每个模块重复联网）。 */
+  recon?: CityRecon | null;
 }
 
 export interface GeneratedModule {
@@ -113,6 +117,67 @@ function snapshotSource(snapshot: FactSnapshot): SourceRef {
     ...(snapshot.sourceRef.url ? { url: snapshot.sourceRef.url } : {}),
     retrievedAt: snapshot.sourceRef.retrievedAt,
   };
+}
+
+function reconSource(recon: CityRecon | null, type: string): SourceRef | null {
+  return recon?.sources.find((item) => item.type === type) ?? null;
+}
+
+function reconFallbackSource(recon: CityRecon | null): SourceRef | null {
+  return (
+    recon?.sources.find((item) => item.id.startsWith('S-RECON-')) ??
+    recon?.sources[0] ??
+    null
+  );
+}
+
+function reconContext(recon: CityRecon | null, maxChars = 1200): string {
+  if (!recon) return '';
+  const parts: string[] = [];
+  if (recon.wikipedia?.summary) parts.push(`维基百科摘要：${recon.wikipedia.summary}`);
+  if (recon.wikipedia?.extract) parts.push(`维基百科正文：${recon.wikipedia.extract.slice(0, 2400)}`);
+  if (recon.wikidata?.description) parts.push(`Wikidata 描述：${recon.wikidata.description}`);
+  const answer = recon.searches.map((item) => item.answer).find((item) => item);
+  if (answer) parts.push(`检索综述：${answer}`);
+  const snippets = recon.searches
+    .flatMap((item) => item.results.slice(0, 3))
+    .map((item) => `${item.title}：${item.content}`)
+    .join('\n');
+  if (snippets) parts.push(`检索摘要：${snippets.slice(0, 1800)}`);
+  return parts.join('\n').slice(0, maxChars);
+}
+
+function latestPopulation(recon: CityRecon | null): { year: number; value: number } | null {
+  const rows = recon?.wikidata?.populations.filter(
+    (item) => item.year >= 1990 && item.year <= new Date().getFullYear(),
+  );
+  if (!rows || rows.length === 0) return null;
+  return rows.reduce((latest, item) => (item.year > latest.year ? item : latest));
+}
+
+const CLIMATE_TYPES = [
+  '亚热带季风气候',
+  '温带季风气候',
+  '温带大陆性气候',
+  '高原山地气候',
+  '热带季风气候',
+  '地中海气候',
+  '亚热带湿润气候',
+  '温带海洋性气候',
+  '高原气候',
+];
+
+function detectClimateType(recon: CityRecon | null): string | null {
+  const text = [
+    recon?.wikipedia?.summary ?? '',
+    recon?.wikipedia?.extract ?? '',
+    recon?.wikidata?.description ?? '',
+    ...(recon?.searches ?? []).flatMap((item) => [
+      item.answer ?? '',
+      ...item.results.slice(0, 3).map((result) => result.content),
+    ]),
+  ].join(' ');
+  return CLIMATE_TYPES.find((type) => text.includes(type)) ?? null;
 }
 
 function buildIdentity(input: GenerateInput): GeneratedModule {
@@ -486,12 +551,15 @@ function asText(value: unknown): string {
 }
 
 async function llmIdentity(input: GenerateInput): Promise<GeneratedModule> {
+  const recon = input.recon ?? null;
+  const context = reconContext(recon, 900);
   const text = await callDeepSeek([
     { role: 'system', content: SYSTEM_PROMPT },
     {
       role: 'user',
       content:
         `城市：${input.city.standardName}（${input.city.province}）。` +
+        (context ? `可参考的背景（仅供气质判断，不要复述数据）：${context}\n` : '') +
         '请用 8-60 个字写一句城市人格，概括它的气质，不要罗列数据或景点。' +
         '只输出 {"oneLinePersona":"..."}。',
     },
@@ -502,13 +570,48 @@ async function llmIdentity(input: GenerateInput): Promise<GeneratedModule> {
     throw new GenerationError('LLM_OUTPUT_INVALID', '城市人格长度不符合 8-60 字');
   }
   const base = buildIdentity(input);
+  const data = { ...(base.data as Record<string, unknown>) };
+  const sources = [...base.sources, llmSource(), ...(recon?.sources ?? [])];
+  const sourceRefs = [DICTIONARY_SOURCE_ID, llmSource().id];
+  const wikiSource = reconSource(recon, 'wikipedia');
+  const wikidataSource = reconSource(recon, 'wikidata');
+
+  const population = latestPopulation(recon);
+  const statPop = recon?.stats.pop ?? null;
+  const statPopSource = statPop
+    ? (recon?.sources.find((item) => item.url === statPop.url) ?? null)
+    : null;
+  if (statPop && statPopSource) {
+    data.population = {
+      value: statPop.value,
+      unit: '万人',
+      statYear: statPop.year,
+      sourceRefs: [statPopSource.id],
+    };
+    sourceRefs.push(statPopSource.id);
+  } else if (population && wikidataSource) {
+    data.population = {
+      value: Math.round((population.value / 10000) * 100) / 100,
+      unit: '万人',
+      statYear: population.year,
+      sourceRefs: [wikidataSource.id],
+    };
+    sourceRefs.push(wikidataSource.id);
+  }
+  const climateType = detectClimateType(recon);
+  const climateSource = wikiSource ?? reconSource(recon, 'web_search');
+  if (climateType && climateSource) {
+    data.climateType = { value: climateType, sourceRefs: [climateSource.id] };
+    sourceRefs.push(climateSource.id);
+  }
+
   return {
     ...base,
-    sources: [...base.sources, llmSource()],
+    sources,
     data: {
-      ...(base.data as Record<string, unknown>),
+      ...data,
       oneLinePersona: persona,
-      sourceRefs: [DICTIONARY_SOURCE_ID, llmSource().id],
+      sourceRefs: [...new Set(sourceRefs)],
     },
   };
 }
@@ -521,12 +624,17 @@ async function llmChronicle(input: GenerateInput): Promise<GeneratedModule> {
   const table = dynasties.dynasties
     .map((dynasty) => `${dynasty.name}(${dynasty.startYear},${dynasty.endYear ?? 'null'})`)
     .join('、');
+  const recon = input.recon ?? null;
+  const context = reconContext(recon, 1800);
   const text = await callDeepSeek([
     { role: 'system', content: SYSTEM_PROMPT },
     {
       role: 'user',
       content:
         `城市：${input.city.standardName}。本地朝代年表：${table}。` +
+        (context
+          ? `可参考的史实背景（只用于选择与叙述，不得新增年表之外的年份）：${context}\n`
+          : '') +
         '请挑选 3-5 个与本城历史最相关的朝代，输出 {"items":[{"eraName","startYear","endYear",' +
         '"periodRange","ancientCityName","keyEvents","relicToday"}]}。' +
         'eraName 必须来自年表，startYear/endYear 必须与年表完全一致；' +
@@ -542,6 +650,7 @@ async function llmChronicle(input: GenerateInput): Promise<GeneratedModule> {
     if (dynasty.endYear !== null) allowedYears.add(dynasty.endYear);
   }
   const gazetteer = input.gazetteer ?? getGazetteer();
+  const wikiSource = reconSource(recon, 'wikipedia');
   const data = asArray(parsed.items).flatMap((item) => {
     const dynasty = dynasties.dynasties.find((entry) => entry.name === asText(item.eraName));
     if (!dynasty) return [];
@@ -570,7 +679,11 @@ async function llmChronicle(input: GenerateInput): Promise<GeneratedModule> {
         keyEvents,
         relicToday,
         centerCoord: anchor.coordinates,
-        sourceRefs: [llmSource().id, DYNASTY_SOURCE.id],
+        sourceRefs: [
+          llmSource().id,
+          DYNASTY_SOURCE.id,
+          ...(wikiSource ? [wikiSource.id] : []),
+        ],
         verification: 'pending_human_review' as const,
       },
     ];
@@ -581,13 +694,13 @@ async function llmChronicle(input: GenerateInput): Promise<GeneratedModule> {
   return {
     status: 'degraded',
     verification: 'pending_human_review',
-    sources: [llmSource(), DYNASTY_SOURCE],
+    sources: [llmSource(), DYNASTY_SOURCE, ...(recon?.sources ?? [])],
     data,
   };
 }
 
 async function llmLandmarks(input: GenerateInput): Promise<GeneratedModule> {
-  const snapshot = input.snapshot ?? getFactSnapshot(input.city.cityId);
+  const snapshot = input.snapshot ?? (await loadCitySnapshot(input.city));
   if (!snapshot || snapshot.landmarks.length === 0) {
     throw new GenerationError('NO_FACTS', '本地快照无可用景点实体');
   }
@@ -643,8 +756,11 @@ async function llmLandmarks(input: GenerateInput): Promise<GeneratedModule> {
 
 async function llmRelics(input: GenerateInput): Promise<GeneratedModule> {
   const registry = input.registry ?? getRelicsRegistry();
-  if (!registry) throw new GenerationError('NO_FACTS', '缺少文物名录产物');
-  const relics = registry.relics.filter((relic) => relic.cityId === input.city.cityId);
+  const snapshot = input.snapshot ?? (await loadCitySnapshot(input.city));
+  const localRelics =
+    registry?.relics.filter((relic) => relic.cityId === input.city.cityId) ?? [];
+  const relics =
+    localRelics.length > 0 ? localRelics : snapshot ? snapshotToRegistry(snapshot) : [];
   if (relics.length === 0) throw new GenerationError('NO_FACTS', '本城文物名录为空');
   const candidates = relics.slice(0, 12).map((relic) => ({
     registryId: relic.registryId,
@@ -668,7 +784,9 @@ async function llmRelics(input: GenerateInput): Promise<GeneratedModule> {
     const relic = relics.find((entry) => entry.registryId === asText(item.registryId));
     if (!relic) return [];
     for (const sourceId of relic.sourceRefs) {
-      const source = registry.sources.find((entry) => entry.id === sourceId);
+      const source =
+        registry?.sources.find((entry) => entry.id === sourceId) ??
+        (snapshot && sourceId === snapshot.sourceRef.id ? snapshot.sourceRef : undefined);
       if (source) {
         usedSources.set(sourceId, {
           id: source.id,
@@ -711,8 +829,16 @@ async function llmRelics(input: GenerateInput): Promise<GeneratedModule> {
   };
 }
 
+/** 人物叙事中不得出现的字段名 / JSON 键名（泄漏即丢弃该人物，防止内部结构外泄）。 */
+const FIGURE_LEAK_PATTERN =
+  /relationType|birthplace|deathplace|workplace|position|entityRef|sourceRefs|registryId|poemId|候选/i;
+
+function leaksFigureFields(texts: Array<string | undefined>): boolean {
+  return texts.some((text) => typeof text === 'string' && FIGURE_LEAK_PATTERN.test(text));
+}
+
 async function llmFigures(input: GenerateInput): Promise<GeneratedModule> {
-  const snapshot = input.snapshot ?? getFactSnapshot(input.city.cityId);
+  const snapshot = input.snapshot ?? (await loadCitySnapshot(input.city));
   if (!snapshot || snapshot.figures.length === 0) {
     throw new GenerationError('NO_FACTS', '本地快照无可用人物实体');
   }
@@ -722,16 +848,25 @@ async function llmFigures(input: GenerateInput): Promise<GeneratedModule> {
       role: 'user',
       content:
         `城市：${input.city.standardName}。候选人物：${JSON.stringify(
-          snapshot.figures.slice(0, 12).map((figure) => ({
+          snapshot.figures.slice(0, 20).map((figure) => ({
             entityRef: figure.entityId,
             name: figure.name,
-            relationType: figure.relationType,
-            evidence: figure.evidence,
+            relation:
+              figure.evidence.property === 'birthplace'
+                ? '籍贯'
+                : figure.evidence.property === 'deathplace'
+                  ? '卒地'
+                  : figure.evidence.property === 'workplace'
+                    ? '任职/游历'
+                    : '本城人物',
+            place: figure.evidence.value,
           })),
         )}。` +
-        '请选出 2-6 位，输出 {"items":[{"entityRef","dynasty","cityBond","highlights"}]}；' +
-        'entityRef 必须来自候选，cityBond 10-300 字说明与城市的真实关联，highlights 10-200 字；' +
-        '朝代不确定写「待考」。',
+        '请选出 5-6 位（候选足够时至少 5 位），输出 {"items":[{"entityRef","dynasty","cityBond","highlights"}]}；' +
+        'entityRef 必须来自候选；cityBond 60-220 字，用自然中文写清人物与' +
+        `${input.city.standardName}的具体关联（籍贯、卒地、任职或本城人物），` +
+        '不要出现 relationType、deathplace、position 等字段名或 JSON 键名，也不要复述「候选资料」；' +
+        'highlights 50-160 字，写生平、代表作品/事件与可寻访遗迹；朝代不确定写「待考」。',
     },
   ]);
   const parsed = parseJsonObject(text);
@@ -739,17 +874,26 @@ async function llmFigures(input: GenerateInput): Promise<GeneratedModule> {
   const data = asArray(parsed.items).flatMap((item) => {
     const figure = snapshot.figures.find((entry) => entry.entityId === asText(item.entityRef));
     if (!figure) return [];
+    const dynasty = asText(item.dynasty) || PENDING;
+    const cityBond = asText(item.cityBond);
+    const highlights = asText(item.highlights);
+    if (leaksFigureFields([dynasty, cityBond, highlights])) {
+      console.warn(
+        `[llmFigures] ${figure.name} 的叙事包含字段名/键名，已丢弃（entityRef=${figure.entityId}）`,
+      );
+      return [];
+    }
     return [
       {
         entityRef: figure.entityId,
         name: figure.name,
-        dynasty: asText(item.dynasty) || PENDING,
+        dynasty,
         birthYear: figureYear(figure.birthYear),
         deathYear: figureYear(figure.deathYear),
         relationType: figure.relationType,
         evidence: figure.evidence,
-        cityBond: asText(item.cityBond),
-        highlights: asText(item.highlights),
+        cityBond,
+        highlights,
         sites: buildFigureSites(figure, input.city, gazetteer),
         sourceRefs: [snapshot.sourceRef.id],
         verification: 'pending_human_review' as const,
@@ -835,12 +979,16 @@ async function llmPoetics(input: GenerateInput): Promise<GeneratedModule> {
 }
 
 async function llmLocalSoul(input: GenerateInput): Promise<GeneratedModule> {
+  const recon = input.recon ?? null;
+  const context = reconContext(recon, 1600);
   const text = await callDeepSeek([
     { role: 'system', content: SYSTEM_PROMPT },
     {
       role: 'user',
       content:
-        `城市：${input.city.standardName}。请整理本地市井文化，输出 {"foods":[{"name","flavor","origin"}],` +
+        `城市：${input.city.standardName}。` +
+        (context ? `可参考的检索背景（只可据此整理，不得编造）：${context}\n` : '') +
+        '请整理本地市井文化，输出 {"foods":[{"name","flavor","origin"}],' +
         '"dialects":[{"word","pronunciation","meaning","example"}],' +
         '"ichItems":[{"name","level":"national|provincial|待考","intro"}],' +
         '"festivals":[{"name","season","custom"}]}。' +
@@ -848,24 +996,84 @@ async function llmLocalSoul(input: GenerateInput): Promise<GeneratedModule> {
     },
   ]);
   const parsed = parseJsonObject(text);
+  const webSource = reconSource(recon, 'web_search');
   const ichItems = asArray(parsed.ichItems).map((item) => ({
     name: asText(item.name),
     level: ['national', 'provincial'].includes(asText(item.level))
       ? (asText(item.level) as 'national' | 'provincial')
       : ('待考' as const),
     intro: asText(item.intro),
-    sourceRefs: [llmSource().id],
+    sourceRefs: [llmSource().id, ...(webSource ? [webSource.id] : [])],
   }));
   return {
     status: 'degraded',
     verification: 'pending_human_review',
-    sources: [llmSource()],
+    sources: [llmSource(), ...(recon?.sources ?? [])],
     data: {
       aiCurated: true,
       foods: asArray(parsed.foods),
       dialects: asArray(parsed.dialects),
       ichItems,
       festivals: asArray(parsed.festivals),
+    },
+  };
+}
+
+async function llmDataPulse(input: GenerateInput): Promise<GeneratedModule> {
+  const recon = input.recon ?? null;
+  if (!recon) {
+    throw new GenerationError('NO_FACTS', '城市侦察未取得任何可核验来源');
+  }
+  const years = [2021, 2022, 2023, 2024, 2025];
+  const gdpByYear = new Map<number, number>();
+  if (recon.stats.gdp) gdpByYear.set(recon.stats.gdp.year, recon.stats.gdp.value);
+  const popByYear = new Map<number, number>();
+  for (const point of recon.wikidata?.populations ?? []) {
+    if (years.includes(point.year)) {
+      popByYear.set(point.year, Math.round((point.value / 10000) * 100) / 100);
+    }
+  }
+  if (recon.stats.pop) popByYear.set(recon.stats.pop.year, recon.stats.pop.value);
+  const climate = recon.climate?.monthly ?? [];
+  if (gdpByYear.size === 0 && popByYear.size === 0 && climate.length === 0) {
+    throw new GenerationError('NO_FACTS', '未检索到可核验的统计或气候序列');
+  }
+  const fallback = reconFallbackSource(recon);
+  if (!fallback) throw new GenerationError('NO_FACTS', '城市侦察未登记来源');
+  const gdpSource =
+    recon.sources.find((item) => item.url === recon.stats.gdp?.url) ?? fallback;
+  const popSource =
+    recon.sources.find((item) => item.url === recon.stats.pop?.url) ??
+    reconSource(recon, 'wikidata') ??
+    fallback;
+  const climateSource =
+    recon.sources.find((item) => item.title.startsWith('Open-Meteo')) ?? fallback;
+
+  return {
+    status: 'degraded',
+    verification: 'pending_human_review',
+    sources: recon.sources,
+    data: {
+      gdpSeries: years.map((year) => ({ year, value: gdpByYear.get(year) ?? null })),
+      popSeries: years.map((year) => ({ year, value: popByYear.get(year) ?? null })),
+      statMeta: {
+        gdp: {
+          unit: '亿元',
+          caliber: '地区生产总值（现价）；缺失年份不以估算补齐',
+          sourceRefs: [gdpSource.id],
+        },
+        pop: {
+          unit: '万人',
+          caliber: '年末常住人口；缺失年份不以估算补齐',
+          sourceRefs: [popSource.id],
+        },
+      },
+      climateMonthly: climate,
+      climateMeta: {
+        period: recon.climate?.period ?? '1991–2020',
+        station: recon.climate?.station ?? '待考',
+        sourceRefs: [climateSource.id],
+      },
     },
   };
 }
@@ -885,12 +1093,6 @@ export class DeepSeekGenerator implements ModuleGenerator {
 
   async generate(input: GenerateInput): Promise<GeneratedModule> {
     activeLlmConfig = this.settings;
-    if (input.module === 'dataPulse') {
-      throw new GenerationError(
-        'NO_FACTS',
-        '暂无可核验的本城统计序列来源，数据脉搏模块保持「待考」',
-      );
-    }
     let lastError: unknown = null;
     for (let attempt = 0; attempt < 2; attempt += 1) {
       try {
@@ -928,6 +1130,8 @@ export class DeepSeekGenerator implements ModuleGenerator {
         return llmPoetics(input);
       case 'localSoul':
         return llmLocalSoul(input);
+      case 'dataPulse':
+        return llmDataPulse(input);
       default:
         throw new GenerationError('NO_FACTS', `模块 ${String(input.module)} 暂无可用事实来源`);
     }

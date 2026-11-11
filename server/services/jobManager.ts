@@ -24,6 +24,7 @@ import {
   validateModuleData,
   type ModuleGenerator,
 } from './llmGenerator';
+import { loadCityRecon } from './cityRecon';
 
 export type SseEventName = 'meta' | 'theme' | 'module' | 'module_error' | 'done' | 'error';
 
@@ -77,6 +78,8 @@ const DEFAULT_MODULES = [...MODULE_NAMES];
 
 function toModuleErrorCode(code: string): ModuleErrorCode {
   if (code === 'LLM_TIMEOUT' || code === 'NO_FACTS') return code;
+  // 网络类失败（连接失败 / 接口错误）归入 LLM_TIMEOUT：可重试、不误导为结构问题。
+  if (code === 'LLM_NETWORK' || code === 'LLM_HTTP_ERROR') return 'LLM_TIMEOUT';
   if (code === 'SOURCE_MISSING' || code === 'VERIFY_FAILED') return 'VERIFY_FAILED';
   return 'SCHEMA_INVALID';
 }
@@ -238,14 +241,26 @@ export class JobManager {
 
   private async run(runtime: JobRuntime, input: StartJobInput): Promise<void> {
     const failed: ModuleName[] = [];
+    const jobStartedAt = Date.now();
     try {
+      // 非预置城市先做一次城市侦察：维基百科、Wikidata、Tavily、气候与官方统计。
+      // 侦察失败不阻断生成，各模块会按 NO_FACTS 降级。
+      const reconStartedAt = Date.now();
+      const recon = input.city.isPreset ? null : await loadCityRecon(input.city);
+      if (recon) {
+        console.log(
+          `[gen] city=${input.city.cityId} recon ms=${Date.now() - reconStartedAt}`,
+        );
+      }
       for (const module of runtime.planned) {
+        const moduleStartedAt = Date.now();
         this.deps.jobRepo.incrementLlmCalls(runtime.jobId);
         try {
           const generated = await this.deps.generator.generate({
             city: input.city,
             module,
             aliases: input.aliases,
+            recon,
           });
           const data = validateModuleData(module, generated.data);
           const used = collectSourceRefs(data);
@@ -274,6 +289,9 @@ export class JobManager {
             data,
             sources: generated.sources,
           });
+          console.log(
+            `[gen] city=${runtime.cityId} module=${module} status=${generated.status} ms=${Date.now() - moduleStartedAt}`,
+          );
         } catch (error) {
           const rawCode =
             error instanceof GenerationError
@@ -283,6 +301,9 @@ export class JobManager {
                 : 'GENERATION_FAILED';
           const code = toModuleErrorCode(rawCode);
           const message = error instanceof Error ? error.message : String(error);
+          console.warn(
+            `[gen] city=${runtime.cityId} module=${module} failed raw=${rawCode} code=${code} message=${message}`,
+          );
           this.deps.archiveRepo.markModuleFailed(
             runtime.cityId,
             module,
@@ -333,6 +354,9 @@ export class JobManager {
         generatedAt,
         dataVersion: bundle?.archive.dataVersion ?? 1,
       });
+      console.log(
+        `[gen] city=${runtime.cityId} done status=${status} modules=${runtime.planned.length} failed=${failed.length} total=${Date.now() - jobStartedAt}ms`,
+      );
       this.finish(runtime);
     } catch (error) {
       this.failRuntime(runtime, error);

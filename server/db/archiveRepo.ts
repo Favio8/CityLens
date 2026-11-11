@@ -274,4 +274,23 @@ export class ArchiveRepo {
     const row = this.db.prepare('SELECT COUNT(*) AS n FROM city_archives').get() as { n: number };
     return row.n;
   }
+
+  /**
+   * 清理未发布档案（P1-11 维护通道）：只删除 status='unpublished' 且非预置的
+   * 档案行及其模块行；预置与已发布档案绝不受影响。返回被删除的 city_id 列表。
+   */
+  deleteUnpublished(): string[] {
+    const rows = this.db
+      .prepare("SELECT city_id FROM city_archives WHERE status = 'unpublished' AND is_preset = 0")
+      .all() as Array<{ city_id: string }>;
+    const cityIds = rows.map((row) => row.city_id);
+    if (cityIds.length === 0) return [];
+    const placeholders = cityIds.map(() => '?').join(',');
+    const remove = this.db.transaction((ids: string[]) => {
+      this.db.prepare(`DELETE FROM city_modules WHERE city_id IN (${placeholders})`).run(...ids);
+      this.db.prepare(`DELETE FROM city_archives WHERE city_id IN (${placeholders})`).run(...ids);
+    });
+    remove(cityIds);
+    return cityIds;
+  }
 }
