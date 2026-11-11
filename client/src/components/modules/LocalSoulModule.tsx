@@ -11,7 +11,7 @@ export function LocalSoulModule({ data, sources }: { data: LocalSoul; sources: S
     <div>
       <div className="mb-8 flex flex-col gap-2 rounded-sm border-l-2 bg-[var(--city-primary)]/5 py-3 pl-4 pr-3 md:flex-row md:items-center md:justify-between" style={{ borderColor: 'var(--city-primary)' }}>
         <p className="text-xs leading-relaxed text-[var(--text-secondary)]">
-          本卷由 AI 依据可考资料整理，可能存在口味与习俗的地域差异；已标记为待人工复核。
+          本卷由 AI 依据可考资料整理，可能存在口味与习俗的地域差异；页面底部已标注来源说明，欢迎核对原始资料。
         </p>
         <AiTag />
       </div>

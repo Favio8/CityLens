@@ -292,6 +292,7 @@ button {
     background: transparent;
     font-size: 13px;
     letter-spacing: 0.12em;
+    white-space: nowrap;
     transition: all 0.3s ease;
   }
 

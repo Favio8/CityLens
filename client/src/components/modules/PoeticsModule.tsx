@@ -121,7 +121,7 @@ export function PoeticsModule({
               </div>
             </div>
 
-            <div className="mt-6 overflow-x-auto">
+            <div className="mt-6 overflow-x-auto" tabIndex={0} role="group" aria-label="诗词原文（可横向滚动查看）">
               <div className="flex min-w-max flex-row-reverse items-start justify-center gap-3 md:mx-auto md:h-[260px] md:gap-5">
                 {poem.lines.map((line) => (
                   <p

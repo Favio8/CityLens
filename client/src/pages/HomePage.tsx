@@ -38,13 +38,13 @@ export function HomePage() {
     <div>
       <HomeHero hot={hot} />
 
-      <section className="border-t hairline">
+      <section className="border-t hairline" aria-labelledby="home-volumes-title">
         <div className="page-shell py-16 md:py-24">
           <Reveal>
             <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
               <div>
                 <p className="eyebrow">八卷成志</p>
-                <h2 className="section-title mt-3">一座城的八个切面</h2>
+                <h2 className="section-title mt-3" id="home-volumes-title">一座城的八个切面</h2>
               </div>
               <p className="max-w-md text-xs leading-relaxed text-[var(--text-secondary)]">
                 每卷独立生成、独立降级。某卷失败不会拖垮整座城；所有事实附来源，未考之处明确标注。
@@ -71,13 +71,13 @@ export function HomePage() {
         </div>
       </section>
 
-      <section className="border-t hairline">
+      <section className="border-t hairline" aria-labelledby="home-presets-title">
         <div className="page-shell py-16 md:py-24">
           <Reveal>
             <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
               <div>
                 <p className="eyebrow">馆藏名城</p>
-                <h2 className="section-title mt-3">六座城的完整档案</h2>
+                <h2 className="section-title mt-3" id="home-presets-title">六座城的完整档案</h2>
               </div>
               <p className="max-w-md text-xs leading-relaxed text-[var(--text-secondary)]">
                 西安、杭州、成都、北京、苏州、洛阳由构建期管线组装，开箱即可读。
@@ -115,11 +115,11 @@ export function HomePage() {
       </section>
 
       {favorites.length > 0 || recents.length > 0 ? (
-        <section className="border-t hairline">
+        <section className="border-t hairline" aria-labelledby="home-library-title">
           <div className="page-shell py-16 md:py-20">
             <Reveal>
               <p className="eyebrow">你的书案</p>
-              <h2 className="section-title mt-3">继续上次的阅读</h2>
+              <h2 className="section-title mt-3" id="home-library-title">继续上次的阅读</h2>
             </Reveal>
             <div className="mt-8 grid gap-3 md:grid-cols-2">
               {recents.slice(0, 4).map((entry) => (

@@ -25,7 +25,7 @@ export function LandmarksModule({
       <MapView cityId={cityId} cityName={cityName} center={center} landmarks={data} sources={sources} />
       {missing.length > 0 ? (
         <p className="mt-4 text-[10px] leading-relaxed text-[var(--text-secondary)]">
-          坐标待考：{missing.map((item) => item.name).join('、')}。这些条目未绘制地图点，待人工复核后补充。
+          坐标待考：{missing.map((item) => item.name).join('、')}。这些条目未绘制地图点，坐标待补充。
         </p>
       ) : null}
     </div>

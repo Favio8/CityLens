@@ -18,12 +18,9 @@ export function AiTag({ label = 'AI 整理' }: { label?: string }) {
 }
 
 export function VerificationTag({ status }: { status: 'verified_by_source' | 'pending_human_review' | 'preset_manual' }) {
-  const text =
-    status === 'verified_by_source'
-      ? '来源可核验'
-      : status === 'preset_manual'
-        ? '人工整理'
-        : '待人工复核';
+  // AI 整理说明统一放在城志页底部，避免每张卡片重复「待人工复核」。
+  if (status === 'pending_human_review') return null;
+  const text = status === 'verified_by_source' ? '来源可核验' : '人工整理';
   return (
     <span
       className={`inline-flex items-center rounded-sm border px-1.5 py-0.5 text-[10px] tracking-[0.14em] ${

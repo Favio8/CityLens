@@ -1,11 +1,13 @@
 /**
  * 城市检索与消歧模态框（PRD 2.1 / 2.2 / AC-01 / AC-02 / AC-09）。
  * 300ms 防抖联想；同音/形近/City 同名弹出消歧卡；区县与古称直接归并并提示。
+ * 焦点陷阱：打开聚焦搜索框，Tab 循环，Esc 关闭，关闭后还原焦点。
  */
-import { useEffect, useId, useRef, useState } from 'react';
+import { useCallback, useEffect, useId, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import type { HotCity, SearchCandidate, SearchResponse } from '@citylens/shared/schema';
 import { MAX_QUERY_LENGTH } from '@citylens/shared/schema';
+import { useFocusTrap } from '../../hooks/useFocusTrap';
 import { getHotCities, searchCities } from '../../lib/api';
 
 interface CitySearchModalProps {
@@ -32,8 +34,12 @@ export function CitySearchModal({ open, onClose }: CitySearchModalProps) {
   const [error, setError] = useState<string | null>(null);
   const [hot, setHot] = useState<HotCity[]>([]);
 
+  const closeModal = useCallback(() => onClose(), [onClose]);
+  const panelRef = useFocusTrap(open, closeModal);
+
   useEffect(() => {
     if (!open) return;
+    // 焦点陷阱负责 Tab 循环与焦点还原；这里只保留「打开即聚焦输入框」。
     setQuery('');
     setResult(null);
     setError(null);
@@ -48,19 +54,15 @@ export function CitySearchModal({ open, onClose }: CitySearchModalProps) {
     };
   }, [open]);
 
+  // 打开期间锁定背景滚动（焦点陷阱另行负责 Tab/Esc/焦点还原）。
   useEffect(() => {
     if (!open) return;
-    const onKeyDown = (event: KeyboardEvent): void => {
-      if (event.key === 'Escape') onClose();
-    };
-    document.addEventListener('keydown', onKeyDown);
     const previous = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
     return () => {
-      document.removeEventListener('keydown', onKeyDown);
       document.body.style.overflow = previous;
     };
-  }, [open, onClose]);
+  }, [open]);
 
   useEffect(() => {
     if (!open) return;
@@ -137,6 +139,7 @@ export function CitySearchModal({ open, onClose }: CitySearchModalProps) {
         onClick={onClose}
       />
       <div
+        ref={panelRef}
         className="surface-card relative w-full max-w-2xl overflow-hidden rounded-lg"
         style={{ boxShadow: 'var(--shadow-lift)' }}
       >
@@ -167,7 +170,7 @@ export function CitySearchModal({ open, onClose }: CitySearchModalProps) {
           </kbd>
         </div>
 
-        <div className="max-h-[58vh] overflow-y-auto px-3 py-3">
+        <div className="max-h-[58vh] overflow-y-auto px-3 py-3" tabIndex={0} role="region" aria-label="搜索结果（可滚动）">
           {!query.trim() ? (
             <HotCities hot={hot} onPick={(cityId) => { navigate(`/city/${cityId}`); onClose(); }} />
           ) : loading && !result ? (
