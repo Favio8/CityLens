@@ -12,7 +12,7 @@
 | Node.js | v24.15.0 |
 | npm | 11.12.1 |
 | 浏览器 | Chrome（无头模式，CDP 视口模拟 375 / 768 / 1280） |
-| 日期 | 2026-11-10（首轮）；2026-11-11（官方 LLM / Lighthouse / 三层断网 / 数据补全 / 四大新功能 / 干净环境复跑 / 最终门禁） |
+| 日期 | 2026-11-10（首轮）；2026-11-11（官方 LLM / Lighthouse / 三层断网 / 数据补全 / 四大新功能 / 干净环境复跑 / 最终门禁 / PRD 对照完备性检查与偏差修复） |
 | 模式 | 初测无 Key（模拟 LLM + 无底图）；2026-11-10 复测改用本机 Magpie 网关（`zcode/GLM-5.2`）、`ADMIN_TOKEN` 与天地图双 Key（浏览器端 + 服务器端）；`ENABLE_IMAGES=true`（本地 Commons 图片）；2026-11-11 起改用用户提供的 **StepFun 官方 Key**（`https://api.stepfun.com/step_plan/v1`，`step-3.7-flash`，经 `.env` 配置，`llmSettingsSource=env`） |
 
 命令统一在项目根目录执行；本机部分终端存在 PATH 超长问题，详见 6.3。
@@ -64,6 +64,7 @@
 | 长图海报 | `client/src/lib/poster.ts` 纯函数 `buildPosterSpec` + Canvas 750px 竖版渲染；城市页 hero「导出长图」→ 焦点陷阱对话框 → dataURL 预览 → 下载 PNG（实测 230KB）；`poster.test.ts` 覆盖规格构建 |
 | 错误边界 | 路由级 `RouteBoundary`（`resetKey=pathname`）+ 模块级 ErrorBoundary：单路由/单模块异常只降级该区域，不白屏；`ErrorBoundary.test.tsx` 覆盖 |
 | 可访问性 | `跳到正文` 跳转链接、`<main id="main-content">`、section `aria-labelledby`、横向滚动容器 `tabIndex+role=group`、模态/对话框 focus trap（Tab 循环 + Esc + 焦点还原）；axe（wcag2a/2aa/best-practice）应用自身 0 违规 |
+| PRD 偏差修复（2026-11-11 产品视角检查） | 卷目导航补 daytrip/quiz 入口（按成卷状态过滤）；ATTACHED 并入提示（SSE `notice` 事件 + 前端状态条）；缓存命中朱砂印章「藏书阁已收录 · 为你秒速展卷」3s 渐隐；页脚补「内容由 AI 整合，请以权威资料为准」；检索下拉补英文名与「匹配古称：XX」格式；PRD 回写 v1.2（实时天气纳入/P2 交付/耗时上限放宽 60s·180s/SSE notice/移除 GSAP 死依赖） |
 | 后台 LLM 预算 | `/admin` 大模型卡片显示「今日调用 x / 预算 y（剩余 z）」（`jobRepo.sumLlmCallsSince`）；保存/恢复配置时保留预算字段 |
 | 诗词覆盖扩展 | 语料 137 → **148 城、2,702 首**：新增石家庄、秦皇岛、保定、张家口、承德、沈阳、大连、哈尔滨、南通、连云港、宿迁、舟山、丽水、蚌埠、马鞍山 15 城关键词（其中 12 城有诗；承德/舟山/哈尔滨暂无可考诗作，不以泛称凑数）。**2026-11-11 对抗性审查修复跨城误配**：「天津桥」不再归属天津（17 首洛阳诗回归洛阳，天津仅留 3 首直沽/盘山古诗）、福州「西湖」（52→35）、哈尔滨「上京」、蚌埠「钟离」、郑州「黄河」、青岛「琅琊→琅琊台」；`poetryCorpus.test.ts` 4 项回归 fixture 锁定归属规则 |
 | 统计序列补全 | 六城 GDP/常住人口补齐 **2021–2025 官方公报序列**；修正原有错误数据：北京 GDP（原 44350.7/45222.4/47353.7/49670.2 → 官方 40269.6/41610.9/43760.7/49843.1/52073.4）、杭州 GDP（原 19110/19660/20960/21838 → 官方 18109/18753/20059/21860/23011）；北京/杭州/成都/苏州/洛阳人口序列逐份公报回填；`statsBaseline.test.ts` 锁定成都完整序列与「西安 2021 人口缺失保持 null」 |
@@ -83,7 +84,7 @@
 | 重新生成 | 预置保护提示、确认弹窗、增量生成、冷却；2026-11-11 ego-browser 实测四步（取消/确认/冷却 429/预置保护）全过 | — |
 | 无 Key 策略 | 产品负责人 2026-11-11 确认线上全程配置官方 LLM Key（`.env` 已配置 StepFun）；无 Key 分支（本地快照生成、标 `degraded`）仅作开发自测保留，PRD 3.5 已加 v1.1.1 注记 | 未缓存城市在无 Key 时仍会生成部分档案（设计取舍），不会出现 PRD AC-14 的「尚未收录」整页状态 |
 | 网络失败 | 2026-11-11 三层真实断网实测（用户侧/服务侧/LLM 黑洞）全部通过，见 AC-18 | — |
-| 真实 LLM 端到端 | 2026-11-11 通过 StepFun 官方接口实测：镇江、宁波两座新城 8/8 卷成卷，档案 `generator.model=step-3.7-flash@stepfun` | identity 净耗时 3.62s（达标）/ 4.78s（超 3.5s 目标——可用模型均为推理型）；总耗时 150.6s / 164.7s 超 PRD 90s 上限，项目未实现总上限熔断；真实输出仍需人工复核 |
+| 真实 LLM 端到端 | 2026-11-11 通过 StepFun 官方接口实测：镇江、宁波两座新城 8/8 卷成卷，档案 `generator.model=step-3.7-flash@stepfun` | identity 净耗时 3.62s（达标）/ 4.78s（超 3.5s 目标——可用模型均为推理型）；总耗时 150.6s / 164.7s（v1.2 上限放宽至 180s 后达标）；真实输出仍需人工复核 |
 | 文物图片 | Wikidata P18 + Commons 抓取 36 件候选，22 件成功下载并带署名/许可证；运行期零外部图片请求（CDP 实测）；22/22 条程序化交叉核对（逐张表见 7.4） | 14 件 Wikidata 无 P18 图片，故不配图；许可证适用性、图片与文物的对应关系仍需人工复核 |
 | 行政区轮廓 | `data:geo` 自动抓取、结构校验、缓存与来源清单；已实现 `--source=tianditu` 备选源（GCJ-02 已标注，不默认启用） | 默认来源 DataV.GeoAtlas 的授权条款与审图号未完成人工确认，公开上线前必须合规审校 |
 
@@ -143,7 +144,7 @@
 
 ```bash
 npm run typecheck          # 服务端 + 前端 TypeScript strict
-npm test                   # 166 项单元/集成测试（23 个文件）
+npm test                   # 170 项单元/集成测试（25 个文件）
 npm run verify             # 六城预置档案合规校验
 npm run test:llm           # LLM 提供方连通性测试（读 .env，支持 --base-url/--model/--api-key/--timeout-ms 覆盖）
 npm run data:geo           # 抓取并缓存六城行政区轮廓（--source=tianditu 可选备选源）
@@ -159,7 +160,7 @@ npm run archives:clean-unpublished                 # dry-run 列出未发布档�
 
 ```text
 npm run typecheck   ✓ 无错误
-npm test            ✓ 166 passed（23 files）
+npm test            ✓ 170 passed（25 files）
 npm run verify      ✓ 通过 6/6
 npm run build       ✓ built in ~6–10s
 ```
@@ -217,7 +218,7 @@ curl "http://localhost:8787/api/cities/CN-610100"
 - 诗词意象覆盖不完整：少数诗原文既无本地地名、也无固定词表泛指词（人工简称表现含苏州「太湖」、西安「终南」，坐标待人工核对），`imageryMap` 为空；未用模型补写以避免幻觉。
 - 名人地图依赖人物关联证据的字段形态：杭州、成都、苏州的 `birthplace/deathplace` 为区县或乡镇名（如「临安区」「郫都区」「姑苏村」），本地地名库无法按本城解析，故这些城市的名人模块不绘制点位，仅显示说明。
 - 非预置城市的年代轴为 LLM 生成，`validateNarrativeYears` 已接入并会丢弃年表外年份的节点；已用 StepFun 官方接口实测真实生成，`verification` 仍为 `pending_human_review`。
-- PRD 3.3 的「identity 3.5s 本地降级」路径未实现；PRD 90s 总耗时上限未做熔断。StepFun 实测：identity 净耗时 3.62s（达标）/ 4.78s（超标，可用模型均为推理型），总耗时 150.6s / 164.7s。
+- PRD 3.3 的「identity 3.5s 本地降级」路径未实现（v1.2 已确认保持：流式骨架屏 + 逐卷显影兜底等待体验）；PRD 90s 总耗时上限已由产品负责人放宽至 180s（v1.2，见 PRD 0.3），当前仍不设总熔断。StepFun 实测：identity 净耗时 3.62s（达标）/ 4.78s（超标，可用模型均为推理型），总耗时 150.6s / 164.7s（放宽后达标）。
 - SSE/CORS 已收紧：生产只允许 `APP_ORIGINS` 中的来源，开发放行 localhost；公网部署仍需配置该变量并建议置于反向代理之后。
 - 预置诗词选题重复度问题已处理：新增同题/同组诗/高频三字片段去重；成都「将赴成都草堂」组诗现最多 1 首、苏州太湖石题咏最多 2 首、西安同题应制诗不再重复。剩余少数主题相近但题名不同的诗仍保留。
 - 未缓存城市在无 Key 时仍生成部分档案，与 PRD AC-14 文案不一致（设计取舍，产品负责人 2026-11-11 确认线上全程配置官方 Key）。

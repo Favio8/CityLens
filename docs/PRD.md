@@ -2,11 +2,11 @@
 
 | 文档版本 | 状态 | 产品负责人 | 适用阶段 | 更新日期 | 基线 |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **v1.1.0** | 评审意见已合入，待研发 (Ready for Dev) | Senior PM & Architect | MVP 一期（中国地级及以上城市 + 海外架构预留） | 2026-11-10 | 在 v1.0.0 上修订 |
+| **v1.2.0** | v1.1 已交付并通过自测；v1.2 合入产品负责人已批准的变更（见 0.3） | Senior PM & Architect | MVP 一期 + 二期行旅工具（已提前交付） | 2026-11-11 | 在 v1.1.0 上修订 |
 
 ---
 
-## 0. 版本变更说明（v1.0 → v1.1）
+## 0. 版本变更说明（v1.0 → v1.1 → v1.2）
 
 ### 0.1 评审问题处理对照
 
@@ -36,9 +36,21 @@
 | 底图与地名搜索 | 天地图（环境变量 `TIANDITU_KEY`） | 无 Key 时不加载底图瓦片，仅绘制行政区轮廓 GeoJSON 与宣纸底色 |
 | 坐标系 | WGS84，格式 `[lng, lat]` | 全链路唯一，禁止混用 GCJ-02 |
 | 大模型 | 默认 DeepSeek（OpenAI 兼容接口），可通过环境变量切换通义千问等兼容服务 | 优先 `json_schema`，不支持时退化为 `json_object` + Zod 校验 + 最多 2 次修复重试 |
-| 流式通道 | SSE，客户端用 fetch 流（`@microsoft/fetch-event-source`）+ `AbortController` | 不使用原生 `EventSource`，因为需要 POST 与自定义请求头 |
+| 流式通道 | SSE，客户端用 fetch 流 + `AbortController` | 不使用原生 `EventSource`，因为需要 POST 与自定义请求头 |
 | 字体 | 自托管并子集化，不引用 Google Fonts | 影响首屏体积与 Lighthouse |
 | 图片 | 一期默认关闭（`ENABLE_IMAGES=false`） | 开启时仅允许 Wikimedia Commons 并记录许可证 |
+
+### 0.3 v1.2 变更说明（产品负责人 2026-11-11 批准）
+
+| # | 变更 | 原因与影响 |
+| :--- | :--- | :--- |
+| 1 | **二期行旅工具提前交付**：双城对比、「如果只有一天」、随堂小测、长图海报已实现并入一期验收（原 P2 预留升级为交付） | 1.2 功能清单 P2 行同步更新；新增 `/api/compare`、`/daytrip`、`/quiz` 接口与 `/compare` 路由 |
+| 2 | **实时天气纳入范围**：城市名片卷展示 Open-Meteo 实时天气条（温度/现象/风速/更新时间与来源） | 撤销 v1.1「不展示实时天气」的限定（空气质量仍不做）；天气与路线不写库，每次请求现算，与档案生成解耦 |
+| 3 | **无 Key 策略确认**：线上全程配置官方大模型 Key；无 Key 分支（本地快照生成 + degraded 标注）仅作开发自测保留 | 3.5 已加注记；AC-14 按设计取舍通过 |
+| 4 | **生成耗时上限放宽**：单模块超时 60s、单次生成总上限 180s（原 25s / 90s） | 官方 StepFun `step-3.7-flash` 为推理型模型，单模块含推理 token（chronicle 实测 22–40s，全程 150–165s）；收紧到 25s 将导致大面积失败，违背「5–10 分钟看懂一座城」承诺。流式骨架屏与进度条保证等待体验 |
+| 5 | **检索超时口径拆分**：阶段 2 补充检索（Wikipedia/Tavily）硬超时 2500ms 不变；事实快照 SPARQL 单独 15s 预算 | 两类检索定位不同，混用一个数字会造成误读 |
+| 6 | **SSE 新增 `notice` 非致命事件**（如并入既有任务的 ATTACHED 提示） | 落实 2.2 的 ATTACHED 状态反馈；不中断流 |
+| 7 | **动效栈调整**：视差与显影由 Framer Motion + 自绘朝代滑块实现，移除未使用的 GSAP 依赖 | 功能等效，减少死依赖 |
 
 ---
 
@@ -72,7 +84,7 @@
 | **基础引擎** | **持久化缓存与流式编排** | **P0** | SQLite 持久化；命中缓存 < 500ms 返回并标记“已为你复用”；未命中通过 SSE 按模块流式生成并落库 | 不支持多用户协同编辑 |
 | **基础引擎** | **生成任务编排** | **P0** | 同城单飞、增量生成（已通过校验的模块不重复生成）、失败冷却、限流、每日调用预算、预置城市保护 | 一期不做分布式任务队列 |
 | **基础引擎** | **离线事实快照与核验管线** | **P0** | 构建期脚本生成事实快照、古诗词核验库、文物名录、地名库；运行期用于事实上下文与校验 | 不做实时全网抓取 |
-| **内容模块 01** | **城市名片 (City Identity)** | **P0** | 标准名、古称/别称、坐标、面积、常住人口、气候类型、行政区划概览、一句话城市性格、城市专属主题色 | 不展示实时天气与空气质量 |
+| **内容模块 01** | **城市名片 (City Identity)** | **P0** | 标准名、古称/别称、坐标、面积、常住人口、气候类型、行政区划概览、一句话城市性格、城市专属主题色；身份卷附带实时天气条（Open-Meteo，标注更新时间与来源） | 不做空气质量与预报 |
 | **内容模块 02** | **前世今生 (Chronicle)** | **P0** | 朝代时间轴（5–8 个关键历史切片），联动切换当时城名、叙事与城址中心坐标 | 不做逐年编年史 |
 | **内容模块 03** | **景点地图 (Landmarks)** | **P0** | 必去地标 4–6 个 + 小众历史秘境 2–4 个，含最佳季节、推荐理由；卡片与地图双向联动 | 不做订票、OTA 比价、导航路线 |
 | **内容模块 04** | **文物与博物馆 (Relics)** | **P0** | 4–6 件代表性文物、遗址或馆藏重器（名录不足时按实际条数），含年代、馆藏地、保护级别与故事 | 不做 3D 文物建模 |
@@ -81,7 +93,7 @@
 | **内容模块 07** | **城市味道 (Local Soul)** | **P1** | 美食、方言、非遗、节庆民俗；界面统一标注“AI 整理” | 不做餐厅商户推荐 |
 | **内容模块 08** | **数说城市 (Data Pulse)** | **P1** | 近 5 年 GDP 与常住人口走势、月均气温与降水双轴图；所有指标标注单位、口径、统计年份 | 不做实时金融或房产数据 |
 | **用户工具** | **收藏、足迹与缓存刷新** | **P1** | LocalStorage 收藏夹与最近浏览（最多 20 条）；单模块或全量“重新生成”（二次确认） | 一期不做账号登录 |
-| **二期规划** | **扩展能力预留** | **P2** | 双城对比、“如果只有一天”路线、知识小测验、长图海报；一期仅在数据结构与路由层预留 | 不纳入一期验收 |
+| **行旅工具** | **双城对比 / 如果只有一天 / 随堂小测 / 长图海报** | **P2** | 已于 2026-11-11 提前交付并并入一期验收：对比（GDP/人口/气候/景点/文物/人物/诗词/主题色）、一日路线（快照回退，示意非导航）、小测（本地判分）、海报（Canvas 竖版 PNG） | 不做社交排行与云端保存 |
 
 ---
 
@@ -154,7 +166,7 @@
 | :--- | :--- | :--- |
 | **前端框架** | React 18 / TypeScript 5（`strict: true`）/ Vite 5 | 函数组件 + 自定义 Hooks 解耦业务逻辑 |
 | **样式与主题** | Tailwind CSS + CSS Variables | 动态注入 `--city-primary`、`--city-secondary`、`--city-accent`、`--bg-canvas` 等变量，切换城市与明暗主题零闪烁 |
-| **动效** | GSAP（ScrollTrigger）+ Framer Motion + Canvas 2D | GSAP 负责视差与时间轴钉住；Framer Motion 负责卡片展开、模态框与显影；Canvas 负责首屏水墨粒子与书写笔触 |
+| **动效** | Framer Motion + Canvas 2D + 自绘朝代滑块 | Framer Motion 负责卡片展开、模态框与显影；自绘滑块负责时间轴钉住与阻尼吸附；Canvas 负责首屏水墨粒子与书写笔触（v1.2 移除未使用的 GSAP） |
 | **地图与图表** | MapLibre GL JS + Apache ECharts 5（按需引入） | 统一封装 `MapController`；底图使用天地图，行政区轮廓使用经合规审校的 GeoJSON；ECharts 只引入柱状与折线 |
 | **字体** | Noto Serif SC（标题）、Inter、JetBrains Mono，全部自托管 | 中文字体做子集化与分包；`font-display: swap`；不使用任何外部字体 CDN |
 | **后端** | Node.js 20 LTS + Fastify + TypeScript | RESTful API 与 SSE 端点；统一管理环境变量；任何私钥严禁进入前端包 |
@@ -209,8 +221,8 @@
 | **缓存命中** | 命中本地缓存或预置数据时，TTFB < 100ms，完整 JSON < 500ms |
 | **流式首屏** | SSE 连接建立 < 300ms；`meta` 事件（本地数据：城名、坐标、别名）< 300ms 上屏；`identity` 模块 ≤ 3.5s 上屏 |
 | **identity 降级** | 若大模型在 3.5s 内未返回，先用本地基础事实上屏 `identity`（`status=degraded`、默认墨色主题），主题色与一句话性格随 `theme` 事件稍后到达 |
-| **在线检索** | Wikipedia/Wikidata 硬超时 2500ms，仅服务阶段 2 的补充，不进入首屏路径 |
-| **大模型** | 单模块超时 25s；单次生成总上限 90s |
+| **在线检索** | 阶段 2 补充检索（Wikipedia / Tavily）硬超时 2500ms，仅服务阶段 2 的补充，不进入首屏路径；事实快照 SPARQL 单独 15s 预算（5 条并行） |
+| **大模型** | 单模块超时 60s；单次生成总上限 180s（v1.2 放宽：StepFun 推理型模型实测单模块 22–40s、全程 150–165s，见 0.3） |
 | **动画** | 首屏粒子与滚动视差约 60fps；检测到 `prefers-reduced-motion: reduce` 或帧率持续低于 30fps 时，自动关闭粒子扰动与复杂视差，降级为透明度渐变 |
 | **响应式** | Desktop（≥ 1280px）、Tablet（768–1279px）、Mobile（375–767px）三种视口，无横向滚动条、无文字重叠 |
 | **Lighthouse** | 预置城市页，生产构建：Desktop Performance ≥ 80，Mobile Performance ≥ 70 |
@@ -224,17 +236,22 @@
 | 路由 | 说明 |
 | :--- | :--- |
 | `/` | 首页：搜索框、热门城市、最近浏览与收藏入口 |
-| `/city/:cityId` | 城市档案页，`cityId` 形如 `CN-610100`；可分享、可作为收藏键；支持锚点 `#poetics` 等 |
+| `/city/:cityId` | 城市档案页，`cityId` 形如 `CN-610100`；可分享、可作为收藏键；支持锚点 `#poetics` 等；右侧「卷目」导航（桌面竖排 / 移动端悬浮） |
+| `/compare?cities=CN-A,CN-B` | 双城对比页（v1.2 新增）：两城关键事实并列，支持分享链接 |
 | `*` | 404 空状态（“版图中暂未寻获此页”） |
 
 #### REST 与 SSE 接口
 
 | 方法与路径 | 说明 | 成功响应 | 主要错误码 |
 | :--- | :--- | :--- | :--- |
-| `GET /api/cities/search?q=` | 名称规范化与联想 | `{status: "exact"/"ambiguous"/"none", candidates: [{cityId, name, province, matchedAlias, matchType, summary}], hint?}` | `400 INVALID_QUERY` |
+| `GET /api/cities/search?q=` | 名称规范化与联想 | `{status: "exact"/"ambiguous"/"none", candidates: [{cityId, name, province, matchedAlias, matchType, summary, englishName?}], hint?}` | `400 INVALID_QUERY` |
 | `GET /api/cities/hot` | 热门与预置城市列表 | `{cities: [{cityId, name, province, isPreset}]}` | — |
 | `GET /api/cities/:cityId` | 读取缓存档案 | `200 {fromCache: true, meta, identity, chronicle, landmarks, relics, figures, poetics, localSoul, dataPulse, sources}`（缺失模块为 `null`） | `404 NOT_GENERATED`、`404 CITY_NOT_FOUND`、`429/503 COOLDOWN` |
-| `POST /api/cities/:cityId/generate` | 生成、补全或重新生成；请求体 `{force?: boolean, modules?: string[]}`；响应为 SSE | 见下方事件协议 | `403 PRESET_LOCKED`、`429 REGEN_COOLDOWN`、`429 RATE_LIMITED`、`503 NO_LLM_KEY`、`503 BUDGET_EXCEEDED` |
+| `POST /api/cities/:cityId/generate` | 生成、补全或重新生成；请求体 `{force?: boolean, modules?: string[]}`；响应为 SSE | 见下方事件协议 | `403 PRESET_LOCKED`、`429 REGEN_COOLDOWN`、`429 RATE_LIMITED`、`409 JOB_CONFLICT`、`503 NO_LLM_KEY`、`503 BUDGET_EXCEEDED` |
+| `GET /api/cities/:cityId/daytrip` | 「如果只有一天」示意路线（实时计算：档案优先，未成卷回退 Wikidata 快照） | `{cityId, cityName, stops[], degraded, notice, generatedAt}` | `404 CITY_NOT_FOUND`、`404 NOT_GENERATED` |
+| `GET /api/cities/:cityId/quiz` | 随堂小测题目（本地判分） | `{cityId, cityName, questions[], generatedAt}` | `404 CITY_NOT_FOUND`、`404 NOT_GENERATED`、`404 NO_QUIZ`（可出题字段不足） |
+| `GET /api/cities/:cityId/weather` | 实时天气（Open-Meteo current，10 分钟缓存；只用词典坐标，不要求档案） | `{cityId, observedAt, tempC, weatherCode, weatherLabel, windKmh, source, isRealtime}` | `404 CITY_NOT_FOUND`、`502 WEATHER_UNAVAILABLE` |
+| `GET /api/compare?cities=CN-A,CN-B` | 双城对比（两城须为已发布档案） | `{cities: [CompareCity, CompareCity]}` | `400 INVALID_CITIES`、`404 CITY_NOT_FOUND`、`404 NOT_GENERATED` |
 | `GET /api/health` | 健康检查（含 LLM Key、天地图 Key 是否配置） | `{ok, llmConfigured, mapConfigured}` | — |
 
 单模块重试 = `generate` 且 `modules` 只含该模块；重新生成 = `generate` 且 `force: true`。`force` 对预置城市需请求头 `x-admin-token` 与环境变量 `ADMIN_TOKEN` 一致。
@@ -249,6 +266,7 @@
 | `module_error` | `{seq, name, code, retryable}` | `code`：`LLM_TIMEOUT`、`SCHEMA_INVALID`、`VERIFY_FAILED`、`NO_FACTS` |
 | `done` | `{seq, cityId, status: "complete"/"partial"/"unpublished", failedModules, generatedAt, dataVersion}` | 流结束 |
 | `error` | `{seq, code, message, retryAfterSec?}` | 致命错误，流终止 |
+| `notice` | `{seq, code, message}` | 非致命提示（如 `ATTACHED`：并入既有生成任务），不中断流（v1.2 新增） |
 | `ping` | `{}` | 每 15s 心跳 |
 
 客户端用 fetch 流解析事件，切换城市或卸载页面时调用 `AbortController.abort()`。
