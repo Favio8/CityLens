@@ -12,6 +12,57 @@
 - 地图：天地图（WGS84，全链路禁止 GCJ-02）
 - 大模型：DeepSeek / OpenAI 兼容接口
 
+## 架构
+
+```mermaid
+flowchart LR
+    subgraph Browser["浏览器（React + Vite）"]
+        UI["城市页 / 后台 / 对比 / 路线 / 测验 / 海报"]
+    end
+
+    subgraph Server["Fastify 服务端（:8787）"]
+        API["REST：/api/cities/*、/api/compare、/api/cities/:id/daytrip|quiz|weather"]
+        SSE["SSE：/api/cities/:id/generate（meta→theme→module→done）"]
+        ADMIN["/api/admin/*（Key 掩码管理，需 ADMIN_TOKEN）"]
+        GEN["编排：JobManager（单飞/增量/冷却/限流/预算）"]
+        LLMG["生成器：Mock / DeepSeek 兼容（选择+叙事，事实回填校验）"]
+    end
+
+    subgraph Data["本地数据"]
+        DB[("SQLite<br/>cities / city_archives /<br/>city_modules / generation_jobs /<br/>app_settings")]
+        ART["server/data 构建期产物<br/>词典 / 诗词库 / 文物名录 /<br/>地名库 / 事实快照 / 统计基线"]
+        RECON["server/data/recon 城市侦察缓存"]
+    end
+
+    subgraph External["外部服务（失败即降级，不伪造）"]
+        LLM["大模型（DeepSeek / StepFun / 自定义）"]
+        TD["天地图（瓦片 / 地名检索）"]
+        TV["Tavily 联网检索"]
+        WD["Wikidata / 维基百科"]
+        OM["Open-Meteo（气候基线 + 实时天气）"]
+        CM["Wikimedia Commons（文物图片，构建期下载）"]
+    end
+
+    UI -->|"fetch / SSE"| API
+    UI --> SSE
+    UI --> ADMIN
+    API --> GEN
+    SSE --> GEN
+    GEN --> LLMG
+    GEN --> DB
+    GEN --> ART
+    GEN --> RECON
+    LLMG -->|"仅选择与叙事"| LLM
+    GEN -.->|"侦察（2500ms 硬超时）"| WD
+    GEN -.->|"线索检索（可跳过）"| TV
+    UI -->|"瓦片"| TD
+    GEN -.->|"气候 / 实时天气"| OM
+    ART -.->|"构建期抓取"| CM
+    DB -.->|"Key 掩码 / 预算统计"| ADMIN
+```
+
+> 事实红线：坐标、年份、统计数值、诗词原文一律由本地产物或可核验来源回填；大模型只做「选择与叙事」，无法校验的内容标「待考」或整卷降级。
+
 ## 目录结构
 
 ```
@@ -61,13 +112,18 @@ curl http://localhost:8787/api/cities/hot
 npm run data:dictionary   # Wikidata 行政区划代码 + 坐标 → city_dictionary.json
 npm run data:poetry       # chinese-poetry → 本地诗词库（逐字校验源）
 npm run data:snapshot     # Wikidata → 城市事实快照
+npm run data:stats        # 官方统计公报 + Open-Meteo → 数说城市基线
 npm run data:gazetteer    # 地名坐标库
-npm run data:geo          # DataV.GeoAtlas → 六城行政区轮廓（含来源清单）
+npm run data:geo          # DataV.GeoAtlas → 六城行政区轮廓（含来源清单；--source=tianditu 可选备选源）
 npm run data:images       # Wikidata P18 + Wikimedia Commons → 本地文物图片与许可
 npm run data:presets      # 六座预置城市档案（本地事实模块 + 人工整理稿）
 npm run seed              # 重新导入词典（幂等）
 npm run verify            # 校验预置档案：Schema / 来源 / 坐标 / 年份 / 诗词逐字
 npm run data:refresh      # 依次刷新全部外部数据并重建预置档案
+
+# 维护：LLM 连通性测试与未发布档案清理
+npm run test:llm                                  # 读取 .env 后向配置的 LLM 发起最小请求
+npm run archives:clean-unpublished                 # dry-run 列出未发布档案；--apply 才真正删除
 ```
 
 构建期脚本的网络失败会以非 0 退出并保留旧产物，不会伪造快照；失败原因写入产物 `failures` 字段，并同步记录到验收文档。
@@ -85,8 +141,11 @@ npm run data:refresh      # 依次刷新全部外部数据并重建预置档案
 | 产物 | 生成脚本 | 内容与用途 |
 |---|---|---|
 | `server/data/city_dictionary.json` | `build_city_dictionary.ts` | 342 座城市（334 地级 + 4 直辖市 + 4 文旅县级市白名单）、1480 条别名、WGS84 中心点、Wikidata QID |
-| `server/data/verified_poetry_corpus.json` | `build_poetry_corpus.ts` | chinese-poetry（MIT）全唐诗/宋词/元曲中与六座预置城市相关的 815 首作品（每城 150 首），繁转简仅用于比对，保留原文 |
-| `server/data/fact_snapshot/{cityId}.json` | `build_fact_snapshot.ts` | 六座预置城市的 Wikidata 景点/文物/人物事实快照 |
+| `server/data/verified_poetry_corpus.json` | `build_poetry_corpus.ts` | chinese-poetry（MIT）全唐诗/宋词/元曲中与 149 座城市相关的 2,730 首作品（预置 6 城各 150 首，24 座重点城市各 50 首，其余城市最多 20 首），繁转简仅用于比对，保留原文 |
+| `server/data/stats_baseline.json` | `build_stats_baseline.ts` | 六座预置城市 GDP / 常住人口官方统计序列（2021–2025，西安 2021 人口缺失保持 `null`）与 Open-Meteo ERA5 1991–2020 月均温、月降水，供「数说城市」使用 |
+| `server/data/fact_snapshot/{cityId}.json` | `build_fact_snapshot.ts` / 运行期按需 | 六座预置城市 + 运行期按需生成的其他城市 Wikidata 景点/文物/人物事实快照 |
+| `server/data/recon/{cityId}.json` | 运行期按需 | 非预置城市侦察结果：维基百科摘要、Wikidata 人口、Tavily 检索、官方公报统计与气候；30 天缓存 |
+| `server/data/search_cache/` | 运行期按需 | Tavily 查询结果缓存（7 天），避免同一城市重复消耗检索额度 |
 | `server/data/relics_registry.json` | `build_relics_registry.ts` | 由快照汇总的 427 件文物名录（国保 / 禁止出境展览文物） |
 | `server/data/place_gazetteer.json` | `build_place_gazetteer.ts` | 862 条 WGS84 地名坐标（城市中心 + 景点 + 文物） |
 | `server/data/dynasties.json` | 人工整理 | 固定朝代年表（起止年份），待人工复核 |
@@ -96,9 +155,11 @@ npm run data:refresh      # 依次刷新全部外部数据并重建预置档案
 
 产物中的每条实体均带 `sourceRef`/`sourceRefs`；`server/data/*.db*` 为运行时数据库，不提交。
 
-**预置档案覆盖 7/8 卷**：城市名片、前世今生、景点地图、文物重器、历史名人、诗句中的 Ta、城市味道均已落库；
-「数说城市」因缺少可核验的统计序列产物（GDP/人口/气候月度值）暂不生成，前端显示「此卷暂缺」，
-详见 [FEATURES_AND_VERIFICATION.md](./FEATURES_AND_VERIFICATION.md) 的已知问题；绝不以估算值填充。
+**预置档案覆盖 8/8 卷**：城市名片、前世今生、景点地图、文物重器、历史名人、诗句中的 Ta、城市味道、数说城市均已落库（6 城 × 8 卷 = 48 卷）。
+「数说城市」的 GDP 与常住人口来自各市统计公报或政府数据页（2021–2025 序列），气候为 Open-Meteo ERA5 1991–2020 月值聚合；
+个别检索不到的年份保持 `null`，前端按文字列表或「待考」呈现，绝不以估算值填充。
+实时天气另由城市页身份卷的天气条（Open-Meteo current）提供。
+详见 [FEATURES_AND_VERIFICATION.md](./FEATURES_AND_VERIFICATION.md) 的已知问题。
 
 ## 无 Key 开发模式
 
@@ -110,7 +171,7 @@ npm run data:refresh      # 依次刷新全部外部数据并重建预置档案
 
 配置真实 Key：复制 `.env.example` 为 `.env`，填写后重启 `npm run dev` 即可切换，无需改代码。
 
-### 切换到真实模式（两步）
+### 切换到真实模式（三步）
 
 1. **大模型**：在 https://platform.deepseek.com/ 创建 API Key，写入 `.env`：
 
@@ -126,33 +187,59 @@ npm run data:refresh      # 依次刷新全部外部数据并重建预置档案
 
    也可以不改 `.env`，直接在 `http://localhost:5173/admin` 配置（见下一节），保存后立即生效。
 
-2. **天地图**：在 https://console.tianditu.gov.cn/ 申请「浏览器端」Key，并把
-   `localhost` 与你的部署域名加入白名单，写入 `.env`：
+2. **天地图**：在 https://cloudcenter.tianditu.gov.cn/ 注册并完成「个人开发者」认证，
+   在「开发管理 → 应用管理」分别创建「浏览器端」和「服务器端」两个应用，拿到两个 Key：
 
    ```dotenv
-   TIANDITU_KEY=你的天地图Key
+   TIANDITU_KEY=你的浏览器端Key
+   TIANDITU_SERVER_KEY=你的服务器端Key
    ```
 
-   重启后地图自动加载 t0–t7 矢量底图与注记；天地图 Key 会通过 `/api/map/config`
-   下发给浏览器（瓦片请求必需），大模型 Key 永不下发。
+   浏览器端 Key 会把 `localhost` 与部署域名加入白名单（不填表示不限制）；
+   服务器端 Key 用于服务端地名检索。重启后地图自动加载 t0–t7 矢量底图与注记；
+   浏览器端 Key 会通过 `/api/map/config` 下发给浏览器（瓦片请求必需），
+   大模型 Key 与服务器端 Key 永不下发。
+   旧的 `console.tianditu.gov.cn` 已不可用，请使用上面的云中心地址。
+
+3. **联网检索（可选）**：在 https://app.tavily.com/ 注册后创建 API Key（免费额度约 1,000 次/月）：
+
+   ```dotenv
+   TAVILY_API_KEY=tvly-dev-你的Key
+   SEARCH_DAILY_LIMIT=200
+   ```
+
+   未配置时，城市侦察仍会使用维基百科、Wikidata、Open-Meteo 与直接抓取的官方统计公报；
+   配置后会额外检索非遗、民俗与统计公报线索。国内访问维基百科需要代理时，
+   请在启动服务的终端设置 `HTTPS_PROXY`（Node 不会自动读取系统代理）。
+   也可以不改 `.env`，直接在 `/admin → 联网检索` 填写，保存后立即生效。
 
 ### 后台管理（`/admin`）
 
-打开 `/admin`（页脚有「后台管理」入口），统一管理所有 Key 与服务。页面顶部是服务总览（大模型、天地图、文物图片、档案库），下方分为「大模型」「天地图」「数据与安全」三块。
+打开 `/admin`（页脚有「后台管理」入口），统一管理所有 Key 与服务。页面顶部是服务总览（大模型、天地图、联网检索、文物图片、档案库），下方分为「大模型」「天地图」「联网检索」「数据与安全」四块。
 
-- **大模型**：DeepSeek、阶跃星辰 StepFun（`https://api.stepfun.com/v1`，模型 ID 以控制台为准，页面预填 `step-5` 作示例）或任意 OpenAI 兼容服务；支持连接测试与恢复 `.env` 默认。
+- **大模型**：DeepSeek、阶跃星辰 StepFun（`https://api.stepfun.com/v1`，模型 ID 以控制台为准，页面预填 `step-5` 作示例；2026-11-11 官方实测可用模型 `step-3.7-flash`，Base URL `https://api.stepfun.com/step_plan/v1`）或任意 OpenAI 兼容服务；支持连接测试与恢复 `.env` 默认。
 - **天地图**：浏览器端 Key（瓦片，会下发前端）与服务端 Key（地名检索，只留在服务端）可分别填写；支持启用/关闭底图与服务端 Key 测试。
+- **联网检索**：Tavily API Key 与每日检索上限可分别填写；支持连接测试与恢复 `.env` 默认，总览显示今日用量。
 - **数据与安全**：只读展示诗词库、文物名录、地名库、事实快照、文物图片、行政区轮廓的数量与时间；展示免 Key 服务、ADMIN_TOKEN 状态与 CORS 来源。
 
-保存后 `/api/health` 会显示 `llmProvider` / `llmModel` / `llmSettingsSource=runtime`，不需要重启。
-「测试连接」会发起一次最小请求验证 Key 与模型；「恢复 .env 默认」会删除运行时配置。
+保存后 `/api/health` 会显示 `llmProvider` / `llmModel` / `llmSettingsSource=runtime` 与 `searchConfigured`，不需要重启。
+「测试连接」会发起一次最小请求验证 Key（大模型 / 天地图 / Tavily）；「恢复 .env 默认」会删除对应的运行时配置。
 Key 只保存在本地 SQLite，读取接口只返回 `sk-…abcd` 掩码。
 
 管理接口保护：配置了 `ADMIN_TOKEN` 时必须携带 `x-admin-token`；未配置时只允许本机回环地址访问，
 公网部署请务必设置 `ADMIN_TOKEN` 并置于反向代理之后。
 
 > 预置六城（西安、杭州、成都、北京、苏州、洛阳）使用离线档案，不消耗 LLM 额度；
-> 其余城市首次访问时走真实 LLM 流式生成。
+> 其余城市首次访问时先做一次「城市侦察」：并行读取维基百科摘要、Wikidata 人口/面积、
+> Open-Meteo 气候、Tavily 检索结果，并抓取官方统计公报中的 GDP 与常住人口；
+> 侦察结果缓存到 `server/data/recon/<cityId>.json`，档案生成后再次访问直接命中缓存，
+> 页面显示「已为你复用」，不再调用 LLM 或联网检索。
+> 景点、文物、人物仍按需查询 Wikidata 并缓存到 `server/data/fact_snapshot/<cityId>.json`；
+> 人物还会用中文维基百科「XX市人」分类补充 Wikidata 缺失的历史人物（如安阳的韩琦、韩侂胄）。
+> 地图选中点位时会压暗周边并绘制示意范围圆环（景点约 800m、文物 500m、名人 1200m、诗境 1000m）；
+> 这是空间示意，不代表实际保护范围或行政边界。
+> 诗词库已覆盖 149 座城市（2,730 首）；其余城市该卷显示「此卷暂缺」。
+> 统计值只有在官方公报中逐字命中且确认是本城（非区县）公报时才写入，否则保持 `null` 并显示「待考」。
 
 ## 环境变量
 
@@ -165,6 +252,8 @@ Key 只保存在本地 SQLite，读取接口只返回 `sk-…abcd` 掩码。
 | `LLM_TIMEOUT_MS` | 单次大模型请求超时（毫秒） | `60000` |
 | `TIANDITU_KEY` | 天地图浏览器端 Key；为空则无底图模式 | 空 |
 | `TIANDITU_SERVER_KEY` | 天地图服务端 Key，用于地名检索；可被 `/admin` 覆盖 | 空 |
+| `TAVILY_API_KEY` | Tavily 联网检索 Key；为空时仅使用免费公开源 | 空 |
+| `SEARCH_DAILY_LIMIT` | 每日检索请求上限 | `200` |
 | `ADMIN_TOKEN` | 后台管理与预置城市强制重生成令牌；为空时后台仅限本机 | 空 |
 | `APP_ORIGINS` | 生产环境允许的跨域来源，逗号分隔；开发环境自动放行 localhost | 空 |
 | `LLM_DAILY_CALL_LIMIT` | 每日 LLM 调用预算 | `500` |
@@ -183,6 +272,12 @@ Key 只保存在本地 SQLite，读取接口只返回 `sk-…abcd` 掩码。
 | GET | `/api/cities/hot` | 热门城市（预置城市优先） |
 | GET | `/api/cities/:cityId` | 读取缓存档案 |
 | POST | `/api/cities/:cityId/generate` | SSE 流式生成或复用档案 |
+| GET | `/api/compare?cities=A,B` | 双城对比（GDP/人口/气候/景点/文物/人物/诗词/主题色） |
+| GET | `/api/cities/:cityId/daytrip` | 「如果只有一天」示意路线（上午/下午/晚上三槽）；未成卷时回退 Wikidata 快照，不要求档案 |
+| GET | `/api/cities/:cityId/quiz` | 随堂小测题目（≤5 题，本地判分）；需要档案已生成 |
+| GET | `/api/cities/:cityId/weather` | 实时天气（Open-Meteo current，10 分钟缓存）；只用词典坐标，342 城均可查 |
+
+行旅工具的实时层与档案解耦：天气与一日路线不写库、不缓存事实，每次请求现算（天气拉 Open-Meteo，路线从档案或 Wikidata 快照推导），因此预生成或按需生成档案都不会冻结它们的实时性；随堂小测的题目来自档案事实字段，仍需档案。
 
 SSE 事件：`meta` → `theme` → 8 个 `module`（可穿插 `module_error`）→ `done`；`ping` 每 15s 保活。
 
@@ -212,8 +307,9 @@ curl.exe http://localhost:8787/api/cities/CN-350500
 单元测试与类型检查：
 
 ```bash
-node node_modules/vitest/vitest.mjs run   # 95 项：schema/校验/规范化/编排/SSE/主题色/真实 LLM 解析
-npm run typecheck                          # server + client 的 tsc --noEmit
+npm test            # 158 项（23 个文件）：schema/校验/规范化/编排/SSE/主题色/真实 LLM 解析/按需快照/城市侦察/对比/路线/测验/天气/海报
+npm run typecheck   # server + client 的 tsc --noEmit
+npm run test:llm    # LLM 提供方连通性测试（读 .env，可用参数覆盖）
 ```
 
 实现要点：同一城市生成请求由数据库唯一部分索引 `uq_running_job` 保证单飞；失败任务冷却 10 分钟、无档案城市冷却 5 分钟；每小时最多生成 10 座新城市；每日 LLM 调用受 `LLM_DAILY_CALL_LIMIT` 预算约束；已 `ok`/`degraded` 的模块在增量重生成时复用，不重复调用 LLM。

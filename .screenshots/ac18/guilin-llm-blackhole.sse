@@ -1,0 +1,35 @@
+﻿retry: 3000
+
+event: meta
+data: {"seq":1,"cityId":"CN-450300","standardName":"桂林","province":"广西壮族自治区","aliases":["桂林"],"center":[110.286388888,25.281944444],"isPreset":false,"jobId":"32225892-491e-4784-8348-2ca70a3d7bd7"}
+
+event: theme
+data: {"seq":2,"light":{"primary":"#8C3F2B","secondary":"#4A4E54","accent":"#A98131"},"dark":{"primary":"#D2957F","secondary":"#B4B9C0","accent":"#D9B45C"}}
+
+event: module_error
+data: {"seq":3,"name":"identity","code":"LLM_TIMEOUT","retryable":true}
+
+event: module_error
+data: {"seq":4,"name":"chronicle","code":"LLM_TIMEOUT","retryable":true}
+
+event: module_error
+data: {"seq":5,"name":"landmarks","code":"LLM_TIMEOUT","retryable":true}
+
+event: module_error
+data: {"seq":6,"name":"relics","code":"LLM_TIMEOUT","retryable":true}
+
+event: module_error
+data: {"seq":7,"name":"figures","code":"LLM_TIMEOUT","retryable":true}
+
+event: module_error
+data: {"seq":8,"name":"poetics","code":"LLM_TIMEOUT","retryable":true}
+
+event: module_error
+data: {"seq":9,"name":"localSoul","code":"LLM_TIMEOUT","retryable":true}
+
+event: module
+data: {"seq":10,"name":"dataPulse","status":"degraded","data":{"gdpSeries":[{"year":2021,"value":null},{"year":2022,"value":null},{"year":2023,"value":null},{"year":2024,"value":null},{"year":2025,"value":null}],"popSeries":[{"year":2021,"value":null},{"year":2022,"value":null},{"year":2023,"value":null},{"year":2024,"value":null},{"year":2025,"value":null}],"statMeta":{"gdp":{"unit":"亿元","caliber":"地区生产总值（现价）；缺失年份不以估算补齐","sourceRefs":["S-RECON-CN-450300"]},"pop":{"unit":"万人","caliber":"年末常住人口；缺失年份不以估算补齐","sourceRefs":["S-RECON-CN-450300"]}},"climateMonthly":[{"month":1,"tempC":9,"precipMm":98.7},{"month":2,"tempC":11.3,"precipMm":108.9},{"month":3,"tempC":14.6,"precipMm":225.3},{"month":4,"tempC":19.4,"precipMm":283.8},{"month":5,"tempC":23,"precipMm":355.6},{"month":6,"tempC":25.4,"precipMm":408.3},{"month":7,"tempC":26.8,"precipMm":236},{"month":8,"tempC":27,"precipMm":150},{"month":9,"tempC":25,"precipMm":76.2},{"month":10,"tempC":20.9,"precipMm":73},{"month":11,"tempC":15.7,"precipMm":89.1},{"month":12,"tempC":10.7,"precipMm":71.9}],"climateMeta":{"period":"1991–2020","station":"ERA5 再分析（城市中心格点）","sourceRefs":["S-CLIMATE-aa5bd18bca"]}},"sources":[{"id":"S-RECON-CN-450300","type":"web_search","title":"CityLens 城市侦察记录 · 桂林","retrievedAt":"2026-11-11T05:36:04.985Z"},{"id":"S-WP-e56e97ecf2","type":"wikipedia","title":"维基百科 · 桂林市","url":"https://zh.wikipedia.org/wiki/%E6%A1%82%E6%9E%97%E5%B8%82","retrievedAt":"2026-11-11T05:36:04.985Z"},{"id":"S-WD-d0543e0ba2","type":"wikidata","title":"Wikidata 城市实体 · 桂林（Q189633）","url":"https://www.wikidata.org/wiki/Q189633","retrievedAt":"2026-11-11T05:36:04.985Z"},{"id":"S-CLIMATE-aa5bd18bca","type":"local_snapshot","title":"Open-Meteo ERA5 1991–2020 · 桂林","url":"https://archive-api.open-meteo.com/v1/archive","retrievedAt":"2026-11-11T05:36:04.985Z"},{"id":"S-WEB-67f1e351fb","type":"web_search","title":"有意思的桂林的特色方言，来到桂林你能听得懂吗？","url":"https://zhuanlan.zhihu.com/p/76698060","retrievedAt":"2026-11-11T05:36:04.985Z"},{"id":"S-WEB-9ce67e2815","type":"web_search","title":"桂林市 - 维基百科，自由的百科全书","url":"https://zh.wikipedia.org/zh-hans/%E6%A1%82%E6%9E%97%E5%B8%82","retrievedAt":"2026-11-11T05:36:04.985Z"},{"id":"S-WEB-897daa8aff","type":"web_search","title":"桂林话","url":"https://baike.baidu.com/item/%E6%A1%82%E6%9E%97%E8%AF%9D/1080188","retrievedAt":"2026-11-11T05:36:04.985Z"},{"id":"S-WEB-3ad4d8b094","type":"web_search","title":"2025年桂林市国民经济和社会发展统计公报","url":"https://www.sohu.com/a/1038528571_121106875","retrievedAt":"2026-11-11T05:36:04.985Z"},{"id":"S-WEB-17bed4eec8","type":"web_search","title":"(广西壮族自治区)2025年桂林市国民经济和社会发展统计公报-红黑统计公报库","url":"https://tjgb.hongheiku.com/xjtjgb/xj2020/74429.html","retrievedAt":"2026-11-11T05:36:04.985Z"},{"id":"S-WEB-4eaad645eb","type":"web_search","title":"(桂林市)2025年雁山区国民经济和社会发展统计公报","url":"https://tjgb.hongheiku.com/xjtjgb/xj2020/77353.html","retrievedAt":"2026-11-11T05:36:04.985Z"}]}
+
+event: done
+data: {"seq":11,"cityId":"CN-450300","status":"unpublished","failedModules":["identity","chronicle","landmarks","relics","figures","poetics","localSoul"],"generatedAt":"2026-11-11T05:42:06.858Z","dataVersion":10}
+
