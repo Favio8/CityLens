@@ -13,9 +13,13 @@ import { z } from 'zod';
 import { config, ROOT_DIR } from '../config';
 import type { ArchiveRepo } from '../db/archiveRepo';
 import type { CityRepo } from '../db/cityRepo';
+import type { JobRepo } from '../db/jobRepo';
 import { ApiError } from '../errors';
 import { LLM_PROVIDERS, type LlmSettingsService } from '../services/llmSettings';
 import type { MapSettingsService } from '../services/mapSettings';
+import type { SearchSettingsService } from '../services/searchSettings';
+import { searchUsage } from '../services/searchService';
+import { startOfToday } from '../services/rateLimiter';
 import {
   getGazetteer,
   getPoetryCorpus,
@@ -52,11 +56,23 @@ const MapTestInputSchema = z.object({
   browserKey: z.string().max(500).optional(),
 });
 
+const SearchSettingsInputSchema = z.object({
+  apiKey: z.string().max(500).optional(),
+  clearApiKey: z.boolean().optional(),
+  dailyLimit: z.number().int().min(1).max(5000).optional(),
+});
+
+const SearchTestInputSchema = z.object({
+  apiKey: z.string().max(500).optional(),
+});
+
 export interface AdminRouteDeps {
   llmSettings: LlmSettingsService;
   mapSettings: MapSettingsService;
+  searchSettings: SearchSettingsService;
   repo: CityRepo;
   archiveRepo: ArchiveRepo;
+  jobRepo: JobRepo;
 }
 
 interface DataArtifact {
@@ -167,19 +183,35 @@ function assertAdmin(request: FastifyRequest): void {
 }
 
 export function registerAdminRoutes(app: FastifyInstance, deps: AdminRouteDeps): void {
-  const { llmSettings, mapSettings, repo, archiveRepo } = deps;
+  const { llmSettings, mapSettings, searchSettings, repo, archiveRepo, jobRepo } = deps;
 
   app.get('/api/admin/overview', async (request) => {
     assertAdmin(request);
     const llm = llmSettings.publicSettings();
     const map = mapSettings.publicSettings();
+    const search = searchSettings.publicSettings();
     const images = getRelicImages();
+    // 今日 LLM 调用与每日预算（与 rateLimiter.checkBudget 同口径）。
+    const callsToday = jobRepo.sumLlmCallsSince(startOfToday());
+    const dailyBudget = config.llm.dailyCallLimit;
     return {
       llm,
       map,
+      search,
       services: {
-        llm: { configured: llm.hasApiKey && !llm.mock, mock: llm.mock },
+        llm: {
+          configured: llm.hasApiKey && !llm.mock,
+          mock: llm.mock,
+          callsToday,
+          dailyBudget,
+          remaining: Math.max(0, dailyBudget - callsToday),
+        },
         map: { enabled: map.enabled && map.hasBrowserKey },
+        search: {
+          configured: search.hasApiKey,
+          source: search.source,
+          usage: searchUsage(),
+        },
         images: { enabled: config.enableImages, count: images?.records.length ?? 0 },
       },
       artifacts: dataArtifacts(),
@@ -238,7 +270,14 @@ export function registerAdminRoutes(app: FastifyInstance, deps: AdminRouteDeps):
     if (!key) {
       throw new ApiError('INVALID_MAP_CONFIG', '请先填写服务端 Key 或浏览器端 Key', 400);
     }
-    const postStr = JSON.stringify({ keyWord: '故宫', queryType: 1, start: 0, count: 3 });
+    const postStr = JSON.stringify({
+      keyWord: '故宫',
+      level: 12,
+      mapBound: '116.0,39.8,116.6,40.1',
+      queryType: 1,
+      start: 0,
+      count: 3,
+    });
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), 12000);
     const startedAt = Date.now();
@@ -287,6 +326,84 @@ export function registerAdminRoutes(app: FastifyInstance, deps: AdminRouteDeps):
     }
   });
 
+  app.get('/api/admin/search', async (request) => {
+    assertAdmin(request);
+    return { ...searchSettings.publicSettings(), usage: searchUsage() };
+  });
+
+  app.put<{ Body: unknown }>('/api/admin/search', async (request) => {
+    assertAdmin(request);
+    const input = SearchSettingsInputSchema.parse(request.body ?? {});
+    return searchSettings.save(input);
+  });
+
+  app.delete('/api/admin/search', async (request) => {
+    assertAdmin(request);
+    return searchSettings.reset();
+  });
+
+  app.post<{ Body: unknown }>('/api/admin/search/test', async (request) => {
+    assertAdmin(request);
+    const input = SearchTestInputSchema.parse(request.body ?? {});
+    const key = input.apiKey?.trim() || searchSettings.get().apiKey;
+    if (!key) {
+      throw new ApiError('INVALID_SEARCH_CONFIG', '请先填写 Tavily API Key', 400);
+    }
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 20000);
+    const startedAt = Date.now();
+    try {
+      const response = await fetch(`${config.search.baseUrl}/search`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${key}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          query: 'CityLens connectivity test',
+          max_results: 1,
+          search_depth: 'basic',
+          include_answer: false,
+        }),
+        signal: controller.signal,
+      });
+      const latencyMs = Date.now() - startedAt;
+      const text = await response.text();
+      let count = 0;
+      let errorMessage = '';
+      try {
+        const json = JSON.parse(text) as { results?: unknown[]; error?: string; detail?: string };
+        count = Array.isArray(json.results) ? json.results.length : 0;
+        errorMessage = json.error ?? json.detail ?? '';
+      } catch {
+        errorMessage = text.slice(0, 200);
+      }
+      const ok = response.ok && !errorMessage;
+      return {
+        ok,
+        status: response.status,
+        latencyMs,
+        count,
+        message: ok
+          ? `Tavily 返回 ${count} 条结果`
+          : errorMessage || `Tavily 接口返回 HTTP ${response.status}`,
+      };
+    } catch (error) {
+      return {
+        ok: false,
+        status: 0,
+        latencyMs: Date.now() - startedAt,
+        count: 0,
+        message:
+          (error as Error).name === 'AbortError'
+            ? 'Tavily 连接超时'
+            : `Tavily 连接失败：${(error as Error).message}`,
+      };
+    } finally {
+      clearTimeout(timer);
+    }
+  });
+
   app.post<{ Body: unknown }>('/api/admin/llm/test', async (request) => {
     assertAdmin(request);
     const input = LlmTestInputSchema.parse(request.body ?? {});
@@ -294,7 +411,7 @@ export function registerAdminRoutes(app: FastifyInstance, deps: AdminRouteDeps):
     const baseUrl = (input.baseUrl ?? current.baseUrl).replace(/\/+$/, '');
     const model = input.model ?? current.model;
     const apiKey = input.apiKey?.trim() || current.apiKey;
-    const timeoutMs = input.timeoutMs ?? Math.min(current.timeoutMs, 20000);
+    const timeoutMs = input.timeoutMs ?? Math.min(current.timeoutMs, 30000);
     if (!baseUrl || !model) {
       throw new ApiError('INVALID_LLM_CONFIG', '请先填写 Base URL 与模型名', 400);
     }

@@ -158,4 +158,47 @@ describe('DeepSeekGenerator：模型只做选择与叙事，事实由本地库�
       generator.generate({ city: CITY, module: 'dataPulse', aliases: ['长安'] }),
     ).rejects.toBeInstanceOf(GenerationError);
   });
+
+  it('人物叙事泄漏字段名/键名时丢弃该人物，保留正常条目', async () => {
+    const snapshot = getFactSnapshot(CITY.cityId);
+    const figures = snapshot?.figures ?? [];
+    expect(figures.length).toBeGreaterThanOrEqual(2);
+    const [clean, leaky] = figures;
+    vi.stubGlobal(
+      'fetch',
+      vi.fn().mockResolvedValue(
+        sseResponse([
+          JSON.stringify({
+            items: [
+              {
+                entityRef: leaky!.entityId,
+                dynasty: '唐',
+                cityBond: `其 relationType 为 native，birthplace 见候选资料。`,
+                highlights: '唐代人物，事迹见本地快照与候选清单说明。',
+              },
+              {
+                entityRef: clean!.entityId,
+                dynasty: '唐',
+                cityBond: '此人长期在长安任职，留下大量诗文与市政事迹。',
+                highlights: '唐代名臣，政绩与文名俱存，遗迹今日仍可寻访。',
+              },
+            ],
+          }),
+        ]),
+      ),
+    );
+    const generator = new DeepSeekGenerator();
+    const result = await generator.generate({
+      city: CITY,
+      module: 'figures',
+      aliases: ['长安'],
+      snapshot,
+    });
+    const data = result.data as Array<{ entityRef: string; cityBond: string; highlights: string; dynasty: string }>;
+    expect(data).toHaveLength(1);
+    expect(data[0]!.entityRef).toBe(clean!.entityId);
+    // 只约束叙事文本（evidence.property 是 Schema 合法字段，不在此列）
+    const narrative = data.map((item) => `${item.dynasty}${item.cityBond}${item.highlights}`).join('');
+    expect(narrative).not.toMatch(/relationType|birthplace|deathplace|position/);
+  });
 });

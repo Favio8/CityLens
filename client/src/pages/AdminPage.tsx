@@ -6,14 +6,18 @@ import {
   getAdminOverview,
   resetAdminLlm,
   resetAdminMap,
+  resetAdminSearch,
   saveAdminLlm,
   saveAdminMap,
+  saveAdminSearch,
   testAdminLlm,
   testAdminMap,
+  testAdminSearch,
   type AdminLlmSettings,
   type AdminLlmTestResult,
   type AdminMapTestResult,
   type AdminOverview,
+  type AdminSearchTestResult,
 } from '../lib/adminApi';
 
 const PROVIDER_PRESETS = {
@@ -54,6 +58,11 @@ interface MapForm {
   enabled: boolean;
 }
 
+interface SearchForm {
+  apiKey: string;
+  dailyLimit: number;
+}
+
 const EMPTY_LLM_FORM: LlmForm = {
   provider: 'deepseek',
   baseUrl: PROVIDER_PRESETS.deepseek.baseUrl,
@@ -64,6 +73,7 @@ const EMPTY_LLM_FORM: LlmForm = {
 };
 
 const EMPTY_MAP_FORM: MapForm = { browserKey: '', serverKey: '', enabled: true };
+const EMPTY_SEARCH_FORM: SearchForm = { apiKey: '', dailyLimit: 200 };
 const FIELD =
   'mt-1.5 w-full border bg-transparent px-3 py-2 text-xs outline-none hairline focus:border-[var(--city-primary)]';
 const LABEL = 'text-[10px] tracking-[0.16em] text-[var(--text-secondary)]';
@@ -104,11 +114,11 @@ function AdminSection({
   children: ReactNode;
 }) {
   return (
-    <section id={id} className="mt-12 scroll-mt-24">
+    <section id={id} className="mt-12 scroll-mt-24" aria-labelledby={`${id}-title`}>
       <div className="mb-5 flex flex-wrap items-end justify-between gap-3 border-b pb-4 hairline">
         <div>
           <p className="hanzi-index">{index} · {title}</p>
-          <h2 className="mt-2 font-serif text-2xl tracking-[0.12em] md:text-3xl">{title}</h2>
+          <h2 id={`${id}-title`} className="mt-2 font-serif text-2xl tracking-[0.12em] md:text-3xl">{title}</h2>
           <p className="mt-2 max-w-2xl text-[11px] leading-relaxed text-[var(--text-secondary)]">
             {description}
           </p>
@@ -126,25 +136,32 @@ export function AdminPage() {
   const [overview, setOverview] = useState<AdminOverview | null>(null);
   const [llmForm, setLlmForm] = useState<LlmForm>(EMPTY_LLM_FORM);
   const [mapForm, setMapForm] = useState<MapForm>(EMPTY_MAP_FORM);
+  const [searchForm, setSearchForm] = useState<SearchForm>(EMPTY_SEARCH_FORM);
   const [loading, setLoading] = useState(false);
   const [savingLlm, setSavingLlm] = useState(false);
   const [testingLlm, setTestingLlm] = useState(false);
   const [savingMap, setSavingMap] = useState(false);
   const [testingMap, setTestingMap] = useState(false);
+  const [savingSearch, setSavingSearch] = useState(false);
+  const [testingSearch, setTestingSearch] = useState(false);
   const [llmMessage, setLlmMessage] = useState<string | null>(null);
   const [mapMessage, setMapMessage] = useState<string | null>(null);
+  const [searchMessage, setSearchMessage] = useState<string | null>(null);
   const [llmTest, setLlmTest] = useState<AdminLlmTestResult | null>(null);
   const [mapTest, setMapTest] = useState<AdminMapTestResult | null>(null);
+  const [searchTest, setSearchTest] = useState<AdminSearchTestResult | null>(null);
 
   const load = async (adminToken: string): Promise<void> => {
     setLoading(true);
     setLlmMessage(null);
     setMapMessage(null);
+    setSearchMessage(null);
     try {
       const data = await getAdminOverview(adminToken);
       setOverview(data);
       setLlmForm(toLlmForm(data.llm));
       setMapForm({ browserKey: '', serverKey: '', enabled: data.map.enabled });
+      setSearchForm({ apiKey: '', dailyLimit: data.search.dailyLimit });
       setToken(adminToken);
       sessionStorage.setItem(ADMIN_TOKEN_KEY, adminToken);
     } catch (error) {
@@ -180,7 +197,13 @@ export function AdminPage() {
         llm: data,
         services: {
           ...overview.services,
-          llm: { configured: data.hasApiKey && !data.mock, mock: data.mock },
+          llm: {
+            configured: data.hasApiKey && !data.mock,
+            mock: data.mock,
+            callsToday: overview.services.llm.callsToday,
+            dailyBudget: overview.services.llm.dailyBudget,
+            remaining: overview.services.llm.remaining,
+          },
         },
       });
       setLlmForm(toLlmForm(data));
@@ -222,7 +245,13 @@ export function AdminPage() {
         llm: data,
         services: {
           ...overview.services,
-          llm: { configured: data.hasApiKey && !data.mock, mock: data.mock },
+          llm: {
+            configured: data.hasApiKey && !data.mock,
+            mock: data.mock,
+            callsToday: overview.services.llm.callsToday,
+            dailyBudget: overview.services.llm.dailyBudget,
+            remaining: overview.services.llm.remaining,
+          },
         },
       });
       setLlmForm(toLlmForm(data));
@@ -284,11 +313,75 @@ export function AdminPage() {
     }
   };
 
+  const saveSearch = async (): Promise<void> => {
+    if (!overview) return;
+    setSavingSearch(true);
+    setSearchMessage(null);
+    setSearchTest(null);
+    try {
+      const data = await saveAdminSearch(token, {
+        ...(searchForm.apiKey.trim() ? { apiKey: searchForm.apiKey.trim() } : {}),
+        dailyLimit: searchForm.dailyLimit,
+      });
+      setOverview({
+        ...overview,
+        search: data,
+        services: {
+          ...overview.services,
+          search: { configured: data.hasApiKey, source: data.source, usage: overview.services.search.usage },
+        },
+      });
+      setSearchForm({ apiKey: '', dailyLimit: data.dailyLimit });
+      setSearchMessage('已保存：下一次生成新城市时生效。');
+    } catch (error) {
+      setSearchMessage((error as Error).message);
+    } finally {
+      setSavingSearch(false);
+    }
+  };
+
+  const testSearch = async (): Promise<void> => {
+    setTestingSearch(true);
+    setSearchMessage(null);
+    setSearchTest(null);
+    try {
+      setSearchTest(
+        await testAdminSearch(token, {
+          ...(searchForm.apiKey.trim() ? { apiKey: searchForm.apiKey.trim() } : {}),
+        }),
+      );
+    } catch (error) {
+      setSearchMessage((error as Error).message);
+    } finally {
+      setTestingSearch(false);
+    }
+  };
+
+  const resetSearch = async (): Promise<void> => {
+    if (!overview) return;
+    if (!window.confirm('恢复联网检索为 .env 默认？运行时保存的 Tavily Key 与额度将被删除。')) return;
+    try {
+      const data = await resetAdminSearch(token);
+      setOverview({
+        ...overview,
+        search: data,
+        services: {
+          ...overview.services,
+          search: { configured: data.hasApiKey, source: data.source, usage: overview.services.search.usage },
+        },
+      });
+      setSearchForm({ apiKey: '', dailyLimit: data.dailyLimit });
+      setSearchMessage('已恢复 .env 默认配置。');
+    } catch (error) {
+      setSearchMessage((error as Error).message);
+    }
+  };
+
   const preset = PROVIDER_PRESETS[llmForm.provider];
 
   return (
-    <main>
-      <section className="relative overflow-hidden border-b hairline">
+    <div>
+      <section className="relative overflow-hidden border-b hairline" aria-labelledby="admin-hero-title">
         <InkCanvas />
         <div
           className="pointer-events-none absolute inset-0"
@@ -299,7 +392,7 @@ export function AdminPage() {
         />
         <div className="page-shell relative py-12 md:py-16">
           <p className="eyebrow">CITYLENS · ADMIN</p>
-          <h1 className="display-city mt-4 text-[52px] md:text-[82px]">后台管理</h1>
+          <h1 id="admin-hero-title" className="display-city mt-4 text-[52px] md:text-[82px]">后台管理</h1>
           <p className="mt-4 max-w-2xl text-sm leading-[1.9] text-[var(--text-secondary)]">
             统一管理大模型、天地图、图片与外部数据服务。Key 只保存在本地 SQLite，读取接口只返回掩码；
             保存后无需重启服务。
@@ -313,6 +406,13 @@ export function AdminPage() {
               <span className="flex items-center gap-1.5 border px-2 py-1 hairline">
                 <StatusDot tone={overview.services.map.enabled ? 'ok' : 'off'} />
                 天地图 · {overview.services.map.enabled ? '已配置' : '无底图'}
+              </span>
+              <span className="flex items-center gap-1.5 border px-2 py-1 hairline">
+                <StatusDot tone={overview.services.search.configured ? 'ok' : 'off'} />
+                联网检索 ·{' '}
+                {overview.services.search.configured
+                  ? `${overview.services.search.usage.count}/${overview.services.search.usage.limit}`
+                  : '未配置'}
               </span>
               <span className="flex items-center gap-1.5 border px-2 py-1 hairline">
                 <StatusDot tone={overview.services.images.enabled ? 'ok' : 'off'} />
@@ -329,7 +429,7 @@ export function AdminPage() {
 
       <div className="page-shell py-10">
         {!overview ? (
-          <section className="surface-card mx-auto max-w-xl rounded-md p-6">
+          <section className="surface-card mx-auto max-w-xl rounded-md p-6" aria-label="管理访问令牌">
             <p className="eyebrow">访问令牌</p>
             <p className="mt-2 text-[11px] leading-relaxed text-[var(--text-secondary)]">
               服务端配置了 <code className="mono">ADMIN_TOKEN</code> 时必须填写；未配置时仅允许本机回环访问。
@@ -361,6 +461,7 @@ export function AdminPage() {
                   ['admin-overview', '总览'],
                   ['admin-llm', '大模型'],
                   ['admin-map', '天地图'],
+                  ['admin-search', '联网检索'],
                   ['admin-data', '数据与安全'],
                 ].map(([id, label]) => (
                   <a key={id} href={`#${id}`} className="ink-btn px-3 py-1.5">
@@ -374,7 +475,8 @@ export function AdminPage() {
               </span>
             </div>
 
-            <section id="admin-overview" className="mt-8 scroll-mt-24">
+            <section id="admin-overview" className="mt-8 scroll-mt-24" aria-labelledby="admin-overview-title">
+              <h2 id="admin-overview-title" className="sr-only">服务总览</h2>
               <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
                 <div className="surface-card rounded-md p-5">
                   <div className="flex items-center justify-between">
@@ -386,6 +488,10 @@ export function AdminPage() {
                   <p className="mt-3 text-[10px] text-[var(--text-secondary)]">
                     {overview.llm.hasApiKey ? `Key ${overview.llm.apiKeyMasked}` : '未配置 Key'} ·{' '}
                     {overview.llm.mock ? '模拟模式' : '真实调用'}
+                  </p>
+                  <p className="mono mt-3 text-[10px] text-[var(--text-secondary)]">
+                    今日调用 {overview.services.llm.callsToday} / 预算 {overview.services.llm.dailyBudget}
+                    （剩余 {overview.services.llm.remaining}）
                   </p>
                 </div>
                 <div className="surface-card rounded-md p-5">
@@ -611,7 +717,7 @@ export function AdminPage() {
                   <button type="button" className="ink-btn px-4 py-2 text-[11px]" onClick={() => void resetMap()}>
                     恢复 .env 默认
                   </button>
-                  <a href="https://console.tianditu.gov.cn/" target="_blank" rel="noreferrer" className="ink-link text-[10px] text-[var(--text-secondary)]">
+                  <a href="https://cloudcenter.tianditu.gov.cn/center/development/myApp" target="_blank" rel="noreferrer" className="ink-link text-[10px] text-[var(--text-secondary)]">
                     天地图控制台 ↗
                   </a>
                 </div>
@@ -629,8 +735,79 @@ export function AdminPage() {
             </AdminSection>
 
             <AdminSection
-              id="admin-data"
+              id="admin-search"
               index="03"
+              title="联网检索"
+              description="Tavily 用于非预置城市首次生成时的线索检索。Key 只保存在本地 SQLite，保存后立即生效；未配置时仍使用维基百科、Wikidata 与官方公报等免费来源。"
+              aside={<span className="mono text-[10px] text-[var(--text-secondary)]">{overview.search.source === 'runtime' ? '运行时配置' : '.env 默认'}</span>}
+            >
+              <div className="surface-card rounded-md p-6">
+                <div className="grid gap-4 md:grid-cols-2">
+                  <label className="block">
+                    <span className={LABEL}>Tavily API Key</span>
+                    <input
+                      type="password"
+                      value={searchForm.apiKey}
+                      onChange={(event) => setSearchForm((current) => ({ ...current, apiKey: event.target.value }))}
+                      placeholder={overview.search.hasApiKey ? `已保存：${overview.search.apiKeyMasked}` : 'tvly-dev-…'}
+                      className={FIELD}
+                      autoComplete="new-password"
+                    />
+                    <span className="mt-1 block text-[10px] leading-relaxed text-[var(--text-secondary)]">
+                      免费额度约 1,000 次/月；每次城市侦察通常消耗 2 次检索。
+                    </span>
+                  </label>
+                  <label className="block">
+                    <span className={LABEL}>每日检索上限</span>
+                    <input
+                      type="number"
+                      min={1}
+                      max={5000}
+                      value={searchForm.dailyLimit}
+                      onChange={(event) =>
+                        setSearchForm((current) => ({
+                          ...current,
+                          dailyLimit: Number(event.target.value) || 1,
+                        }))
+                      }
+                      className={FIELD}
+                    />
+                    <span className="mt-1 block text-[10px] leading-relaxed text-[var(--text-secondary)]">
+                      今日已用 {overview.services.search.usage.count} / {overview.services.search.usage.limit} 次。
+                    </span>
+                  </label>
+                </div>
+
+                <div className="mt-6 flex flex-wrap items-center gap-2">
+                  <button type="button" className="ink-btn ink-btn--solid px-4 py-2 text-[11px]" onClick={() => void saveSearch()} disabled={savingSearch}>
+                    {savingSearch ? '保存中…' : '保存配置'}
+                  </button>
+                  <button type="button" className="ink-btn px-4 py-2 text-[11px]" onClick={() => void testSearch()} disabled={testingSearch}>
+                    {testingSearch ? '测试中…' : '测试连接'}
+                  </button>
+                  <button type="button" className="ink-btn px-4 py-2 text-[11px]" onClick={() => void resetSearch()}>
+                    恢复 .env 默认
+                  </button>
+                  <a href="https://app.tavily.com/" target="_blank" rel="noreferrer" className="ink-link text-[10px] text-[var(--text-secondary)]">
+                    Tavily 控制台 ↗
+                  </a>
+                </div>
+
+                {searchMessage ? <p className="mt-4 text-[11px] leading-relaxed text-[var(--city-primary)]" role="status">{searchMessage}</p> : null}
+                {searchTest ? (
+                  <div className="mt-4 rounded-sm border p-3 text-[11px] leading-relaxed hairline" role="status">
+                    <p className="mono text-[10px] tracking-[0.12em]">
+                      {searchTest.ok ? 'Key 可用' : 'Key 测试失败'} · HTTP {searchTest.status} · {searchTest.latencyMs}ms · {searchTest.count} 条
+                    </p>
+                    <p className="mt-1 text-[var(--text-secondary)]">{searchTest.message}</p>
+                  </div>
+                ) : null}
+              </div>
+            </AdminSection>
+
+            <AdminSection
+              id="admin-data"
+              index="04"
               title="数据产物与安全"
               description="构建期抓取的数据产物状态，以及当前管理接口的访问方式。产物刷新请运行 npm run data:refresh。"
             >
@@ -690,6 +867,6 @@ export function AdminPage() {
           </div>
         )}
       </div>
-    </main>
+    </div>
   );
 }

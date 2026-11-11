@@ -57,6 +57,28 @@ export interface AdminMapTestResult {
   message: string;
 }
 
+export interface AdminSearchSettings {
+  hasApiKey: boolean;
+  apiKeyMasked: string;
+  dailyLimit: number;
+  source: 'runtime' | 'env';
+  updatedAt: string | null;
+}
+
+export interface AdminSearchInput {
+  apiKey?: string;
+  clearApiKey?: boolean;
+  dailyLimit?: number;
+}
+
+export interface AdminSearchTestResult {
+  ok: boolean;
+  status: number;
+  latencyMs: number;
+  count: number;
+  message: string;
+}
+
 export interface AdminArtifact {
   key: string;
   label: string;
@@ -69,9 +91,21 @@ export interface AdminArtifact {
 export interface AdminOverview {
   llm: AdminLlmSettings;
   map: AdminMapSettings;
+  search: AdminSearchSettings;
   services: {
-    llm: { configured: boolean; mock: boolean };
+    llm: {
+      configured: boolean;
+      mock: boolean;
+      callsToday: number;
+      dailyBudget: number;
+      remaining: number;
+    };
     map: { enabled: boolean };
+    search: {
+      configured: boolean;
+      source: 'runtime' | 'env';
+      usage: { date: string; count: number; limit: number };
+    };
     images: { enabled: boolean; count: number };
   };
   artifacts: AdminArtifact[];
@@ -152,6 +186,27 @@ export function testAdminMap(
   input: Pick<AdminMapInput, 'browserKey' | 'serverKey'>,
 ): Promise<AdminMapTestResult> {
   return request('/api/admin/map/test', token, {
+    method: 'POST',
+    body: JSON.stringify(input),
+  });
+}
+
+export function saveAdminSearch(
+  token: string,
+  input: AdminSearchInput,
+): Promise<AdminSearchSettings> {
+  return request('/api/admin/search', token, { method: 'PUT', body: JSON.stringify(input) });
+}
+
+export function resetAdminSearch(token: string): Promise<AdminSearchSettings> {
+  return request('/api/admin/search', token, { method: 'DELETE' });
+}
+
+export function testAdminSearch(
+  token: string,
+  input: Pick<AdminSearchInput, 'apiKey'>,
+): Promise<AdminSearchTestResult> {
+  return request('/api/admin/search/test', token, {
     method: 'POST',
     body: JSON.stringify(input),
   });

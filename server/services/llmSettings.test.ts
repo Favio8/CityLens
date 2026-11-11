@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { config } from '../config';
 import { openDb } from '../db';
 import { LlmSettingsService } from './llmSettings';
 
@@ -7,12 +8,13 @@ function service(): LlmSettingsService {
 }
 
 describe('大模型运行时配置', () => {
-  it('未保存时沿用 .env，并在无 Key 时保持模拟模式', () => {
+  it('未保存时沿用 .env：mock 与 Key 状态跟随环境变量', () => {
     const settings = service();
     const current = settings.get();
     expect(current.source).toBe('env');
-    expect(current.mock).toBe(true);
-    expect(settings.hasKey()).toBe(false);
+    // .env 有 Key 时真实调用；无 Key 时自动模拟（与 config.mockLlm 一致）。
+    expect(current.mock).toBe(config.mockLlm);
+    expect(settings.hasKey()).toBe(config.llm.apiKey.length > 0);
   });
 
   it('保存自定义服务后立即生效，读取接口不泄露明文 Key', () => {
