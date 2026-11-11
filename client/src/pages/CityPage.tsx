@@ -10,6 +10,9 @@ import {
 import { CityHero } from '../components/hero/CityHero';
 import { ScrollNav } from '../components/layout/ScrollNav';
 import { ModuleRenderer } from '../components/modules/ModuleRenderer';
+import { DayTripModule } from '../components/modules/DayTripModule';
+import { QuizModule } from '../components/modules/QuizModule';
+import { ErrorBoundary } from '../components/ui/ErrorBoundary';
 import { Reveal } from '../components/ui/Reveal';
 import { SectionShell } from '../components/ui/SectionShell';
 import { useCityStream, type StreamedModule } from '../hooks/useCityStream';
@@ -127,6 +130,8 @@ export function CityPage() {
   const persona =
     identity && typeof identity.oneLinePersona === 'string' ? identity.oneLinePersona : null;
   const moduleCount = Object.keys(state.modules).length;
+  // 流式阶段出错（冷却 / 限流 / 预算）时， hero 操作卡片展示原因，避免错误不可见。
+  const heroNotice = state.phase === 'error' ? state.fatal?.message ?? null : null;
 
   return (
     <div>
@@ -138,16 +143,19 @@ export function CityPage() {
         isFavorite={isFavorite(cityId)}
         persona={persona}
         hint={hint}
+        archive={state.archive}
+        notice={heroNotice}
         onToggleFavorite={() => toggleFavorite(cityId)}
         onRegenerate={() => regenerate()}
       />
       <ScrollNav />
 
-      <main className="page-shell pb-10">
+      <div className="page-shell pb-10">
         {state.phase === 'reading' || !meta ? (
           <ReadingSkeleton cityId={cityId} />
         ) : (
-          <div>
+          <>
+            <div>
             {MODULE_TITLES.map(([name, index, title]) => {
               const module = state.modules[name];
               const error = state.errors[name];
@@ -183,15 +191,17 @@ export function CityPage() {
                 >
                   {module ? (
                     <Reveal>
-                      <ModuleRenderer
-                        name={name}
-                        data={module.data}
-                        sources={sources}
-                        cityId={cityId}
-                        cityName={meta.standardName}
-                        center={meta.center}
-                        palette={state.theme ?? meta.themePalette}
-                      />
+                      <ErrorBoundary title="此卷渲染异常" resetKey={name}>
+                        <ModuleRenderer
+                          name={name}
+                          data={module.data}
+                          sources={sources}
+                          cityId={cityId}
+                          cityName={meta.standardName}
+                          center={meta.center}
+                          palette={state.theme ?? meta.themePalette}
+                        />
+                      </ErrorBoundary>
                     </Reveal>
                   ) : (
                     <Reveal>
@@ -217,8 +227,45 @@ export function CityPage() {
               );
             })}
           </div>
+          <p className="mt-10 border-t pt-4 text-[10px] leading-relaxed text-[var(--text-secondary)] hairline">
+            除预置馆藏外，本页条目由 AI 依据所列来源整理；点击各卡片的「[源]」可查看原始链接。
+            重要事实、年代与数据请以原始来源为准。
+          </p>
+          {state.phase === 'ready' ? (
+            <>
+              <SectionShell
+                id="daytrip"
+                index="行"
+                title="如果只有一天"
+                aside={
+                  <span className="mono text-[10px] tracking-[0.16em] text-[var(--text-secondary)]">
+                    示意路线 · 非导航
+                  </span>
+                }
+              >
+                <DayTripModule
+                  cityId={cityId}
+                  cityName={meta.standardName}
+                  center={meta.center}
+                />
+              </SectionShell>
+              <SectionShell
+                id="quiz"
+                index="问"
+                title="随堂小测"
+                aside={
+                  <span className="mono text-[10px] tracking-[0.16em] text-[var(--text-secondary)]">
+                    本地判分 · 不出本卷之外的知识点
+                  </span>
+                }
+              >
+                <QuizModule cityId={cityId} cityName={meta.standardName} />
+              </SectionShell>
+            </>
+          ) : null}
+          </>
         )}
-      </main>
+      </div>
     </div>
   );
 }

@@ -23,6 +23,10 @@ import {
 } from '../services/cacheService';
 import type { JobManager, SseEnvelope } from '../services/jobManager';
 import { hashIp, type RateLimiter } from '../services/rateLimiter';
+import { buildDayTrip } from '../services/dayTripService';
+import { loadCitySnapshot } from '../services/cityFactSnapshot';
+import { buildQuiz } from '../services/quizService';
+import { getCityWeather } from '../services/weatherService';
 
 export interface ArchiveRouteDeps {
   repo: CityRepo;
@@ -52,6 +56,49 @@ function cooldownError(cityId: string, untilIso: string): ApiError {
 export function registerArchiveRoutes(app: FastifyInstance, deps: ArchiveRouteDeps): void {
   const { repo, archiveRepo, jobRepo, jobManager, rateLimiter } = deps;
 
+  /** 行旅工具共用：读取已发布档案；未生成返回 404。 */
+  const requireBundle = (cityId: string) => {
+    const city = repo.getCity(cityId);
+    if (!city) throw new ApiError('CITY_NOT_FOUND', '版图中暂无此城', 404);
+    const bundle = loadBundle(archiveRepo, city.cityId);
+    if (!bundle || bundle.archive.status === 'unpublished') {
+      throw new ApiError('NOT_GENERATED', '此城尚未成卷，暂不提供该工具', 404);
+    }
+    return { city, bundle };
+  };
+
+  /** 「如果只有一天」一日路线（示意路线，非导航）。 */
+  app.get<{ Params: { cityId: string } }>('/api/cities/:cityId/daytrip', async (request) => {
+    const city = repo.getCity(request.params.cityId);
+    if (!city) throw new ApiError('CITY_NOT_FOUND', '版图中暂无此城', 404);
+    const bundle = loadBundle(archiveRepo, city.cityId);
+    if (bundle && bundle.archive.status !== 'unpublished') {
+      return buildDayTrip(city, bundle);
+    }
+    // 实时层解耦：未成卷也尝试用 Wikidata 快照排路线（本地优先，缺失则按需抓取；
+    // 失败有 10 分钟负缓存，不会每次请求都打 Wikidata）。
+    const snapshot = await loadCitySnapshot(city);
+    if (snapshot) return buildDayTrip(city, null, snapshot);
+    throw new ApiError('NOT_GENERATED', '此城尚未成卷，且未检索到可核验的点位快照', 404);
+  });
+
+  /** 知识小测验：题目来自档案事实字段，本地判分。 */
+  app.get<{ Params: { cityId: string } }>('/api/cities/:cityId/quiz', async (request) => {
+    const { city, bundle } = requireBundle(request.params.cityId);
+    return buildQuiz(city, bundle);
+  });
+
+  /** 实时天气（Open-Meteo，无需 Key）；失败 502，前端回退气候基线。 */
+  app.get<{ Params: { cityId: string } }>('/api/cities/:cityId/weather', async (request) => {
+    const city = repo.getCity(request.params.cityId);
+    if (!city) throw new ApiError('CITY_NOT_FOUND', '版图中暂无此城', 404);
+    const weather = await getCityWeather(city.cityId, city.center);
+    if (!weather) {
+      throw new ApiError('WEATHER_UNAVAILABLE', '实时天气暂不可用，已回退到气候基线', 502);
+    }
+    return weather;
+  });
+
   app.get<{ Params: { cityId: string } }>('/api/cities/:cityId', async (request) => {
     const startedAt = Date.now();
     const city = repo.getCity(request.params.cityId);
@@ -75,6 +122,7 @@ export function registerArchiveRoutes(app: FastifyInstance, deps: ArchiveRouteDe
   app.post<{ Params: { cityId: string }; Body: unknown }>(
     '/api/cities/:cityId/generate',
     async (request, reply) => {
+      const requestStartedAt = Date.now();
       const body = GenerateRequestSchema.parse(request.body ?? {});
       const city = repo.getCity(request.params.cityId);
       if (!city) throw new ApiError('CITY_NOT_FOUND', '版图中暂无此城', 404);
@@ -127,6 +175,7 @@ export function registerArchiveRoutes(app: FastifyInstance, deps: ArchiveRouteDe
         modules,
       });
 
+      let firstEventLogged = false;
       reply.hijack();
       const origin = request.headers.origin;
       const headers: Record<string, string> = {
@@ -161,6 +210,12 @@ export function registerArchiveRoutes(app: FastifyInstance, deps: ArchiveRouteDe
 
       detach = jobManager.attach(runtime, (event) => {
         try {
+          if (!firstEventLogged) {
+            firstEventLogged = true;
+            console.log(
+              `[sse] city=${runtime.cityId} firstEvent=${event.event} ms=${Date.now() - requestStartedAt}`,
+            );
+          }
           writeEvent(reply, event);
           if (event.event === 'done') {
             cleanup();

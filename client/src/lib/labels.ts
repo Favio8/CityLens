@@ -17,7 +17,7 @@ export const COORD_SOURCE_LABELS: Record<CoordSource, string> = {
 
 export const VERIFICATION_LABELS: Record<VerificationStatus, string> = {
   verified_by_source: '来源可核验',
-  pending_human_review: '待人工复核',
+  pending_human_review: 'AI 整理',
   preset_manual: '人工整理',
 };
 

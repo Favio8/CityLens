@@ -2,10 +2,12 @@
 import type { Identity, NumberFact, SourceRef, StringFact } from '@citylens/shared/schema';
 import { SourceBadge } from '../ui/SourceBadge';
 import { PendingTag, VerificationTag } from '../ui/Tags';
+import { WeatherStrip } from './WeatherStrip';
 
 interface IdentityModuleProps {
   data: Identity;
   sources: SourceRef[];
+  cityId?: string;
 }
 
 function NumberTile({
@@ -63,7 +65,7 @@ function StringTile({ label, fact, sources }: { label: string; fact: StringFact;
   );
 }
 
-export function IdentityModule({ data, sources }: IdentityModuleProps) {
+export function IdentityModule({ data, sources, cityId }: IdentityModuleProps) {
   const persona = typeof data.oneLinePersona === 'string' ? data.oneLinePersona : null;
   return (
     <div>
@@ -103,6 +105,8 @@ export function IdentityModule({ data, sources }: IdentityModuleProps) {
         </span>
         <VerificationTag status={data.verification} />
       </div>
+
+      {cityId ? <WeatherStrip cityId={cityId} /> : null}
     </div>
   );
 }

@@ -13,10 +13,11 @@ import {
   Marker,
   NavigationControl,
   Popup,
+  type GeoJSONSource,
   type MapOptions,
 } from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
-import type { GeoJSON } from 'geojson';
+import type { GeoJSON, Polygon } from 'geojson';
 import type { Coord } from '@citylens/shared/schema';
 import { getMapConfig, type MapConfig } from '../../lib/api';
 import { MAP_FOCUS_EVENT, type MapFocusDetail } from '../../lib/mapFocus';
@@ -29,6 +30,8 @@ export interface CityMapPoint {
   name: string;
   coordinates: Coord;
   kindLabel?: string;
+  /** 选中时的示意范围半径（米）；缺省按地图类型取值。 */
+  rangeMeters?: number;
 }
 
 interface CityMapProps {
@@ -43,9 +46,11 @@ interface CityMapProps {
   ariaLabel?: string;
   /** 是否在点位变化时自动缩放到包围盒，默认 true。 */
   fitPoints?: boolean;
+  /** 一日路线：按顺序连接各站点的折线（示意路线，非导航）。 */
+  route?: Coord[];
 }
 
-export type MapScope = 'landmarks' | 'relics' | 'figures' | 'poetics';
+export type MapScope = 'landmarks' | 'relics' | 'figures' | 'poetics' | 'daytrip';
 
 function tiandituStyle(key: string): MapStyle {
   const subdomains = Array.from({ length: 8 }, (_, index) => index);
@@ -96,6 +101,52 @@ function emptyStyle(): MapStyle {
   };
 }
 
+/** 选中点位的示意半径：不是精确边界，只用于空间感知。 */
+const RANGE_BY_SCOPE: Record<MapScope, number> = {
+  landmarks: 800,
+  relics: 500,
+  figures: 1200,
+  poetics: 1000,
+  daytrip: 1000,
+};
+
+function circlePolygon(center: Coord, radiusMeters: number, steps = 72): Polygon {
+  const [lng, lat] = center;
+  const earthRadius = 6378137;
+  const distance = radiusMeters / earthRadius;
+  const latRad = (lat * Math.PI) / 180;
+  const lngRad = (lng * Math.PI) / 180;
+  const ring: Array<[number, number]> = [];
+  for (let index = 0; index <= steps; index += 1) {
+    const bearing = (index / steps) * 2 * Math.PI;
+    const lat2 = Math.asin(
+      Math.sin(latRad) * Math.cos(distance) +
+        Math.cos(latRad) * Math.sin(distance) * Math.cos(bearing),
+    );
+    const lng2 =
+      lngRad +
+      Math.atan2(
+        Math.sin(bearing) * Math.sin(distance) * Math.cos(latRad),
+        Math.cos(distance) - Math.sin(latRad) * Math.sin(lat2),
+      );
+    ring.push([(lng2 * 180) / Math.PI, (lat2 * 180) / Math.PI]);
+  }
+  return { type: 'Polygon', coordinates: [ring] };
+}
+
+/** 世界矩形挖去圆形范围，形成「聚光灯」遮罩。 */
+function spotlightMask(center: Coord, radiusMeters: number): Polygon {
+  const hole = circlePolygon(center, radiusMeters).coordinates[0] ?? [];
+  const outer: Array<[number, number]> = [
+    [-180, -85],
+    [180, -85],
+    [180, 85],
+    [-180, 85],
+    [-180, -85],
+  ];
+  return { type: 'Polygon', coordinates: [outer, hole] };
+}
+
 export function CityMap({
   cityId,
   cityName,
@@ -107,6 +158,7 @@ export function CityMap({
   heightClass = 'h-[280px] md:h-[420px]',
   ariaLabel,
   fitPoints = true,
+  route,
 }: CityMapProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<MapLibreMap | null>(null);
@@ -117,6 +169,12 @@ export function CityMap({
   const reduced = useReducedMotion();
 
   const pointsKey = useMemo(() => points.map((point) => point.id).join('|'), [points]);
+  const routeKey = useMemo(() => (route ?? []).map((coord) => coord.join(',')).join('|'), [route]);
+  const selectedPoint = useMemo(
+    () => points.find((point) => point.id === selectedId) ?? null,
+    [points, selectedId],
+  );
+  const rangeMeters = selectedPoint?.rangeMeters ?? RANGE_BY_SCOPE[scope];
 
   useEffect(() => {
     const controller = new AbortController();
@@ -281,6 +339,34 @@ export function CityMap({
           map.fitBounds(bounds, { padding: 60, maxZoom: 13, duration: reduced ? 0 : 700 });
         }
       }
+
+      // 一日路线：按站点顺序画连接线（示意路线，非导航）。
+      const lineGeojson: GeoJSON = route && route.length >= 2
+        ? { type: 'Feature', properties: {}, geometry: { type: 'LineString', coordinates: route } }
+        : { type: 'Feature', properties: {}, geometry: { type: 'LineString', coordinates: [] } };
+      if (!map.getSource('daytrip-route')) {
+        map.addSource('daytrip-route', { type: 'geojson', data: lineGeojson });
+        map.addLayer({
+          id: 'daytrip-route-line',
+          type: 'line',
+          source: 'daytrip-route',
+          paint: {
+            'line-color': '#8C3F2B',
+            'line-width': 2,
+            'line-opacity': 0.75,
+            'line-dasharray': [3, 2],
+          },
+        });
+      } else {
+        (map.getSource('daytrip-route') as GeoJSONSource).setData(lineGeojson);
+      }
+      if (map.getLayer('daytrip-route-line')) {
+        map.setLayoutProperty(
+          'daytrip-route-line',
+          'visibility',
+          route && route.length >= 2 ? 'visible' : 'none',
+        );
+      }
     };
 
     if (map.loaded()) rebuild();
@@ -292,7 +378,7 @@ export function CityMap({
     };
     // points 内容由 pointsKey 代表；selectedId 单独在下方同步，避免反复重置视野
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pointsKey, config, reduced, fitPoints]);
+  }, [pointsKey, routeKey, config, reduced, fitPoints]);
 
   // 选中态只切换 marker 样式，不移动地图
   useEffect(() => {
@@ -300,6 +386,81 @@ export function CityMap({
       item.element.classList.toggle('citylens-marker--active', id === selectedId);
     }
   }, [selectedId, pointsKey]);
+
+  // 选中点位的「聚光灯」遮罩：压暗周边，圈出示意范围
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map) return;
+    const layerIds = [
+      'selection-spotlight-fill',
+      'selection-range-fill',
+      'selection-range-line',
+    ];
+
+    const apply = (): void => {
+      if (!selectedPoint) {
+        for (const id of layerIds) {
+          if (map.getLayer(id)) map.setLayoutProperty(id, 'visibility', 'none');
+        }
+        return;
+      }
+      const range = circlePolygon(selectedPoint.coordinates, rangeMeters);
+      const mask = spotlightMask(selectedPoint.coordinates, rangeMeters);
+      const dark = document.documentElement.dataset.theme === 'dark';
+      const primary =
+        getComputedStyle(document.documentElement).getPropertyValue('--city-primary').trim() ||
+        '#8C3F2B';
+
+      if (!map.getSource('selection-spotlight')) {
+        map.addSource('selection-spotlight', { type: 'geojson', data: mask });
+        map.addLayer({
+          id: 'selection-spotlight-fill',
+          type: 'fill',
+          source: 'selection-spotlight',
+          paint: {
+            'fill-color': '#0f0d0b',
+            'fill-opacity': dark ? 0.55 : 0.32,
+          },
+        });
+      } else {
+        (map.getSource('selection-spotlight') as GeoJSONSource).setData(mask);
+      }
+
+      if (!map.getSource('selection-range')) {
+        map.addSource('selection-range', { type: 'geojson', data: range });
+        map.addLayer({
+          id: 'selection-range-fill',
+          type: 'fill',
+          source: 'selection-range',
+          paint: { 'fill-color': primary, 'fill-opacity': 0.1 },
+        });
+        map.addLayer({
+          id: 'selection-range-line',
+          type: 'line',
+          source: 'selection-range',
+          paint: {
+            'line-color': primary,
+            'line-width': 1.6,
+            'line-opacity': 0.9,
+            'line-dasharray': [2, 1.5],
+          },
+        });
+      } else {
+        (map.getSource('selection-range') as GeoJSONSource).setData(range);
+      }
+
+      for (const id of layerIds) {
+        if (map.getLayer(id)) map.setLayoutProperty(id, 'visibility', 'visible');
+      }
+    };
+
+    if (map.isStyleLoaded()) apply();
+    else map.once('load', apply);
+
+    return () => {
+      map.off('load', apply);
+    };
+  }, [selectedPoint, rangeMeters, config]);
 
   return (
     <div className="relative overflow-hidden rounded-md border hairline">
@@ -309,12 +470,22 @@ export function CityMap({
         role="application"
         aria-label={ariaLabel ?? `${cityName}地图`}
       />
+      {selectedPoint ? (
+        <span className="pointer-events-none absolute left-1/2 top-3 -translate-x-1/2 whitespace-nowrap rounded-sm bg-[var(--bg-canvas)]/90 px-2 py-1 text-[9px] tracking-[0.14em] text-[var(--text-secondary)] shadow-sm">
+          约 {rangeMeters} m 示意范围 · 非精确边界
+        </span>
+      ) : null}
       {failed ? (
         <div className="absolute inset-0 grid place-items-center bg-[var(--bg-canvas)]/90 p-6 text-center">
           <p className="text-xs leading-relaxed text-[var(--text-secondary)]">
             当前环境不支持 WebGL 地图。以下内容仍可阅读，坐标均为 WGS84。
           </p>
         </div>
+      ) : null}
+      {scope === 'daytrip' ? (
+        <span className="pointer-events-none absolute bottom-3 left-3 rounded-sm bg-[var(--bg-canvas)]/85 px-2 py-1 text-[9px] tracking-[0.18em] text-[var(--text-secondary)]">
+          示意路线 · 非导航
+        </span>
       ) : null}
       {config && !config.enabled ? (
         <span className="pointer-events-none absolute bottom-3 left-3 hidden rounded-sm bg-[var(--bg-canvas)]/85 px-2 py-1 text-[9px] tracking-[0.18em] text-[var(--text-secondary)] md:block">

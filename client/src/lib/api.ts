@@ -2,11 +2,19 @@
 import {
   ApiErrorSchema,
   CityArchiveResponseSchema,
+  CompareResponseSchema,
+  DayTripSchema,
   HotCitiesResponseSchema,
+  QuizSchema,
   SearchResponseSchema,
+  WeatherResponseSchema,
   type CityArchiveResponse,
+  type CompareResponse,
+  type DayTrip,
   type HotCity,
+  type Quiz,
   type SearchResponse,
+  type WeatherResponse,
 } from '@citylens/shared/schema';
 import type { ZodTypeAny, z } from 'zod';
 
@@ -66,6 +74,27 @@ export async function getHotCities(signal?: AbortSignal): Promise<HotCity[]> {
 
 export function getCityArchive(cityId: string, signal?: AbortSignal): Promise<CityArchiveResponse> {
   return getJson(`/api/cities/${encodeURIComponent(cityId)}`, CityArchiveResponseSchema, signal);
+}
+
+/** 双城对比：/api/compare?cities=CN-A,CN-B。 */
+export function getCompare(firstCityId: string, secondCityId: string, signal?: AbortSignal): Promise<CompareResponse> {
+  const cities = [firstCityId, secondCityId].map((id) => encodeURIComponent(id)).join(',');
+  return getJson(`/api/compare?cities=${cities}`, CompareResponseSchema, signal);
+}
+
+/** 「如果只有一天」一日路线。 */
+export function getDayTrip(cityId: string, signal?: AbortSignal): Promise<DayTrip> {
+  return getJson(`/api/cities/${encodeURIComponent(cityId)}/daytrip`, DayTripSchema, signal);
+}
+
+/** 知识小测验。 */
+export function getQuiz(cityId: string, signal?: AbortSignal): Promise<Quiz> {
+  return getJson(`/api/cities/${encodeURIComponent(cityId)}/quiz`, QuizSchema, signal);
+}
+
+/** 实时天气（失败 502，调用方回退到气候基线）。 */
+export function getCityWeather(cityId: string, signal?: AbortSignal): Promise<WeatherResponse> {
+  return getJson(`/api/cities/${encodeURIComponent(cityId)}/weather`, WeatherResponseSchema, signal);
 }
 
 export interface HealthInfo {

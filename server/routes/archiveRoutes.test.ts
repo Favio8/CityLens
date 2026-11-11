@@ -1,5 +1,5 @@
 import type { AddressInfo } from 'node:net';
-import { afterEach, describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { MODULE_NAMES } from '../../shared/schema';
 import { buildApp } from '../index';
 import { config } from '../config';
@@ -7,6 +7,8 @@ import { openDb, type Db } from '../db';
 import { JobRepo } from '../db/jobRepo';
 import { hashIp } from '../services/rateLimiter';
 import { MockGenerator } from '../services/llmGenerator';
+import { setFactSnapshot, type FactSnapshot } from '../services/presetData';
+import { resetWeatherCache } from '../services/weatherService';
 
 interface SseRecord {
   event: string;
@@ -302,5 +304,145 @@ describe('保护与限流', () => {
     expect(response.status).toBe(429);
     const body = (await response.json()) as { code: string };
     expect(body.code).toBe('RATE_LIMITED');
+  });
+});
+
+describe('行旅工具实时层（解耦档案）', () => {
+  /** 插入一座没有任何档案的测试城市。 */
+  function insertBareCity(db: Db, cityId: string, name: string): void {
+    db.prepare(
+      `INSERT INTO cities
+         (city_id, standard_name, province, admin_level, pinyin, english_name, center_lng, center_lat, hot_rank)
+       VALUES (?, ?, '测试省', 'prefecture', 'test', 'Test', 118.0, 24.0, NULL)`,
+    ).run(cityId, name);
+  }
+
+  it('未成卷城市有一日路线：走 Wikidata 快照回退，不要求档案', async () => {
+    const { db, app } = setup();
+    insertBareCity(db, 'CN-90099', '快照城');
+    const snapshot: FactSnapshot = {
+      cityId: 'CN-90099',
+      cityName: '快照城',
+      cityQid: 'Q999',
+      center: [118.0, 24.0],
+      retrievedAt: '2026-11-11T00:00:00.000Z',
+      sourceRef: {
+        id: 'S-WD-CN-90099',
+        type: 'wikidata',
+        title: 'Wikidata 事实快照 · 快照城',
+        retrievedAt: '2026-11-11T00:00:00.000Z',
+      },
+      landmarks: [
+        {
+          entityId: 'Q1',
+          name: '城东塔',
+          coordinates: [118.05, 24.02],
+          kind: '古建筑',
+          heritageDesignations: [],
+          description: null,
+          sitelinks: 9,
+        },
+        {
+          entityId: 'Q2',
+          name: '城西寺',
+          coordinates: [117.95, 24.01],
+          kind: '寺庙',
+          heritageDesignations: [],
+          description: null,
+          sitelinks: 7,
+        },
+      ],
+      relics: [],
+      figures: [],
+      failures: [],
+    };
+    setFactSnapshot('CN-90099', snapshot);
+
+    const base = await listen(app);
+    const response = await fetch(`${base}/api/cities/CN-90099/daytrip`);
+    expect(response.status).toBe(200);
+    const trip = (await response.json()) as {
+      stops: Array<{ name: string; coordSource: string; sourceRefs: string[] }>;
+      degraded: boolean;
+      notice: string;
+    };
+    // 按距离排序：城西寺（117.95）比城东塔（118.05）更近
+    expect(trip.stops.map((stop) => stop.name)).toEqual(['城西寺', '城东塔']);
+    expect(trip.stops.every((stop) => stop.coordSource === 'wikidata')).toBe(true);
+    expect(trip.stops[0]!.sourceRefs).toEqual(['S-WD-CN-90099']);
+    expect(trip.notice).toContain('Wikidata 事实快照');
+    expect(trip.degraded).toBe(true);
+  });
+
+  it('未成卷城市可查实时天气：只用词典坐标，不要求档案', async () => {
+    const { db, app } = setup();
+    insertBareCity(db, 'CN-90098', '天气城');
+    resetWeatherCache();
+    // 只拦 Open-Meteo 请求；测试客户端访问本地服务器的 fetch 必须透传，否则会自环。
+    const realFetch = globalThis.fetch.bind(globalThis);
+    const fetchSpy = vi.spyOn(globalThis, 'fetch').mockImplementation((input, init) => {
+      const url = String(
+        typeof input === 'object' && input !== null && 'url' in input
+          ? (input as { url: string }).url
+          : input,
+      );
+      if (url.includes('api.open-meteo.com')) {
+        return Promise.resolve(
+          new Response(
+            JSON.stringify({
+              current: {
+                time: '2026-11-11T12:00:00Z',
+                temperature_2m: 18.44,
+                weather_code: 3,
+                wind_speed_10m: 12.34,
+              },
+            }),
+            { status: 200, headers: { 'content-type': 'application/json' } },
+          ),
+        );
+      }
+      return realFetch(input, init);
+    });
+
+    try {
+      const base = await listen(app);
+      const response = await fetch(`${base}/api/cities/CN-90098/weather`);
+      expect(response.status).toBe(200);
+      const weather = (await response.json()) as {
+        cityId: string;
+        tempC: number;
+        weatherCode: number;
+        weatherLabel: string;
+        windKmh: number;
+        isRealtime: boolean;
+        source: string;
+      };
+      expect(weather.cityId).toBe('CN-90098');
+      expect(weather.tempC).toBe(18.4);
+      expect(weather.weatherLabel).toBe('阴');
+      expect(weather.windKmh).toBe(12.3);
+      expect(weather.isRealtime).toBe(true);
+      expect(weather.source).toBe('open-meteo');
+      // 请求参数取自词典中心坐标（118.0, 24.0）
+      const openMeteoCalls = fetchSpy.mock.calls
+        .map((call) => String(call[0]))
+        .filter((url) => url.includes('api.open-meteo.com'));
+      expect(openMeteoCalls).toHaveLength(1);
+      expect(openMeteoCalls[0]).toContain('latitude=24');
+      expect(openMeteoCalls[0]).toContain('longitude=118');
+    } finally {
+      fetchSpy.mockRestore();
+    }
+  });
+
+  it('未知城市的行旅工具返回 404 CITY_NOT_FOUND', async () => {
+    const { app } = setup();
+    const base = await listen(app);
+    const daytrip = await fetch(`${base}/api/cities/CN-000000/daytrip`);
+    expect(daytrip.status).toBe(404);
+    expect(((await daytrip.json()) as { code: string }).code).toBe('CITY_NOT_FOUND');
+    const weather = await fetch(`${base}/api/cities/CN-000000/weather`);
+    expect(weather.status).toBe(404);
+    expect(((await weather.json()) as { code: string }).code).toBe('CITY_NOT_FOUND');
   });
 });

@@ -1,9 +1,10 @@
-import { lazy, Suspense, useEffect } from 'react';
+import { lazy, Suspense, useEffect, type ReactNode } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import { Footer } from './components/layout/Footer';
 import { TopBar } from './components/layout/TopBar';
 import { SearchProvider } from './components/search/SearchProvider';
 import { ThemeProvider } from './hooks/useDynamicTheme';
+import { ErrorBoundary } from './components/ui/ErrorBoundary';
 import { HomePage } from './pages/HomePage';
 import { NotFoundPage } from './pages/NotFoundPage';
 
@@ -14,6 +15,22 @@ const CityPage = lazy(() =>
 const AdminPage = lazy(() =>
   import('./pages/AdminPage').then((module) => ({ default: module.AdminPage })),
 );
+const ComparePage = lazy(() =>
+  import('./pages/ComparePage').then((module) => ({ default: module.ComparePage })),
+);
+
+/** 路由级错误边界：单路由异常只降级该路由，不白屏。 */
+function RouteBoundary({ children }: { children: ReactNode }) {
+  const { pathname } = useLocation();
+  return (
+    <ErrorBoundary
+      title="此页渲染异常"
+      resetKey={pathname}
+    >
+      {children}
+    </ErrorBoundary>
+  );
+}
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -35,16 +52,45 @@ export default function App() {
           跳到正文
         </a>
         <TopBar />
-        <div id="main-content">
+        <main id="main-content">
           <Suspense fallback={<RouteFallback />}>
             <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/city/:cityId" element={<CityPage />} />
-              <Route path="/admin" element={<AdminPage />} />
+              <Route
+                path="/"
+                element={
+                  <RouteBoundary>
+                    <HomePage />
+                  </RouteBoundary>
+                }
+              />
+              <Route
+                path="/city/:cityId"
+                element={
+                  <RouteBoundary>
+                    <CityPage />
+                  </RouteBoundary>
+                }
+              />
+              <Route
+                path="/admin"
+                element={
+                  <RouteBoundary>
+                    <AdminPage />
+                  </RouteBoundary>
+                }
+              />
+              <Route
+                path="/compare"
+                element={
+                  <RouteBoundary>
+                    <ComparePage />
+                  </RouteBoundary>
+                }
+              />
               <Route path="*" element={<NotFoundPage />} />
             </Routes>
           </Suspense>
-        </div>
+        </main>
         <Footer />
       </SearchProvider>
     </ThemeProvider>

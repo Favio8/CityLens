@@ -79,7 +79,7 @@ export function ModuleRenderer({
   switch (name) {
     case 'identity': {
       const parsed = IdentitySchema.parse(data);
-      return <IdentityModule data={parsed} sources={sources} />;
+      return <IdentityModule data={parsed} sources={sources} cityId={cityId} />;
     }
     case 'chronicle': {
       const parsed = ChronicleSchema.parse(data);

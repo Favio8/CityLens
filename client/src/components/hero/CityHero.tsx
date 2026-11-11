@@ -1,8 +1,11 @@
 /** 城市卷首：城名、古称、坐标、显影进度与操作。 */
-import { useEffect, useState } from 'react';
-import type { Meta } from '@citylens/shared/schema';
+import { useCallback, useState } from 'react';
+import { Link } from 'react-router-dom';
+import type { CityArchiveResponse, Meta } from '@citylens/shared/schema';
 import type { StreamPhase } from '../../hooks/useCityStream';
+import { useFocusTrap } from '../../hooks/useFocusTrap';
 import { formatCoord, formatDateTime } from '../../lib/format';
+import { PosterDialog } from '../poster/PosterDialog';
 import { InkCanvas } from './InkCanvas';
 
 interface CityHeroProps {
@@ -13,6 +16,10 @@ interface CityHeroProps {
   isFavorite: boolean;
   persona?: string | null;
   hint?: string | null;
+  /** 完整档案（缓存命中时存在），用于导出长图海报。 */
+  archive?: CityArchiveResponse | null;
+  /** 来自流式状态机的致命错误提示（如冷却 / 限流），展示在操作卡片中。 */
+  notice?: string | null;
   onToggleFavorite: () => void;
   onRegenerate?: () => void;
 }
@@ -25,12 +32,15 @@ export function CityHero({
   isFavorite,
   persona,
   hint,
+  archive,
+  notice,
   onToggleFavorite,
   onRegenerate,
 }: CityHeroProps) {
   const [copied, setCopied] = useState(false);
   const [confirmOpen, setConfirmOpen] = useState(false);
-  const [notice, setNotice] = useState<string | null>(null);
+  const [posterOpen, setPosterOpen] = useState(false);
+  const [presetNotice, setPresetNotice] = useState<string | null>(null);
   const streaming = phase === 'streaming_init' || phase === 'streaming_modules' || phase === 'reading';
   const statusText =
     phase === 'streaming_init'
@@ -40,6 +50,9 @@ export function CityHero({
         : fromCache
           ? '已为你复用'
           : '档案已成卷';
+
+  const closeConfirm = useCallback(() => setConfirmOpen(false), []);
+  const dialogRef = useFocusTrap(confirmOpen, closeConfirm);
 
   const share = async (): Promise<void> => {
     try {
@@ -53,21 +66,14 @@ export function CityHero({
 
   const requestRegenerate = (): void => {
     if (meta?.isPreset) {
-      setNotice('预置馆藏受保护：该城档案由构建期管线组装，不支持重新生成。');
+      setPresetNotice('预置馆藏受保护：该城档案由构建期管线组装，不支持重新生成。');
       return;
     }
-    setNotice(null);
+    setPresetNotice(null);
     setConfirmOpen(true);
   };
 
-  useEffect(() => {
-    if (!confirmOpen) return;
-    const onKey = (event: KeyboardEvent): void => {
-      if (event.key === 'Escape') setConfirmOpen(false);
-    };
-    document.addEventListener('keydown', onKey);
-    return () => document.removeEventListener('keydown', onKey);
-  }, [confirmOpen]);
+  const noticeText = presetNotice ?? notice ?? null;
 
   return (
     <section className="relative overflow-hidden border-b hairline" aria-labelledby="city-title">
@@ -177,17 +183,22 @@ export function CityHero({
                 </div>
               </dl>
 
-              <div className="mt-5 flex flex-wrap gap-2">
+              <div className="mt-5 grid grid-cols-2 gap-2">
                 <button
                   type="button"
                   onClick={onToggleFavorite}
-                  className={`ink-btn flex-1 px-3 py-2 text-[11px] ${isFavorite ? 'ink-btn--solid' : ''}`}
+                  className={`ink-btn col-span-2 px-3 py-2 text-[11px] ${isFavorite ? 'ink-btn--solid' : ''}`}
                   aria-pressed={isFavorite}
                   disabled={!meta}
                 >
                   {isFavorite ? '已收入藏书阁' : '收入藏书阁'}
                 </button>
-                <button type="button" onClick={() => void share()} className="ink-btn px-3 py-2 text-[11px]" disabled={!meta}>
+                <button
+                  type="button"
+                  onClick={() => void share()}
+                  className={`ink-btn px-3 py-2 text-[11px] ${onRegenerate ? '' : 'col-span-2'}`}
+                  disabled={!meta}
+                >
                   {copied ? '链接已复制' : '分享此卷'}
                 </button>
                 {onRegenerate ? (
@@ -200,10 +211,28 @@ export function CityHero({
                     重新生成
                   </button>
                 ) : null}
+                {meta ? (
+                  <Link
+                    to={`/compare?cities=${meta.cityId},`}
+                    className="ink-btn px-3 py-2 text-center text-[11px]"
+                  >
+                    双城对比
+                  </Link>
+                ) : null}
+                {meta ? (
+                  <button
+                    type="button"
+                    onClick={() => setPosterOpen(true)}
+                    className="ink-btn px-3 py-2 text-[11px]"
+                    disabled={!archive}
+                  >
+                    导出长图
+                  </button>
+                ) : null}
               </div>
-              {notice ? (
+              {noticeText ? (
                 <p className="mt-3 text-[11px] leading-relaxed text-[var(--city-primary)]" role="status">
-                  {notice}
+                  {noticeText}
                 </p>
               ) : null}
             </div>
@@ -218,6 +247,7 @@ export function CityHero({
           onClick={() => setConfirmOpen(false)}
         >
           <div
+            ref={dialogRef}
             role="dialog"
             aria-modal="true"
             aria-labelledby="regenerate-title"
@@ -251,6 +281,12 @@ export function CityHero({
           </div>
         </div>
       ) : null}
+
+      <PosterDialog
+        open={posterOpen}
+        archive={archive ?? null}
+        onClose={() => setPosterOpen(false)}
+      />
     </section>
   );
 }

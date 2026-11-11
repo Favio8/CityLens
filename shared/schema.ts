@@ -60,6 +60,7 @@ export const SOURCE_TYPES = [
   'relics_registry',
   'preset_manual',
   'llm_curation',
+  'web_search',
 ] as const;
 export const SourceTypeSchema = z.enum(SOURCE_TYPES);
 export type SourceType = z.infer<typeof SourceTypeSchema>;
@@ -575,6 +576,135 @@ export const ApiErrorSchema = z.object({
   retryAfterSec: z.number().int().nonnegative().optional(),
 });
 export type ApiError = z.infer<typeof ApiErrorSchema>;
+
+/* -------------------------------------------------------------------------- */
+/* 行旅工具：双城对比 / 一日路线 / 知识小测验 / 实时天气                        */
+/* -------------------------------------------------------------------------- */
+
+/** 对比用的数值事实：缺失一律「待考」，不估算。 */
+export const CompareNumberFactSchema = z.object({
+  value: z.union([z.number().finite(), PendingSchema]),
+  unit: z.string().min(1).optional(),
+  caliber: z.string().min(1).optional(),
+  statYear: z.number().int().nullable().optional(),
+  sourceRefs: z.array(z.string().min(1)).default([]),
+});
+export type CompareNumberFact = z.infer<typeof CompareNumberFactSchema>;
+
+export const CompareTextFactSchema = z.object({
+  value: z.union([z.string().min(1), PendingSchema]),
+  sourceRefs: z.array(z.string().min(1)).default([]),
+});
+export type CompareTextFact = z.infer<typeof CompareTextFactSchema>;
+
+export const CompareEntrySchema = z.object({
+  name: z.string().min(1),
+  detail: z.string().min(1),
+});
+export type CompareEntry = z.infer<typeof CompareEntrySchema>;
+
+export const CompareCitySchema = z.object({
+  cityId: CityIdSchema,
+  standardName: z.string().min(1),
+  province: z.string().min(1),
+  oneLinePersona: z.union([z.string().min(1), PendingSchema]),
+  gdp: CompareNumberFactSchema,
+  population: CompareNumberFactSchema,
+  climateType: CompareTextFactSchema,
+  landmarks: z.array(CompareEntrySchema).max(3),
+  relics: z.array(CompareEntrySchema).max(2),
+  figures: z.array(CompareEntrySchema).max(2),
+  poemCount: z.number().int().nonnegative(),
+  themePalette: ThemePaletteSchema,
+  archiveStatus: ArchiveStatusSchema,
+  generatedAt: IsoDateSchema,
+});
+export type CompareCity = z.infer<typeof CompareCitySchema>;
+
+export const CompareRequestSchema = z.object({
+  /** 恰好两座城市，逗号分隔，如 CN-610100,CN-330100。 */
+  cities: z.tuple([CityIdSchema, CityIdSchema]),
+});
+export const CompareResponseSchema = z.object({
+  cities: z.tuple([CompareCitySchema, CompareCitySchema]),
+  generatedAt: IsoDateSchema,
+});
+export type CompareResponse = z.infer<typeof CompareResponseSchema>;
+
+/** 「如果只有一天」一日路线：示意路线，非导航。 */
+export const DAY_TRIP_SLOTS = ['morning', 'afternoon', 'evening'] as const;
+export const DayTripSlotSchema = z.enum(DAY_TRIP_SLOTS);
+export type DayTripSlot = z.infer<typeof DayTripSlotSchema>;
+
+export const DayTripStopSchema = z.object({
+  name: z.string().min(1),
+  placeName: z.string().min(1),
+  coordinates: CoordSchema,
+  coordSource: CoordSourceSchema,
+  slot: DayTripSlotSchema,
+  category: z.string().min(1),
+  sourceRefs: z.array(z.string().min(1)).default([]),
+});
+export type DayTripStop = z.infer<typeof DayTripStopSchema>;
+
+export const DayTripSchema = z.object({
+  cityId: CityIdSchema,
+  cityName: z.string().min(1),
+  stops: z.array(DayTripStopSchema).max(6),
+  degraded: z.boolean(),
+  notice: z.string().min(1),
+  generatedAt: IsoDateSchema,
+});
+export type DayTrip = z.infer<typeof DayTripSchema>;
+
+/** 知识小测验：题目只来自该城档案的事实字段，本地判分，不依赖 LLM。 */
+export const QuizOptionSchema = z.object({
+  id: z.string().min(1),
+  text: z.string().min(1),
+});
+export type QuizOption = z.infer<typeof QuizOptionSchema>;
+
+export const QuizFactKindSchema = z.enum([
+  'identity',
+  'chronicle',
+  'landmarks',
+  'relics',
+  'figures',
+]);
+export type QuizFactKind = z.infer<typeof QuizFactKindSchema>;
+
+export const QuizQuestionSchema = z.object({
+  id: z.string().min(1),
+  type: z.enum(['single', 'boolean']),
+  prompt: z.string().min(1),
+  options: z.array(QuizOptionSchema).min(2).max(4),
+  answerId: z.string().min(1),
+  explanation: z.string().min(1),
+  sourceRefs: z.array(z.string().min(1)).default([]),
+  factKind: QuizFactKindSchema,
+});
+export type QuizQuestion = z.infer<typeof QuizQuestionSchema>;
+
+export const QuizSchema = z.object({
+  cityId: CityIdSchema,
+  cityName: z.string().min(1),
+  questions: z.array(QuizQuestionSchema).min(1).max(5),
+  generatedAt: IsoDateSchema,
+});
+export type Quiz = z.infer<typeof QuizSchema>;
+
+/** 实时天气（Open-Meteo，无需 Key）；失败时前端回退到 1991–2020 气候基线。 */
+export const WeatherResponseSchema = z.object({
+  cityId: CityIdSchema,
+  observedAt: z.string().min(1),
+  tempC: z.number().finite(),
+  weatherCode: z.number().int(),
+  weatherLabel: z.string().min(1),
+  windKmh: z.number().nonnegative(),
+  source: z.literal('open-meteo'),
+  isRealtime: z.literal(true),
+});
+export type WeatherResponse = z.infer<typeof WeatherResponseSchema>;
 
 /* -------------------------------------------------------------------------- */
 /* SSE 事件协议（PRD 3.4）                                                     */

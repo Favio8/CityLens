@@ -12,12 +12,15 @@ import { JobRepo } from './db/jobRepo';
 import { ApiError } from './errors';
 import { registerArchiveRoutes } from './routes/archiveRoutes';
 import { registerAdminRoutes } from './routes/adminRoutes';
+import { registerCompareRoutes } from './routes/compareRoutes';
 import { JobManager } from './services/jobManager';
 import { createGenerator, type ModuleGenerator } from './services/llmGenerator';
 import { LlmSettingsService } from './services/llmSettings';
 import { MapSettingsService } from './services/mapSettings';
+import { SearchSettingsService } from './services/searchSettings';
 import { InvalidQueryError, normalizeQuery } from './services/normalizer';
 import { RateLimiter } from './services/rateLimiter';
+import { searchUsage } from './services/searchService';
 
 export interface BuildAppOptions {
   db?: ReturnType<typeof getDb>;
@@ -34,6 +37,7 @@ export function buildApp(options: BuildAppOptions = {}) {
   const jobRepo = new JobRepo(db);
   const llmSettings = new LlmSettingsService(db);
   const mapSettings = new MapSettingsService(db);
+  const searchSettings = new SearchSettingsService(db);
   const generator = options.generator ?? createGenerator(llmSettings);
   const jobManager = new JobManager({ archiveRepo, jobRepo, cityRepo: repo, generator });
   const rateLimiter = new RateLimiter(jobRepo, { dailyCallLimit: config.llm.dailyCallLimit });
@@ -72,6 +76,8 @@ export function buildApp(options: BuildAppOptions = {}) {
       llmProvider: llm.provider,
       llmModel: llm.model,
       llmSettingsSource: llm.source,
+      searchConfigured: searchSettings.publicSettings().hasApiKey,
+      searchUsage: searchUsage(),
       presetCities: archiveRepo.countPresets(),
       archives: archiveRepo.countArchives(),
     };
@@ -120,7 +126,8 @@ export function buildApp(options: BuildAppOptions = {}) {
     rateLimiter,
     llmSettings,
   });
-  registerAdminRoutes(app, { llmSettings, mapSettings, repo, archiveRepo });
+  registerAdminRoutes(app, { llmSettings, mapSettings, searchSettings, repo, archiveRepo, jobRepo });
+  registerCompareRoutes(app, { repo, archiveRepo });
 
   // 生产模式下托管前端构建产物（开发模式由 Vite 提供）
   if (clientDistExists() && existsSync(join(config.clientDist, 'index.html'))) {

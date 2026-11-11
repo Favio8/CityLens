@@ -48,6 +48,14 @@ export function TopBar() {
         </Link>
 
         <div className="flex items-center gap-1.5 md:gap-2">
+          <Link
+            to="/compare"
+            className="hidden items-center gap-2 rounded-full border px-3 py-2 text-xs tracking-[0.1em] transition-colors hover:border-[var(--city-primary)] hairline md:flex"
+          >
+            <CompareIcon />
+            <span className="hidden sm:inline">双城对比</span>
+          </Link>
+
           <button
             type="button"
             onClick={openSearch}
@@ -150,7 +158,7 @@ function LibraryPanel({
       {items.length === 0 ? (
         <p className="py-4 text-xs leading-relaxed text-[var(--text-secondary)]">{empty}</p>
       ) : (
-        <ul className="max-h-72 space-y-1 overflow-y-auto">
+        <ul className="max-h-72 space-y-1 overflow-y-auto" tabIndex={0} aria-label={`${title}列表（可滚动）`}>
           {items.map((item) => (
             <li key={item.cityId} className="group flex items-center justify-between gap-2">
               <Link
@@ -182,6 +190,15 @@ function SearchIcon() {
     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden>
       <circle cx="11" cy="11" r="7" />
       <path d="m16.5 16.5 4 4" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function CompareIcon() {
+  return (
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden>
+      <rect x="3" y="5" width="8" height="14" rx="1" />
+      <rect x="13" y="5" width="8" height="14" rx="1" />
     </svg>
   );
 }
