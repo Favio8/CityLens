@@ -23,6 +23,7 @@ export interface AliasRow {
   standardName: string;
   province: string;
   summary: string | null;
+  englishName?: string | null;
 }
 
 interface CityRow {
@@ -89,7 +90,7 @@ export class CityRepo {
       const result = this.db
         .prepare(
           `SELECT ca.alias_key, ca.display_alias, ca.city_id, ca.match_type, ca.hint,
-                  c.standard_name, c.province, c.summary
+                  c.standard_name, c.province, c.summary, c.english_name
            FROM city_aliases ca JOIN cities c ON c.city_id = ca.city_id
            WHERE ca.alias_key IN (${placeholders})`,
         )
@@ -102,6 +103,7 @@ export class CityRepo {
         standard_name: string;
         province: string;
         summary: string | null;
+        english_name: string | null;
       }>;
       for (const r of result) {
         rows.push({
@@ -113,6 +115,7 @@ export class CityRepo {
           standardName: r.standard_name,
           province: r.province,
           summary: r.summary,
+          englishName: r.english_name,
         });
       }
     }

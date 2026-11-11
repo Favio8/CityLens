@@ -1,5 +1,5 @@
 /** 卷目导航：桌面右侧竖排，移动端悬浮卷标。 */
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 export const MODULE_SECTIONS = [
   { id: 'identity', index: '01', label: '城市名片' },
@@ -12,7 +12,19 @@ export const MODULE_SECTIONS = [
   { id: 'dataPulse', index: '08', label: '数据脉搏' },
 ] as const;
 
-export function ScrollNav() {
+/** 行旅工具区块：仅档案成卷后渲染，故按状态决定是否出现在卷目。 */
+export const TOOL_SECTIONS = [
+  { id: 'daytrip', index: '行', label: '如果只有一天' },
+  { id: 'quiz', index: '问', label: '随堂小测' },
+] as const;
+
+/** 按展示状态过滤卷目：未成卷时不出现行旅工具入口（避免点击无目标）。 */
+export function tocSections(showTools: boolean): ReadonlyArray<{ id: string; index: string; label: string }> {
+  return showTools ? [...MODULE_SECTIONS, ...TOOL_SECTIONS] : MODULE_SECTIONS;
+}
+
+export function ScrollNav({ showTools = false }: { showTools?: boolean }) {
+  const sections = useMemo(() => tocSections(showTools), [showTools]);
   const [active, setActive] = useState<string>('identity');
   const [open, setOpen] = useState(false);
 
@@ -26,12 +38,12 @@ export function ScrollNav() {
       },
       { rootMargin: '-38% 0px -52% 0px', threshold: 0 },
     );
-    for (const section of MODULE_SECTIONS) {
+    for (const section of sections) {
       const element = document.getElementById(section.id);
       if (element) observer.observe(element);
     }
     return () => observer.disconnect();
-  }, []);
+  }, [sections]);
 
   return (
     <>
@@ -39,9 +51,9 @@ export function ScrollNav() {
         className="fixed right-5 top-1/2 z-30 hidden -translate-y-1/2 flex-col items-end gap-1 2xl:flex"
         aria-label="卷目导航"
       >
-        {MODULE_SECTIONS.map((section, position) => {
+        {sections.map((section, position) => {
           const isActive = active === section.id;
-          const passed = MODULE_SECTIONS.findIndex((item) => item.id === active) > position;
+          const passed = sections.findIndex((item) => item.id === active) > position;
           return (
             <a
               key={section.id}
@@ -81,7 +93,7 @@ export function ScrollNav() {
             aria-label="卷目导航"
             style={{ boxShadow: 'var(--shadow-lift)' }}
           >
-            {MODULE_SECTIONS.map((section) => (
+            {sections.map((section) => (
               <a
                 key={section.id}
                 href={`#${section.id}`}

@@ -9,6 +9,7 @@ import {
   SseDoneEventSchema,
   SseErrorEventSchema,
   SseMetaEventSchema,
+  SseNoticeEventSchema,
   SseModuleErrorEventSchema,
   SseModuleEventSchema,
   SseThemeEventSchema,
@@ -58,6 +59,7 @@ export interface CityStreamState {
   fromCache: boolean;
   fatal: FatalError | null;
   jobId: string | null;
+  notice: string | null;
 }
 
 const initialState: CityStreamState = {
@@ -71,6 +73,7 @@ const initialState: CityStreamState = {
   fromCache: false,
   fatal: null,
   jobId: null,
+  notice: null,
 };
 
 /** 把缓存档案转成与流式事件一致的模块结构，供统一渲染。 */
@@ -133,6 +136,7 @@ export function useCityStream(cityId: string) {
         phase: 'streaming_init',
         fatal: null,
         fromCache: false,
+        notice: null,
       }));
 
       try {
@@ -172,6 +176,12 @@ export function useCityStream(cityId: string) {
             try {
               payload = JSON.parse(data);
             } catch {
+              return;
+            }
+
+            if (event === 'notice') {
+              const parsed = SseNoticeEventSchema.safeParse(payload);
+              if (parsed.success) setState((prev) => ({ ...prev, notice: parsed.data.message }));
               return;
             }
 

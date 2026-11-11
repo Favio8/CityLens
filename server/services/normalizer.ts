@@ -27,6 +27,7 @@ export interface AliasRecord {
   standardName: string;
   province: string;
   summary: string | null;
+  englishName?: string | null;
 }
 
 export interface NormalizerRepo {
@@ -41,6 +42,7 @@ export interface SearchCandidateOut {
   matchedAlias: string;
   matchType: 'standard' | 'ancient' | 'pinyin' | 'english' | 'district_hint' | 'typo';
   summary: string | null;
+  englishName?: string | null;
 }
 
 export interface SearchResultOut {
@@ -102,6 +104,7 @@ function toCandidate(row: AliasRecord): SearchCandidateOut {
     matchedAlias: row.displayAlias ?? row.aliasKey,
     matchType: row.matchType as SearchCandidateOut['matchType'],
     summary: row.summary,
+    englishName: row.englishName ?? null,
   };
 }
 
@@ -177,6 +180,7 @@ export function normalizeQuery(raw: string, repo: NormalizerRepo): SearchResultO
           matchedAlias: correction.standardName,
           matchType: 'typo',
           summary: correction.summary,
+          englishName: correction.englishName,
         },
       ],
       hint: `已为你纠正为「${correction.standardName}」`,

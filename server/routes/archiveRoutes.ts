@@ -172,7 +172,7 @@ export function registerArchiveRoutes(app: FastifyInstance, deps: ArchiveRouteDe
         throw new ApiError(budget.code, budget.message, 503, budget.retryAfterSec);
       }
 
-      const { runtime } = jobManager.start({
+      const { runtime, attached } = jobManager.start({
         city,
         aliases: repo.listAncientAliases(city.cityId),
         requesterHash,
@@ -184,6 +184,17 @@ export function registerArchiveRoutes(app: FastifyInstance, deps: ArchiveRouteDe
       // 否则计时的只是回放写入耗时（新任务的首个实时事件是 theme）。
       const replayedCount = runtime.replay.length;
       let firstEventLogged = false;
+      // 并入既有任务时先发一条非致命提示（PRD 2.2：ATTACHED 状态反馈）。
+      const attachedNotice = attached
+        ? {
+            event: 'notice' as const,
+            seq: runtime.seq,
+            data: {
+              code: 'ATTACHED',
+              message: '已有读者正在为此城展卷，已为你并入',
+            },
+          }
+        : null;
       reply.hijack();
       const origin = request.headers.origin;
       const headers: Record<string, string> = {
@@ -197,6 +208,7 @@ export function registerArchiveRoutes(app: FastifyInstance, deps: ArchiveRouteDe
       if (origin && isOriginAllowed(origin)) headers['Access-Control-Allow-Origin'] = origin;
       reply.raw.writeHead(200, headers);
       reply.raw.write(`retry: 3000\n\n`);
+      if (attachedNotice) writeEvent(reply, attachedNotice);
 
       const ping = setInterval(() => {
         try {

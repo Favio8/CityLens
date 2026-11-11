@@ -206,9 +206,14 @@ export function CitySearchModal({ open, onClose }: CitySearchModalProps) {
                 >
                   <span>
                     <span className="font-serif text-lg tracking-[0.08em]">{candidate.name}</span>
+                    {candidate.englishName ? (
+                      <span className="ml-2 text-xs text-[var(--text-secondary)]">({candidate.englishName})</span>
+                    ) : null}
                     <span className="ml-2 text-xs text-[var(--text-secondary)]">{candidate.province}</span>
                     <span className="mt-1 block max-w-xl text-xs leading-relaxed text-[var(--text-secondary)]">
-                      {candidate.summary ?? '暂无简介'}
+                      {candidate.matchType === 'standard'
+                        ? candidate.summary ?? '暂无简介'
+                        : `匹配${MATCH_LABELS[candidate.matchType]}：${candidate.matchedAlias}${candidate.summary ? ` · ${candidate.summary}` : ''}`}
                     </span>
                   </span>
                   <span className="shrink-0 text-right">

@@ -1,5 +1,5 @@
 /** 城市卷首：城名、古称、坐标、显影进度与操作。 */
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import type { CityArchiveResponse, Meta } from '@citylens/shared/schema';
 import type { StreamPhase } from '../../hooks/useCityStream';
@@ -40,6 +40,19 @@ export function CityHero({
   const [copied, setCopied] = useState(false);
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [posterOpen, setPosterOpen] = useState(false);
+  // 缓存命中印章（PRD 2.2）：朱砂微标签停留 3 秒后渐隐，露出常驻「成卷时间」铭牌。
+  const [cacheStamp, setCacheStamp] = useState(false);
+
+  useEffect(() => {
+    if (!fromCache || !meta) {
+      setCacheStamp(false);
+      return;
+    }
+    setCacheStamp(true);
+    const timer = window.setTimeout(() => setCacheStamp(false), 3000);
+    return () => window.clearTimeout(timer);
+  }, [fromCache, meta]);
+
   const [presetNotice, setPresetNotice] = useState<string | null>(null);
   const streaming = phase === 'streaming_init' || phase === 'streaming_modules' || phase === 'reading';
   const statusText =
@@ -91,6 +104,16 @@ export function CityHero({
             <div className="flex flex-wrap items-center gap-3">
               <span className="eyebrow">{meta ? `${meta.province} · ${meta.cityId}` : '方志官检索中'}</span>
               {meta?.isPreset ? <span className="stamp">预置馆藏</span> : null}
+              {fromCache ? (
+                <span
+                  className={`stamp transition-opacity duration-700 ${
+                    cacheStamp ? 'opacity-100' : 'pointer-events-none opacity-0'
+                  }`}
+                  style={{ borderColor: 'var(--city-primary)', color: 'var(--city-primary)' }}
+                >
+                  藏书阁已收录 · 为你秒速展卷
+                </span>
+              ) : null}
               {meta?.generator?.model.includes('mock') ? (
                 <span className="text-[10px] tracking-[0.16em] text-[var(--text-secondary)]">模拟生成</span>
               ) : null}

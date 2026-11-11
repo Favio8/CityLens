@@ -148,7 +148,21 @@ export function CityPage() {
         onToggleFavorite={() => toggleFavorite(cityId)}
         onRegenerate={() => regenerate()}
       />
-      <ScrollNav />
+      <ScrollNav showTools={state.phase === 'ready'} />
+
+      {state.notice ? (
+        <div className="page-shell pt-4">
+          <p
+            className="mx-auto flex w-fit items-center gap-2 rounded-full border bg-[var(--bg-elevated)] px-4 py-1.5 text-[11px] tracking-[0.14em] text-[var(--text-secondary)] hairline"
+            role="status"
+          >
+            <span aria-hidden style={{ color: 'var(--city-primary)' }}>
+              ⁂
+            </span>
+            {state.notice}
+          </p>
+        </div>
+      ) : null}
 
       <div className="page-shell pb-10">
         {state.phase === 'reading' || !meta ? (

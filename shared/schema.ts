@@ -530,6 +530,7 @@ export const SearchCandidateSchema = z.object({
   matchedAlias: z.string().min(1),
   matchType: MatchTypeSchema,
   summary: z.string().nullable(),
+  englishName: z.string().nullable().optional(),
 });
 export type SearchCandidate = z.infer<typeof SearchCandidateSchema>;
 
@@ -718,6 +719,7 @@ export const SSE_EVENT_NAMES = [
   'done',
   'error',
   'ping',
+  'notice',
 ] as const;
 export type SseEventName = (typeof SSE_EVENT_NAMES)[number];
 
@@ -732,6 +734,14 @@ export const SseMetaEventSchema = z.object({
   jobId: z.string(),
 });
 export type SseMetaEvent = z.infer<typeof SseMetaEventSchema>;
+
+/** 非致命提示事件（如并入既有生成任务）；不中断流。 */
+export const SseNoticeEventSchema = z.object({
+  seq: z.number().int().nonnegative(),
+  code: z.string().min(1),
+  message: z.string().min(1),
+});
+export type SseNoticeEvent = z.infer<typeof SseNoticeEventSchema>;
 
 export const SseModuleEventSchema = z.object({
   seq: z.number().int().nonnegative(),

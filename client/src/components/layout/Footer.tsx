@@ -18,7 +18,7 @@ export function Footer() {
           </div>
           <p className="mt-4 max-w-md text-xs leading-[1.9] text-[var(--text-secondary)]">
             景点、文物、人物、诗词与坐标均来自构建期产物或可核验的公开来源；无法核验的内容标注「待考」。
-            本页不构成任何消费或出行建议。
+            内容由 AI 整合，请以权威资料为准。本页不构成任何消费或出行建议。
           </p>
         </div>
         <div className="flex flex-col gap-2 text-xs text-[var(--text-secondary)] md:items-end">

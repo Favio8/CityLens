@@ -27,7 +27,7 @@ import {
 } from './llmGenerator';
 import { loadCityRecon } from './cityRecon';
 
-export type SseEventName = 'meta' | 'theme' | 'module' | 'module_error' | 'done' | 'error';
+export type SseEventName = 'meta' | 'theme' | 'module' | 'module_error' | 'done' | 'error' | 'notice';
 
 export interface SseEnvelope {
   event: SseEventName;
