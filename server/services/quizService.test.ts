@@ -190,4 +190,44 @@ describe('quizService', () => {
     expect(quiz.questions).toHaveLength(0);
     expect(quiz.cityId).toBe('CN-320300');
   });
+
+  it('单选答案不恒在首位（确定性轮换），判断题保持「正确」在前', () => {
+    // 同一档案换 cityId 只改轮换种子：多数情况下应有题目答案不在首位
+    const ids = ['CN-320300', 'CN-330100', 'CN-610100', 'CN-510100', 'CN-110000', 'CN-410300'];
+    const notFirst = ids.filter((cityId) => {
+      const quiz = buildQuiz(
+        { ...city, cityId } as CityBrief,
+        bundleWith(fullArchive),
+      );
+      return quiz.questions.some(
+        (question) => question.type === 'single' && question.options[0]?.id !== question.answerId,
+      );
+    });
+    expect(notFirst.length).toBeGreaterThan(0);
+    // 判分按 id，不受顺序影响：答案始终是合法选项
+    for (const cityId of ids) {
+      const quiz = buildQuiz({ ...city, cityId } as CityBrief, bundleWith(fullArchive));
+      for (const question of quiz.questions) {
+        expect(question.options.map((o) => o.id)).toContain(question.answerId);
+      }
+    }
+    // 相同输入结果稳定（可复现）
+    expect(buildQuiz(city, bundleWith(fullArchive))).toEqual(buildQuiz(city, bundleWith(fullArchive)));
+  });
+
+  it('景点题干扰项与答案不同名', () => {
+    const quiz = buildQuiz(
+      city,
+      bundleWith({
+        ...fullArchive,
+        landmarks: [
+          fullArchive.landmarks[0],
+          { ...fullArchive.landmarks[1]!, name: '云龙山' },
+        ],
+      }),
+    );
+    const landmarkQuestion = quiz.questions.find((q) => q.factKind === 'landmarks');
+    // 干扰项与答案同名时该题不出（去重后无干扰项）
+    expect(landmarkQuestion).toBeUndefined();
+  });
 });

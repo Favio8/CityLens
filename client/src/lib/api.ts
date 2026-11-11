@@ -60,7 +60,12 @@ async function getJson<S extends ZodTypeAny>(
   });
   if (!response.ok) throw await readError(response);
   const payload: unknown = await response.json();
-  return schema.parse(payload);
+  try {
+    return schema.parse(payload);
+  } catch {
+    // 200 但结构不符契约：给出可读文案，不把 Zod 的原始 JSON 串抛给界面。
+    throw new ApiRequestError('SCHEMA_MISMATCH', '服务返回的数据格式不符合预期，请稍后重试', 200);
+  }
 }
 
 export function searchCities(query: string, signal?: AbortSignal): Promise<SearchResponse> {

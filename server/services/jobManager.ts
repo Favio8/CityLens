@@ -11,6 +11,7 @@ import { computeArchiveStatus } from '../../shared/validators';
 import type { ArchiveRepo } from '../db/archiveRepo';
 import type { CityBrief, CityRepo } from '../db/cityRepo';
 import type { JobRepo } from '../db/jobRepo';
+import { ApiError } from '../errors';
 import { FAILURE_COOLDOWN_MS } from '../../shared/schema';
 import {
   DEFAULT_THEME_PALETTE,
@@ -154,7 +155,8 @@ export class JobManager {
     if (!created) {
       const racing = this.runtimes.get(input.city.cityId);
       if (racing && !racing.finished) return { runtime: racing, attached: true };
-      throw new GenerationError('JOB_CONFLICT', '同城已有生成任务，请稍后重试');
+      // 进程重启后 DB 里的 running 任务尚未被判 stale：按 409 冲突返回，而非 500。
+      throw new ApiError('JOB_CONFLICT', '同城已有生成任务，请稍后重试', 409);
     }
     this.deps.jobRepo.clearCooldowns(input.city.cityId);
 

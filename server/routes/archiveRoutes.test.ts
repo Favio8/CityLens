@@ -1,9 +1,11 @@
 import type { AddressInfo } from 'node:net';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { MODULE_NAMES } from '../../shared/schema';
+import { MODULE_NAMES, PENDING } from '../../shared/schema';
+import { DEFAULT_THEME_PALETTE } from '../../shared/cityThemes';
 import { buildApp } from '../index';
 import { config } from '../config';
 import { openDb, type Db } from '../db';
+import { ArchiveRepo } from '../db/archiveRepo';
 import { JobRepo } from '../db/jobRepo';
 import { hashIp } from '../services/rateLimiter';
 import { MockGenerator } from '../services/llmGenerator';
@@ -444,5 +446,93 @@ describe('行旅工具实时层（解耦档案）', () => {
     const weather = await fetch(`${base}/api/cities/CN-000000/weather`);
     expect(weather.status).toBe(404);
     expect(((await weather.json()) as { code: string }).code).toBe('CITY_NOT_FOUND');
+  });
+
+  it('可发布但出不了题的档案：quiz 返回 404 NO_QUIZ（不再是 Schema 解析失败）', async () => {
+    const { db, app } = setup();
+    // 直接构造一份 partial 档案：气候待考、景点只有必去、文物只有 1 件、无年表/人物模块，
+    // 五个出题器全部落空（FiguresSchema 要求人物 evidence 非空，故不出题必须缺席人物模块）。
+    const archiveRepo = new ArchiveRepo(db);
+    const generatedAt = '2026-11-11T00:00:00.000Z';
+    archiveRepo.ensureArchive({
+      cityId: 'CN-350500',
+      status: 'partial',
+      themePalette: DEFAULT_THEME_PALETTE,
+      sources: [],
+      isPreset: false,
+      generator: null,
+      generatedAt,
+    });
+    archiveRepo.saveModule({
+      cityId: 'CN-350500',
+      name: 'identity',
+      status: 'ok',
+      data: {
+        standardName: '泉州',
+        aliases: ['刺桐'],
+        center: [118.6757, 24.8741],
+        area: { value: PENDING, sourceRefs: [] },
+        population: { value: PENDING, sourceRefs: [] },
+        climateType: { value: PENDING, sourceRefs: [] },
+        adminDivisions: { value: PENDING, sourceRefs: [] },
+        oneLinePersona: PENDING,
+        sourceRefs: [],
+        verification: 'pending_human_review',
+      },
+      verification: {},
+      generatedAt,
+    });
+    archiveRepo.saveModule({
+      cityId: 'CN-350500',
+      name: 'landmarks',
+      status: 'ok',
+      data: [
+        {
+          entityRef: 'Q-1',
+          name: '开元寺',
+          category: 'must_visit',
+          bestSeason: PENDING,
+          reason: '宋代遗构，闽南佛教寺院代表。',
+          placeName: '泉州开元寺',
+          coordinates: [118.5767, 24.8717],
+          coordSource: 'local_gazetteer',
+          sourceRefs: [],
+          verification: 'pending_human_review',
+        },
+      ],
+      verification: {},
+      generatedAt,
+    });
+    archiveRepo.saveModule({
+      cityId: 'CN-350500',
+      name: 'relics',
+      status: 'ok',
+      data: [
+        {
+          registryId: 'R-1',
+          name: '洛阳桥',
+          era: '宋',
+          museumOrSite: '泉州洛阳桥',
+          protectionLevel: '国保',
+          findSpot: '待考',
+          story: '宋代跨海梁式石桥，闽南交通史见证。',
+          coordinates: null,
+          sourceRefs: [],
+          verification: 'pending_human_review',
+        },
+      ],
+      verification: {},
+      generatedAt,
+    });
+    archiveRepo.updateStatus('CN-350500', 'partial', generatedAt);
+
+    const base = await listen(app);
+    const quiz = await fetch(`${base}/api/cities/CN-350500/quiz`);
+    expect(quiz.status).toBe(404);
+    expect(((await quiz.json()) as { code: string }).code).toBe('NO_QUIZ');
+
+    // 同日路线仍然可用（走档案）
+    const daytrip = await fetch(`${base}/api/cities/CN-350500/daytrip`);
+    expect(daytrip.status).toBe(200);
   });
 });

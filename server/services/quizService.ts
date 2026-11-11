@@ -29,6 +29,21 @@ function shuffleFree(options: Array<{ id: string; text: string }>): Array<{ id: 
   return options;
 }
 
+/**
+ * 按题干确定性轮换选项位置：避免正确答案恒在首位（用户永远选第一项即可满分）。
+ * 判分按 option id 比对，与顺序无关；判断题（t/f）陈述恒为真，不轮换。
+ */
+function rotateOptions(
+  options: Array<{ id: string; text: string }>,
+  seed: string,
+): Array<{ id: string; text: string }> {
+  if (options.length < 2) return options;
+  let hash = 7;
+  for (const char of seed) hash = (hash * 31 + char.charCodeAt(0)) % 100003;
+  const offset = hash % options.length;
+  return [...options.slice(offset), ...options.slice(0, offset)];
+}
+
 function climateQuestion(city: CityBrief, bundle: ArchiveBundle): Draft | null {
   const identity = IdentitySchema.safeParse(bundle.modules.get('identity')?.data);
   if (!identity.success) return null;
@@ -78,9 +93,12 @@ function landmarkQuestion(city: CityBrief, bundle: ArchiveBundle): Draft | null 
   const others = landmarks.data.filter((item) => item.category !== 'must_visit');
   if (mustVisit.length === 0 || others.length === 0) return null;
   const answer = mustVisit[0]!;
+  // 干扰项按名称去重，避免与答案同名导致判分歧义。
+  const distractors = others.filter((item) => item.name !== answer.name).slice(0, 2);
+  if (distractors.length === 0) return null;
   const options = [
     { id: 'a', text: answer.name },
-    ...others.slice(0, 2).map((item, index) => ({ id: String.fromCharCode(98 + index), text: item.name })),
+    ...distractors.map((item, index) => ({ id: String.fromCharCode(98 + index), text: item.name })),
   ];
   return {
     factKind: 'landmarks',
@@ -146,11 +164,16 @@ export function buildQuiz(city: CityBrief, bundle: ArchiveBundle): Quiz {
     if (questions.length >= 5) break;
     const built = draft(city, bundle);
     if (!built) continue;
+    // 判断题（t/f）不轮换；单选按题干确定性轮换，答案不恒在首位。
+    const isBoolean = built.options.length === 2 && built.options[0]?.id === 't';
+    const options = isBoolean
+      ? built.options
+      : rotateOptions(built.options, `${city.cityId}|${built.prompt}`);
     questions.push({
       id: `q${questions.length + 1}`,
-      type: built.options.length === 2 && built.options[0]?.id === 't' ? 'boolean' : 'single',
+      type: isBoolean ? 'boolean' : 'single',
       prompt: built.prompt,
-      options: built.options,
+      options,
       answerId: built.answerId,
       explanation: built.explanation,
       sourceRefs: built.sourceRefs,

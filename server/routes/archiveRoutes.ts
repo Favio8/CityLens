@@ -85,7 +85,12 @@ export function registerArchiveRoutes(app: FastifyInstance, deps: ArchiveRouteDe
   /** 知识小测验：题目来自档案事实字段，本地判分。 */
   app.get<{ Params: { cityId: string } }>('/api/cities/:cityId/quiz', async (request) => {
     const { city, bundle } = requireBundle(request.params.cityId);
-    return buildQuiz(city, bundle);
+    const quiz = buildQuiz(city, bundle);
+    // 可出题字段不足时明确 404，避免空数组撞上 Schema 的 min(1) 让前端解析失败。
+    if (quiz.questions.length === 0) {
+      throw new ApiError('NO_QUIZ', '可核验的事实字段不足 1 题，宁缺毋滥', 404);
+    }
+    return quiz;
   });
 
   /** 实时天气（Open-Meteo，无需 Key）；失败 502，前端回退气候基线。 */
@@ -175,6 +180,9 @@ export function registerArchiveRoutes(app: FastifyInstance, deps: ArchiveRouteDe
         modules,
       });
 
+      // attach 会同步回放历史事件；只统计回放之后的首个实时事件，
+      // 否则计时的只是回放写入耗时（新任务的首个实时事件是 theme）。
+      const replayedCount = runtime.replay.length;
       let firstEventLogged = false;
       reply.hijack();
       const origin = request.headers.origin;
@@ -210,7 +218,7 @@ export function registerArchiveRoutes(app: FastifyInstance, deps: ArchiveRouteDe
 
       detach = jobManager.attach(runtime, (event) => {
         try {
-          if (!firstEventLogged) {
+          if (event.seq > replayedCount && !firstEventLogged) {
             firstEventLogged = true;
             console.log(
               `[sse] city=${runtime.cityId} firstEvent=${event.event} ms=${Date.now() - requestStartedAt}`,

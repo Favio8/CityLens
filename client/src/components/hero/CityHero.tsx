@@ -201,6 +201,9 @@ export function CityHero({
                 >
                   {copied ? '链接已复制' : '分享此卷'}
                 </button>
+                <span className="sr-only" role="status" aria-live="polite">
+                  {copied ? '链接已复制到剪贴板' : ''}
+                </span>
                 {onRegenerate ? (
                   <button
                     type="button"

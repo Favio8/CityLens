@@ -141,12 +141,12 @@ npm run archives:clean-unpublished                 # dry-run 列出未发布档�
 | 产物 | 生成脚本 | 内容与用途 |
 |---|---|---|
 | `server/data/city_dictionary.json` | `build_city_dictionary.ts` | 342 座城市（334 地级 + 4 直辖市 + 4 文旅县级市白名单）、1480 条别名、WGS84 中心点、Wikidata QID |
-| `server/data/verified_poetry_corpus.json` | `build_poetry_corpus.ts` | chinese-poetry（MIT）全唐诗/宋词/元曲中与 149 座城市相关的 2,730 首作品（预置 6 城各 150 首，24 座重点城市各 50 首，其余城市最多 20 首），繁转简仅用于比对，保留原文 |
+| `server/data/verified_poetry_corpus.json` | `build_poetry_corpus.ts` | chinese-poetry（MIT）全唐诗/宋词/元曲中与 148 座城市相关的 2,702 首作品（预置 6 城上限各 150 首，24 座重点城市各 50 首，其余城市最多 20 首），繁转简仅用于比对，保留原文 |
 | `server/data/stats_baseline.json` | `build_stats_baseline.ts` | 六座预置城市 GDP / 常住人口官方统计序列（2021–2025，西安 2021 人口缺失保持 `null`）与 Open-Meteo ERA5 1991–2020 月均温、月降水，供「数说城市」使用 |
 | `server/data/fact_snapshot/{cityId}.json` | `build_fact_snapshot.ts` / 运行期按需 | 六座预置城市 + 运行期按需生成的其他城市 Wikidata 景点/文物/人物事实快照 |
 | `server/data/recon/{cityId}.json` | 运行期按需 | 非预置城市侦察结果：维基百科摘要、Wikidata 人口、Tavily 检索、官方公报统计与气候；30 天缓存 |
 | `server/data/search_cache/` | 运行期按需 | Tavily 查询结果缓存（7 天），避免同一城市重复消耗检索额度 |
-| `server/data/relics_registry.json` | `build_relics_registry.ts` | 由快照汇总的 427 件文物名录（国保 / 禁止出境展览文物） |
+| `server/data/relics_registry.json` | `build_relics_registry.ts` | 由快照汇总的 671 件文物名录（国保 / 禁止出境展览文物） |
 | `server/data/place_gazetteer.json` | `build_place_gazetteer.ts` | 862 条 WGS84 地名坐标（城市中心 + 景点 + 文物） |
 | `server/data/dynasties.json` | 人工整理 | 固定朝代年表（起止年份），待人工复核 |
 | `server/data/relic_images.json` | `build_relic_images.ts` | 六城前 6 件文物的本地图片路径、Commons 署名、许可证与来源页 |
@@ -238,7 +238,7 @@ Key 只保存在本地 SQLite，读取接口只返回 `sk-…abcd` 掩码。
 > 人物还会用中文维基百科「XX市人」分类补充 Wikidata 缺失的历史人物（如安阳的韩琦、韩侂胄）。
 > 地图选中点位时会压暗周边并绘制示意范围圆环（景点约 800m、文物 500m、名人 1200m、诗境 1000m）；
 > 这是空间示意，不代表实际保护范围或行政边界。
-> 诗词库已覆盖 149 座城市（2,730 首）；其余城市该卷显示「此卷暂缺」。
+> 诗词库已覆盖 148 座城市（2,702 首）；其余城市该卷显示「此卷暂缺」。
 > 统计值只有在官方公报中逐字命中且确认是本城（非区县）公报时才写入，否则保持 `null` 并显示「待考」。
 
 ## 环境变量
@@ -307,7 +307,7 @@ curl.exe http://localhost:8787/api/cities/CN-350500
 单元测试与类型检查：
 
 ```bash
-npm test            # 158 项（23 个文件）：schema/校验/规范化/编排/SSE/主题色/真实 LLM 解析/按需快照/城市侦察/对比/路线/测验/天气/海报
+npm test            # 166 项（23 个文件）：schema/校验/规范化/编排/SSE/主题色/真实 LLM 解析/按需快照/城市侦察/对比/路线/测验/天气/海报/诗词语料归属回归
 npm run typecheck   # server + client 的 tsc --noEmit
 npm run test:llm    # LLM 提供方连通性测试（读 .env，可用参数覆盖）
 ```

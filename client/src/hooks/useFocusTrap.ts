@@ -12,6 +12,10 @@ const FOCUSABLE_SELECTOR =
 
 export function useFocusTrap(active: boolean, onClose?: () => void) {
   const containerRef = useRef<HTMLDivElement | null>(null);
+  // onClose 常为内联函数（身份不稳定），存入 ref 以免 effect 因依赖变化重跑、
+  // 把焦点反复拽回首个可聚焦元素。
+  const onCloseRef = useRef(onClose);
+  onCloseRef.current = onClose;
 
   useEffect(() => {
     if (!active) return;
@@ -30,7 +34,7 @@ export function useFocusTrap(active: boolean, onClose?: () => void) {
     const onKeyDown = (event: KeyboardEvent): void => {
       if (event.key === 'Escape') {
         event.preventDefault();
-        onClose?.();
+        onCloseRef.current?.();
         return;
       }
       if (event.key !== 'Tab') return;
@@ -52,7 +56,7 @@ export function useFocusTrap(active: boolean, onClose?: () => void) {
       container.removeEventListener('keydown', onKeyDown);
       previous?.focus();
     };
-  }, [active, onClose]);
+  }, [active]);
 
   return containerRef;
 }

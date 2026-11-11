@@ -19,10 +19,21 @@ export function hashIp(ip: string, salt: string): string {
   return createHash('sha256').update(`${salt}:${ip}`, 'utf8').digest('hex');
 }
 
+/**
+ * 「今日」起点：固定按 Asia/Shanghai 日界计算。
+ * 服务端可能以 UTC 部署（容器默认时区），若用服务器本地日界，
+ * 「今日 LLM 调用 / 预算」会与「请明日再试」的北京时间预期错位。
+ */
 export function startOfToday(now = new Date()): string {
-  const date = new Date(now);
-  date.setHours(0, 0, 0, 0);
-  return date.toISOString();
+  const parts = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Asia/Shanghai',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).formatToParts(now);
+  const part = (type: string): number => Number(parts.find((item) => item.type === type)?.value ?? '0');
+  const utcMidnight = Date.UTC(part('year'), part('month') - 1, part('day'));
+  return new Date(utcMidnight).toISOString();
 }
 
 export interface RateLimiterOptions {

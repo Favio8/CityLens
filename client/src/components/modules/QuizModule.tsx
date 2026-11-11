@@ -4,12 +4,13 @@
  */
 import { useEffect, useState } from 'react';
 import type { Quiz } from '@citylens/shared/schema';
-import { getQuiz } from '../../lib/api';
+import { ApiRequestError, getQuiz } from '../../lib/api';
 import { PendingTag } from '../ui/Tags';
 
 export function QuizModule({ cityId, cityName }: { cityId: string; cityName: string }) {
   const [quiz, setQuiz] = useState<Quiz | null>(null);
   const [failed, setFailed] = useState(false);
+  const [noQuiz, setNoQuiz] = useState(false);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [submitted, setSubmitted] = useState(false);
 
@@ -17,12 +18,16 @@ export function QuizModule({ cityId, cityName }: { cityId: string; cityName: str
     const controller = new AbortController();
     setQuiz(null);
     setFailed(false);
+    setNoQuiz(false);
     setAnswers({});
     setSubmitted(false);
     void getQuiz(cityId, controller.signal)
       .then(setQuiz)
       .catch((error: unknown) => {
-        if ((error as Error).name !== 'AbortError') setFailed(true);
+        if ((error as Error).name === 'AbortError') return;
+        // 404 NO_QUIZ = 档案可核验字段不足，走「宁缺毋滥」空状态，而非失败文案。
+        if (error instanceof ApiRequestError && error.code === 'NO_QUIZ') setNoQuiz(true);
+        else setFailed(true);
       });
     return () => controller.abort();
   }, [cityId]);
@@ -38,15 +43,7 @@ export function QuizModule({ cityId, cityName }: { cityId: string; cityName: str
     );
   }
 
-  if (!quiz) {
-    return (
-      <div className="surface-card h-48 animate-pulse rounded-md" aria-busy="true">
-        <span className="sr-only">出题中</span>
-      </div>
-    );
-  }
-
-  if (quiz.questions.length === 0) {
+  if (noQuiz) {
     return (
       <div className="surface-card rounded-md p-8">
         <PendingTag label="此题卷暂缺" />
@@ -57,6 +54,15 @@ export function QuizModule({ cityId, cityName }: { cityId: string; cityName: str
     );
   }
 
+  if (!quiz) {
+    return (
+      <div className="surface-card h-48 animate-pulse rounded-md" aria-busy="true">
+        <span className="sr-only">出题中</span>
+      </div>
+    );
+  }
+
+  // 路由保证有题才返回 200（Schema min(1)）；空题情况已由上面的 noQuiz 空状态覆盖。
   const answered = quiz.questions.filter((question) => answers[question.id]).length;
   const correct = submitted
     ? quiz.questions.filter((question) => answers[question.id] === question.answerId).length

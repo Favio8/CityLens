@@ -105,7 +105,8 @@ export function renderPoster(spec: PosterSpec): HTMLCanvasElement {
   const padding = 56;
   const canvas = document.createElement('canvas');
   const ctx = canvas.getContext('2d');
-  if (!ctx) return canvas;
+  // Canvas 不可用时明确失败，由调用方展示降级提示，不返回空白画布让用户下载空图。
+  if (!ctx) throw new Error('当前环境不支持 Canvas 渲染');
 
   const sections: Section[] = [];
   if (spec.landmarks.length > 0) sections.push({ title: '代表景点', lines: spec.landmarks });
@@ -166,13 +167,17 @@ export function renderPoster(spec: PosterSpec): HTMLCanvasElement {
     ctx.textAlign = 'left';
     ctx.font = '26px "Noto Serif SC", serif';
     ctx.fillStyle = '#1e1e1e';
-    // 简单折行：每行约 24 个全角字符
+    // 简单折行：每行约 24 个全角字符；超出 3 行时末行加省略号，避免静默截断。
     const chars = [...spec.persona];
     const rows: string[] = [];
     for (let index = 0; index < chars.length; index += 24) {
       rows.push(chars.slice(index, index + 24).join(''));
     }
-    for (const row of rows.slice(0, 3)) {
+    const shown = rows.slice(0, 3);
+    if (rows.length > shown.length) {
+      shown[shown.length - 1] = `${shown[shown.length - 1]?.slice(0, 23) ?? ''}…`;
+    }
+    for (const row of shown) {
       ctx.fillText(row, padding, y);
       y += 44;
     }

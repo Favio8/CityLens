@@ -36,15 +36,17 @@ export function PosterDialog({
 
   const download = (): void => {
     if (!archive) return;
-    const canvas = renderPoster(buildPosterSpec(archive));
+    const spec = buildPosterSpec(archive);
+    const canvas = renderPoster(spec);
     canvas.toBlob((blob) => {
       if (!blob) return;
       const url = URL.createObjectURL(blob);
       const anchor = document.createElement('a');
       anchor.href = url;
-      anchor.download = posterFileName(buildPosterSpec(archive));
+      anchor.download = posterFileName(spec);
       anchor.click();
-      URL.revokeObjectURL(url);
+      // 延迟到下一帧再撤销：部分浏览器（Firefox/Safari）在 click 尚未落盘时撤销会得到空文件。
+      window.setTimeout(() => URL.revokeObjectURL(url), 0);
     }, 'image/png');
   };
 

@@ -119,10 +119,12 @@ describe('每日预算', () => {
     if (!blocked.allowed) expect(blocked.code).toBe('BUDGET_EXCEEDED');
   });
 
-  it('startOfToday 取本地零点', () => {
-    const date = new Date('2026-11-10T23:30:00');
-    const start = new Date(startOfToday(date));
-    expect(start.getHours()).toBe(0);
-    expect(start.getMinutes()).toBe(0);
+  it('startOfToday 按 Asia/Shanghai 日界切分', () => {
+    // 2026-11-10 15:30 UTC = 北京 23:30，仍属当日
+    const before = new Date('2026-11-10T15:30:00.000Z');
+    expect(startOfToday(before)).toBe('2026-11-10T00:00:00.000Z');
+    // 2026-11-10 16:30 UTC = 北京 2026-11-11 00:30，已跨入次日
+    const after = new Date('2026-11-10T16:30:00.000Z');
+    expect(startOfToday(after)).toBe('2026-11-11T00:00:00.000Z');
   });
 });

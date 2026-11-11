@@ -32,6 +32,11 @@ function CityPicker({
   const [candidates, setCandidates] = useState<SearchCandidate[]>([]);
   const [picked, setPicked] = useState<SearchCandidate | null>(null);
 
+  // 槽位值被外部清空（如分享链接变更、对侧「更换」）时同步清除已选芯片，避免 UI 与 URL 矛盾。
+  useEffect(() => {
+    if (!value) setPicked(null);
+  }, [value]);
+
   useEffect(() => {
     const trimmed = query.trim();
     if (!trimmed) {
@@ -232,8 +237,8 @@ export function ComparePage() {
       const next = new URLSearchParams(params);
       const first = slot === 'first' ? cityId : firstId ?? '';
       const second = slot === 'second' ? cityId : secondId ?? '';
-      if (first && second) next.set('cities', `${first},${second}`);
-      else next.set('cities', [first, second].filter(Boolean).join(','));
+      // 两个槽位都写出（允许空串）：清空其一时另一城保持在原槽位，不会位移成第一城。
+      next.set('cities', `${first},${second}`);
       setParams(next, { replace: true });
     },
     [params, firstId, secondId, setParams],

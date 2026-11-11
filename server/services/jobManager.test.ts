@@ -236,3 +236,33 @@ describe('sourceRefs 收集', () => {
     expect([...refs].sort()).toEqual(['S1', 'S2', 'S3', 'S4']);
   });
 });
+
+describe('进程重启后的任务冲突', () => {
+  it('DB 中未过 stale 期的 running 任务使 start 抛 409 JOB_CONFLICT，而非 500', () => {
+    const { manager, jobRepo, city } = setup();
+    // 模拟进程重启：DB 里残留一个刚开始的 running 任务（未到 120s stale 期）。
+    jobRepo.create({
+      jobId: 'restart-leftover',
+      cityId: CITY_ID,
+      force: false,
+      modules: ['identity'],
+      requesterHash: 'hash-restart',
+      startedAt: new Date().toISOString(),
+    });
+    let error: { code?: string; statusCode?: number } | null = null;
+    try {
+      manager.start({
+        city,
+        aliases: [],
+        requesterHash: 'hash-new',
+        force: false,
+        modules: [...MODULE_NAMES],
+      });
+    } catch (thrown) {
+      error = thrown as { code?: string; statusCode?: number };
+    }
+    expect(error).not.toBeNull();
+    expect(error?.code).toBe('JOB_CONFLICT');
+    expect(error?.statusCode).toBe(409);
+  });
+});

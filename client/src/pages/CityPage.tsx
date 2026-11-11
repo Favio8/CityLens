@@ -191,7 +191,7 @@ export function CityPage() {
                 >
                   {module ? (
                     <Reveal>
-                      <ErrorBoundary title="此卷渲染异常" resetKey={name}>
+                      <ErrorBoundary title="此卷渲染异常" resetKey={`${cityId}:${name}`}>
                         <ModuleRenderer
                           name={name}
                           data={module.data}
@@ -243,11 +243,13 @@ export function CityPage() {
                   </span>
                 }
               >
-                <DayTripModule
-                  cityId={cityId}
-                  cityName={meta.standardName}
-                  center={meta.center}
-                />
+                <ErrorBoundary title="一日路线渲染异常" resetKey={`${cityId}:daytrip`}>
+                  <DayTripModule
+                    cityId={cityId}
+                    cityName={meta.standardName}
+                    center={meta.center}
+                  />
+                </ErrorBoundary>
               </SectionShell>
               <SectionShell
                 id="quiz"
@@ -259,7 +261,9 @@ export function CityPage() {
                   </span>
                 }
               >
-                <QuizModule cityId={cityId} cityName={meta.standardName} />
+                <ErrorBoundary title="小测验渲染异常" resetKey={`${cityId}:quiz`}>
+                  <QuizModule cityId={cityId} cityName={meta.standardName} />
+                </ErrorBoundary>
               </SectionShell>
             </>
           ) : null}
