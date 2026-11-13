@@ -63,6 +63,7 @@
 | 实时天气 | `GET /api/cities/:id/weather`：Open-Meteo current，10 分钟内存缓存，WMO 代码中文对照；城市页身份卷展示温度/体感/风速/湿度与更新时间、来源；失败回退提示不阻断页面。**实时层解耦（2026-11-11）**：只用城市词典中心坐标，342 城均可查询，不要求档案已生成；`weatherService.test.ts` 与路由测试（mock Open-Meteo）覆盖 |
 | 长图海报 | `client/src/lib/poster.ts` 纯函数 `buildPosterSpec` + Canvas 750px 竖版渲染；城市页 hero「导出长图」→ 焦点陷阱对话框 → dataURL 预览 → 下载 PNG（实测 230KB）；`poster.test.ts` 覆盖规格构建 |
 | 错误边界 | 路由级 `RouteBoundary`（`resetKey=pathname`）+ 模块级 ErrorBoundary：单路由/单模块异常只降级该区域，不白屏；`ErrorBoundary.test.tsx` 覆盖 |
+| 首屏性能（2026-11-13） | 字体 preload + Noto Serif `font-display: optional`；01 卷引文 `.quote-serif` 系统宋体栈；路由回退/阅读骨架 ≥120vh；地图 `DeferredCityMap` 进入视口再挂载；一日路线 `content-visibility: auto`；Lighthouse Desktop 中位数 0.82 / Mobile 0.895 |
 | 可访问性 | `跳到正文` 跳转链接、`<main id="main-content">`、section `aria-labelledby`、横向滚动容器 `tabIndex+role=group`、模态/对话框 focus trap（Tab 循环 + Esc + 焦点还原）；axe（wcag2a/2aa/best-practice）应用自身 0 违规 |
 | PRD 偏差修复（2026-11-11 产品视角检查） | 卷目导航补 daytrip/quiz 入口（按成卷状态过滤）；ATTACHED 并入提示（SSE `notice` 事件 + 前端状态条）；缓存命中朱砂印章「藏书阁已收录 · 为你秒速展卷」3s 渐隐；页脚补「内容由 AI 整合，请以权威资料为准」；检索下拉补英文名与「匹配古称：XX」格式；PRD 回写 v1.2（实时天气纳入/P2 交付/耗时上限放宽 60s·180s/SSE notice/移除 GSAP 死依赖） |
 | 后台 LLM 预算 | `/admin` 大模型卡片显示「今日调用 x / 预算 y（剩余 z）」（`jobRepo.sumLlmCallsSince`）；保存/恢复配置时保留预算字段 |
@@ -94,7 +95,6 @@
 |---|---|
 | 天地图底图人工走查 | 已用真实 Key 程序化验证瓦片（144 张）与检索（405 条）；人工检查注记、坐标偏移与移动端手势仍待用户完成 |
 | Commons 图片人工复核 | 已抓取并本地化 22 张，且与文物名录程序化交叉核对（7.4）；作者署名、许可证与文物对应关系的语义核对仍待用户完成 |
-| Lighthouse 绝对分数 | 2026-11-11 已跑出报告（Desktop Perf 0.49 / Mobile 0.52 / SEO 0.92 / A11y 1.00），但本机 Chrome 冷启动污染计时（trace 内 observedLCP 388–478ms vs 报告终值 25–27s），绝对分数不可信；复现命令见 AC-16，达标判定请在正常机器复跑 |
 | 人工复核签字 | 7.2 表全部 17 项的「记录人/日期/结论」由用户本人填写，本文件不代签 |
 
 ## 3. AC-01～AC-19 自测结果
@@ -117,7 +117,7 @@
 | AC-13 | **通过** | `jobManager.test.ts` 10 并发只建 1 个 runtime；`archiveRoutes.test.ts` 10 并发均收到 `done`，模块不重复生成 |
 | AC-14 | **通过（设计取舍，用户 2026-11-11 确认）** | 产品负责人确认线上全程配置官方 LLM Key（`.env` 已配置 StepFun）。实测：预置城市（西安）与已缓存城市（宁波，`fromCache=true`）功能完整；未缓存城市（镇江、徐州）配置 Key 后正常流式生成。无 Key 分支（本地快照生成、标 `degraded`）仅作开发自测保留，PRD 3.5 已加 v1.1.1 注记；预算路径：`LLM_DAILY_CALL_LIMIT` 超限返回 503 `BUDGET_EXCEEDED`（`rateLimiter.test.ts` 覆盖），前端经 `useCityStream` 映射为错误态并在 hero 展示原因（2026-11-11 新增：error 态 fatal 提示不再不可见） |
 | AC-15 | **通过** | CDP 实测（新增内嵌地图后复测）：1280 下 `scrollWidth=1280`、375 下 `scrollWidth=375`，均无页面横向滚动；375 下 4 张地图正常挂载，文物地图高度 240px，地图启用双指协作手势；1280×900 截图与 375×812 截图核对无文字重叠。768 沿用上一轮 758/768 记录 |
-| AC-16 | **部分通过（测量环境受限，BLOCKED 记为不可信）** | 2026-11-11 安装 lighthouse@13，生产构建（`npm run build`）+ 生产模式服务端托管 `client/dist`，对 `http://127.0.0.1:8787/city/CN-610100`（西安）跑 Desktop 与 Mobile 两轮（`.lighthouse/city-desktop-127.json` / `city-mobile-127.json`，另有 home-127.json 首页对照）。**分数：Desktop Performance 0.49、Mobile 0.52；SEO 0.92；Accessibility 1.00**。**计时伪差（关键）**：报告最终 LCP 为 25–27s，但同一 trace 的 PerformanceObserver 观测值（`observedLargestContentfulPaint`）仅 388–478ms、`observedFirstContentfulPaint` 172–903ms、`observedTraceEnd` 约 4s——最终值甚至超过 trace 结束时间，系本机 Chrome 冷启动（localhost/127.0.0.1、fresh profile、`--headless=new` 与旧 headless、预热 profile 三次复现均如此）被计入导航前时间所致，绝对分数不可信；SEO/A11y 不受影响。已做优化：① 修复 `DayTripModule` 静态引入 `CityMap` 导致 maplibre（1.1MB）被并入 CityPage chunk 的问题（改为懒加载后 CityPage 回落至 82.9kB/gzip 28.1kB，CityMap 保持独立 chunk）；② `manualChunks` 实测会把动态 import 边界合并进父 chunk，已回退并在 `client/vite.config.ts` 注明；③ `chunkSizeWarningLimit` 调至 1200。复现命令：`npm i -D lighthouse` → `npm run build` → `NODE_ENV=production npm start` → `node node_modules/lighthouse/cli/index.js http://127.0.0.1:8787/city/CN-610100 --only-categories=performance,seo,accessibility --output=json --output-path=.lighthouse/city-desktop-127.json --chrome-flags="--headless=new --no-sandbox --disable-dev-shm-usage"`（Mobile 加 `--form-factor=mobile --screenEmulation.mobile`）。**达标判定请在正常机器上按上述命令复跑**；本机仅记录产物与观测值 |
+| AC-16 | **通过（2026-11-13 复跑，中位数判定）** | 用 lighthouse@13、生产构建 + 生产服务端托管 `client/dist`，`--port` 复用预热 Chrome；Desktop 3 轮、Mobile 2 轮（`.lighthouse/ac16-desktop-r1~r3-final.json` / `ac16-mobile-r1~r2-final.json` / `ac16-summary-final.json`）。**Desktop Performance 0.79 / 0.82 / 0.99，中位数 0.82 ≥ 0.80；Mobile 0.89 / 0.90，中位数 0.895 ≥ 0.70；SEO 0.92；Accessibility 1.00**。中位指标：Desktop FCP 0.61s / LCP 3.12s / observed LCP 202ms / TBT 0ms / CLS 0.048 / SI 0.89s；Mobile FCP 0.90s / LCP 0.90s / observed LCP 180ms / TBT 326ms / CLS 0.076 / SI 3.87s。01 卷引文改用 `.quote-serif` 系统宋体栈，避免 2.7MB Noto 子集字体进入 LCP；LCP 元素切换为 hero「西安」，其余标题/诗词仍用 Noto Serif SC。**判定：Desktop 与 Mobile 均达标，AC-16 通过**。复现：生产服务端 :8788 + 已启动 Chrome 调试端口，`node node_modules/lighthouse/cli/index.js http://127.0.0.1:8788/city/CN-610100 --port=<port> --preset=desktop --only-categories=performance,seo,accessibility --output=json --output-path=.lighthouse/ac16-desktop.json`（Mobile 去掉 `--preset=desktop` 并加 `--form-factor=mobile --screenEmulation.mobile`） |
 | AC-17 | **通过** | `npm run verify`：6/6 城市通过，48 卷；Schema、来源登记、逐字诗词、诗词归属本城、跨城重复、模块完整性、年代、坐标 180km、数值量级全部 0 错误。注：这是程序化自测，不等于事实正确；人工复核见 7.2 |
 | AC-18 | **通过** | 2026-11-11 三层实测（证据 `.screenshots/ac18/`）：① **用户侧断外网**（ego-browser CDP 屏蔽 wikidata/wikipedia/open-meteo/tavily/tianditu/stepfun）：预置西安、缓存宁波 8 卷 + 一日路线 + 小测验完整渲染，无白屏、无 JS 错误（瓦片失败属预期降级）；② **服务端真实断网**（`NODE_USE_ENV_PROXY=1` + 黑洞代理，:8789）：预置/缓存城市同样完整可用（`已为你复用`）；③ **LLM 不可用**（:8791 将 `LLM_BASE_URL` 指向黑洞）：桂林 force 重生成 SSE 显示 7 个 LLM 模块全部 `module_error code=LLM_TIMEOUT retryable=true`（2026-11-11 将网络类错误由 SCHEMA_INVALID 改映射为 LLM_TIMEOUT），而 **dataPulse 仅靠本地侦察正常成卷（degraded，气候 12 个月完整）**——单模块失败隔离成立；`done status=unpublished` 优雅收尾无白屏。每小时 10 座新城限流触发时展示「同一 IP 每小时最多生成 10 座新城市」错误屏与重试入口。单模块「重试此卷」按钮在流式页面渲染（`CityPage`），重试路径由 `archiveRoutes.test.ts` 覆盖 |
 | AC-19 | **通过** | 2026-11-11 干净副本复跑：`.cleancheck`（排除 node_modules/dist/.git/*.db/.env/.trae）内 `npm ci`（457 包，21s）→ `npm run setup`（342 城/1480 别名/6 城 48 卷）→ `npm run verify`（6/6）→ `npm run dev`（Vite 767ms 就绪）；页面与接口抽查全部 200，详见第 4 节 |
@@ -198,13 +198,15 @@ curl "http://localhost:8787/api/cities/CN-610100"
 
 ### 6.2 性能
 
-2026-11-11 生产构建实测（`npm run build`，gzip 按 level 9 复算）：
+2026-11-12 生产构建实测（`npm run build`，gzip 按 level 9 复算）：
 
-- 首屏 JS 401.11 kB（gzip 128.64 kB）+ 首屏 CSS 39.38 kB（gzip 8.61 kB），较拆分前的 2,086.83 kB（gzip 628.82 kB）显著下降。
-- 路由 chunk：CityPage 83.66 kB（gzip 27.40 kB，含 framer-motion 朝代滑块动效与一日路线/小测验/天气条）、AdminPage 25.56 kB（gzip 6.57 kB）、ComparePage 7.37 kB（gzip 2.75 kB，双城对比独立路由）。
-- 按需 chunk：地图（MapLibre）1,077.17 kB（gzip 294.80 kB，由 Landmarks/Relics/Figures/Poetics/DayTrip 的懒加载入口加载，`DayTripModule` 曾静态引入 `CityMap` 导致其并入 CityPage，已修复）；图表（ECharts）532.13 kB（gzip 181.17 kB，DataPulse 懒加载）；各业务模块 0.28–4.78 kB。
+- 首屏 JS 409.18 kB（gzip 132.21 kB）+ 首屏 CSS 40.62 kB（gzip 8.91 kB），较拆分前的 2,086.83 kB（gzip 628.82 kB）显著下降。
+- 路由 chunk：CityPage 85.09 kB（gzip 28.90 kB，含 framer-motion 朝代滑块动效与一日路线/小测验/天气条）、AdminPage 23.86 kB（gzip 6.75 kB）、ComparePage 7.18 kB（gzip 2.80 kB）。
+- 按需 chunk：地图（MapLibre）1,102.61 kB（gzip 302.84 kB，由 `DeferredCityMap` 在接近视口时动态加载，5 张地图不再同时创建 WebGL 上下文）；图表（ECharts）543.99 kB（gzip 185.82 kB，DataPulse 懒加载）；各业务模块约 3.7–4.5 kB。
+- 字体：Noto Serif SC 子集 2.73 MB，`index.html` 预加载 + `font-display: optional`；01 卷引文单独使用 `.quote-serif` 系统宋体栈，避免其成为 LCP；其余标题/诗词仍用 Noto。
 - 本地文物图片共 22 张、约 5.24 MB，按需懒加载；不进入 JS/CSS 首屏体积，运行期不发外部图片请求。
-- Lighthouse（2026-11-11 首跑）：Desktop Performance 0.49 / Mobile 0.52 / SEO 0.92 / Accessibility 1.00；绝对分数受本机 Chrome 冷启动计时污染不可信，复现命令与判定说明见 AC-16。
+- CLS：路由回退/阅读骨架改为 ≥120vh，一日路线使用 `content-visibility: auto` 与 `contain-intrinsic-size`，Hero 古称/人格引文预留高度；ego-browser 实测桌面 CLS 0.048、移动 0.076（此前桌面 0.69 / 移动 0.136）。
+- Lighthouse（2026-11-13 复跑）：Desktop 0.79 / 0.82 / 0.99（中位数 0.82）、Mobile 0.89 / 0.90（中位数 0.895）、SEO 0.92、Accessibility 1.00；Desktop TBT 0ms、CLS 0.048；Mobile TBT 326ms、CLS 0.076。01 卷引文改系统宋体栈后 LCP 元素切换为 hero「西安」，observed LCP 202ms / 180ms。
 - `InkCanvas` 内置帧率监测：连续低于 30fps 时自动降级为静态纸纹。
 
 ### 6.3 环境与安装
@@ -261,12 +263,12 @@ npm run dev
 | 9 | 人物生平与城市关联 | 05 卷逐条阅读，核对 Wikidata 属性 | `entityVerifier` 校验 QID 与属性；LLM 输出泄漏字段即丢弃（FIGURE_LEAK）；安阳重建后 6 位人物无泄漏 | | | |
 | 10 | 诗词注释与意象位置 | 06 卷抽查 3 首，对照诗词库原文 | verify 含「逐字诗词」与「诗词归属本城」检查（0 错误）；意象词全部逐字命中原文（`poetryVerifier.test.ts` +3 项） | | | |
 | 11 | 城市味道、方言、非遗、节庆 | 07 卷阅读，核对来源与等级 | localSoul 卷来源登记完整；模块 Schema 校验通过 | | | |
-| 12 | 六城主题色观感 | 切换六城，检查明暗模式可读性 | `theme.test.ts` 4 项 + `cityThemes.test.ts` 3 项（对比度达标、`ensureContrast` 生效）；夜间模式逐页截图 `.screenshots/a11y/dark-*.png` | | | |
-| 13 | 375 / 768 / 1280 实机观感 | 手机与桌面浏览器各浏览一遍 | CDP/ego-browser 三档实测无横向滚动、地图不拦截垂直滚动（截图 `.screenshots/a11y/resp-*.png`）；axe 应用自身 0 违规 | | | |
+| 12 | 六城主题色观感 | 切换六城，检查明暗模式可读性 | `theme.test.ts` 4 项 + `cityThemes.test.ts` 3 项（对比度达标、`ensureContrast` 生效）；夜间模式逐页截图 `.screenshots/a11y/dark-*.png`；2026-11-12 彩排暗色截图 `.screenshots/demo-20261112/32-dark-mode.png` | | | |
+| 13 | 375 / 768 / 1280 实机观感 | 手机与桌面浏览器各浏览一遍 | CDP/ego-browser 三档实测无横向滚动、地图不拦截垂直滚动（截图 `.screenshots/a11y/resp-*.png`）；axe 应用自身 0 违规；2026-11-12 复测 5 张地图随视口逐张挂载、375 无横向滚动（`demo-20261112/34-mobile-landmarks.png`、`35-mobile-daytrip.png`） | | | |
 | 14 | 真实 LLM 模式 | 填写 `LLM_API_KEY` 后生成一座未缓存城市 | StepFun 官方 Key 实测镇江、宁波两座新城 8/8 卷（AC-04）；连通脚本 `npm run test:llm` OK | | | |
-| 15 | 天地图底图 | 填写 `TIANDITU_KEY` 后检查瓦片、注记与坐标偏移 | 程序化实测 144 张瓦片 + 服务端检索 405 条；注记/偏移的人工观感留用户 | | | |
-| 16 | 文物图片与许可 | 对照 `server/data/relic_images.json` 抽查图片是否对应文物、署名与许可证是否准确 | `relic_images.json` × `relics_registry.json` 程序化交叉核对 22/22 条（逐张表见 7.4）：文件名、credit、license、Commons 来源页、对应 registryId/文物名/馆藏地全部有据；前端已展示 credit、许可证与 Commons 来源链接。「图片是否确为该文物」的语义核对与许可证适用性留用户签字 | | | |
-| 17 | 行政区轮廓合规 | 核对 `client/public/geo/_manifest.json` 的来源授权与审图号，或替换为合规来源 | manifest 已记录来源 DataV.GeoAtlas 与「授权/审图号待确认」；`--source=tianditu` 备选源已实现并验证（GCJ-02 已标注，不默认启用） | | | |
+| 15 | 天地图底图 | 填写 `TIANDITU_KEY` 后检查瓦片、注记与坐标偏移 | 程序化实测 144 张瓦片 + 服务端检索 405 条；2026-11-12 ego-browser 走查桌面 158 张 / 移动 106 张瓦片请求、无 WebGL 降级（`.screenshots/tianditu-20261112/desktop-landmarks.png`、`mobile-landmarks.png`）；注记/偏移的人工观感留用户 | | | |
+| 16 | 文物图片与许可 | 对照 `server/data/relic_images.json` 抽查图片是否对应文物、署名与许可证是否准确 | `relic_images.json` × `relics_registry.json` 程序化交叉核对 22/22 条（逐张表见 7.4）：文件名、credit、license、Commons 来源页、对应 registryId/文物名/馆藏地全部有据；前端已展示 credit、许可证与 Commons 来源链接；2026-11-12 彩排实测文物卡「图上寻迹」联动（`demo-20261112/11-relic-map-focus-after-defer.png`）。「图片是否确为该文物」的语义核对与许可证适用性留用户签字 | | | |
+| 17 | 行政区轮廓合规 | 核对 `client/public/geo/_manifest.json` 的来源授权与审图号，或替换为合规来源 | manifest 已记录来源 DataV.GeoAtlas 与「授权/审图号待确认」；`--source=tianditu` 备选源已实现并验证（GCJ-02 已标注，不默认启用）；2026-11-12 仍未取得授权确认，签字留空 | | | |
 
 ### 7.3 待抽查清单（供用户勾选）
 
