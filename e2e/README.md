@@ -3,6 +3,7 @@
 > 2026-11-11 使用 ego-browser（ego lite，用户指定）对本地生产模式服务端实测。
 > 服务端：`NODE_ENV=production npm start`（托管 `client/dist`，:8787）；前端为生产构建产物。
 > 2026-11-12 演讲彩排复跑：生产构建托管于 :8788，脚本 `C:/Users/19949/ego/citylens-demo-20261112/round-*.mjs`，截图 `.screenshots/demo-20261112/`。
+> 2026-11-13 分享海报复跑：脚本 `C:/Users/19949/ego/citylens-share-20261113/round-*.mjs`，截图 `.screenshots/share-20261113/`。
 > 所有脚本存档于 `C:/Users/19949/ego/<目标>-20261111/round-*.mjs`，截图存档于项目 `.screenshots/`。
 
 ## 运行方式
@@ -27,7 +28,7 @@ ego-browser nodejs -e "await import('file:///C:/Users/19949/ego/<目标>-2026111
 | 6 | 双城对比 | 通过：`/compare?cities=CN-610100,CN-330100` 双列渲染（GDP 取最新非空年份、待考处理）；`/api/compare` 集成测试 4 项 | `server/routes/compareRoutes.test.ts` |
 | 7 | 一日路线 | 通过：西安页「如果只有一天」section + 地图连接线 + 「示意路线 · 非导航」标注；2026-11-12 复测 5 张地图（景点/文物/名人/诗境/一日）随视口逐张挂载，375/768/1280 均无横向滚动 | `.screenshots/a11y/resp-*.png`、`.screenshots/demo-20261112/30-maps-verified.png`，`dayTripService.test.ts` 3 项 |
 | 8 | 知识小测验 | 通过：西安页「随堂小测」section，题目来自档案事实字段，本地判分 | `quizService.test.ts` 4 项 |
-| 9 | 长图海报 | 通过：CityHero「导出长图」→ PosterDialog（Canvas 预览）→「下载 PNG」实测下载 `读城-西安-2026-11-11.png`，173,108 字节（2026-11-12） | `poster.test.ts` 4 项；`.screenshots/demo-20261112/26-poster-dialog.png` |
+| 9 | 分享与海报 | 通过：CityHero「分享此卷」→ 弹窗（复制链接 / 生成海报）→ 750×1334 预览 → 下载 PNG `读城-西安-2026-11-11.png`，183,068 字节；北京长诗句夹注过滤后无出格（2026-11-13） | `poster.test.ts` 5 项、`share.test.ts` 2 项、`qr.test.ts` 2 项；`.screenshots/share-20261113/02-poster-preview.png`、`04-beijing-poster-preview.png` |
 | 10 | 404 / 异常城市 | 通过：`/city/CN-000000` 显示「版图中暂无此城」+ 热门名城入口 | `.screenshots/a18-20261111/` 相关轮次 |
 | 11 | 真实断网（用户侧 + 服务侧 + LLM 黑洞） | 通过：预置/缓存城市完整；LLM 失败时 7 卷 `module_error LLM_TIMEOUT`、dataPulse 本地侦察成卷、无白屏 | `.screenshots/ac18/` + `guilin-llm-blackhole.sse` |
 | 12 | 可访问性（axe/键盘/响应式/暗色） | 通过：应用自身 0 违规；三档无横向滚动；地图不拦截滚动 | `.screenshots/a11y/` |
@@ -48,7 +49,7 @@ ego-browser nodejs -e "await import('file:///C:/Users/19949/ego/<目标>-2026111
 4. 诗词意象「长安」悬停 → 批注气泡 + 诗境地图约 1000m 示意范围
 5. 「如果只有一天」→ 上午 / 下午 / 晚上三槽 + 示意路线（非导航）
 6. 「随堂小测」答 3 题 → 提交批改 → 得分、解析与来源
-7. 「导出长图」→ 下载 PNG（实测 173KB）
+7. 「分享此卷」→ 复制链接 / 生成海报 → 下载 PNG（实测 183KB，含二维码）
 8. `/compare?cities=CN-610100,CN-330100` → 暗色模式 → `/city/CN-000000`
 
 **降级话术**
@@ -86,6 +87,10 @@ curl.exe http://localhost:8787/api/cities/CN-350500/weather
 
 ## 已知限制
 
+- 二维码编码当前页面 origin；本地 `localhost` / `127.0.0.1` 二维码手机不可达，
+  演示请用局域网 IP 或公网域名打开页面。
+- ego-browser 自动化点击「复制链接」会触发浏览器剪贴板权限提示；真实用户点击后授权即可。
+  未授权时弹窗内提供只读链接，聚焦即可全选后手动复制。
 - 本机 Lighthouse（2026-11-13，Desktop 3 轮 / Mobile 2 轮）：Desktop 0.79 / 0.82 / 0.99（中位数 0.82），
   Mobile 0.89 / 0.90（中位数 0.895），SEO 0.92 / A11y 1.00；AC-16 已按中位数通过；
   LCP 审计值仍有轮次波动，报告与复现命令见 FEATURES AC-16。

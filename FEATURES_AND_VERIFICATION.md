@@ -61,7 +61,7 @@
 | 如果只有一天 | `GET /api/cities/:id/daytrip`：有坐标景点+文物去重后按与市中心 haversine 距离分上午/下午/晚上三槽（ceil(n/3)），不足 4 站标 `degraded`，界面明示「示意路线，非导航」；地图叠加连线（`route` 参数）与角标。**实时层解耦（2026-11-11）**：未成卷城市回退 Wikidata 事实快照排路线（本地快照优先，缺失则按需抓取并落盘，10 分钟负缓存），notice 注明「点位取自 Wikidata 事实快照（未经人工整理）」；`dayTripService.test.ts` 与路由测试覆盖 |
 | 随堂小测 | `GET /api/cities/:id/quiz`：5 类出题器（气候/年表/景点/文物/人物判断题），干扰项取自同档案或固定气候表，最多 5 题；前端本地判分、提交后解析+来源、可重做；`quizService.test.ts` 覆盖 |
 | 实时天气 | `GET /api/cities/:id/weather`：Open-Meteo current，10 分钟内存缓存，WMO 代码中文对照；城市页身份卷展示温度/体感/风速/湿度与更新时间、来源；失败回退提示不阻断页面。**实时层解耦（2026-11-11）**：只用城市词典中心坐标，342 城均可查询，不要求档案已生成；`weatherService.test.ts` 与路由测试（mock Open-Meteo）覆盖 |
-| 长图海报 | `client/src/lib/poster.ts` 纯函数 `buildPosterSpec` + Canvas 750px 竖版渲染；城市页 hero「导出长图」→ 焦点陷阱对话框 → dataURL 预览 → 下载 PNG（实测 230KB）；`poster.test.ts` 覆盖规格构建 |
+| 分享与海报 | 「分享此卷」一个入口：弹窗内选择「复制链接」或「生成海报」；海报为 750×1334 固定 9:16 竖版，含城市切片、诗句、统计数据与二维码，扫码直达 `/city/:id`；诗句夹注/出处说明自动过滤，超宽诗句按可用宽度截断，避免出格；支持下载 PNG 与系统分享图片（可用时）。海报与二维码代码由 `PosterPreview` 动态加载，不进入首屏；`poster.test.ts`、`share.test.ts`、`qr.test.ts` 覆盖 |
 | 错误边界 | 路由级 `RouteBoundary`（`resetKey=pathname`）+ 模块级 ErrorBoundary：单路由/单模块异常只降级该区域，不白屏；`ErrorBoundary.test.tsx` 覆盖 |
 | 首屏性能（2026-11-13） | 字体 preload + Noto Serif `font-display: optional`；01 卷引文 `.quote-serif` 系统宋体栈；路由回退/阅读骨架 ≥120vh；地图 `DeferredCityMap` 进入视口再挂载；一日路线 `content-visibility: auto`；Lighthouse Desktop 中位数 0.82 / Mobile 0.895 |
 | 可访问性 | `跳到正文` 跳转链接、`<main id="main-content">`、section `aria-labelledby`、横向滚动容器 `tabIndex+role=group`、模态/对话框 focus trap（Tab 循环 + Esc + 焦点还原）；axe（wcag2a/2aa/best-practice）应用自身 0 违规 |
