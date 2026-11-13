@@ -5,7 +5,7 @@ import type { CityArchiveResponse, Meta } from '@citylens/shared/schema';
 import type { StreamPhase } from '../../hooks/useCityStream';
 import { useFocusTrap } from '../../hooks/useFocusTrap';
 import { formatCoord, formatDateTime } from '../../lib/format';
-import { PosterDialog } from '../poster/PosterDialog';
+import { ShareDialog } from '../share/ShareDialog';
 import { InkCanvas } from './InkCanvas';
 
 interface CityHeroProps {
@@ -16,7 +16,7 @@ interface CityHeroProps {
   isFavorite: boolean;
   persona?: string | null;
   hint?: string | null;
-  /** 完整档案（缓存命中时存在），用于导出长图海报。 */
+  /** 完整档案（缓存命中时存在），用于分享海报。 */
   archive?: CityArchiveResponse | null;
   /** 来自流式状态机的致命错误提示（如冷却 / 限流），展示在操作卡片中。 */
   notice?: string | null;
@@ -37,9 +37,8 @@ export function CityHero({
   onToggleFavorite,
   onRegenerate,
 }: CityHeroProps) {
-  const [copied, setCopied] = useState(false);
   const [confirmOpen, setConfirmOpen] = useState(false);
-  const [posterOpen, setPosterOpen] = useState(false);
+  const [shareOpen, setShareOpen] = useState(false);
   // 缓存命中印章（PRD 2.2）：朱砂微标签停留 3 秒后渐隐，露出常驻「成卷时间」铭牌。
   const [cacheStamp, setCacheStamp] = useState(false);
 
@@ -66,16 +65,6 @@ export function CityHero({
 
   const closeConfirm = useCallback(() => setConfirmOpen(false), []);
   const dialogRef = useFocusTrap(confirmOpen, closeConfirm);
-
-  const share = async (): Promise<void> => {
-    try {
-      await navigator.clipboard.writeText(window.location.href);
-      setCopied(true);
-      window.setTimeout(() => setCopied(false), 1800);
-    } catch {
-      setCopied(false);
-    }
-  };
 
   const requestRegenerate = (): void => {
     if (meta?.isPreset) {
@@ -220,15 +209,12 @@ export function CityHero({
                 </button>
                 <button
                   type="button"
-                  onClick={() => void share()}
-                  className={`ink-btn px-3 py-2 text-[11px] ${onRegenerate ? '' : 'col-span-2'}`}
+                  onClick={() => setShareOpen(true)}
+                  className="ink-btn ink-btn--solid col-span-2 px-3 py-2 text-[11px]"
                   disabled={!meta}
                 >
-                  {copied ? '链接已复制' : '分享此卷'}
+                  分享此卷
                 </button>
-                <span className="sr-only" role="status" aria-live="polite">
-                  {copied ? '链接已复制到剪贴板' : ''}
-                </span>
                 {onRegenerate ? (
                   <button
                     type="button"
@@ -246,16 +232,6 @@ export function CityHero({
                   >
                     双城对比
                   </Link>
-                ) : null}
-                {meta ? (
-                  <button
-                    type="button"
-                    onClick={() => setPosterOpen(true)}
-                    className="ink-btn px-3 py-2 text-[11px]"
-                    disabled={!archive}
-                  >
-                    导出长图
-                  </button>
                 ) : null}
               </div>
               {noticeText ? (
@@ -310,10 +286,10 @@ export function CityHero({
         </div>
       ) : null}
 
-      <PosterDialog
-        open={posterOpen}
+      <ShareDialog
+        open={shareOpen}
         archive={archive ?? null}
-        onClose={() => setPosterOpen(false)}
+        onClose={() => setShareOpen(false)}
       />
     </section>
   );

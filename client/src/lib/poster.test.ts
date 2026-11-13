@@ -164,15 +164,20 @@ function archive(overrides: Partial<CityArchiveResponse> = {}): CityArchiveRespo
   };
 }
 
+const SHARE_URL = 'https://citylens.example/city/CN-610100';
+
 describe('buildPosterSpec', () => {
   it('提取城名、人设、代表条目与最新统计年份', () => {
-    const spec = buildPosterSpec(archive());
+    const spec = buildPosterSpec(archive(), SHARE_URL);
     expect(spec.cityName).toBe('西安');
     expect(spec.persona).toContain('十三朝古都');
-    expect(spec.landmarks).toEqual(['大雁塔', '兵马俑', '城墙']);
+    expect(spec.landmarks).toEqual(['大雁塔']);
     expect(spec.relics).toEqual(['镶金兽首玛瑙杯（唐）']);
     expect(spec.figures).toEqual(['白居易']);
     expect(spec.poems[0]).toMatchObject({ title: '登科后', author: '孟郊', dynasty: '唐' });
+    expect(spec.poemLines).toEqual(['春风得意马蹄疾', '一日看尽长安花']);
+    expect(spec.shareUrl).toBe(SHARE_URL);
+    expect(spec.coordinates).toBe('34.26°N, 108.94°E');
     const gdp = spec.stats.find((stat) => stat.label.includes('地区生产总值'));
     expect(gdp?.value).toBe('13,902.67 亿元');
     expect(gdp?.label).toContain('2025');
@@ -193,27 +198,54 @@ describe('buildPosterSpec', () => {
         figures: null,
         poetics: null,
       }),
+      SHARE_URL,
     );
     expect(spec.persona).toBe(PENDING);
     expect(spec.landmarks).toEqual([]);
     expect(spec.relics).toEqual([]);
     expect(spec.figures).toEqual([]);
     expect(spec.poems).toEqual([]);
+    expect(spec.poemLines).toEqual([]);
     expect(spec.stats).toEqual([]);
     expect(spec.disclaimer).toContain('AI');
   });
 
   it('GDP 序列全空时该行显示「待考」', () => {
     const base = archive();
-    const spec = buildPosterSpec({
-      ...base,
-      dataPulse: { ...base.dataPulse!, gdpSeries: [{ year: 2025, value: null }] },
-    });
+    const spec = buildPosterSpec(
+      {
+        ...base,
+        dataPulse: { ...base.dataPulse!, gdpSeries: [{ year: 2025, value: null }] },
+      },
+      SHARE_URL,
+    );
     const gdp = spec.stats.find((stat) => stat.label.includes('地区生产总值'));
     expect(gdp?.value).toBe(PENDING);
   });
 
+  it('诗句夹注与出处说明不进入海报', () => {
+    const base = archive();
+    const poem = base.poetics![0]!;
+    const spec = buildPosterSpec(
+      {
+        ...base,
+        poetics: [
+          {
+            ...poem,
+            lines: [
+              '燕昭北筑黄金台，四方豪杰乘风来。',
+              '（见元人王恽《秋涧集》。',
+              '《古今图书集成·职方典》二九《顺天府部》亦载此诗，题作《燕台》）。',
+            ],
+          },
+        ],
+      },
+      SHARE_URL,
+    );
+    expect(spec.poemLines).toEqual(['燕昭北筑黄金台，四方豪杰乘风来。']);
+  });
+
   it('文件名包含城名与生成日期', () => {
-    expect(posterFileName(buildPosterSpec(archive()))).toBe('读城-西安-2026-11-11.png');
+    expect(posterFileName(buildPosterSpec(archive(), SHARE_URL))).toBe('读城-西安-2026-11-11.png');
   });
 });
