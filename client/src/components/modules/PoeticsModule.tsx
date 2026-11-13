@@ -10,7 +10,8 @@ import { focusMap } from '../../lib/mapFocus';
 import { SourceBadge } from '../ui/SourceBadge';
 import { Reveal } from '../ui/Reveal';
 import { VerificationTag } from '../ui/Tags';
-import { CityMap, type CityMapPoint } from './CityMap';
+import type { CityMapPoint } from './CityMap';
+import { DeferredCityMap } from './DeferredCityMap';
 
 interface BubbleState {
   note: string;
@@ -72,7 +73,7 @@ export function PoeticsModule({
           <p className="mb-3 text-[10px] tracking-[0.2em] text-[var(--text-secondary)]">
             诗境地图 · 悬停意象词即定位
           </p>
-          <CityMap
+          <DeferredCityMap
             cityId={cityId}
             cityName={cityName}
             center={center}

@@ -3,16 +3,12 @@
  * 从档案景点 / 文物中选取有坐标点位，按上午 / 下午 / 晚上分组；
  * 地图画连接线并标注「示意路线，非导航」；不订票、不承诺营业时间。
  */
-import { lazy, Suspense, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { Coord, DayTrip, DayTripSlot } from '@citylens/shared/schema';
 import type { CityMapPoint } from './CityMap';
+import { DeferredCityMap } from './DeferredCityMap';
 import { PendingTag } from '../ui/Tags';
 import { getDayTrip } from '../../lib/api';
-
-/** 地图依赖较重，进入视口时再加载，避免拖慢首屏。 */
-const CityMap = lazy(() =>
-  import('./CityMap').then((module) => ({ default: module.CityMap })),
-);
 
 const SLOT_LABELS: Record<DayTripSlot, string> = {
   morning: '上午',
@@ -26,15 +22,18 @@ export function DayTripModule({
   cityId,
   cityName,
   center,
+  enabled,
 }: {
   cityId: string;
   cityName: string;
   center: Coord;
+  enabled: boolean;
 }) {
   const [trip, setTrip] = useState<DayTrip | null>(null);
   const [failed, setFailed] = useState(false);
 
   useEffect(() => {
+    if (!enabled) return;
     const controller = new AbortController();
     setTrip(null);
     setFailed(false);
@@ -44,7 +43,7 @@ export function DayTripModule({
         if ((error as Error).name !== 'AbortError') setFailed(true);
       });
     return () => controller.abort();
-  }, [cityId]);
+  }, [cityId, enabled]);
 
   if (failed) {
     return (
@@ -59,7 +58,10 @@ export function DayTripModule({
 
   if (!trip) {
     return (
-      <div className="surface-card h-[280px] animate-pulse rounded-md md:h-[420px]" aria-busy="true">
+      <div
+        className="surface-card min-h-[880px] animate-pulse rounded-md md:min-h-[560px]"
+        aria-busy="true"
+      >
         <span className="sr-only">路线排布中</span>
       </div>
     );
@@ -74,7 +76,7 @@ export function DayTripModule({
   const route = trip.stops.map((stop) => stop.coordinates);
 
   return (
-    <div className="grid gap-6 lg:grid-cols-[45%_55%]">
+    <div className="daytrip-grid grid min-h-[880px] gap-6 md:min-h-[560px] lg:grid-cols-[45%_55%]">
       <div className="space-y-4">
         {trip.degraded ? (
           <p className="rounded-sm border border-dashed p-3 text-[11px] leading-relaxed text-[var(--text-secondary)] hairline">
@@ -105,23 +107,15 @@ export function DayTripModule({
         })}
         <p className="text-[10px] leading-relaxed text-[var(--text-secondary)]">{trip.notice}</p>
       </div>
-      <Suspense
-        fallback={
-          <div className="surface-card h-[280px] animate-pulse rounded-md md:h-[420px]" aria-busy="true">
-            <span className="sr-only">地图加载中</span>
-          </div>
-        }
-      >
-        <CityMap
-          cityId={cityId}
-          cityName={cityName}
-          center={center}
-          points={points}
-          scope="daytrip"
-          route={route}
-          ariaLabel={`${cityName}一日路线示意图`}
-        />
-      </Suspense>
+      <DeferredCityMap
+        cityId={cityId}
+        cityName={cityName}
+        center={center}
+        points={points}
+        scope="daytrip"
+        route={route}
+        ariaLabel={`${cityName}一日路线示意图`}
+      />
     </div>
   );
 }

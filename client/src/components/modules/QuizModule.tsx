@@ -7,7 +7,15 @@ import type { Quiz } from '@citylens/shared/schema';
 import { ApiRequestError, getQuiz } from '../../lib/api';
 import { PendingTag } from '../ui/Tags';
 
-export function QuizModule({ cityId, cityName }: { cityId: string; cityName: string }) {
+export function QuizModule({
+  cityId,
+  cityName,
+  enabled,
+}: {
+  cityId: string;
+  cityName: string;
+  enabled: boolean;
+}) {
   const [quiz, setQuiz] = useState<Quiz | null>(null);
   const [failed, setFailed] = useState(false);
   const [noQuiz, setNoQuiz] = useState(false);
@@ -15,6 +23,7 @@ export function QuizModule({ cityId, cityName }: { cityId: string; cityName: str
   const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
+    if (!enabled) return;
     const controller = new AbortController();
     setQuiz(null);
     setFailed(false);
@@ -30,7 +39,7 @@ export function QuizModule({ cityId, cityName }: { cityId: string; cityName: str
         else setFailed(true);
       });
     return () => controller.abort();
-  }, [cityId]);
+  }, [cityId, enabled]);
 
   if (failed) {
     return (
@@ -56,7 +65,7 @@ export function QuizModule({ cityId, cityName }: { cityId: string; cityName: str
 
   if (!quiz) {
     return (
-      <div className="surface-card h-48 animate-pulse rounded-md" aria-busy="true">
+      <div className="surface-card min-h-[360px] animate-pulse rounded-md" aria-busy="true">
         <span className="sr-only">出题中</span>
       </div>
     );
@@ -69,7 +78,7 @@ export function QuizModule({ cityId, cityName }: { cityId: string; cityName: str
     : 0;
 
   return (
-    <div className="surface-card rounded-md p-6 md:p-8">
+    <div className="surface-card min-h-[360px] rounded-md p-6 md:p-8">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <p className="text-[11px] tracking-[0.16em] text-[var(--text-secondary)]">
           {cityName} · 随堂小测 · 共 {quiz.questions.length} 题

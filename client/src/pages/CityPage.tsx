@@ -245,42 +245,43 @@ export function CityPage() {
             除预置馆藏外，本页条目由 AI 依据所列来源整理；点击各卡片的「[源]」可查看原始链接。
             重要事实、年代与数据请以原始来源为准。
           </p>
-          {state.phase === 'ready' ? (
-            <>
-              <SectionShell
-                id="daytrip"
-                index="行"
-                title="如果只有一天"
-                aside={
-                  <span className="mono text-[10px] tracking-[0.16em] text-[var(--text-secondary)]">
-                    示意路线 · 非导航
-                  </span>
-                }
-              >
-                <ErrorBoundary title="一日路线渲染异常" resetKey={`${cityId}:daytrip`}>
-                  <DayTripModule
-                    cityId={cityId}
-                    cityName={meta.standardName}
-                    center={meta.center}
-                  />
-                </ErrorBoundary>
-              </SectionShell>
-              <SectionShell
-                id="quiz"
-                index="问"
-                title="随堂小测"
-                aside={
-                  <span className="mono text-[10px] tracking-[0.16em] text-[var(--text-secondary)]">
-                    本地判分 · 不出本卷之外的知识点
-                  </span>
-                }
-              >
-                <ErrorBoundary title="小测验渲染异常" resetKey={`${cityId}:quiz`}>
-                  <QuizModule cityId={cityId} cityName={meta.standardName} />
-                </ErrorBoundary>
-              </SectionShell>
-            </>
-          ) : null}
+          <SectionShell
+            id="daytrip"
+            index="行"
+            title="如果只有一天"
+            aside={
+              <span className="mono text-[10px] tracking-[0.16em] text-[var(--text-secondary)]">
+                示意路线 · 非导航
+              </span>
+            }
+          >
+            <ErrorBoundary title="一日路线渲染异常" resetKey={`${cityId}:daytrip`}>
+              <DayTripModule
+                cityId={cityId}
+                cityName={meta.standardName}
+                center={meta.center}
+                enabled={state.phase === 'ready'}
+              />
+            </ErrorBoundary>
+          </SectionShell>
+          <SectionShell
+            id="quiz"
+            index="问"
+            title="随堂小测"
+            aside={
+              <span className="mono text-[10px] tracking-[0.16em] text-[var(--text-secondary)]">
+                本地判分 · 不出本卷之外的知识点
+              </span>
+            }
+          >
+            <ErrorBoundary title="小测验渲染异常" resetKey={`${cityId}:quiz`}>
+              <QuizModule
+                cityId={cityId}
+                cityName={meta.standardName}
+                enabled={state.phase === 'ready'}
+              />
+            </ErrorBoundary>
+          </SectionShell>
           </>
         )}
       </div>
@@ -290,7 +291,7 @@ export function CityPage() {
 
 function ReadingSkeleton({ cityId }: { cityId: string }) {
   return (
-    <div className="py-10">
+    <div className="min-h-[120vh] py-10">
       <p className="mono text-[10px] tracking-[0.3em] text-[var(--text-secondary)]">
         READING ARCHIVE · {cityId}
       </p>

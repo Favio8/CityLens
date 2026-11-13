@@ -100,7 +100,7 @@ export default function App() {
 /** 路由级懒加载占位：保持宣纸底色，避免白屏。 */
 function RouteFallback() {
   return (
-    <div className="flex min-h-[60vh] items-center justify-center" aria-live="polite" aria-busy="true">
+    <div className="flex min-h-[120vh] items-center justify-center" aria-live="polite" aria-busy="true">
       <div className="text-center">
         <p className="mono text-[10px] tracking-[0.3em] text-[var(--text-secondary)]">展卷中</p>
         <div className="mx-auto mt-4 h-px w-24 overflow-hidden bg-[var(--border-subtle)]">

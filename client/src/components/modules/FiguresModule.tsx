@@ -6,7 +6,8 @@ import { focusMap } from '../../lib/mapFocus';
 import { SourceBadge } from '../ui/SourceBadge';
 import { Reveal } from '../ui/Reveal';
 import { VerificationTag } from '../ui/Tags';
-import { CityMap, type CityMapPoint } from './CityMap';
+import type { CityMapPoint } from './CityMap';
+import { DeferredCityMap } from './DeferredCityMap';
 
 function year(value: number | '待考'): string {
   if (value === '待考') return '待考';
@@ -62,7 +63,7 @@ export function FiguresModule({
           <p className="mb-3 text-xs leading-relaxed text-[var(--text-secondary)]">
             人物遗迹坐标统一为 WGS84。点击姓名下的地点标签或「图上寻迹」定位；点击地图标记回到对应人物卡。
           </p>
-          <CityMap
+          <DeferredCityMap
             cityId={cityId}
             cityName={cityName}
             center={center}

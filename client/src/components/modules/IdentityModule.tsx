@@ -77,7 +77,7 @@ export function IdentityModule({ data, sources, cityId }: IdentityModuleProps) {
           >
             “
           </span>
-          <p className="font-serif text-xl leading-[1.9] tracking-[0.04em] md:text-2xl">{persona}</p>
+          <p className="quote-serif text-xl leading-[1.9] tracking-[0.04em] md:text-2xl">{persona}</p>
         </blockquote>
       ) : (
         <div className="mb-10 flex items-center gap-2">

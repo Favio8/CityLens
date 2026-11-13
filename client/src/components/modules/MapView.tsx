@@ -7,7 +7,8 @@ import type { Landmark, SourceRef } from '@citylens/shared/schema';
 import { focusMap } from '../../lib/mapFocus';
 import { COORD_SOURCE_LABELS } from '../../lib/labels';
 import { SourceBadge } from '../ui/SourceBadge';
-import { CityMap, type CityMapPoint } from './CityMap';
+import type { CityMapPoint } from './CityMap';
+import { DeferredCityMap } from './DeferredCityMap';
 
 const CATEGORY_LABELS = { must_visit: '必游', hidden_gem: '秘境' } as const;
 
@@ -145,7 +146,7 @@ export function MapView({ cityId, cityName, center, landmarks, sources }: MapVie
         </ul>
 
         <div className="order-1 lg:order-2 lg:sticky lg:top-24">
-          <CityMap
+          <DeferredCityMap
             cityId={cityId}
             cityName={cityName}
             center={center}

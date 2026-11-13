@@ -211,8 +211,10 @@ describe('quizService', () => {
         expect(question.options.map((o) => o.id)).toContain(question.answerId);
       }
     }
-    // 相同输入结果稳定（可复现）
-    expect(buildQuiz(city, bundleWith(fullArchive))).toEqual(buildQuiz(city, bundleWith(fullArchive)));
+    // 相同输入结果稳定（可复现）；generatedAt 是时间戳，比较时剔除
+    const first = buildQuiz(city, bundleWith(fullArchive));
+    const second = buildQuiz(city, bundleWith(fullArchive));
+    expect({ ...second, generatedAt: '' }).toEqual({ ...first, generatedAt: '' });
   });
 
   it('景点题干扰项与答案不同名', () => {

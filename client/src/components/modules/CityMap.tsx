@@ -34,7 +34,7 @@ export interface CityMapPoint {
   rangeMeters?: number;
 }
 
-interface CityMapProps {
+export interface CityMapProps {
   cityId: string;
   cityName: string;
   center: Coord;
@@ -226,7 +226,11 @@ export function CityMap({
       popup.setLngLat([lng, lat]).setDOMContent(node).addTo(map);
     };
 
-    const onError = (): void => setFailed(true);
+    // 单张瓦片或样式请求失败不应整图降级：保留已渲染的轮廓与点位，
+    // 仅有 WebGL/Map 构造失败（上面的 catch）才显示不支持提示。
+    const onError = (): void => {
+      console.warn('[map] 瓦片或样式加载异常（地图保持可用）');
+    };
     map.on('error', onError);
 
     map.on('load', () => {

@@ -5,7 +5,8 @@ import { focusMap } from '../../lib/mapFocus';
 import { SourceBadge } from '../ui/SourceBadge';
 import { Reveal } from '../ui/Reveal';
 import { PendingTag, VerificationTag } from '../ui/Tags';
-import { CityMap, type CityMapPoint } from './CityMap';
+import type { CityMapPoint } from './CityMap';
+import { DeferredCityMap } from './DeferredCityMap';
 
 export function RelicsModule({
   cityId,
@@ -53,7 +54,7 @@ export function RelicsModule({
           <p className="mb-3 text-xs leading-relaxed text-[var(--text-secondary)]">
             文物与遗址坐标统一为 WGS84。点击卡片「图上寻迹」定位；点击地图标记回到对应卡片。
           </p>
-          <CityMap
+          <DeferredCityMap
             cityId={cityId}
             cityName={cityName}
             center={center}

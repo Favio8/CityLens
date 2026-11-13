@@ -129,22 +129,24 @@ export function CityHero({
               </span>
             </h1>
 
-            {meta && meta.aliases.length > 0 ? (
-              <p className="mt-4 font-serif text-sm tracking-[0.18em] text-[var(--text-secondary)]">
-                古称
-                {meta.aliases.slice(0, 4).map((alias) => (
-                  <span key={alias} className="ml-3 border-b border-dotted border-[var(--border-strong)] pb-0.5">
-                    {alias}
-                  </span>
-                ))}
-              </p>
-            ) : null}
+            <p className="mt-4 min-h-[1.5em] font-serif text-sm tracking-[0.18em] text-[var(--text-secondary)]">
+              {meta && meta.aliases.length > 0 ? (
+                <>
+                  古称
+                  {meta.aliases.slice(0, 4).map((alias) => (
+                    <span key={alias} className="ml-3 border-b border-dotted border-[var(--border-strong)] pb-0.5">
+                      {alias}
+                    </span>
+                  ))}
+                </>
+              ) : null}
+            </p>
 
-            {persona ? (
-              <p className="mt-6 max-w-2xl font-serif text-base leading-[2] tracking-[0.04em] md:text-lg">
-                {persona}
-              </p>
-            ) : null}
+            <div className="mt-6 min-h-[4.5em] max-w-2xl">
+              {persona ? (
+                <p className="font-serif text-base leading-[2] tracking-[0.04em] md:text-lg">{persona}</p>
+              ) : null}
+            </div>
 
             {hint ? (
               <p

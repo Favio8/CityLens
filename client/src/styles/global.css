@@ -11,7 +11,9 @@
   src: url('/fonts/NotoSerifSC-subset.woff2') format('woff2');
   font-weight: 200 900;
   font-style: normal;
-  font-display: swap;
+  /* 2.7MB 子集字体：optional 避免慢网下字体回填导致的 LCP 推迟与版式位移；
+     字体进入缓存后仍会直接使用 Noto Serif SC */
+  font-display: optional;
 }
 
 @font-face {
@@ -28,6 +30,19 @@
   font-weight: 100 800;
   font-style: normal;
   font-display: swap;
+}
+
+/* 一日路线区块在视口外时跳过布局，避免首屏把「区块插入」计入 CLS；
+   进入视口后再正常渲染，地图由 DeferredCityMap 负责挂载。 */
+.daytrip-grid {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 880px;
+}
+
+@media (min-width: 768px) {
+  .daytrip-grid {
+    contain-intrinsic-size: auto 560px;
+  }
 }
 
 /* ------------------------------------------------------------------ */
@@ -176,6 +191,12 @@ button {
 
   .serif {
     font-family: 'Noto Serif SC', 'Source Han Serif SC', 'Songti SC', serif;
+  }
+
+  /* 仅用于 01 卷 LCP 引文：优先系统宋体，避免 2.7MB 自托管子集字体进入 LCP；
+     其余标题、诗词仍使用 Noto Serif SC。 */
+  .quote-serif {
+    font-family: 'Songti SC', 'STSong', 'SimSun', 'Noto Serif CJK SC', serif;
   }
 
   .mono {
