@@ -1,18 +1,36 @@
 # CityLens 读城
 
-交互式城市人文档案系统。输入城市名、古称或拼音，读城引擎以流式方式逐模块生成八个人文模块，每个模块独立显影、独立降级。
+> 交互式城市人文档案系统 —— 输入城市名、古称或拼音，引擎以流式方式逐模块生成八卷人文档案，每卷独立显影、独立降级。
 
-> 当前进度：阶段 1–7 已完成（服务端、离线事实管线、缓存编排、SSE 流式、八模块前端、预置档案与 verify、性能与响应式打磨）。功能完成度、AC-01～AC-19 自测证据与待人工复核清单见 [FEATURES_AND_VERIFICATION.md](./FEATURES_AND_VERIFICATION.md)。
+CityLens 将一座城市组织为八卷可读的人文档案：**城市名片、前世今生、景点地图、文物重器、历史名人、诗句中的 Ta、城市味道、数说城市**。
+大模型只负责「选择与叙事」，坐标、年份、统计数值与诗词原文一律由本地可核验产物回填并校验——无法核验的内容标注「待考」或整卷降级，绝不用看似合理的数据充数。
+
+- **运行环境**：Node.js ≥ 22.19.0，npm ≥ 10
+- **工程基线**：TypeScript strict 全量类型检查、260 项自动化测试、可执行浏览器回归（e2e 27/27）、预置档案自动校验
+- **验收记录**：[FEATURES_AND_VERIFICATION.md](./FEATURES_AND_VERIFICATION.md)（功能完成度、AC-01～AC-19 自测证据、待人工复核清单）
+
+## 核心特性
+
+| 能力 | 说明 |
+|---|---|
+| 八卷流式生成 | SSE 协议 `meta → theme → module × 8 → done`，单卷独立成功/失败/降级，骨架屏逐卷显影 |
+| 同城单飞 | 数据库唯一部分索引 `uq_running_job` + 内存 runtime 双保险；并发请求并入同一任务，不重复生成、不重复计费 |
+| 断线恢复 | 独立只读契约 `POST /api/cities/:id/generate/resume`：运行中并入原任务、结束后只读回放终态；不新建任务、不调用生成器、不改档案 |
+| 增量生成 | 已通过校验且最近一次尝试未失败的模块自动复用；重新生成失败时已有合格内容保持可用，档案不下架 |
+| 预算与截止 | LLM 调用在真正发出请求前原子记账（按实际请求时间归属北京日期）；单次生成受 180s 总截止约束，上游挂起或忽略取消时编排层按时收尾，迟到结果不落库 |
+| 离线事实管线 | 构建期抓取 + 本地缓存：城市词典、诗词库、文物名录、地名坐标、事实快照、统计基线；断网可离线重建，运行期零外部事实请求 |
+| 无 Key 可用 | 未配置 LLM / 天地图 Key 时自动进入模拟 LLM 与无底图模式，完整开发与自测不受阻塞 |
+| 行旅工具 | 「如果只有一天」示意路线、随堂小测、实时天气、双城对比、分享海报；实时层与档案解耦，不冻结实时性 |
 
 ## 技术栈
 
-- 前端：React + TypeScript（strict）+ Vite + MapLibre GL JS + ECharts
-- 后端：Fastify + better-sqlite3 + SSE（`fetch` 流式）
-- 共享契约：`shared/schema.ts`（Zod），前后端唯一类型来源
-- 地图：天地图（WGS84，全链路禁止 GCJ-02）
-- 大模型：DeepSeek / OpenAI 兼容接口
+- **前端**：React + TypeScript（strict）+ Vite + MapLibre GL JS + ECharts
+- **后端**：Fastify + better-sqlite3 + SSE（`fetch` 流式读取）
+- **共享契约**：`shared/schema.ts`（Zod），前后端唯一类型来源
+- **地图**：天地图（WGS84 全链路，禁止 GCJ-02）
+- **大模型**：DeepSeek / StepFun / 任意 OpenAI 兼容接口
 
-## 架构
+## 系统架构
 
 ```mermaid
 flowchart LR
@@ -24,7 +42,7 @@ flowchart LR
         API["REST：/api/cities/*、/api/compare、/api/cities/:id/daytrip|quiz|weather"]
         SSE["SSE：/api/cities/:id/generate（meta→theme→module→done）"]
         ADMIN["/api/admin/*（Key 掩码管理，需 ADMIN_TOKEN）"]
-        GEN["编排：JobManager（单飞/增量/冷却/限流/预算）"]
+        GEN["编排：JobManager（单飞/并入/增量/冷却/限流/预算）"]
         LLMG["生成器：Mock / DeepSeek 兼容（选择+叙事，事实回填校验）"]
     end
 
@@ -61,7 +79,7 @@ flowchart LR
     DB -.->|"Key 掩码 / 预算统计"| ADMIN
 ```
 
-> 事实红线：坐标、年份、统计数值、诗词原文一律由本地产物或可核验来源回填；大模型只做「选择与叙事」，无法校验的内容标「待考」或整卷降级。
+> **事实红线**：坐标、年份、统计数值、诗词原文一律由本地产物或可核验来源回填；大模型只做「选择与叙事」，无法校验的内容标「待考」或整卷降级。
 
 ## 目录结构
 
@@ -75,10 +93,11 @@ CityLens/
 │  └─ data/                # 构建期产物（词典/诗词库/快照/名录/地名库）
 ├─ shared/                 # schema.ts / validators.ts / theme.ts
 ├─ scripts/                # 构建期数据管线
+├─ e2e/                    # 可执行浏览器回归（CDP，零新增依赖）
 └─ docs/PRD.md             # CityLens 读城 PRD v1.2
 ```
 
-## 快速开始（干净环境）
+## 快速开始
 
 要求 Node.js ≥ 22.19.0（`undici@8` 与 `lighthouse@13` 的实际下限），npm ≥ 10。
 
@@ -106,80 +125,15 @@ curl http://localhost:8787/api/cities/hot
 >
 > Vite 默认只监听 `localhost`（IPv6），请使用 http://localhost:5173 ；若浏览器打不开，改用 `npm run dev:client -- --host 127.0.0.1`。
 
-### 数据管线（可重复执行）
+## 配置
 
-```bash
-npm run data:dictionary   # Wikidata 行政区划代码 + 坐标 → city_dictionary.json
-npm run data:poetry       # chinese-poetry → 本地诗词库（逐字校验源）
-npm run data:snapshot     # Wikidata → 城市事实快照
-npm run data:stats        # 官方统计公报 + Open-Meteo → 数说城市基线
-npm run data:gazetteer    # 地名坐标库
-npm run data:geo          # DataV.GeoAtlas → 六城行政区轮廓（含来源清单；--source=tianditu 可选备选源）
-npm run data:images       # Wikidata P18 + Wikimedia Commons → 本地文物图片与许可
-npm run data:presets      # 六座预置城市档案（本地事实模块 + 人工整理稿）
-npm run seed              # 重新导入词典（幂等）
-npm run verify            # 校验预置档案：Schema / 来源 / 坐标 / 年份 / 诗词逐字
-npm run data:refresh      # 依次刷新全部外部数据并重建预置档案
-
-# 维护：LLM 连通性测试、未发布档案清理、只读校验与抽查材料导出
-npm run test:llm                                  # 读取 .env 后向配置的 LLM 发起最小请求
-npm run archives:clean-unpublished                 # dry-run 列出未发布档案；--apply 才真正删除
-npm run archives:audit                            # 非预置档案只读校验（失败模块及原因）
-npm run fact-check                                # 导出逐条事实抽查材料（只读，docs/fact-check-*.md）
-```
-
-## 检查入口（可重复执行）
-
-```bash
-npm run check             # typecheck + test + build（不依赖真实密钥与外网缓存）
-npm run check:full        # setup + verify + check（初始化后的完整校验）
-npm run e2e               # 可执行浏览器回归（CDP 零依赖，自起服务端与 Chrome）
-```
-
-构建期脚本的网络失败会以非 0 退出并保留旧产物，不会伪造快照；失败原因写入产物 `failures` 字段，并同步记录到验收文档。
-
-### 免 Key 数据源的本地缓存
-
-- **Wikidata**：SPARQL 结果按查询哈希缓存在 `scripts/.cache/wikidata/`，断网时可直接复用；`REFRESH_WIKIDATA=1` 强制联网刷新。
-- **chinese-poetry**：源 JSON 缓存在 `scripts/.cache/chinese-poetry/`（约 28 MB），并用 `.listings/` 记录目录清单；断网时自动回退本地缓存重建。可选 `GITHUB_TOKEN` 提高 GitHub API 限额，`REFRESH_POETRY=1` 强制更新清单。
-- **Wikimedia Commons**：图片与许可元数据由 `npm run data:images` 抓取并落到 `client/public/images/relics/` 与 `server/data/relic_images.json`；默认复用已下载文件，`REFRESH_IMAGES=1` 强制刷新。
-- **行政区轮廓**：`npm run data:geo` 会缓存到 `scripts/.cache/geo/` 并生成 `client/public/geo/_manifest.json`；现有来源为 DataV.GeoAtlas，**授权与审图号未完成人工确认**，公开上线前必须合规审校或替换为天地图/自然资源部标准地图来源。
-- **国家文物局名录**：没有公开 API，无法可靠自动抓取，仍需人工下载官方名单后离线导入。
-
-### 数据产物（构建期生成，已提交）
-
-| 产物 | 生成脚本 | 内容与用途 |
-|---|---|---|
-| `server/data/city_dictionary.json` | `build_city_dictionary.ts` | 342 座城市（334 地级 + 4 直辖市 + 4 文旅县级市白名单）、1480 条别名、WGS84 中心点、Wikidata QID |
-| `server/data/verified_poetry_corpus.json` | `build_poetry_corpus.ts` | chinese-poetry（MIT）全唐诗/宋词/元曲中与 148 座城市相关的 2,702 首作品（预置 6 城上限各 150 首，24 座重点城市各 50 首，其余城市最多 20 首），繁转简仅用于比对，保留原文 |
-| `server/data/stats_baseline.json` | `build_stats_baseline.ts` | 六座预置城市 GDP / 常住人口官方统计序列（2021–2025，西安 2021 人口缺失保持 `null`）与 Open-Meteo ERA5 1991–2020 月均温、月降水，供「数说城市」使用 |
-| `server/data/fact_snapshot/{cityId}.json` | `build_fact_snapshot.ts` / 运行期按需 | 六座预置城市 + 运行期按需生成的其他城市 Wikidata 景点/文物/人物事实快照 |
-| `server/data/recon/{cityId}.json` | 运行期按需 | 非预置城市侦察结果：维基百科摘要、Wikidata 人口、Tavily 检索、官方公报统计与气候；30 天缓存 |
-| `server/data/search_cache/` | 运行期按需 | Tavily 查询结果缓存（7 天），避免同一城市重复消耗检索额度 |
-| `server/data/relics_registry.json` | `build_relics_registry.ts` | 由快照汇总的 671 件文物名录（国保 / 禁止出境展览文物） |
-| `server/data/place_gazetteer.json` | `build_place_gazetteer.ts` | 862 条 WGS84 地名坐标（城市中心 + 景点 + 文物） |
-| `server/data/dynasties.json` | 人工整理 | 固定朝代年表（起止年份），待人工复核 |
-| `server/data/relic_images.json` | `build_relic_images.ts` | 六城前 6 件文物的本地图片路径、Commons 署名、许可证与来源页 |
-| `client/public/images/relics/` | `build_relic_images.ts` | 已下载到本地的文物缩略图（640px），运行期不请求外部图片 |
-| `client/public/geo/*.json` | `build_geo_boundaries.ts` | 六城行政区轮廓；`_manifest.json` 记录来源与合规待确认提示 |
-
-产物中的每条实体均带 `sourceRef`/`sourceRefs`；`server/data/*.db*` 为运行时数据库，不提交。
-
-**预置档案覆盖 8/8 卷**：城市名片、前世今生、景点地图、文物重器、历史名人、诗句中的 Ta、城市味道、数说城市均已落库（6 城 × 8 卷 = 48 卷）。
-「数说城市」的 GDP 与常住人口来自各市统计公报或政府数据页（2021–2025 序列），气候为 Open-Meteo ERA5 1991–2020 月值聚合；
-个别检索不到的年份保持 `null`，前端按文字列表或「待考」呈现，绝不以估算值填充。
-实时天气另由城市页身份卷的天气条（Open-Meteo current）提供。
-详见 [FEATURES_AND_VERIFICATION.md](./FEATURES_AND_VERIFICATION.md) 的已知问题。
-
-## 无 Key 开发模式
+### 无 Key 开发模式
 
 项目在没有 LLM Key、没有天地图 Key 时也能完整开发与自测：
 
 - 未配置 `LLM_API_KEY`：服务端启用**模拟 LLM**，仍然走完整的流式、单飞、冷却、限流与降级路径，输出带 `mock` 标记；预置档案只由 `npm run data:presets` 构建，模拟结果不会覆盖预置档案。
 - 未配置 `TIANDITU_KEY`：前端使用**无底图模式**，只绘制行政区轮廓与宣纸底色。
 - `ENABLE_IMAGES=false`（默认）：档案不带图片；运行 `npm run data:images` 后设为 `true`，会使用已下载到本地的 Commons 图片，运行期仍不请求外部图片。
-
-配置真实 Key：复制 `.env.example` 为 `.env`，填写后重启 `npm run dev` 即可切换，无需改代码。
 
 ### 切换到真实模式（三步）
 
@@ -251,7 +205,7 @@ Key 只保存在本地 SQLite，读取接口只返回 `sk-…abcd` 掩码。
 > 诗词库已覆盖 148 座城市（2,702 首）；其余城市该卷显示「此卷暂缺」。
 > 统计值只有在官方公报中逐字命中且确认是本城（非区县）公报时才写入，否则保持 `null` 并显示「待考」。
 
-## 环境变量
+### 环境变量
 
 | 变量 | 说明 | 默认 |
 |---|---|---|
@@ -274,6 +228,85 @@ Key 只保存在本地 SQLite，读取接口只返回 `sk-…abcd` 掩码。
 | `MOCK_LLM` | 强制使用模拟 LLM（即使配置了真实 Key） | 空（未配置 Key 时自动开启） |
 | `MOCK_LLM_DELAY_MS` | 模拟 LLM 单模块延迟，用于观察流式时序 | `150` |
 
+API 密钥仅保存在服务端；大模型 Key 与天地图服务端 Key 永不下发浏览器，后台读取接口只返回掩码。
+
+## 数据管线（构建期，可重复执行）
+
+```bash
+npm run data:dictionary   # Wikidata 行政区划代码 + 坐标 → city_dictionary.json
+npm run data:poetry       # chinese-poetry → 本地诗词库（逐字校验源）
+npm run data:snapshot     # Wikidata → 城市事实快照
+npm run data:stats        # 官方统计公报 + Open-Meteo → 数说城市基线
+npm run data:gazetteer    # 地名坐标库
+npm run data:geo          # DataV.GeoAtlas → 六城行政区轮廓（含来源清单；--source=tianditu 可选备选源）
+npm run data:images       # Wikidata P18 + Wikimedia Commons → 本地文物图片与许可
+npm run data:presets      # 六座预置城市档案（本地事实模块 + 人工整理稿）
+npm run seed              # 重新导入词典（幂等）
+npm run verify            # 校验预置档案：Schema / 来源 / 坐标 / 年份 / 诗词逐字
+npm run data:refresh      # 依次刷新全部外部数据并重建预置档案
+
+# 维护：LLM 连通性测试、未发布档案清理、只读校验与抽查材料导出
+npm run test:llm                    # 读取 .env 后向配置的 LLM 发起最小请求
+npm run archives:clean-unpublished  # dry-run 列出未发布档案；--apply 才真正删除
+npm run archives:audit              # 非预置档案只读校验（失败模块及原因）
+npm run fact-check                  # 导出逐条事实抽查材料（只读，docs/fact-check-*.md）
+```
+
+构建期脚本的网络失败会以非 0 退出并保留旧产物，不会伪造快照；失败原因写入产物 `failures` 字段，并同步记录到验收文档。
+
+### 免 Key 数据源的本地缓存
+
+- **Wikidata**：SPARQL 结果按查询哈希缓存在 `scripts/.cache/wikidata/`，断网时可直接复用；`REFRESH_WIKIDATA=1` 强制联网刷新。
+- **chinese-poetry**：源 JSON 缓存在 `scripts/.cache/chinese-poetry/`（约 28 MB），并用 `.listings/` 记录目录清单；断网时自动回退本地缓存重建。可选 `GITHUB_TOKEN` 提高 GitHub API 限额，`REFRESH_POETRY=1` 强制更新清单。
+- **Wikimedia Commons**：图片与许可元数据由 `npm run data:images` 抓取并落到 `client/public/images/relics/` 与 `server/data/relic_images.json`；默认复用已下载文件，`REFRESH_IMAGES=1` 强制刷新。
+- **行政区轮廓**：`npm run data:geo` 会缓存到 `scripts/.cache/geo/` 并生成 `client/public/geo/_manifest.json`；现有来源为 DataV.GeoAtlas，**授权与审图号未完成人工确认**，公开上线前必须合规审校或替换为天地图/自然资源部标准地图来源。
+- **国家文物局名录**：没有公开 API，无法可靠自动抓取，仍需人工下载官方名单后离线导入。
+
+### 数据产物（构建期生成，已提交）
+
+| 产物 | 生成脚本 | 内容与用途 |
+|---|---|---|
+| `server/data/city_dictionary.json` | `build_city_dictionary.ts` | 342 座城市（334 地级 + 4 直辖市 + 4 文旅县级市白名单）、1480 条别名、WGS84 中心点、Wikidata QID |
+| `server/data/verified_poetry_corpus.json` | `build_poetry_corpus.ts` | chinese-poetry（MIT）全唐诗/宋词/元曲中与 148 座城市相关的 2,702 首作品（预置 6 城上限各 150 首，24 座重点城市各 50 首，其余城市最多 20 首），繁转简仅用于比对，保留原文 |
+| `server/data/stats_baseline.json` | `build_stats_baseline.ts` | 六座预置城市 GDP / 常住人口官方统计序列（2021–2025，西安 2021 人口缺失保持 `null`）与 Open-Meteo ERA5 1991–2020 月均温、月降水，供「数说城市」使用 |
+| `server/data/fact_snapshot/{cityId}.json` | `build_fact_snapshot.ts` / 运行期按需 | 六座预置城市 + 运行期按需生成的其他城市 Wikidata 景点/文物/人物事实快照 |
+| `server/data/recon/{cityId}.json` | 运行期按需 | 非预置城市侦察结果：维基百科摘要、Wikidata 人口、Tavily 检索、官方公报统计与气候；30 天缓存 |
+| `server/data/search_cache/` | 运行期按需 | Tavily 查询结果缓存（7 天），避免同一城市重复消耗检索额度 |
+| `server/data/relics_registry.json` | `build_relics_registry.ts` | 由快照汇总的 671 件文物名录（国保 / 禁止出境展览文物） |
+| `server/data/place_gazetteer.json` | `build_place_gazetteer.ts` | 862 条 WGS84 地名坐标（城市中心 + 景点 + 文物） |
+| `server/data/dynasties.json` | 人工整理 | 固定朝代年表（起止年份），待人工复核 |
+| `server/data/relic_images.json` | `build_relic_images.ts` | 六城前 6 件文物的本地图片路径、Commons 署名、许可证与来源页 |
+| `client/public/images/relics/` | `build_relic_images.ts` | 已下载到本地的文物缩略图（640px），运行期不请求外部图片 |
+| `client/public/geo/*.json` | `build_geo_boundaries.ts` | 六城行政区轮廓；`_manifest.json` 记录来源与合规待确认提示 |
+
+产物中的每条实体均带 `sourceRef`/`sourceRefs`；`server/data/*.db*` 为运行时数据库，不提交。
+
+**预置档案覆盖 8/8 卷**：六城 × 八卷 = 48 卷全部落库。
+「数说城市」的 GDP 与常住人口来自各市统计公报或政府数据页（2021–2025 序列），气候为 Open-Meteo ERA5 1991–2020 月值聚合；
+个别检索不到的年份保持 `null`，前端按文字列表或「待考」呈现，绝不以估算值填充。
+实时天气另由城市页身份卷的天气条（Open-Meteo current）提供。
+
+## 质量保障
+
+```bash
+npm run check             # typecheck + test + build（不依赖真实密钥与外网缓存）
+npm run check:full        # setup + verify + check（初始化后的完整校验）
+npm run e2e               # 可执行浏览器回归（CDP 零依赖，自起服务端与 Chrome）
+npm test                  # 260 项（29 个文件）
+npm run typecheck         # server + client 的 tsc --noEmit
+```
+
+测试覆盖：schema 与共享校验、规范化、任务编排（单飞/并入/增量/冷却/预算/硬截止）、SSE 路由与只读恢复契约、`attempt_id` 迁移、主题色对比度、真实 LLM 响应解析、按需事实快照、城市侦察、双城对比、一日路线、小测、天气、海报、诗词语料归属、流式状态机与断线恢复集成。
+
+### 实现要点
+
+- **单飞与并入**：同城生成由 `uq_running_job` 唯一部分索引保证单飞；后到客户端并入既有任务，其 `attemptId` 绑定到原任务（内存集合 + `generation_job_attempts` 绑定表），未收到 `meta` 就断线后也能恢复到同一 `jobId`；任务结束与服务重启后定位稳定。
+- **预算**：每日 LLM 调用受 `LLM_DAILY_CALL_LIMIT` 约束，真正发出请求前原子检查与记账，按实际请求时间记入 `llm_call_log`，任务跨午夜运行不串日；重试同样计数，Mock/本地模块不计费。
+- **硬截止**：单次生成受 180s 总截止约束（PRD v1.2），上游挂起或忽略取消时编排层按时收尾并发送唯一 `done`，迟到结果不落库。
+- **旧档案保护**：重新生成失败时已有合格内容保持可用（失败只记入 `verification.lastAttempt`），档案不下架、不进入冷却；增量重生成复用合格模块，单卷重试重新生成失败模块。
+- **只读恢复**：`POST /api/cities/:id/generate/resume` 携带 `meta.jobId` 与客户端 `attemptId`——任务运行中则并入并在同一连接随收尾收到 `done`；已结束则只读回放 `meta → theme → module(fromCache) → module_error → done`；不存在/过期/进程重启/不属于此城则返回明确 409 与「重新展卷」入口。恢复不创建 `generation_jobs`、不调用生成器、不写 `llm_call_log`、不修改档案 `dataVersion/generatedAt`，也不经过刷新冷却或预算入口；未发布档案仍按 GET 口径拒绝内容。
+- **流式异常恢复**：首次连接拒绝、响应体读取中断、缺少 `done` 的 EOF 走同一套有界重连（主动取消静默）；「继续展卷」入口只走恢复接口，不重复计费。
+
 ## 接口
 
 | 方法 | 路径 | 说明 |
@@ -283,6 +316,7 @@ Key 只保存在本地 SQLite，读取接口只返回 `sk-…abcd` 掩码。
 | GET | `/api/cities/hot` | 热门城市（预置城市优先） |
 | GET | `/api/cities/:cityId` | 读取缓存档案 |
 | POST | `/api/cities/:cityId/generate` | SSE 流式生成或复用档案 |
+| POST | `/api/cities/:cityId/generate/resume` | 只读断线恢复（并入运行中任务或回放终态） |
 | GET | `/api/compare?cities=A,B` | 双城对比（GDP/人口/气候/景点/文物/人物/诗词/主题色） |
 | GET | `/api/cities/:cityId/daytrip` | 「如果只有一天」示意路线（上午/下午/晚上三槽）；未成卷时回退 Wikidata 快照，不要求档案 |
 | GET | `/api/cities/:cityId/quiz` | 随堂小测题目（≤5 题，本地判分）；需要档案已生成 |
@@ -292,7 +326,7 @@ Key 只保存在本地 SQLite，读取接口只返回 `sk-…abcd` 掩码。
 
 SSE 事件：`meta` → `theme` → 8 个 `module`（可穿插 `module_error`）→ `done`；`ping` 每 15s 保活。
 
-### 阶段 3 自测（流式 / 单飞 / 冷却 / 限流）
+### 接口自测（curl）
 
 以下命令在 PowerShell 中执行（`curl.exe -N` 关闭缓冲才能看到逐条事件）。无 Key 时自动使用模拟 LLM，延迟默认 150ms/模块。
 
@@ -315,19 +349,14 @@ curl.exe http://localhost:8787/api/cities/CN-350500
 # 5) 限流：同一 IP 一小时内新建第 11 座城市，应返回 429 RATE_LIMITED（retryAfterSec=3600）
 ```
 
-单元测试与类型检查：
-
-```bash
-npm test            # 253 项（29 个文件）：schema/校验/规范化/编排/SSE/主题色/真实 LLM 解析/按需快照/城市侦察/对比/路线/测验/天气/海报/诗词语料归属回归/流式状态机/预算与截止/档案仓储/只读恢复契约/attempt_id 迁移/断线恢复集成测试
-npm run typecheck   # server + client 的 tsc --noEmit
-npm run test:llm    # LLM 提供方连通性测试（读 .env，可用参数覆盖）
-```
-
-实现要点：同一城市生成请求由数据库唯一部分索引 `uq_running_job` 保证单飞；失败任务冷却 10 分钟、无档案城市冷却 5 分钟；每小时最多生成 10 座新城市；每日 LLM 调用受 `LLM_DAILY_CALL_LIMIT` 预算约束（真正发出请求前原子检查与记账，按实际请求时间记入 `llm_call_log`，任务跨午夜运行不串日；重试同样计数，Mock/本地模块不计费）；单次生成受 180s 总截止约束（PRD v1.2），上游挂起或忽略取消时编排层也会按时收尾并发送唯一 `done`，迟到结果不落库；断线重连并入已有任务时不受刷新冷却与预算入口影响；已 `ok`/`degraded` 且最近一次尝试未失败的模块在增量重生成时复用，不重复调用 LLM；重新生成失败时已有合格内容保持可用（失败只记入 `verification.lastAttempt`），档案不下架。流式异常恢复（2026-11-14 四轮）：首次连接拒绝、响应体读取中断、缺少 `done` 的 EOF 走同一套有界重连（主动取消静默）。恢复**不再复用普通生成入口**，而是调用独立的只读契约 `POST /api/cities/:cityId/generate/resume`（携带 `meta.jobId` 与客户端 `attemptId`）：任务仍在运行则并入并在同一连接随收尾收到 `done`；任务已结束则只读回放 `meta → theme → module(fromCache) → module_error → done`；任务不存在/过期/进程重启/不属于此城则返回明确 409 与「重新展卷」入口。恢复不创建 `generation_jobs`、不调用生成器、不写 `llm_call_log`、不修改档案 `dataVersion/generatedAt`，也不经过刷新冷却或预算入口（预算耗尽仍可读已完成结果）；未发布档案仍按 GET 口径拒绝内容。用户显式「重新生成」与单卷「重试此卷」仍走正常生成入口并正常计费。旧内容与最新刷新失败同时可见（`meta.moduleAttempts` 契约扩展 + `fromCache` 回放不清失败记录 + 单卷重试）。
-
 ## 数据真实性
 
 - 景点、文物、人物、诗词、坐标、统计数值全部来自构建期脚本产物、本地名录或可核验的公开来源，每项都带 `sourceRefs` 与 `verification`。
 - 无法取得或无法核验的内容统一填「待考」，`verification` 为 `pending_human_review`，不会用看似合理的内容充数。
 - 预置城市的叙事文字为人工/AI 整理，`verification` 不冒充人工复核。人工抽查由用户按 PRD 7.2 完成。
 - 文件中的 `preset_manual` / `curated` 字段表示人工整理内容，仍需人工复核。
+
+## 文档
+
+- [FEATURES_AND_VERIFICATION.md](./FEATURES_AND_VERIFICATION.md)：功能完成度、AC-01～AC-19 自测结果、已知限制与人工复核清单
+- [docs/PRD.md](./docs/PRD.md)：产品需求文档 v1.2
