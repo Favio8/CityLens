@@ -579,12 +579,39 @@ export const HotCitiesResponseSchema = z.object({
   cities: z.array(HotCitySchema),
 });
 
+/** 客户端尝试标识：一次用户发起的生成/刷新/单卷重试一个，用于断线后精确找回原任务。 */
+export const AttemptIdSchema = z.string().min(1).max(64);
+
 export const GenerateRequestSchema = z.object({
   force: z.boolean().optional(),
   // 模块名去重由 JobManager 统一处理；这里限制长度，避免单请求无限放大生成次数。
   modules: z.array(ModuleNameSchema).min(1).max(MODULE_NAMES.length).optional(),
+  /** 本次用户发起的生成尝试；首次请求已到服务端但 meta 丢失时，恢复仍能精确定位原任务。 */
+  attemptId: AttemptIdSchema.optional(),
 });
 export type GenerateRequest = z.infer<typeof GenerateRequestSchema>;
+
+/**
+ * 恢复契约（与「开始生成」「单卷重试」严格分开）：
+ * 只并入仍在运行的原任务，或回放已结束原任务的终态；绝不创建新生成任务。
+ * - jobId：来自 SSE meta，最精确；
+ * - attemptId：客户端发起时生成，meta 尚未收到时仍可定位原任务；
+ * - 两者都缺省时按城市当前运行任务/最近任务裁决（兼容旧客户端与多端同看）。
+ */
+export const ResumeRequestSchema = z.object({
+  jobId: z.string().min(1).optional(),
+  attemptId: AttemptIdSchema.optional(),
+});
+export type ResumeRequest = z.infer<typeof ResumeRequestSchema>;
+
+/** 恢复请求的明确终态错误码：客户端据此展示「重新展卷」入口，而不是自动生成。 */
+export const RESUME_TERMINAL_CODES = [
+  'RESUME_UNAVAILABLE',
+  'JOB_NOT_RESUMABLE',
+  'JOB_MISMATCH',
+  'JOB_UNPUBLISHED',
+] as const;
+export type ResumeTerminalCode = (typeof RESUME_TERMINAL_CODES)[number];
 
 export const HealthResponseSchema = z.object({
   ok: z.boolean(),
@@ -757,6 +784,8 @@ export const SseMetaEventSchema = z.object({
   center: CoordSchema,
   isPreset: z.boolean(),
   jobId: z.string(),
+  /** 本次生成尝试标识；旧客户端可忽略。断线恢复时用于在未收到 meta 前定位原任务。 */
+  attemptId: z.string().optional(),
 });
 export type SseMetaEvent = z.infer<typeof SseMetaEventSchema>;
 

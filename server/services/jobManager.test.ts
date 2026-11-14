@@ -1172,3 +1172,263 @@ describe('P1：单次生成总截止（180s）', () => {
     expect(counting.calls).toEqual([]);
   });
 });
+
+/* -------------------------------------------------------------------------- */
+/* 恢复契约：只读回放 / 并入原任务，绝不创建第二个生成任务                     */
+/* -------------------------------------------------------------------------- */
+
+/** 最后一个模块挂起：用于制造「原任务仍在运行」窗口。 */
+class LastModuleGate implements ModuleGenerator {
+  readonly name = 'last-module-gate';
+  readonly promptVersion = 'gate-v1';
+  private readonly inner = new FixedGenerator();
+  private release: (() => void) | null = null;
+
+  releaseLast(): void {
+    this.release?.();
+    this.release = null;
+  }
+
+  async generate(input: GenerateInput): Promise<GeneratedModule> {
+    if (input.module === 'dataPulse') {
+      await new Promise<void>((resolve) => {
+        this.release = resolve;
+      });
+    }
+    return this.inner.generate(input);
+  }
+}
+
+describe('恢复契约：只读回放与并入运行中任务', () => {
+  function jobCount(jobRepo: ReturnType<typeof setup>['jobRepo']): number {
+    return jobRepo.listRecent(100).length;
+  }
+
+  it('已结束任务：回放终态与可用档案，不新增任务/生成器调用/档案写入', async () => {
+    const context = setup();
+    const started = context.manager.start({
+      city: context.city,
+      aliases: ['长安'],
+      requesterHash: 'hash',
+      force: false,
+      modules: [...MODULE_NAMES],
+      attemptId: 'attempt-finished',
+    });
+    const done = await waitDone(started.runtime, context.manager);
+    expect(done.status).toBe('partial');
+    expect(context.counting.count).toBe(MODULE_NAMES.length);
+
+    const archiveBefore = context.archiveRepo.getArchive(CITY_ID)!;
+    const modulesBefore = JSON.stringify(context.archiveRepo.listModules(CITY_ID));
+    const jobsBefore = jobCount(context.jobRepo);
+
+    const outcome = context.manager.resume({
+      city: context.city,
+      aliases: ['长安'],
+      jobId: started.runtime.jobId,
+    });
+    expect(outcome.kind).toBe('terminal');
+    if (outcome.kind !== 'terminal') throw new Error('expected terminal');
+    expect(outcome.status).toBe('partial');
+
+    const events = outcome.events;
+    expect(events[0]!.event).toBe('notice');
+    expect((events[0]!.data as { code: string }).code).toBe('RESUMED_TERMINAL');
+    const meta = events.find((event) => event.event === 'meta')!.data as {
+      jobId: string;
+      attemptId?: string;
+    };
+    expect(meta.jobId).toBe(started.runtime.jobId);
+    expect(meta.attemptId).toBe('attempt-finished');
+
+    const moduleEvents = events.filter((event) => event.event === 'module');
+    expect(moduleEvents).toHaveLength(5);
+    expect(
+      moduleEvents.every((event) => (event.data as { fromCache?: boolean }).fromCache === true),
+    ).toBe(true);
+    const errors = events
+      .filter((event) => event.event === 'module_error')
+      .map((event) => (event.data as { name: ModuleName }).name);
+    expect(errors).toEqual(['chronicle', 'localSoul', 'dataPulse']);
+    const doneEvent = events.at(-1)!;
+    expect(doneEvent.event).toBe('done');
+    expect((doneEvent.data as { failedModules: ModuleName[] }).failedModules).toEqual(errors);
+
+    // 恢复没有生成、没有新增任务、没有写档案。
+    expect(context.counting.count).toBe(MODULE_NAMES.length);
+    expect(jobCount(context.jobRepo)).toBe(jobsBefore);
+    const archiveAfter = context.archiveRepo.getArchive(CITY_ID)!;
+    expect(archiveAfter.dataVersion).toBe(archiveBefore.dataVersion);
+    expect(archiveAfter.generatedAt).toBe(archiveBefore.generatedAt);
+    expect(JSON.stringify(context.archiveRepo.listModules(CITY_ID))).toBe(modulesBefore);
+    expect(context.jobRepo.countLlmCallsSince('1970-01-01T00:00:00.000Z')).toBe(0);
+  });
+
+  it('运行中任务：按 attemptId 并入同一 runtime，并在收尾收到 done', async () => {
+    const gated = new LastModuleGate();
+    const context = setup({ generator: gated });
+    const started = context.manager.start({
+      city: context.city,
+      aliases: [],
+      requesterHash: 'hash',
+      force: false,
+      modules: [...MODULE_NAMES],
+      attemptId: 'attempt-live',
+    });
+    expect(started.attached).toBe(false);
+    await vi.waitFor(() => expect(context.counting.count).toBe(MODULE_NAMES.length));
+
+    const outcome = context.manager.resume({
+      city: context.city,
+      aliases: [],
+      attemptId: 'attempt-live',
+    });
+    expect(outcome.kind).toBe('attached');
+    if (outcome.kind !== 'attached') throw new Error('expected attached');
+    expect(outcome.runtime.jobId).toBe(started.runtime.jobId);
+
+    const donePromise = waitDone(started.runtime, context.manager);
+    gated.releaseLast();
+    const done = await donePromise;
+    expect(done.status).toBe('complete');
+    expect(context.counting.count).toBe(MODULE_NAMES.length);
+    expect(jobCount(context.jobRepo)).toBe(1);
+  });
+
+  it('保留旧内容但最近一次尝试失败：终态同时给出旧内容与失败提示，不重试失败模块', async () => {
+    const seed = setup({ generator: new FixedGenerator() });
+    await waitDone(
+      seed.manager.start({
+        city: seed.city,
+        aliases: [],
+        requesterHash: 'hash',
+        force: false,
+        modules: [...MODULE_NAMES],
+      }).runtime,
+      seed.manager,
+    );
+    const identityBefore = seed.archiveRepo
+      .listModules(CITY_ID)
+      .find((module) => module.name === 'identity');
+
+    const refreshManager = new JobManager({
+      archiveRepo: seed.archiveRepo,
+      jobRepo: seed.jobRepo,
+      cityRepo: seed.cityRepo,
+      generator: new SelectiveFailGenerator(['identity']),
+      budget: { consume: () => true },
+    });
+    const refreshed = refreshManager.start({
+      city: seed.city,
+      aliases: [],
+      requesterHash: 'hash',
+      force: true,
+      modules: [...MODULE_NAMES],
+      attemptId: 'attempt-retained',
+    });
+    const refreshDone = await waitDone(refreshed.runtime, refreshManager);
+    expect(refreshDone.status).toBe('complete');
+    expect(refreshDone.failedModules).toEqual(['identity']);
+    const archiveBefore = seed.archiveRepo.getArchive(CITY_ID)!;
+
+    // 换一个没有任何 runtime 的 manager，模拟「客户端丢失 done 后重新恢复」。
+    const counting = new CountingGenerator(new FixedGenerator());
+    const resumeManager = new JobManager({
+      archiveRepo: seed.archiveRepo,
+      jobRepo: seed.jobRepo,
+      cityRepo: seed.cityRepo,
+      generator: counting,
+      budget: { consume: () => true },
+    });
+    const outcome = resumeManager.resume({
+      city: seed.city,
+      aliases: [],
+      attemptId: 'attempt-retained',
+    });
+    expect(outcome.kind).toBe('terminal');
+    if (outcome.kind !== 'terminal') throw new Error('expected terminal');
+
+    const identityModule = outcome.events.find(
+      (event) => event.event === 'module' && (event.data as { name: string }).name === 'identity',
+    );
+    expect(identityModule).toBeDefined();
+    expect((identityModule!.data as { data: unknown }).data).toEqual(identityBefore?.data);
+    const identityError = outcome.events.find(
+      (event) => event.event === 'module_error' && (event.data as { name: string }).name === 'identity',
+    );
+    expect(identityError).toBeDefined();
+    expect((identityError!.data as { code: string }).code).toBe('LLM_TIMEOUT');
+
+    expect(counting.count).toBe(0);
+    expect(jobCount(seed.jobRepo)).toBe(2);
+    const archiveAfter = seed.archiveRepo.getArchive(CITY_ID)!;
+    expect(archiveAfter.dataVersion).toBe(archiveBefore.dataVersion);
+    expect(archiveAfter.generatedAt).toBe(archiveBefore.generatedAt);
+  });
+
+  it('无 jobId/attemptId：只认恢复窗口内的同城最近任务，超出窗口返回 RESUME_UNAVAILABLE', async () => {
+    const clock = { now: new Date('2026-11-14T10:00:00.000Z') };
+    const context = setup({ generator: new FixedGenerator(), now: () => clock.now });
+    const started = context.manager.start({
+      city: context.city,
+      aliases: [],
+      requesterHash: 'hash',
+      force: false,
+      modules: [...MODULE_NAMES],
+    });
+    await waitDone(started.runtime, context.manager);
+
+    const immediate = context.manager.resume({ city: context.city, aliases: [] });
+    expect(immediate.kind).toBe('terminal');
+
+    clock.now = new Date(clock.now.getTime() + 31 * 60 * 1000);
+    const expired = context.manager.resume({ city: context.city, aliases: [] });
+    expect(expired).toMatchObject({ kind: 'unavailable', code: 'RESUME_UNAVAILABLE' });
+  });
+
+  it('未知任务、跨城任务、重启遗留 running 均给出明确不可恢复结果', async () => {
+    const context = setup();
+    const unknown = context.manager.resume({
+      city: context.city,
+      aliases: [],
+      jobId: 'missing-job',
+    });
+    expect(unknown).toMatchObject({ kind: 'unavailable', code: 'RESUME_UNAVAILABLE' });
+
+    const otherJob = context.jobRepo.create({
+      jobId: 'other-city-job',
+      cityId: OTHER_CITY_ID,
+      force: false,
+      modules: ['identity'],
+      requesterHash: 'hash-other',
+      startedAt: new Date().toISOString(),
+    });
+    expect(otherJob).not.toBeNull();
+    const mismatch = context.manager.resume({
+      city: context.city,
+      aliases: [],
+      jobId: 'other-city-job',
+    });
+    expect(mismatch).toMatchObject({ kind: 'unavailable', code: 'JOB_MISMATCH' });
+
+    // 模拟进程重启：DB 仍有 running 任务，但内存没有对应 runtime。
+    const leftover = context.jobRepo.create({
+      jobId: 'restart-leftover',
+      cityId: CITY_ID,
+      force: false,
+      modules: ['identity'],
+      requesterHash: 'hash-old',
+      startedAt: new Date().toISOString(),
+      attemptId: 'attempt-leftover',
+    });
+    expect(leftover).not.toBeNull();
+    const notResumable = context.manager.resume({
+      city: context.city,
+      aliases: [],
+      attemptId: 'attempt-leftover',
+    });
+    expect(notResumable).toMatchObject({ kind: 'unavailable', code: 'JOB_NOT_RESUMABLE' });
+    // 恢复失败不得顺带创建任务（仅上面手工写入的 2 条）。
+    expect(jobCount(context.jobRepo)).toBe(2);
+  });
+});

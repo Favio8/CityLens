@@ -20,9 +20,12 @@
  */
 import { spawn, spawnSync, execFileSync } from 'node:child_process';
 import { mkdirSync, mkdtempSync, writeFileSync, rmSync, existsSync } from 'node:fs';
+import { createRequire } from 'node:module';
 import { resolve, dirname } from 'node:path';
 import { tmpdir } from 'node:os';
 import { fileURLToPath } from 'node:url';
+
+const require = createRequire(import.meta.url);
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const TSX = resolve(ROOT, 'node_modules/tsx/dist/cli.mjs');
@@ -34,6 +37,8 @@ const KEEP = process.env.E2E_KEEP === '1';
 const TEST_CITY = process.env.E2E_CITY ?? 'CN-321100';
 /** 切城竞态的旧城市：非预置、有预置档案（E2E_CITY2），避免预置刷新保护干扰。 */
 const OLD_CITY = process.env.E2E_CITY2 ?? 'CN-320100';
+/** 断线恢复专用城市：非预置、有预置档案，且不与写型场景共用，避免刷新冷却。 */
+const RECOVERY_CITY = process.env.E2E_CITY3 ?? 'CN-320400';
 const NEW_CITY = 'CN-330100'; // 杭州（预置，缓存命中）
 const PRESET_CITY = 'CN-610100'; // 西安（预置，缓存命中）
 
@@ -193,6 +198,33 @@ let server = null;
 let chrome = null;
 let cdp = null;
 let tmp = null;
+/** 服务端 stdout/stderr 累积：用生成日志条数证明恢复没有再次调用生成器。 */
+let serverLog = '';
+
+/** 读取 e2e 自己的临时数据库（只读优先；绝不触碰真实数据库）。 */
+function readIsolatedDb(fn) {
+  if (!tmp) throw new Error('隔离数据库尚未创建');
+  const path = resolve(tmp, 'citylens.db');
+  const Database = require('better-sqlite3');
+  let db;
+  try {
+    db = new Database(path, { readonly: true, fileMustExist: true });
+  } catch {
+    // WAL 只读打开失败时退回普通打开（仍是 e2e 临时库）。
+    db = new Database(path);
+  }
+  try {
+    return fn(db);
+  } finally {
+    db.close();
+  }
+}
+
+/** 生成器实际被调用的模块次数（服务端 [gen] ... module= 日志）。 */
+function countGenModuleLines(cityId) {
+  const marker = `[gen] city=${cityId} module=`;
+  return serverLog.split(marker).length - 1;
+}
 
 async function waitForHealth(timeoutMs = 30_000) {
   const deadline = Date.now() + timeoutMs;
@@ -249,7 +281,7 @@ async function setupEnvironment() {
   });
 
   // 测试城市的侦察 stub 写在临时运行期目录内，绝不触碰项目目录。
-  for (const cityId of [TEST_CITY, OLD_CITY]) {
+  for (const cityId of [TEST_CITY, OLD_CITY, RECOVERY_CITY]) {
     const reconPath = resolve(runtimeDir, 'recon', `${cityId}.json`);
     mkdirSync(dirname(reconPath), { recursive: true });
     writeFileSync(
@@ -273,7 +305,9 @@ async function setupEnvironment() {
       'utf8',
     );
   }
-  console.log(`[e2e] 已写入临时侦察 stub ${TEST_CITY} / ${OLD_CITY}（位于临时运行期目录）`);
+  console.log(
+    `[e2e] 已写入临时侦察 stub ${TEST_CITY} / ${OLD_CITY} / ${RECOVERY_CITY}（位于临时运行期目录）`,
+  );
 
   console.log(`[e2e] 启动生产服务端 :${PORT} …`);
   server = spawn(process.execPath, [TSX, 'server/index.ts'], {
@@ -285,8 +319,14 @@ async function setupEnvironment() {
     },
     stdio: ['ignore', 'pipe', 'pipe'],
   });
-  server.stdout.on('data', (chunk) => process.stdout.write(`[server] ${chunk}`));
-  server.stderr.on('data', (chunk) => process.stderr.write(`[server] ${chunk}`));
+  server.stdout.on('data', (chunk) => {
+    serverLog += chunk.toString();
+    process.stdout.write(`[server] ${chunk}`);
+  });
+  server.stderr.on('data', (chunk) => {
+    serverLog += chunk.toString();
+    process.stderr.write(`[server] ${chunk}`);
+  });
   await waitForHealth();
   console.log(`[e2e] 服务端就绪 ${BASE}（临时库 + 隔离运行期缓存）`);
 }
@@ -719,6 +759,204 @@ async function scenarioPoster() {
   await clickSelector('button[aria-label="关闭分享"]').catch(() => undefined);
 }
 
+/**
+ * 场景 7：部分失败任务丢失 done 后的只读恢复。
+ * 在浏览器内截断 generate 流的 done 事件，让客户端自动走 /generate/resume：
+ * 断言不新增 generation_jobs、不再次调用生成器、不写 LLM 账本、不改档案版本与生成时间；
+ * 失败提示与旧内容同时可见，且不会自动重试失败模块。
+ */
+async function scenarioRecovery() {
+  console.log('[e2e] 场景 7：丢失 done 后的只读恢复（部分失败）');
+  if (EXTERNAL_BASE) {
+    skip('断线恢复（写型场景）', 'E2E_BASE_URL 指向外部服务，禁止写操作');
+    return;
+  }
+  await goto(`${BASE}/city/${RECOVERY_CITY}`);
+  await waitFor(
+    async () => cdp.evaluate(`document.body.innerText.includes('已为你复用')`),
+    20_000,
+    250,
+    '恢复城市就绪',
+  );
+
+  const seeded = await (await fetch(`${BASE}/api/cities/${RECOVERY_CITY}`)).json();
+  const identityBefore = seeded.identity;
+  const jobsBefore = readIsolatedDb(
+    (db) =>
+      db
+        .prepare('SELECT COUNT(*) AS n FROM generation_jobs WHERE city_id = ?')
+        .get(RECOVERY_CITY).n,
+  );
+  const llmBefore = readIsolatedDb(
+    (db) =>
+      db.prepare('SELECT COUNT(*) AS n FROM llm_call_log WHERE city_id = ?').get(RECOVERY_CITY).n,
+  );
+  const genLinesBefore = countGenModuleLines(RECOVERY_CITY);
+
+  // 注入截断：generate 流一旦出现 done，就只转发它之前的内容并报错，制造「丢失 done」；
+  // 恢复请求单独计数，用于证明客户端改走了只读恢复接口。
+  await cdp.evaluate(
+    `(() => {
+       window.__e2eGenCalls = 0;
+       window.__e2eResumeCalls = 0;
+       window.__e2eTruncated = false;
+       const original = window.fetch.bind(window);
+       window.fetch = async (input, init) => {
+         const url = typeof input === 'string' ? input : (input && input.url) || '';
+         const method = (init && init.method) || 'GET';
+         if (url.endsWith('/generate') && method === 'POST') {
+           window.__e2eGenCalls += 1;
+           const response = await original(input, init);
+           if (!response.body) return response;
+           const reader = response.body.getReader();
+           const decoder = new TextDecoder();
+           const encoder = new TextEncoder();
+           const body = new ReadableStream({
+             async start(controller) {
+               let all = '';
+               try {
+                 for (;;) {
+                   const { done, value } = await reader.read();
+                   if (done) break;
+                   all += decoder.decode(value, { stream: true });
+                   const cut = all.indexOf('event: done');
+                   if (cut >= 0) {
+                     if (cut > 0) controller.enqueue(encoder.encode(all.slice(0, cut)));
+                     window.__e2eTruncated = true;
+                     try { await reader.cancel(); } catch (error) { void error; }
+                     controller.error(new TypeError('e2e simulated lost done'));
+                     return;
+                   }
+                 }
+                 if (all) controller.enqueue(encoder.encode(all));
+                 controller.close();
+               } catch (error) {
+                 controller.error(error);
+               }
+             },
+           });
+           return new Response(body, {
+             status: response.status,
+             statusText: response.statusText,
+             headers: response.headers,
+           });
+         }
+         if (url.endsWith('/generate/resume') && method === 'POST') {
+           window.__e2eResumeCalls += 1;
+         }
+         return original(input, init);
+       };
+       return true;
+     })()`,
+  );
+
+  await clickByText('button', '重新生成');
+  await clickByText('button', '确认重读');
+  await waitFor(
+    async () => cdp.evaluate('window.__e2eTruncated === true'),
+    60_000,
+    300,
+    'generate 流在 done 前被截断',
+  );
+
+  // 以服务端任务收尾瞬间的档案签名为准：恢复不得再写档案。
+  await waitFor(
+    async () =>
+      readIsolatedDb(
+        (db) =>
+          db
+            .prepare(
+              `SELECT COUNT(*) AS n FROM generation_jobs
+               WHERE city_id = ? AND status = 'running'`,
+            )
+            .get(RECOVERY_CITY).n,
+      ) === 0,
+    60_000,
+    300,
+    '原任务收尾',
+  );
+  const atFinish = await (await fetch(`${BASE}/api/cities/${RECOVERY_CITY}`)).json();
+
+  await waitFor(
+    async () =>
+      cdp.evaluate(
+        `document.body.innerText.includes('本次更新失败') &&
+         [...document.querySelectorAll('button')].some((b) => b.textContent.includes('重试此卷'))`,
+      ),
+    60_000,
+    300,
+    '恢复后失败提示与单卷重试入口',
+  );
+  await sleep(2000);
+
+  const calls = await cdp.evaluate(
+    `({ gen: window.__e2eGenCalls, resume: window.__e2eResumeCalls, truncated: window.__e2eTruncated })`,
+  );
+  check(
+    '丢失 done 后只走恢复接口（未再次调用生成接口）',
+    calls.gen === 1 && calls.resume >= 1 && calls.truncated === true,
+    JSON.stringify(calls),
+  );
+
+  const jobsAfter = readIsolatedDb(
+    (db) =>
+      db
+        .prepare('SELECT COUNT(*) AS n FROM generation_jobs WHERE city_id = ?')
+        .get(RECOVERY_CITY).n,
+  );
+  check(
+    '恢复未新增生成任务',
+    jobsAfter === jobsBefore + 1,
+    `generation_jobs ${jobsBefore} → ${jobsAfter}`,
+  );
+  const llmAfter = readIsolatedDb(
+    (db) =>
+      db.prepare('SELECT COUNT(*) AS n FROM llm_call_log WHERE city_id = ?').get(RECOVERY_CITY).n,
+  );
+  check(
+    '恢复未写入 LLM 调用账本',
+    llmAfter === llmBefore,
+    `llm_call_log ${llmBefore} → ${llmAfter}`,
+  );
+  const genLinesAfter = countGenModuleLines(RECOVERY_CITY);
+  check(
+    '恢复未再次调用生成器（仅用户触发的一轮 8 卷）',
+    genLinesAfter === genLinesBefore + 8,
+    `[gen] module 行 ${genLinesBefore} → ${genLinesAfter}`,
+  );
+
+  const oldContent = await cdp.evaluate(
+    `document.body.innerText.includes('一座用于回归测试的')`,
+  );
+  check('部分失败恢复后旧内容仍在', Boolean(oldContent));
+  const noBlank = await cdp.evaluate(`document.body.innerText.length > 200`);
+  check('部分失败恢复后无白屏', Boolean(noBlank));
+
+  // 再等 2 秒：不得自动重试失败模块（生成日志与任务数保持不变）。
+  await sleep(2000);
+  const genLinesIdle = countGenModuleLines(RECOVERY_CITY);
+  const jobsIdle = readIsolatedDb(
+    (db) =>
+      db
+        .prepare('SELECT COUNT(*) AS n FROM generation_jobs WHERE city_id = ?')
+        .get(RECOVERY_CITY).n,
+  );
+  check(
+    '恢复后不自动重试失败模块',
+    genLinesIdle === genLinesAfter && jobsIdle === jobsAfter,
+    `genLines ${genLinesAfter} → ${genLinesIdle}; jobs ${jobsAfter} → ${jobsIdle}`,
+  );
+
+  const after = await (await fetch(`${BASE}/api/cities/${RECOVERY_CITY}`)).json();
+  check(
+    '恢复未修改档案版本、生成时间与可用内容',
+    after.meta.dataVersion === atFinish.meta.dataVersion &&
+      after.meta.generatedAt === atFinish.meta.generatedAt &&
+      JSON.stringify(after.identity) === JSON.stringify(identityBefore),
+    `v${atFinish.meta.dataVersion}/${atFinish.meta.generatedAt} → v${after.meta.dataVersion}/${after.meta.generatedAt}`,
+  );
+}
+
 /* -------------------------------------------------------------------------- */
 /* 主流程                                                                     */
 /* -------------------------------------------------------------------------- */
@@ -733,6 +971,7 @@ async function main() {
     await scenarioCitySwitch();
     await scenarioCompare();
     await scenarioPoster();
+    await scenarioRecovery();
   } catch (error) {
     check('e2e 执行异常', false, error.message);
     if (cdp) {

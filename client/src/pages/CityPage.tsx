@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState, type ReactNode } from 'react';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import {
   IdentitySchema,
+  RESUME_TERMINAL_CODES,
   type HotCity,
   type Identity,
   type SourceRef,
@@ -49,7 +50,12 @@ export function CityPage() {
   const { cityId = '' } = useParams();
   const location = useLocation();
   const hint = (location.state as { hint?: string | null } | null)?.hint ?? null;
-  const { state, startGeneration, retryModule, regenerate } = useCityStream(cityId);
+  const { state, startGeneration, retryModule, regenerate, resumeGeneration } =
+    useCityStream(cityId);
+  const resumeUnavailable =
+    state.phase === 'error' &&
+    state.fatal !== null &&
+    (RESUME_TERMINAL_CODES as readonly string[]).includes(state.fatal.code);
   const { openSearch } = useSearch();
   const { isFavorite, toggleFavorite, addRecent } = useLocalLibrary();
 
@@ -118,10 +124,14 @@ export function CityPage() {
   if (state.phase === 'error' && !state.meta) {
     return (
       <StatusScreen
-        title="展卷未成"
-        description={state.fatal?.message ?? '生成过程出现未知错误，请稍后重试。'}
+        title={resumeUnavailable ? '原任务已不可恢复' : '展卷未成'}
+        description={
+          resumeUnavailable
+            ? `${state.fatal?.message ?? '原任务不存在或已过期。'}点击「重新展卷」将由你显式发起一次新的生成（可能消耗额度）。`
+            : (state.fatal?.message ?? '生成过程出现未知错误，请稍后重试。')
+        }
         actionLabel="重新展卷"
-        // 非 force 重试：服务端会并入仍在运行的任务并回放事件，已生成的卷不丢失。
+        // 用户显式发起新生成；断线恢复不会走这里。
         onAction={() => void startGeneration()}
       />
     );
@@ -165,8 +175,8 @@ export function CityPage() {
         </div>
       ) : null}
 
-      {/* 流中断且重连耗尽：提供「继续展卷」入口——非 force 请求会并入/回放原任务，
-          不会创建新刷新、不会重复扣额度，也不会被 5 分钟刷新冷却拦截。 */}
+      {/* 流中断且重连耗尽：提供「继续展卷」入口——只读取/并入原任务，
+          不创建新生成任务、不调用生成器、不重复扣额度。 */}
       {state.phase === 'error' && state.fatal?.code === 'STREAM_INTERRUPTED' ? (
         <div className="page-shell pt-4">
           <div className="mx-auto flex w-fit flex-wrap items-center gap-3 rounded-full border bg-[var(--bg-elevated)] px-4 py-2 hairline">
@@ -175,10 +185,28 @@ export function CityPage() {
             </span>
             <button
               type="button"
-              onClick={() => void startGeneration()}
+              onClick={resumeGeneration}
               className="ink-btn px-3 py-1.5 text-[10px]"
             >
               继续展卷
+            </button>
+          </div>
+        </div>
+      ) : null}
+
+      {/* 原任务不存在/过期/进程重启：恢复已明确失败，需要用户显式发起新生成。 */}
+      {resumeUnavailable ? (
+        <div className="page-shell pt-4">
+          <div className="mx-auto flex w-fit flex-wrap items-center gap-3 rounded-full border bg-[var(--bg-elevated)] px-4 py-2 hairline">
+            <span className="text-[11px] tracking-[0.14em] text-[var(--text-secondary)]" role="status">
+              {state.fatal?.message ?? '原任务已不可恢复'}
+            </span>
+            <button
+              type="button"
+              onClick={() => void startGeneration()}
+              className="ink-btn px-3 py-1.5 text-[10px]"
+            >
+              重新展卷
             </button>
           </div>
         </div>
@@ -255,11 +283,11 @@ export function CityPage() {
                         <p className="font-serif text-sm leading-relaxed text-[var(--text-secondary)]">
                           {error
                             ? `此卷未能成卷（${error.code}），可单独重试，不影响其他卷。`
-                            : state.phase === 'ready'
+                            : state.phase === 'ready' || resumeUnavailable
                               ? '此卷暂缺：暂无可核验的数据来源，已列入人工复核清单，绝不以推测数据充数。'
                               : '方志官正在检索与校验，请稍候。'}
                         </p>
-                        {!error && state.phase !== 'ready' ? (
+                        {!error && state.phase !== 'ready' && !resumeUnavailable ? (
                           <div className="mt-6 space-y-3" aria-hidden>
                             <div className="ink-breathe h-3 w-2/3 rounded bg-[var(--border-subtle)]" />
                             <div className="ink-breathe h-3 w-full rounded bg-[var(--border-subtle)]" style={{ animationDelay: '0.2s' }} />

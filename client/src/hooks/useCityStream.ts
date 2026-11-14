@@ -41,6 +41,21 @@ export function useCityStream(cityId: string) {
           body: JSON.stringify({
             force: options.force ?? false,
             ...(options.modules ? { modules: options.modules } : {}),
+            ...(options.attemptId ? { attemptId: options.attemptId } : {}),
+          }),
+          signal,
+        }),
+      // 只读恢复：只带稳定任务标识，绝不带 force/modules。
+      fetchResume: (id, options, signal) =>
+        fetch(`/api/cities/${encodeURIComponent(id)}/generate/resume`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'text/event-stream',
+          },
+          body: JSON.stringify({
+            ...(options.jobId ? { jobId: options.jobId } : {}),
+            ...(options.attemptId ? { attemptId: options.attemptId } : {}),
           }),
           signal,
         }),
@@ -68,5 +83,10 @@ export function useCityStream(cityId: string) {
     controllerRef.current?.regenerate(adminToken);
   }, []);
 
-  return { state, startGeneration, retryModule, regenerate };
+  /** 只读恢复原任务：不发新生成、不重复计费。 */
+  const resumeGeneration = useCallback(() => {
+    void controllerRef.current?.resumeGeneration();
+  }, []);
+
+  return { state, startGeneration, retryModule, regenerate, resumeGeneration };
 }

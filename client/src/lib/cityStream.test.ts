@@ -150,7 +150,11 @@ interface Harness {
   controller: CityStreamController;
   states: CityStreamState[];
   streams: FakeStream[];
-  streamCalls: Array<{ cityId: string; options: { force?: boolean; modules?: string[] } }>;
+  streamCalls: Array<{
+    cityId: string;
+    options: { force?: boolean; modules?: string[]; attemptId?: string };
+  }>;
+  resumeCalls: Array<{ cityId: string; jobId?: string; attemptId?: string }>;
   archiveCalls: string[];
   latest: () => CityStreamState;
 }
@@ -171,11 +175,55 @@ function harness(options: {
 } = {}): Harness {
   const states: CityStreamState[] = [initialStreamState];
   const streams: FakeStream[] = [];
-  const streamCalls: Array<{ cityId: string; options: { force?: boolean; modules?: string[] } }> = [];
+  const streamCalls: Array<{
+    cityId: string;
+    options: { force?: boolean; modules?: string[]; attemptId?: string };
+  }> = [];
+  const resumeCalls: Array<{ cityId: string; jobId?: string; attemptId?: string }> = [];
   const archiveCalls: string[] = [];
   const cache = options.cache ?? 'miss';
   const script = options.streamScript ?? [];
   let streamIndex = 0;
+  /** 每次生成/恢复连接共用同一脚本与流数组，便于按顺序断言。 */
+  const nextStream = (signal: AbortSignal): Promise<Response> => {
+    const step = script[streamIndex] ?? { kind: 'stream' as const };
+    streamIndex += 1;
+    if (step.kind === 'reject') {
+      // 首次连接异常（连接被拒 / DNS 失败）：fetch 层 TypeError。
+      return Promise.reject(new TypeError('fetch failed'));
+    }
+    if (step.kind === 'http') {
+      return Promise.resolve(
+        new Response(JSON.stringify(step.body), {
+          status: step.status,
+          headers: { 'content-type': 'application/json' },
+        }),
+      );
+    }
+    if (step.kind === 'readError') {
+      // 响应体读取中断：先异步吐若干事件再 error
+      // （同步 error 会清空队列，事件将永远读不到）。
+      const encoder = new TextEncoder();
+      let index = 0;
+      const body = new ReadableStream<Uint8Array>({
+        pull(controller) {
+          if (index < (step.events ?? []).length) {
+            const item = (step.events ?? [])[index]!;
+            index += 1;
+            controller.enqueue(
+              encoder.encode(`event: ${item.event}\ndata: ${JSON.stringify(item.data)}\n\n`),
+            );
+            return;
+          }
+          controller.error(new TypeError('network error'));
+        },
+      });
+      return Promise.resolve(new Response(body, { status: 200 }));
+    }
+    const fake = fakeStream(signal);
+    streams.push(fake);
+    return Promise.resolve(new Response(fake.stream, { status: 200 }));
+  };
   const controller = new CityStreamController({
     fetchArchive: (cityId) => {
       archiveCalls.push(cityId);
@@ -185,44 +233,15 @@ function harness(options: {
         : Promise.resolve(archive(cityId));
     },
     fetchStream: (cityId, opts, signal) => {
-      streamCalls.push({ cityId, options: { force: opts.force, modules: opts.modules } });
-      const step = script[streamIndex] ?? { kind: 'stream' as const };
-      streamIndex += 1;
-      if (step.kind === 'reject') {
-        // 首次连接异常（连接被拒 / DNS 失败）：fetch 层 TypeError。
-        return Promise.reject(new TypeError('fetch failed'));
-      }
-      if (step.kind === 'http') {
-        return Promise.resolve(
-          new Response(JSON.stringify(step.body), {
-            status: step.status,
-            headers: { 'content-type': 'application/json' },
-          }),
-        );
-      }
-      if (step.kind === 'readError') {
-        // 响应体读取中断：先异步吐若干事件再 error
-        // （同步 error 会清空队列，事件将永远读不到）。
-        const encoder = new TextEncoder();
-        let index = 0;
-        const body = new ReadableStream<Uint8Array>({
-          pull(controller) {
-            if (index < (step.events ?? []).length) {
-              const item = (step.events ?? [])[index]!;
-              index += 1;
-              controller.enqueue(
-                encoder.encode(`event: ${item.event}\ndata: ${JSON.stringify(item.data)}\n\n`),
-              );
-              return;
-            }
-            controller.error(new TypeError('network error'));
-          },
-        });
-        return Promise.resolve(new Response(body, { status: 200 }));
-      }
-      const fake = fakeStream(signal);
-      streams.push(fake);
-      return Promise.resolve(new Response(fake.stream, { status: 200 }));
+      streamCalls.push({
+        cityId,
+        options: { force: opts.force, modules: opts.modules, attemptId: opts.attemptId },
+      });
+      return nextStream(signal);
+    },
+    fetchResume: (cityId, opts, signal) => {
+      resumeCalls.push({ cityId, jobId: opts.jobId, attemptId: opts.attemptId });
+      return nextStream(signal);
     },
     consume: (response, onEvent, signal) => consumeSse(response, onEvent, signal),
     onChange: (state) => states.push(state),
@@ -234,6 +253,7 @@ function harness(options: {
     states,
     streams,
     streamCalls,
+    resumeCalls,
     archiveCalls,
     latest: () => states[states.length - 1]!,
   };
@@ -264,6 +284,10 @@ describe('CityStreamController：缓存读取', () => {
         const fake = fakeStream(signal);
         return Promise.resolve(new Response(fake.stream, { status: 200 }));
       },
+      fetchResume: (_cityId, _opts, signal) => {
+        const fake = fakeStream(signal);
+        return Promise.resolve(new Response(fake.stream, { status: 200 }));
+      },
       consume: (response, onEvent, signal) => consumeSse(response, onEvent, signal),
       onChange: () => undefined,
     });
@@ -287,9 +311,11 @@ describe('CityStreamController：流中断与有界重连', () => {
     await tick();
     await tick();
 
-    // 自动重连：服务端回放全部事件 + 新模块 + done。
-    expect(h.streamCalls).toHaveLength(2);
-    expect(h.streamCalls[1]!.options.force).toBeFalsy();
+    // 自动恢复：走只读恢复契约（携带 jobId），服务端回放全部事件 + 新模块 + done。
+    expect(h.streamCalls).toHaveLength(1);
+    expect(h.resumeCalls).toHaveLength(1);
+    expect(h.resumeCalls[0]).toMatchObject({ cityId: CITY_A, jobId: `job-${CITY_A}` });
+    expect(h.resumeCalls[0]!.attemptId).toBeTruthy();
     h.streams[1]!.send([
       META_EVENT(CITY_A),
       MODULE_EVENT('identity', 2),
@@ -321,12 +347,14 @@ describe('CityStreamController：流中断与有界重连', () => {
     const state = h.latest();
     expect(state.phase).toBe('error');
     expect(state.fatal?.code).toBe('STREAM_INTERRUPTED');
-    expect(h.streamCalls).toHaveLength(3);
-    // 显式重试入口：再次 startGeneration 会重新发起（非 force）。
-    void h.controller.startGeneration();
+    // 1 次用户生成 + 2 次有界恢复；恢复不再调用生成接口。
+    expect(h.streamCalls).toHaveLength(1);
+    expect(h.resumeCalls).toHaveLength(2);
+    // 显式入口「继续展卷」仍走只读恢复，不发起新生成。
+    void h.controller.resumeGeneration();
     await tick();
-    expect(h.streamCalls).toHaveLength(4);
-    expect(h.streamCalls[3]!.options.force).toBeFalsy();
+    expect(h.streamCalls).toHaveLength(1);
+    expect(h.resumeCalls).toHaveLength(3);
   });
 
   it('缓存命中后重新生成：流被截断时重连，不被上一轮 done 阻止', async () => {
@@ -347,8 +375,9 @@ describe('CityStreamController：流中断与有界重连', () => {
     await tick();
     await tick();
 
-    // 必须自动重连（并入服务端任务并回放）。
-    expect(h.streamCalls).toHaveLength(2);
+    // 必须自动恢复（并入服务端任务并回放），且使用只读恢复接口。
+    expect(h.streamCalls).toHaveLength(1);
+    expect(h.resumeCalls).toHaveLength(1);
     h.streams[1]!.send([
       META_EVENT(CITY_A),
       MODULE_EVENT('identity', 2),
@@ -387,7 +416,9 @@ describe('CityStreamController：流中断与有界重连', () => {
     h.streams[1]!.close();
     await tick();
     await tick();
-    expect(h.streamCalls).toHaveLength(3);
+    // 第二次用户生成仍可恢复：生成接口只在用户点击时调用。
+    expect(h.streamCalls).toHaveLength(2);
+    expect(h.resumeCalls).toHaveLength(1);
     h.streams[2]!.send([META_EVENT(CITY_A), DONE_EVENT(CITY_A, 3)]);
     await tick();
     h.streams[2]!.close();
@@ -411,10 +442,12 @@ describe('CityStreamController：流中断与有界重连', () => {
     await tick();
     expect(h.latest().meta?.cityId).toBe(CITY_B);
     const streamsBefore = h.streamCalls.length;
+    const resumesBefore = h.resumeCalls.length;
     await tick();
     await tick();
-    // 旧批次的重连被批次令牌拦截，不得为 A 新建流。
+    // 旧批次的重连被批次令牌拦截，不得为 A 新建生成或恢复流。
     expect(h.streamCalls.length).toBe(streamsBefore);
+    expect(h.resumeCalls.length).toBe(resumesBefore);
     expect(h.latest().meta?.cityId).toBe(CITY_B);
   });
 
@@ -561,6 +594,11 @@ describe('CityStreamController：城市切换保护', () => {
         streams.push(fake);
         return Promise.resolve(new Response(fake.stream, { status: 200 }));
       },
+      fetchResume: (_cityId, _opts, signal) => {
+        const fake = fakeStream(signal);
+        streams.push(fake);
+        return Promise.resolve(new Response(fake.stream, { status: 200 }));
+      },
       consume: (response, onEvent, signal) => consumeSse(response, onEvent, signal),
       onChange: (state) => states.push(state),
     });
@@ -619,8 +657,9 @@ describe('CityStreamController：网络异常与 EOF 统一恢复', () => {
     h.controller.openCity(CITY_A);
     await tick();
     await tick();
-    // 必须自动重连（旧实现只请求一次就进入 NETWORK_ERROR）。
-    expect(h.streamCalls).toHaveLength(2);
+    // 必须自动恢复（旧实现只请求一次就进入 NETWORK_ERROR）。
+    expect(h.streamCalls).toHaveLength(1);
+    expect(h.resumeCalls).toHaveLength(1);
     h.streams[0]!.send([META_EVENT(CITY_A), MODULE_EVENT('identity', 2), DONE_EVENT(CITY_A, 3)]);
     await tick();
     h.streams[0]!.close();
@@ -629,7 +668,7 @@ describe('CityStreamController：网络异常与 EOF 统一恢复', () => {
     expect(h.latest().done?.cityId).toBe(CITY_A);
   });
 
-  it('响应体读取异常后走有界重连并成功', async () => {
+  it('响应体读取异常后走有界恢复并成功', async () => {
     const h = harness({
       reconnectDelayMs: 1,
       streamScript: [
@@ -641,7 +680,8 @@ describe('CityStreamController：网络异常与 EOF 统一恢复', () => {
     await tick();
     await tick();
     await tick();
-    expect(h.streamCalls).toHaveLength(2);
+    expect(h.streamCalls).toHaveLength(1);
+    expect(h.resumeCalls).toHaveLength(1);
     // 中断前收到的模块被保留。
     expect(Object.keys(h.latest().modules)).toEqual(['identity']);
     h.streams[0]!.send([META_EVENT(CITY_A), DONE_EVENT(CITY_A, 3)]);
@@ -651,7 +691,7 @@ describe('CityStreamController：网络异常与 EOF 统一恢复', () => {
     expect(h.latest().phase).toBe('ready');
   });
 
-  it('重连不再发送 force（恢复原任务，避免刷新冷却）', async () => {
+  it('恢复只调用只读恢复接口并携带原任务标识，不再发送 force', async () => {
     const h = harness({
       cache: 'hit',
       reconnectDelayMs: 1,
@@ -661,18 +701,26 @@ describe('CityStreamController：网络异常与 EOF 统一恢复', () => {
     await tick();
     void h.controller.regenerate(); // 用户主动 force 刷新
     await tick();
+    expect(h.streamCalls).toHaveLength(1);
     expect(h.streamCalls[0]!.options.force).toBe(true);
+    const attemptId = h.streamCalls[0]!.options.attemptId;
+    expect(attemptId).toBeTruthy();
     h.streams[0]!.send([META_EVENT(CITY_A), MODULE_EVENT('identity', 2)]);
     await tick();
     h.streams[0]!.close(); // 截断，无 done
     await tick();
     await tick();
-    expect(h.streamCalls).toHaveLength(2);
-    // 重连必须剥离 force：服务端据此并入原任务而非创建新刷新。
-    expect(h.streamCalls[1]!.options.force).toBe(false);
+    // 恢复接口只拿到 jobId/attemptId，生成接口不再被调用。
+    expect(h.streamCalls).toHaveLength(1);
+    expect(h.resumeCalls).toHaveLength(1);
+    expect(h.resumeCalls[0]).toMatchObject({
+      cityId: CITY_A,
+      jobId: `job-${CITY_A}`,
+      attemptId,
+    });
   });
 
-  it('持续失败耗尽后给出可用的「继续展卷」入口（非 force）', async () => {
+  it('持续失败耗尽后「继续展卷」仍只走恢复接口', async () => {
     const h = harness({
       maxReconnects: 2,
       reconnectDelayMs: 1,
@@ -694,12 +742,13 @@ describe('CityStreamController：网络异常与 EOF 统一恢复', () => {
     const state = h.latest();
     expect(state.phase).toBe('error');
     expect(state.fatal?.code).toBe('STREAM_INTERRUPTED');
-    expect(h.streamCalls).toHaveLength(3);
-    // 入口 = 再次 startGeneration（非 force）：服务端会并入/回放原任务。
-    void h.controller.startGeneration();
+    expect(h.streamCalls).toHaveLength(1);
+    expect(h.resumeCalls).toHaveLength(2);
+    // 入口 = 再次恢复（不是生成）：服务端会并入/回放原任务。
+    void h.controller.resumeGeneration();
     await tick();
-    expect(h.streamCalls).toHaveLength(4);
-    expect(h.streamCalls[3]!.options.force).toBeFalsy();
+    expect(h.streamCalls).toHaveLength(1);
+    expect(h.resumeCalls).toHaveLength(3);
   });
 
   it('业务错误（COOLDOWN）不重连，保留服务端 code/message/retryAfterSec', async () => {
@@ -718,7 +767,7 @@ describe('CityStreamController：网络异常与 EOF 统一恢复', () => {
     await tick();
     h.streams[0]!.send([META_EVENT(CITY_A)]);
     await tick();
-    h.streams[0]!.close(); // 截断 → 重连
+    h.streams[0]!.close(); // 截断 → 恢复
     await tick();
     await tick();
     await tick();
@@ -727,11 +776,12 @@ describe('CityStreamController：网络异常与 EOF 统一恢复', () => {
     expect(state.fatal?.code).toBe('COOLDOWN');
     expect(state.fatal?.retryAfterSec).toBe(120);
     expect(state.fatal?.message).toContain('冷却中');
-    // 明确的业务终态不再重连。
-    expect(h.streamCalls).toHaveLength(2);
+    // 明确的业务终态不再恢复。
+    expect(h.streamCalls).toHaveLength(1);
+    expect(h.resumeCalls).toHaveLength(1);
   });
 
-  it('等待重连期间切城：静默取消，不为旧城市新建流', async () => {
+  it('等待重连期间切城：静默取消，不为旧城市新建生成或恢复流', async () => {
     const h = harness({
       cache: 'hit',
       reconnectDelayMs: 30,
@@ -748,10 +798,144 @@ describe('CityStreamController：网络异常与 EOF 统一恢复', () => {
     await tick();
     expect(h.latest().meta?.cityId).toBe(CITY_B);
     const before = h.streamCalls.length;
+    const resumesBefore = h.resumeCalls.length;
     await tick();
     await tick();
     expect(h.streamCalls.length).toBe(before);
+    expect(h.resumeCalls.length).toBe(resumesBefore);
     expect(h.latest().meta?.cityId).toBe(CITY_B);
+  });
+});
+
+/* -------------------------------------------------------------------------- */
+/* 恢复契约：meta 丢失 / 明确不可恢复 / 手动继续展卷                            */
+/* -------------------------------------------------------------------------- */
+
+describe('CityStreamController：只读恢复契约', () => {
+  it('meta 前断线：恢复请求不带 jobId，但仍携带本次 attemptId', async () => {
+    const h = harness({ reconnectDelayMs: 1 });
+    h.controller.openCity(CITY_A);
+    await tick();
+    expect(h.streamCalls).toHaveLength(1);
+    const attemptId = h.streamCalls[0]!.options.attemptId;
+    expect(attemptId).toBeTruthy();
+    // 还没收到 meta 就 EOF。
+    expect(h.latest().jobId).toBeNull();
+    h.streams[0]!.close();
+    await tick();
+    await tick();
+    expect(h.resumeCalls).toHaveLength(1);
+    expect(h.resumeCalls[0]!.jobId).toBeUndefined();
+    expect(h.resumeCalls[0]!.attemptId).toBe(attemptId);
+  });
+
+  it('恢复明确不可用：进入错误态并保留服务端说明，不自动重新生成', async () => {
+    const h = harness({
+      reconnectDelayMs: 1,
+      streamScript: [
+        { kind: 'stream' },
+        {
+          kind: 'http',
+          status: 409,
+          body: {
+            code: 'RESUME_UNAVAILABLE',
+            message: '没有可恢复的生成任务；如需生成请手动重新展卷',
+          },
+        },
+      ],
+    });
+    h.controller.openCity(CITY_A);
+    await tick();
+    h.streams[0]!.send([META_EVENT(CITY_A)]);
+    await tick();
+    h.streams[0]!.close();
+    await tick();
+    await tick();
+    await tick();
+    const state = h.latest();
+    expect(state.phase).toBe('error');
+    expect(state.fatal?.code).toBe('RESUME_UNAVAILABLE');
+    expect(state.fatal?.message).toContain('手动重新展卷');
+    // 不自动发起新生成，也不继续无谓恢复。
+    expect(h.streamCalls).toHaveLength(1);
+    expect(h.resumeCalls).toHaveLength(1);
+  });
+
+  it('恢复终态回放：模块与失败提示进入最终状态', async () => {
+    const cached = archive(CITY_A);
+    const h = harness({
+      cache: 'hit',
+      reconnectDelayMs: 1,
+      fetchArchive: () => Promise.resolve(cached),
+      streamScript: [
+        { kind: 'stream' },
+        {
+          kind: 'stream',
+        },
+      ],
+    });
+    h.controller.openCity(CITY_A);
+    await tick();
+    void h.controller.startGeneration();
+    await tick();
+    h.streams[0]!.send([META_EVENT(CITY_A)]);
+    await tick();
+    h.streams[0]!.close();
+    await tick();
+    await tick();
+    expect(h.resumeCalls).toHaveLength(1);
+    // 服务端终态回放：旧内容 + 失败提示 + done。
+    h.streams[1]!.send([
+      {
+        event: 'notice',
+        data: { seq: 1, code: 'RESUMED_TERMINAL', message: '已恢复原任务的终态（未重新生成、未消耗额度）' },
+      },
+      META_EVENT(CITY_A),
+      { event: 'module_error', data: { seq: 3, name: 'localSoul', code: 'NO_FACTS', retryable: false } },
+      DONE_EVENT(CITY_A, 4),
+    ]);
+    await tick();
+    h.streams[1]!.close();
+    await tick();
+    await tick();
+    const state = h.latest();
+    expect(state.phase).toBe('ready');
+    expect(state.errors.localSoul?.code).toBe('NO_FACTS');
+    expect(state.done?.cityId).toBe(CITY_A);
+  });
+
+  it('手动「继续展卷」调用恢复接口而不是生成接口', async () => {
+    const h = harness({
+      cache: 'hit',
+      reconnectDelayMs: 1,
+      maxReconnects: 2,
+      streamScript: [
+        { kind: 'stream' },
+        { kind: 'reject' },
+        { kind: 'reject' },
+        { kind: 'stream' },
+      ],
+    });
+    h.controller.openCity(CITY_A);
+    await tick();
+    void h.controller.regenerate();
+    await tick();
+    h.streams[0]!.send([META_EVENT(CITY_A)]);
+    await tick();
+    h.streams[0]!.close();
+    await tick();
+    await tick();
+    await tick();
+    // 自动恢复耗尽 → STREAM_INTERRUPTED；手动入口仍只调用恢复接口。
+    expect(h.latest().fatal?.code).toBe('STREAM_INTERRUPTED');
+    const callsBefore = h.streamCalls.length;
+    // 流保持打开（模拟恢复连接建立后继续接收），因此不 await。
+    void h.controller.resumeGeneration();
+    await tick();
+    expect(h.streamCalls.length).toBe(callsBefore);
+    expect(h.resumeCalls).toHaveLength(3);
+    h.streams[1]!.close();
+    await tick();
   });
 });
 

@@ -15,6 +15,8 @@ export interface JobRecord {
   modules: ModuleName[];
   failedModules: ModuleName[];
   requesterHash: string;
+  /** 客户端发起的生成尝试标识；历史任务为 null。 */
+  attemptId: string | null;
   llmCalls: number;
   startedAt: string;
   finishedAt: string | null;
@@ -33,6 +35,7 @@ interface JobRow {
   started_at: string;
   finished_at: string | null;
   cooldown_until: string | null;
+  attempt_id: string | null;
 }
 
 function toRecord(row: JobRow): JobRecord {
@@ -44,6 +47,7 @@ function toRecord(row: JobRow): JobRecord {
     modules: JSON.parse(row.modules_json) as ModuleName[],
     failedModules: row.failed_json ? (JSON.parse(row.failed_json) as ModuleName[]) : [],
     requesterHash: row.requester_hash,
+    attemptId: row.attempt_id ?? null,
     llmCalls: row.llm_calls,
     startedAt: row.started_at,
     finishedAt: row.finished_at,
@@ -62,14 +66,15 @@ export class JobRepo {
     modules: ModuleName[];
     requesterHash: string;
     startedAt: string;
+    attemptId?: string | null;
   }): JobRecord | null {
     try {
       this.db
         .prepare(
           `INSERT INTO generation_jobs
              (job_id, city_id, status, force_flag, modules_json, requester_hash,
-              llm_calls, started_at)
-           VALUES (?, ?, 'running', ?, ?, ?, 0, ?)`,
+              llm_calls, started_at, attempt_id)
+           VALUES (?, ?, 'running', ?, ?, ?, 0, ?, ?)`,
         )
         .run(
           input.jobId,
@@ -78,6 +83,7 @@ export class JobRepo {
           JSON.stringify(input.modules),
           input.requesterHash,
           input.startedAt,
+          input.attemptId ?? null,
         );
     } catch (error) {
       if ((error as { code?: string }).code === 'SQLITE_CONSTRAINT_UNIQUE') return null;
@@ -99,6 +105,30 @@ export class JobRepo {
   getRunning(cityId: string): JobRecord | null {
     const row = this.db
       .prepare(`SELECT * FROM generation_jobs WHERE city_id = ? AND status = 'running'`)
+      .get(cityId) as JobRow | undefined;
+    return row ? toRecord(row) : null;
+  }
+
+  /** 按客户端尝试标识定位同城任务（断线恢复在未收到 meta 时的稳定标识）。 */
+  findByAttempt(cityId: string, attemptId: string): JobRecord | null {
+    const row = this.db
+      .prepare(
+        `SELECT * FROM generation_jobs
+         WHERE city_id = ? AND attempt_id = ?
+         ORDER BY started_at DESC, rowid DESC LIMIT 1`,
+      )
+      .get(cityId, attemptId) as JobRow | undefined;
+    return row ? toRecord(row) : null;
+  }
+
+  /** 同城最近一次任务（无 jobId/attemptId 的兼容恢复路径）。 */
+  findLatestByCity(cityId: string): JobRecord | null {
+    const row = this.db
+      .prepare(
+        `SELECT * FROM generation_jobs
+         WHERE city_id = ?
+         ORDER BY started_at DESC, rowid DESC LIMIT 1`,
+      )
       .get(cityId) as JobRow | undefined;
     return row ? toRecord(row) : null;
   }

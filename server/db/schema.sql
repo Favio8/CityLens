@@ -62,12 +62,16 @@ CREATE TABLE IF NOT EXISTS generation_jobs (
     llm_calls       INTEGER NOT NULL DEFAULT 0,
     started_at      TEXT NOT NULL,
     finished_at     TEXT,
-    cooldown_until  TEXT
+    cooldown_until  TEXT,
+    -- 客户端发起的生成尝试标识：断线恢复时在未收到 meta/jobId 前定位原任务。
+    -- 旧库由 openDb 的幂等迁移补列（历史任务为 NULL，不伪造）。
+    attempt_id      TEXT
 );
 
 CREATE UNIQUE INDEX IF NOT EXISTS uq_running_job ON generation_jobs(city_id) WHERE status = 'running';
 CREATE INDEX IF NOT EXISTS idx_job_requester ON generation_jobs(requester_hash, started_at);
 CREATE INDEX IF NOT EXISTS idx_job_city ON generation_jobs(city_id, started_at);
+CREATE INDEX IF NOT EXISTS idx_job_attempt ON generation_jobs(city_id, attempt_id);
 
 -- 逐次 LLM 调用日志：每日预算按「实际请求发生时间」所属北京日期记账。
 -- 任务可能跨午夜运行，用 generation_jobs.started_at 汇总会把次日的调用算到前一天。

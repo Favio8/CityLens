@@ -5,15 +5,20 @@
  * 发布门槛；预置档案后即可在浏览器里回归「force 重生成 → 模块失败 → 重试」与
  * 「切城竞态」路径。identity/landmarks/relics/figures/poetics 五卷预置合格旧内容，
  * 其中 identity 同时用于回归「已有合格旧内容 → 刷新失败 → 旧内容仍在且可以单卷重试」
- * （e2e 场景 3 以 SIMULATE_FAIL=identity 触发）。E2E_CITY / E2E_CITY2 两座城市都会预置
- * （后者作为切城竞态的旧城市）。只写 e2e 自己的临时数据库（DB_PATH 指向临时目录），
- * 绝不触碰真实数据库。
+ * （e2e 场景 3 以 SIMULATE_FAIL=identity 触发）。E2E_CITY / E2E_CITY2 / E2E_CITY3
+ * 三座城市都会预置（后两座分别用于切城竞态与断线恢复回归）。
+ * 只写 e2e 自己的临时数据库（DB_PATH 指向临时目录），绝不触碰真实数据库。
  */
 import { PENDING } from '../shared/schema';
 import { openDb } from '../server/db';
 import { ArchiveRepo } from '../server/db/archiveRepo';
 
-const cities = [process.env.E2E_CITY ?? 'CN-321100', process.env.E2E_CITY2 ?? 'CN-320100'];
+const cities = [
+  process.env.E2E_CITY ?? 'CN-321100',
+  process.env.E2E_CITY2 ?? 'CN-320100',
+  // 断线恢复回归专用：不与场景 3（写型刷新）共用城市，避免 5 分钟刷新冷却干扰。
+  process.env.E2E_CITY3 ?? 'CN-320400',
+];
 const palette = {
   light: { primary: '#8C3F2B', secondary: '#4A4E54', accent: '#C89B40' },
   dark: { primary: '#D2957F', secondary: '#A8ADB4', accent: '#E0B860' },

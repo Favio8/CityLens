@@ -6,18 +6,26 @@
  * 整体失败进入 10 分钟冷却；单次生成受 180s 总截止约束（PRD v1.2）。
  */
 import { randomUUID } from 'node:crypto';
-import type { ModuleErrorCode, ModuleName, SourceRef, ThemePalette } from '../../shared/schema';
+import type {
+  ArchiveStatus,
+  ModuleErrorCode,
+  ModuleName,
+  ResumeTerminalCode,
+  SourceRef,
+  ThemePalette,
+} from '../../shared/schema';
 import { MODULE_NAMES } from '../../shared/schema';
 import { computeArchiveStatus } from '../../shared/validators';
 import type { ArchiveRepo } from '../db/archiveRepo';
 import { hasUsableModuleContent } from '../db/archiveRepo';
 import type { CityBrief, CityRepo } from '../db/cityRepo';
-import type { JobRepo } from '../db/jobRepo';
+import type { JobRecord, JobRepo } from '../db/jobRepo';
 import { ApiError } from '../errors';
 import { FAILURE_COOLDOWN_MS } from '../../shared/schema';
 import {
   DEFAULT_THEME_PALETTE,
   buildArchiveResponse,
+  latestAttempt,
   loadBundle,
   moduleStatusMap,
   reusableModules,
@@ -42,6 +50,8 @@ export type SseHandler = (event: SseEnvelope) => void;
 export interface JobRuntime {
   jobId: string;
   cityId: string;
+  /** 客户端发起的生成尝试标识；旧客户端为空。 */
+  attemptId: string | null;
   requested: ModuleName[];
   planned: ModuleName[];
   reusable: ModuleName[];
@@ -63,7 +73,31 @@ export interface StartJobInput {
   requesterHash: string;
   force: boolean;
   modules: ModuleName[];
+  attemptId?: string;
 }
+
+export interface ResumeJobInput {
+  city: CityBrief;
+  aliases: string[];
+  jobId?: string;
+  attemptId?: string;
+}
+
+/**
+ * 恢复结果（只读语义，绝不创建任务）：
+ * - attached：并入仍在运行的原任务，随其收尾收到终态；
+ * - terminal：回放已结束原任务的终态与可用档案；
+ * - unavailable：原任务不存在/已过期/不可恢复，需要用户显式发起新生成。
+ */
+export type ResumeOutcome =
+  | { kind: 'attached'; runtime: JobRuntime }
+  | {
+      kind: 'terminal';
+      jobId: string;
+      status: ArchiveStatus;
+      events: SseEnvelope[];
+    }
+  | { kind: 'unavailable'; code: ResumeTerminalCode; message: string };
 
 export interface StartJobResult {
   runtime: JobRuntime;
@@ -86,6 +120,8 @@ export interface JobManagerDeps {
   deadlineMs?: number;
   /** 崩溃遗留任务判定阈值；必须大于 deadlineMs，避免误杀活跃任务。 */
   staleAfterMs?: number;
+  /** 无 jobId/attemptId 的兼容恢复窗口：更早的任务视为已过期，不盲目回放。 */
+  resumeWindowMs?: number;
 }
 
 const DEFAULT_MODULES = [...MODULE_NAMES];
@@ -93,6 +129,8 @@ const DEFAULT_MODULES = [...MODULE_NAMES];
 const DEFAULT_DEADLINE_MS = 180_000;
 /** stale 阈值取总截止 + 120s 余量：活跃任务不会被他城 start 误判为崩溃遗留。 */
 const DEFAULT_STALE_AFTER_MS = DEFAULT_DEADLINE_MS + 120_000;
+/** 兼容恢复窗口 30 分钟：显式 jobId/attemptId 不受此限（只读回放无副作用）。 */
+const DEFAULT_RESUME_WINDOW_MS = 30 * 60 * 1000;
 
 function toModuleErrorCode(code: string): ModuleErrorCode {
   if (code === 'LLM_TIMEOUT' || code === 'NO_FACTS' || code === 'BUDGET_EXCEEDED') return code;
@@ -132,6 +170,7 @@ export class JobManager {
   private readonly now: () => Date;
   private readonly deadlineMs: number;
   private readonly staleAfterMs: number;
+  private readonly resumeWindowMs: number;
   /** 注入了时钟（测试）：截止判定以循环内的时钟检查为准，不武装实时定时器。 */
   private readonly usesInjectedClock: boolean;
 
@@ -139,6 +178,7 @@ export class JobManager {
     this.now = deps.now ?? (() => new Date());
     this.deadlineMs = deps.deadlineMs ?? DEFAULT_DEADLINE_MS;
     this.staleAfterMs = deps.staleAfterMs ?? DEFAULT_STALE_AFTER_MS;
+    this.resumeWindowMs = deps.resumeWindowMs ?? DEFAULT_RESUME_WINDOW_MS;
     this.usesInjectedClock = deps.now !== undefined;
   }
 
@@ -180,6 +220,7 @@ export class JobManager {
       modules: requested,
       requesterHash: input.requesterHash,
       startedAt: now.toISOString(),
+      attemptId: input.attemptId ?? null,
     });
     if (!created) {
       const racing = this.runtimes.get(input.city.cityId);
@@ -192,6 +233,7 @@ export class JobManager {
     const runtime: JobRuntime = {
       jobId,
       cityId: input.city.cityId,
+      attemptId: input.attemptId ?? null,
       requested,
       planned,
       reusable: [...reusable],
@@ -218,6 +260,7 @@ export class JobManager {
       center: input.city.center,
       isPreset: input.city.isPreset,
       jobId,
+      ...(runtime.attemptId ? { attemptId: runtime.attemptId } : {}),
     });
     this.push(runtime, 'theme', {
       seq: runtime.seq + 1,
@@ -251,6 +294,154 @@ export class JobManager {
     if (runtime.finished) return () => undefined;
     runtime.subscribers.add(handler);
     return () => runtime.subscribers.delete(handler);
+  }
+
+  /**
+   * 断线恢复：只并入运行中的原任务，或只读回放已结束任务的终态。
+   * 这里绝不调用 start、绝不创建 generation_jobs、绝不调用生成器或记账，
+   * 也不写档案（data_version / generated_at 保持不变）。
+   */
+  resume(input: ResumeJobInput): ResumeOutcome {
+    const cityId = input.city.cityId;
+    const active = this.runtimes.get(cityId);
+    if (active && !active.finished) {
+      // jobId 是任务主键，优先；未收到 meta 时用 attemptId；两者皆无则并入该城运行中任务。
+      const matches = input.jobId
+        ? input.jobId === active.jobId
+        : input.attemptId
+          ? input.attemptId === active.attemptId
+          : true;
+      if (matches) return { kind: 'attached', runtime: active };
+    }
+
+    const record = this.locateResumeJob(cityId, input);
+    if (record === 'mismatch') {
+      return {
+        kind: 'unavailable',
+        code: 'JOB_MISMATCH',
+        message: '该任务不属于此城，无法恢复；如需生成请手动重新展卷',
+      };
+    }
+    if (!record) {
+      return {
+        kind: 'unavailable',
+        code: 'RESUME_UNAVAILABLE',
+        message: '没有可恢复的生成任务；如需生成请手动重新展卷',
+      };
+    }
+    if (record.status === 'running') {
+      // DB 里仍是 running，但内存中已无对应 runtime（进程重启 / 其它实例）：
+      // 无法并入，也绝不新建任务顶替。
+      return {
+        kind: 'unavailable',
+        code: 'JOB_NOT_RESUMABLE',
+        message: '原任务已无法恢复（服务可能已重启）；如需生成请手动重新展卷',
+      };
+    }
+    const { status, events } = this.buildTerminalReplay(input.city, input.aliases, record);
+    return { kind: 'terminal', jobId: record.jobId, status, events };
+  }
+
+  /**
+   * 定位待恢复任务：
+   * - jobId / attemptId 是稳定任务标识，不做时间窗口限制（回放只读）；
+   * - 两者都缺省时退回「同城最近一次任务」，且只认恢复窗口内的任务，避免回放陈旧历史。
+   */
+  private locateResumeJob(
+    cityId: string,
+    input: ResumeJobInput,
+  ): JobRecord | 'mismatch' | null {
+    if (input.jobId) {
+      const byJob = this.deps.jobRepo.get(input.jobId);
+      if (!byJob) return null;
+      if (byJob.cityId !== cityId) return 'mismatch';
+      return byJob;
+    }
+    if (input.attemptId) {
+      return this.deps.jobRepo.findByAttempt(cityId, input.attemptId);
+    }
+    const latest = this.deps.jobRepo.findLatestByCity(cityId);
+    if (!latest) return null;
+    const startedAt = Date.parse(latest.startedAt);
+    if (!Number.isFinite(startedAt) || this.now().getTime() - startedAt > this.resumeWindowMs) {
+      return null;
+    }
+    return latest;
+  }
+
+  /** 已结束任务的终态回放：meta/theme/可用模块/失败提示/done，全部来自只读读取。 */
+  private buildTerminalReplay(
+    city: CityBrief,
+    aliases: string[],
+    record: JobRecord,
+  ): { status: ArchiveStatus; events: SseEnvelope[] } {
+    const bundle = loadBundle(this.deps.archiveRepo, city.cityId);
+    const status: ArchiveStatus = bundle?.archive.status ?? 'unpublished';
+    const published = bundle !== null && status !== 'unpublished';
+    const themePalette = bundle?.archive.themePalette ?? DEFAULT_THEME_PALETTE;
+    const events: SseEnvelope[] = [];
+    let seq = 0;
+    const push = (event: SseEventName, data: Record<string, unknown>): void => {
+      seq += 1;
+      events.push({ event, data: { seq, ...data }, seq });
+    };
+
+    push('notice', {
+      code: 'RESUMED_TERMINAL',
+      message: '已恢复原任务的终态（未重新生成、未消耗额度）',
+    });
+    push('meta', {
+      cityId: city.cityId,
+      standardName: city.standardName,
+      province: city.province,
+      aliases: aliases.length > 0 ? aliases : [city.standardName],
+      center: city.center,
+      isPreset: city.isPreset,
+      jobId: record.jobId,
+      ...(record.attemptId ? { attemptId: record.attemptId } : {}),
+    });
+    push('theme', { light: themePalette.light, dark: themePalette.dark });
+
+    const failedModules: ModuleName[] = [];
+    if (published) {
+      const statusMap = moduleStatusMap(bundle);
+      for (const name of MODULE_NAMES) {
+        const module = bundle.modules.get(name);
+        if (!module || module.data === null) continue;
+        if (statusMap[name] !== 'ok' && statusMap[name] !== 'degraded') continue;
+        push('module', {
+          name,
+          status: module.status,
+          data: module.data,
+          sources: [],
+          fromCache: true,
+        });
+      }
+      // 失败提示只取自档案的最近一次尝试，与 GET /api/cities/:id 同一口径；
+      // 已成功重跑的模块不会复活过期失败。
+      for (const name of MODULE_NAMES) {
+        const attempt = latestAttempt(bundle.modules.get(name));
+        if (!attempt) continue;
+        failedModules.push(name);
+        push('module_error', {
+          name,
+          code: attempt.code,
+          retryable: attempt.code !== 'NO_FACTS',
+        });
+      }
+    } else {
+      // 未发布档案不对外暴露任何模块内容，只报告任务级失败清单。
+      failedModules.push(...record.failedModules);
+    }
+
+    push('done', {
+      cityId: city.cityId,
+      status,
+      failedModules,
+      generatedAt: bundle?.archive.generatedAt ?? record.finishedAt ?? record.startedAt,
+      dataVersion: bundle?.archive.dataVersion ?? 0,
+    });
+    return { status, events };
   }
 
   private emit(runtime: JobRuntime, event: SseEventName, data: unknown): void {

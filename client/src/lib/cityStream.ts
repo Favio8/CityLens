@@ -158,6 +158,14 @@ export interface GenerateOptions {
   force?: boolean;
   modules?: ModuleName[];
   adminToken?: string;
+  /** 用户发起的生成尝试标识；缺省时由控制器生成。 */
+  attemptId?: string;
+}
+
+/** 恢复请求：只携带稳定任务标识，绝不携带 force/modules。 */
+export interface ResumeOptions {
+  jobId?: string;
+  attemptId?: string;
 }
 
 export interface CityStreamDeps {
@@ -167,6 +175,8 @@ export interface CityStreamDeps {
     options: GenerateOptions,
     signal: AbortSignal,
   ) => Promise<Response>;
+  /** 只读恢复：并入运行中的原任务或回放其终态；不得创建新生成。 */
+  fetchResume: (cityId: string, options: ResumeOptions, signal: AbortSignal) => Promise<Response>;
   consume: (
     response: Response,
     onEvent: (event: RawSseEvent) => void,
@@ -183,6 +193,15 @@ export interface CityStreamDeps {
 
 const DEFAULT_MAX_RECONNECTS = 2;
 const DEFAULT_RECONNECT_DELAY_MS = 800;
+
+/** 一次用户发起的生成尝试的稳定标识；与 jobId 独立，meta 丢失时仍可恢复。 */
+function createAttemptId(): string {
+  const cryptoObject = globalThis.crypto;
+  if (cryptoObject && typeof cryptoObject.randomUUID === 'function') {
+    return cryptoObject.randomUUID();
+  }
+  return `attempt-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
+}
 
 const defaultWait = (ms: number, signal: AbortSignal): Promise<void> =>
   new Promise((resolve, reject) => {
@@ -210,6 +229,8 @@ export class CityStreamController {
   private archiveController: AbortController | null = null;
   private autoStartedBatch = -1;
   private reconnects = 0;
+  /** 本次用户发起的生成尝试标识：恢复时与 meta.jobId 一起构成稳定任务标识。 */
+  private attemptId: string | null = null;
   /** 本轮生成的完成标记：与 state.done（可能是上一轮/缓存的 done）严格区分。 */
   private runDone = false;
   private readonly maxReconnects: number;
@@ -234,6 +255,7 @@ export class CityStreamController {
     this.batch += 1;
     const batch = this.batch;
     this.reconnects = 0;
+    this.attemptId = null;
     this.abortStream();
     this.abortArchive();
     this.commit(initialStreamState, batch);
@@ -288,7 +310,10 @@ export class CityStreamController {
     })();
   }
 
-  /** 发起（或并入）一次流式生成；重复调用在同一批次内被忽略。 */
+  /**
+   * 用户显式发起（或并入）一次流式生成：开始生成 / 强制刷新 / 单卷重试。
+   * 每次都是新的生成尝试（新 attemptId），恢复原任务不走这里。
+   */
   async startGeneration(options: GenerateOptions = {}): Promise<void> {
     if (this.closed) return;
     const cityId = this.cityId;
@@ -303,6 +328,11 @@ export class CityStreamController {
     const controller = new AbortController();
     this.streamController = controller;
 
+    // 新的生成尝试：生成稳定 attemptId；上一轮 jobId 不再适用，
+    // 否则「meta 前断线」的恢复会错误地找回上一轮任务。
+    const attemptId = options.attemptId ?? createAttemptId();
+    this.attemptId = attemptId;
+
     this.commit(
       {
         ...this.state,
@@ -313,60 +343,44 @@ export class CityStreamController {
         fatal: null,
         fromCache: false,
         notice: null,
+        jobId: null,
       },
       batch,
     );
 
-    try {
-      const response = await this.deps.fetchStream(cityId, options, controller.signal);
-      if (!this.isCurrent(batch)) return;
-      if (!response.ok || !response.body) {
-        const payload = (await response.json().catch(() => null)) as {
-          code?: string;
-          message?: string;
-          retryAfterSec?: number;
-        } | null;
-        throw new ApiRequestError(
-          payload?.code ?? 'REQUEST_FAILED',
-          payload?.message ?? `生成请求失败（HTTP ${response.status}）`,
-          response.status,
-          payload?.retryAfterSec,
-        );
-      }
-      await this.deps.consume(response, (event) => this.handleEvent(event, batch), controller.signal);
-      if (!this.isCurrent(batch)) return;
-      // 流正常结束但本轮未收到 done：网络中断或被截断，走有界重连。
-      if (!this.runDone) {
-        await this.reconnectOrFail(options, batch);
-      }
-    } catch (error) {
-      if (!this.isCurrent(batch)) return;
-      // 主动取消（切城 / 关闭 / 重新开始）：静默，不重连。
-      if ((error as Error).name === 'AbortError') return;
-      // 可恢复的网络类异常（连接失败、响应体读取中断、无业务错误体）：
-      // 与「缺少 done 的 EOF」走同一条有界恢复流程。
-      if (isRecoverableStreamError(error)) {
-        await this.reconnectOrFail(options, batch);
-        return;
-      }
-      if (error instanceof ApiRequestError) {
-        // 明确的业务错误（冷却 / 预算 / 未配置 / 鉴权失败…）：保留服务端
-        // code、message、retryAfterSec，直接终态，不做无谓重连。
-        this.commit({ ...this.state, ...mapApiError(error) }, batch);
-        return;
-      }
-      this.commit(
-        {
-          ...this.state,
-          phase: 'error',
-          fatal: { code: 'NETWORK_ERROR', message: '网络中断，未能连通读城服务' },
-        },
-        batch,
-      );
-    } finally {
-      // 只清理本批次自己的流句柄，绝不清除新任务的运行标志。
-      if (this.streamController === controller) this.streamController = null;
-    }
+    await this.runConnection('generate', { ...options, attemptId }, batch, controller);
+  }
+
+  /**
+   * 断线恢复 / 「继续展卷」：只读取状态、回放原任务终态或并入运行中的原任务。
+   * 不产生新生成请求（无 force/modules），因此不新增任务、不调用生成器、不计费。
+   */
+  async resumeGeneration(): Promise<void> {
+    if (this.closed) return;
+    const cityId = this.cityId;
+    if (!cityId) return;
+    if (this.streamController && !this.streamController.signal.aborted) return;
+    this.batch += 1;
+    const batch = this.batch;
+    this.reconnects = 0;
+    this.runDone = false;
+    this.abortStream();
+    const controller = new AbortController();
+    this.streamController = controller;
+
+    this.commit(
+      {
+        ...this.state,
+        // 保留已收到的模块与档案（恢复失败也不清空旧内容）。
+        phase: 'streaming_init',
+        done: null,
+        fatal: null,
+        notice: null,
+      },
+      batch,
+    );
+
+    await this.runConnection('resume', {}, batch, controller);
   }
 
   retryModule(name: ModuleName): void {
@@ -455,6 +469,8 @@ export class CityStreamController {
           dark: { primary: '#D98A6E', secondary: '#A8ADB4', accent: '#E0B860' },
         },
       };
+      // 服务端回显的 attemptId 是权威值（旧客户端可能未生成自己的标识）。
+      if (parsed.data.attemptId) this.attemptId = parsed.data.attemptId;
       this.commit(
         { ...this.state, phase: 'streaming_modules', jobId: parsed.data.jobId, meta },
         batch,
@@ -572,15 +588,89 @@ export class CityStreamController {
   }
 
   /**
-   * 有界重连：复用服务端单飞任务（并入并回放），保留已收到的模块。
-   * 关键约束：
-   * - 重连**不再发送 force**：force 的语义是「创建一次新刷新」，会撞上 5 分钟刷新冷却；
-   *   而重连的目的是恢复原任务——非 force 请求在服务端会并入仍在运行的任务，
-   *   或在任务已完成时按缓存立即回放终态（不重复生成、不重复计费）。
-   * - 非 ok 响应必须解析服务端错误体，保留 code/message/retryAfterSec，
-   *   区分「可再试一次的网络异常」与「明确的业务终态（冷却/预算/鉴权）」。
+   * 单次连接执行器：generate 走用户生成契约，resume 走只读恢复契约。
+   * 两种连接的异常处理一致：可恢复网络异常走有界恢复；明确业务终态直接收尾。
    */
-  private async reconnectOrFail(options: GenerateOptions, batch: number): Promise<void> {
+  private async runConnection(
+    kind: 'generate' | 'resume',
+    options: GenerateOptions,
+    batch: number,
+    controller: AbortController,
+  ): Promise<void> {
+    try {
+      const cityId = this.cityId;
+      if (!cityId) return;
+      const response =
+        kind === 'generate'
+          ? await this.deps.fetchStream(cityId, options, controller.signal)
+          : await this.deps.fetchResume(
+              cityId,
+              {
+                ...(this.state.jobId ? { jobId: this.state.jobId } : {}),
+                ...(this.attemptId ? { attemptId: this.attemptId } : {}),
+              },
+              controller.signal,
+            );
+      if (!this.isCurrent(batch)) return;
+      if (!response.ok || !response.body) {
+        const payload = (await response.json().catch(() => null)) as {
+          code?: string;
+          message?: string;
+          retryAfterSec?: number;
+        } | null;
+        throw new ApiRequestError(
+          payload?.code ?? 'REQUEST_FAILED',
+          payload?.message ?? `请求失败（HTTP ${response.status}）`,
+          response.status,
+          payload?.retryAfterSec,
+        );
+      }
+      await this.deps.consume(
+        response,
+        (event) => this.handleEvent(event, batch),
+        controller.signal,
+      );
+      if (!this.isCurrent(batch)) return;
+      // 流正常结束但本轮未收到 done：网络中断或被截断，走有界恢复。
+      if (!this.runDone) await this.reconnectOrFail(batch);
+    } catch (error) {
+      if (!this.isCurrent(batch)) return;
+      // 主动取消（切城 / 关闭 / 重新开始）：静默，不重连。
+      if ((error as Error).name === 'AbortError') return;
+      // 可恢复的网络类异常（连接失败、响应体读取中断、无业务错误体）：
+      // 与「缺少 done 的 EOF」走同一条有界恢复流程。
+      if (isRecoverableStreamError(error)) {
+        await this.reconnectOrFail(batch);
+        return;
+      }
+      if (error instanceof ApiRequestError) {
+        // 明确业务终态（冷却 / 预算 / 恢复不可用 / 未配置…）：
+        // 保留服务端 code/message/retryAfterSec，不自动重启生成。
+        this.commit({ ...this.state, ...mapApiError(error) }, batch);
+        return;
+      }
+      this.commit(
+        {
+          ...this.state,
+          phase: 'error',
+          fatal: { code: 'NETWORK_ERROR', message: '网络中断，未能连通读城服务' },
+        },
+        batch,
+      );
+    } finally {
+      // 只清理本批次自己的流句柄，绝不清除新任务的运行标志。
+      if (this.streamController === controller) this.streamController = null;
+    }
+  }
+
+  /**
+   * 有界恢复：**只调用只读恢复契约**，携带 jobId / attemptId 找回原任务。
+   * - 原任务仍在运行：服务端并入并在同一连接上随收尾发送 done；
+   * - 原任务已结束：服务端只读回放其终态与可用档案；
+   * - 不可恢复（不存在/过期/进程重启）：保留明确错误码，由用户显式重新展卷。
+   * 恢复过程不发送 force/modules，因此不会创建第二个生成任务、不会重复计费。
+   */
+  private async reconnectOrFail(batch: number): Promise<void> {
     if (!this.isCurrent(batch)) return;
     if (this.reconnects >= this.maxReconnects) {
       this.commit(
@@ -608,56 +698,10 @@ export class CityStreamController {
     // isCurrent 已保证没有更新批次的任务在跑（startGeneration 会递增批次）。
     this.batch += 1;
     const nextBatch = this.batch;
-    // 重连也是「一次新的连接尝试」：完成标记重新计。
+    // 恢复也是「一次新的连接尝试」：完成标记重新计。
     this.runDone = false;
     const controller = new AbortController();
     this.streamController = controller;
-    try {
-      const cityId = this.cityId;
-      if (!cityId) return;
-      // 恢复原任务：剥离 force（见方法注释）。
-      const recoverOptions: GenerateOptions = { ...options, force: false };
-      const response = await this.deps.fetchStream(cityId, recoverOptions, controller.signal);
-      if (!this.isCurrent(nextBatch)) return;
-      if (!response.ok || !response.body) {
-        const payload = (await response.json().catch(() => null)) as {
-          code?: string;
-          message?: string;
-          retryAfterSec?: number;
-        } | null;
-        throw new ApiRequestError(
-          payload?.code ?? 'REQUEST_FAILED',
-          payload?.message ?? `重连失败（HTTP ${response.status}）`,
-          response.status,
-          payload?.retryAfterSec,
-        );
-      }
-      await this.deps.consume(
-        response,
-        (event) => this.handleEvent(event, nextBatch),
-        controller.signal,
-      );
-      if (!this.isCurrent(nextBatch)) return;
-      if (!this.runDone) {
-        await this.reconnectOrFail(options, nextBatch);
-      }
-    } catch (error) {
-      if (!this.isCurrent(nextBatch)) return;
-      // 主动取消：静默。
-      if ((error as Error).name === 'AbortError') return;
-      // 可恢复的网络异常：继续有界重连。
-      if (isRecoverableStreamError(error)) {
-        await this.reconnectOrFail(options, nextBatch);
-        return;
-      }
-      if (error instanceof ApiRequestError) {
-        // 明确的业务终态（如未达发布门槛后的 COOLDOWN）：保留服务端信息收尾。
-        this.commit({ ...this.state, ...mapApiError(error) }, nextBatch);
-        return;
-      }
-      await this.reconnectOrFail(options, nextBatch);
-    } finally {
-      if (this.streamController === controller) this.streamController = null;
-    }
+    await this.runConnection('resume', {}, nextBatch, controller);
   }
 }

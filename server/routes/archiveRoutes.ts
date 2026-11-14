@@ -3,10 +3,11 @@
  * - GET /api/cities/:cityId：缓存命中 < 500ms；未生成 404；失败冷却 429。
  * - POST /api/cities/:cityId/generate：SSE（fetch 流），meta→theme→module…→done。
  */
-import type { FastifyInstance, FastifyReply } from 'fastify';
+import type { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
 import {
   GenerateRequestSchema,
   MODULE_NAMES,
+  ResumeRequestSchema,
   type ModuleName,
 } from '../../shared/schema';
 import { config, isOriginAllowed } from '../config';
@@ -21,7 +22,7 @@ import {
   loadBundle,
   logCacheHit,
 } from '../services/cacheService';
-import type { JobManager, SseEnvelope } from '../services/jobManager';
+import type { JobManager, JobRuntime, SseEnvelope } from '../services/jobManager';
 import { hashIp, type RateLimiter } from '../services/rateLimiter';
 import { buildDayTrip } from '../services/dayTripService';
 import { loadCitySnapshot } from '../services/cityFactSnapshot';
@@ -41,6 +42,124 @@ const PING_INTERVAL_MS = 15_000;
 
 function writeEvent(reply: FastifyReply, envelope: SseEnvelope): void {
   reply.raw.write(`event: ${envelope.event}\ndata: ${JSON.stringify(envelope.data)}\n\n`);
+}
+
+interface SseChannel {
+  write: (envelope: SseEnvelope) => void;
+  end: () => void;
+  isClosed: () => boolean;
+}
+
+/**
+ * 建立 SSE 响应通道（hijack + 头 + retry + 心跳）。
+ * 生成流、恢复流、终态回放共用，避免三套清理逻辑各自遗漏连接。
+ */
+function openSseChannel(request: FastifyRequest, reply: FastifyReply): SseChannel {
+  reply.hijack();
+  const origin = request.headers.origin;
+  const headers: Record<string, string> = {
+    'Content-Type': 'text/event-stream; charset=utf-8',
+    'Cache-Control': 'no-cache, no-transform',
+    Connection: 'keep-alive',
+    'X-Accel-Buffering': 'no',
+    Vary: 'Origin',
+  };
+  // 只回显白名单内的来源；不携带 Cookie，因此不开启 credentials。
+  if (origin && isOriginAllowed(origin)) headers['Access-Control-Allow-Origin'] = origin;
+  reply.raw.writeHead(200, headers);
+  reply.raw.write(`retry: 3000\n\n`);
+
+  let closed = false;
+  let ping: ReturnType<typeof setInterval> | null = null;
+  const cleanup = (): void => {
+    if (closed) return;
+    closed = true;
+    if (ping) clearInterval(ping);
+  };
+  ping = setInterval(() => {
+    try {
+      reply.raw.write(`event: ping\ndata: {}\n\n`);
+    } catch {
+      cleanup();
+    }
+  }, PING_INTERVAL_MS);
+  reply.raw.on('close', cleanup);
+  reply.raw.on('error', cleanup);
+
+  return {
+    write: (envelope) => {
+      if (closed) return;
+      try {
+        writeEvent(reply, envelope);
+      } catch {
+        cleanup();
+      }
+    },
+    end: () => {
+      cleanup();
+      reply.raw.end();
+    },
+    isClosed: () => closed,
+  };
+}
+
+/** 把运行时任务的事件（含回放）接到 SSE；收到 done 即收尾。 */
+function streamJobRuntime(
+  request: FastifyRequest,
+  reply: FastifyReply,
+  jobManager: JobManager,
+  runtime: JobRuntime,
+  requestStartedAt: number,
+  notice?: { code: string; message: string },
+): void {
+  const channel = openSseChannel(request, reply);
+  if (notice) {
+    channel.write({
+      event: 'notice',
+      data: { seq: runtime.seq, ...notice },
+      seq: runtime.seq,
+    });
+  }
+  // attach 会同步回放历史事件；只统计回放之后的首个实时事件。
+  const replayedCount = runtime.replay.length;
+  let firstEventLogged = false;
+  let detach: (() => void) | null = null;
+  detach = jobManager.attach(runtime, (event) => {
+    if (channel.isClosed()) {
+      detach?.();
+      return;
+    }
+    if (event.seq > replayedCount && !firstEventLogged) {
+      firstEventLogged = true;
+      console.log(
+        `[sse] city=${runtime.cityId} firstEvent=${event.event} ms=${Date.now() - requestStartedAt}`,
+      );
+    }
+    channel.write(event);
+    if (event.event === 'done') {
+      detach?.();
+      channel.end();
+    }
+  });
+  // 客户端断开后必须退订，避免 runtime.subscribers 泄漏（任务仍继续生成）。
+  const unsubscribe = (): void => {
+    detach?.();
+    detach = null;
+  };
+  reply.raw.on('close', unsubscribe);
+  reply.raw.on('error', unsubscribe);
+  if (channel.isClosed()) unsubscribe();
+}
+
+/** 已结束任务的终态回放：一次性写完并关闭，不订阅、不生成。 */
+function streamTerminal(
+  request: FastifyRequest,
+  reply: FastifyReply,
+  events: SseEnvelope[],
+): void {
+  const channel = openSseChannel(request, reply);
+  for (const event of events) channel.write(event);
+  channel.end();
 }
 
 function cooldownError(cityId: string, untilIso: string): ApiError {
@@ -185,77 +304,64 @@ export function registerArchiveRoutes(app: FastifyInstance, deps: ArchiveRouteDe
         requesterHash,
         force,
         modules,
+        ...(body.attemptId ? { attemptId: body.attemptId } : {}),
       });
 
-      // attach 会同步回放历史事件；只统计回放之后的首个实时事件，
-      // 否则计时的只是回放写入耗时（新任务的首个实时事件是 theme）。
-      const replayedCount = runtime.replay.length;
-      let firstEventLogged = false;
       // 并入既有任务时先发一条非致命提示（PRD 2.2：ATTACHED 状态反馈）。
-      const attachedNotice = attached
-        ? {
-            event: 'notice' as const,
-            seq: runtime.seq,
-            data: {
-              code: 'ATTACHED',
-              message: '已有读者正在为此城展卷，已为你并入',
-            },
-          }
-        : null;
-      reply.hijack();
-      const origin = request.headers.origin;
-      const headers: Record<string, string> = {
-        'Content-Type': 'text/event-stream; charset=utf-8',
-        'Cache-Control': 'no-cache, no-transform',
-        Connection: 'keep-alive',
-        'X-Accel-Buffering': 'no',
-        Vary: 'Origin',
-      };
-      // 只回显白名单内的来源；不携带 Cookie，因此不开启 credentials。
-      if (origin && isOriginAllowed(origin)) headers['Access-Control-Allow-Origin'] = origin;
-      reply.raw.writeHead(200, headers);
-      reply.raw.write(`retry: 3000\n\n`);
-      if (attachedNotice) writeEvent(reply, attachedNotice);
+      streamJobRuntime(
+        request,
+        reply,
+        jobManager,
+        runtime,
+        requestStartedAt,
+        attached
+          ? { code: 'ATTACHED', message: '已有读者正在为此城展卷，已为你并入' }
+          : undefined,
+      );
+      return reply;
+    },
+  );
 
-      const ping = setInterval(() => {
-        try {
-          reply.raw.write(`event: ping\ndata: {}\n\n`);
-        } catch {
-          clearInterval(ping);
-        }
-      }, PING_INTERVAL_MS);
+  /**
+   * 断线恢复（只读契约）：并入仍在运行的原任务，或回放已结束原任务的终态。
+   * 恢复不创建 generation_jobs、不调用生成器、不记 LLM 账、不写档案，
+   * 也不受刷新冷却与预算入口影响；未发布档案仍按 GET 口径拒绝读取内容。
+   */
+  app.post<{ Params: { cityId: string }; Body: unknown }>(
+    '/api/cities/:cityId/generate/resume',
+    async (request, reply) => {
+      const body = ResumeRequestSchema.parse(request.body ?? {});
+      const city = repo.getCity(request.params.cityId);
+      if (!city) throw new ApiError('CITY_NOT_FOUND', '版图中暂无此城', 404);
 
-      let detach: (() => void) | null = null;
-      let closed = false;
-      const cleanup = (): void => {
-        if (closed) return;
-        closed = true;
-        clearInterval(ping);
-        detach?.();
-        detach = null;
-      };
-
-      detach = jobManager.attach(runtime, (event) => {
-        try {
-          if (event.seq > replayedCount && !firstEventLogged) {
-            firstEventLogged = true;
-            console.log(
-              `[sse] city=${runtime.cityId} firstEvent=${event.event} ms=${Date.now() - requestStartedAt}`,
-            );
-          }
-          writeEvent(reply, event);
-          if (event.event === 'done') {
-            cleanup();
-            reply.raw.end();
-          }
-        } catch {
-          cleanup();
-        }
+      const outcome = jobManager.resume({
+        city,
+        aliases: repo.listAncientAliases(city.cityId),
+        ...(body.jobId ? { jobId: body.jobId } : {}),
+        ...(body.attemptId ? { attemptId: body.attemptId } : {}),
       });
-      if (closed) detach?.();
 
-      reply.raw.on('close', cleanup);
-      reply.raw.on('error', cleanup);
+      if (outcome.kind === 'unavailable') {
+        throw new ApiError(outcome.code, outcome.message, 409);
+      }
+      if (outcome.kind === 'terminal' && outcome.status === 'unpublished') {
+        // 未发布档案不暴露内容：与 GET 完全一致——冷却中 429，否则明确不可恢复。
+        const cooldown = jobRepo.findActiveCooldown(city.cityId, new Date().toISOString());
+        if (cooldown?.cooldownUntil) throw cooldownError(city.cityId, cooldown.cooldownUntil);
+        throw new ApiError(
+          'JOB_UNPUBLISHED',
+          '原任务未达发布门槛，没有可读档案；如需继续请手动重新展卷',
+          409,
+        );
+      }
+      if (outcome.kind === 'attached') {
+        streamJobRuntime(request, reply, jobManager, outcome.runtime, Date.now(), {
+          code: 'RESUMED',
+          message: '已并入仍在进行的原任务，不会重新生成',
+        });
+        return reply;
+      }
+      streamTerminal(request, reply, outcome.events);
       return reply;
     },
   );

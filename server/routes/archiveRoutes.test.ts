@@ -23,12 +23,42 @@ interface SseResult {
   events: SseRecord[];
 }
 
+/**
+ * 所有已打开的响应体读取器：afterEach 先统一取消，再关服务端与数据库。
+ * SSE 连接不取消会让 app.close() 等待到 hook 超时，也会给 Worker 留下悬挂句柄。
+ */
+const openReaders: Array<() => Promise<void>> = [];
+const openedDbs: Db[] = [];
+
+function trackReader(reader: ReadableStreamDefaultReader<Uint8Array>): () => Promise<void> {
+  let cancelled = false;
+  const cancel = async (): Promise<void> => {
+    if (cancelled) return;
+    cancelled = true;
+    try {
+      await reader.cancel();
+    } catch {
+      // 流已结束/已取消
+    }
+  };
+  openReaders.push(cancel);
+  return cancel;
+}
+
+/** 测试专用内存库：统一登记，afterEach 关闭，避免跨用例累积原生句柄。 */
+function memoryDb(): Db {
+  const db = openDb(':memory:');
+  openedDbs.push(db);
+  return db;
+}
+
 async function collectSse(url: string, init?: RequestInit): Promise<SseResult> {
   const response = await fetch(url, init);
   if (!response.ok || !response.body) {
     return { status: response.status, events: [] };
   }
   const reader = response.body.getReader();
+  const cancel = trackReader(reader);
   const decoder = new TextDecoder();
   let buffer = '';
   const events: SseRecord[] = [];
@@ -46,7 +76,7 @@ async function collectSse(url: string, init?: RequestInit): Promise<SseResult> {
       const data = dataLine ? (JSON.parse(dataLine.slice(6)) as Record<string, unknown>) : {};
       events.push({ event, data });
       if (event === 'done') {
-        await reader.cancel();
+        await cancel();
         return { status: response.status, events };
       }
     }
@@ -73,7 +103,9 @@ class SwitchableGenerator implements ModuleGenerator {
 class HangingGenerator implements ModuleGenerator {
   readonly name = 'hanging';
   readonly promptVersion = 'hanging-v1';
+  calls = 0;
   async generate(): Promise<GeneratedModule> {
+    this.calls += 1;
     return new Promise<GeneratedModule>(() => undefined);
   }
 }
@@ -113,6 +145,35 @@ class GatedCompleteGenerator implements ModuleGenerator {
 }
 
 const generatedAt = '2026-11-14T00:00:00.000Z';
+
+/**
+ * 可切换失败模块、逐次计费且确定性的生成器（恢复契约测试专用）。
+ * - 每次 generate 都调用 onLlmCall（模拟真实 LLM 计费），除非 billOnly 指定只对某模块计费；
+ * - 模块数据固定合法，避免依赖本地事实快照。
+ */
+class BillingGenerator implements ModuleGenerator {
+  readonly name = 'billing-test';
+  readonly promptVersion = 'billing-v1';
+  failModules: ModuleName[] = [];
+  billOnly: ModuleName | null = null;
+  calls: ModuleName[] = [];
+
+  async generate(input: GenerateInput): Promise<GeneratedModule> {
+    this.calls.push(input.module);
+    if (this.billOnly === null || this.billOnly === input.module) input.onLlmCall?.();
+    if (this.failModules.includes(input.module)) {
+      throw new GenerationError('LLM_TIMEOUT', `模拟失败：模块 ${input.module} 超时`);
+    }
+    return {
+      status: 'ok',
+      verification: 'verified_by_source',
+      sources: [
+        { id: 'S-OK', type: 'preset_manual', title: '测试来源', retrievedAt: generatedAt },
+      ],
+      data: completeModuleData(input.module),
+    };
+  }
+}
 
 /** GatedCompleteGenerator 使用的合法模块数据（sourceRefs 指向生成器提供的 S-OK）。 */
 function completeModuleData(module: ModuleName): unknown {
@@ -256,6 +317,7 @@ async function openSse(
     };
   }
   const reader = response.body.getReader();
+  const cancelReader = trackReader(reader);
   const decoder = new TextDecoder();
   let buffer = '';
   const readMore = async (): Promise<SseRecord | null> => {
@@ -293,10 +355,33 @@ async function openSse(
         if (!record) return;
       }
     },
-    cancel: async () => {
-      await reader.cancel();
-    },
+    cancel: cancelReader,
   };
+}
+
+/** 已发布档案的只读签名：用于断言恢复未修改版本号与生成时间。 */
+async function readPublishedArchive(
+  base: string,
+  cityId: string,
+): Promise<{ status: string; dataVersion: number; generatedAt: string; identity: unknown }> {
+  const response = await fetch(`${base}/api/cities/${cityId}`);
+  expect(response.status).toBe(200);
+  const body = (await response.json()) as {
+    identity: unknown;
+    meta: { status: string; dataVersion: number; generatedAt: string };
+  };
+  return {
+    status: body.meta.status,
+    dataVersion: body.meta.dataVersion,
+    generatedAt: body.meta.generatedAt,
+    identity: body.identity,
+  };
+}
+
+/** generation_jobs 总行数（恢复是否新增任务的硬断言）。 */
+function countJobs(db: Db): number {
+  const row = db.prepare('SELECT COUNT(*) AS n FROM generation_jobs').get() as { n: number };
+  return row.n;
 }
 
 /** 轮询等待条件成立（服务端任务收尾等异步状态）。 */
@@ -317,7 +402,7 @@ async function waitFor(
 }
 
 function setup(generator: ModuleGenerator = new MockGenerator({ delayMs: 5 })) {
-  const db = openDb(':memory:');
+  const db = memoryDb();
   const insertCity = db.prepare(
     `INSERT INTO cities
        (city_id, standard_name, province, admin_level, pinyin, english_name, center_lng, center_lat, hot_rank)
@@ -346,7 +431,17 @@ async function listen(app: ReturnType<typeof buildApp>): Promise<string> {
 }
 
 afterEach(async () => {
-  await Promise.all(runningApps.splice(0).map((app) => app.close()));
+  // 顺序很关键：先取消所有 SSE 读取器，app.close() 才不会被悬挂连接拖到超时；
+  // 最后关闭内存库，避免原生句柄在 Worker 内跨用例累积。
+  for (const cancel of openReaders.splice(0)) await cancel();
+  await Promise.all(runningApps.splice(0).map((app) => app.close().catch(() => undefined)));
+  for (const db of openedDbs.splice(0)) {
+    try {
+      db.close();
+    } catch {
+      // 已关闭
+    }
+  }
 });
 
 describe('SSE 生成与单飞', () => {
@@ -521,7 +616,7 @@ describe('保护与限流', () => {
 
   it('P0：force 重新生成 identity 失败后旧档案保持可读，且不被冷却', async () => {
     // 预置一份可公开读取的 partial 档案（identity + landmarks + 其余 ok）。
-    const db = openDb(':memory:');
+    const db = memoryDb();
     const insertCity = db.prepare(
       `INSERT INTO cities
          (city_id, standard_name, province, admin_level, pinyin, english_name, center_lng, center_lat, hot_rank)
@@ -804,83 +899,69 @@ describe('保护与限流', () => {
 });
 
 /**
- * 「服务端已完成、客户端丢失 done」的恢复路径（问题二）。
- * 客户端重连必须是非 force：服务端据此并入仍在运行的任务，或在任务已完成时
- * 按缓存立即回放终态——不重复生成、不重复计费、不绕过刷新冷却。
+ * 恢复契约（本轮专项）：断线后只能调用 POST /generate/resume。
+ * 该入口只并入运行中的原任务或只读回放终态，绝不进入 JobManager.start，
+ * 因此不新增 generation_jobs、不调用生成器、不写 llm_call_log、不改档案版本/生成时间。
  */
-describe('SSE 断线恢复：服务端已完成、客户端丢失 done', () => {
-  it('全部完成：截断后非 force 重连读取终态档案，不重复生成计费', async () => {
-    const gated = new GatedCompleteGenerator();
-    const { db, app } = setup(gated);
+describe('恢复契约：断线只读恢复，不重新生成计费', () => {
+  it('全部完成：服务端已完成、客户端丢失 done → 恢复终态，不新增任务/调用/账本/档案写入', async () => {
+    const billing = new BillingGenerator();
+    const { db, app } = setup(billing);
     const base = await listen(app);
     const jobs = new JobRepo(db);
 
-    // 第一次 force 生成：读到第 7 个模块后取消（模拟客户端丢失 done）。
     const first = await openSse(
       `${base}/api/cities/CN-350500/generate`,
       {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ force: true }),
+        body: JSON.stringify({ force: true, attemptId: 'attempt-complete' }),
       },
-      (events) => events.filter((item) => item.event === 'module').length >= 7,
+      (events) => events.some((item) => item.event === 'meta'),
     );
     expect(first.status).toBe(200);
+    const meta = first.events.find((item) => item.event === 'meta')!.data as {
+      jobId: string;
+      attemptId?: string;
+    };
+    expect(meta.attemptId).toBe('attempt-complete');
     await first.cancel();
-    // 此刻服务端任务仍在运行（最后一个模块被挂起）。
-    expect(jobs.getRunning('CN-350500')).not.toBeNull();
-
-    // 服务端任务随后完成——客户端永远收不到它的 done（复现的丢失场景）。
-    gated.releaseLast();
     await waitFor(async () => jobs.getRunning('CN-350500') === null, 10_000, 50, '任务收尾');
-    const callsAfterFirst = gated.calls;
 
-    // 旧客户端行为（重连仍发 force）：被 5 分钟刷新冷却拦截，进入无法恢复的终态。
-    const forceRetry = await fetch(`${base}/api/cities/CN-350500/generate`, {
+    const callsAfter = billing.calls.length;
+    const llmAfter = jobs.countLlmCallsSince('1970-01-01T00:00:00.000Z');
+    const before = await readPublishedArchive(base, 'CN-350500');
+    expect(callsAfter).toBe(MODULE_NAMES.length);
+    expect(llmAfter).toBe(MODULE_NAMES.length);
+
+    const recovered = await collectSse(`${base}/api/cities/CN-350500/generate/resume`, {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ force: true }),
-    });
-    expect(forceRetry.status).toBe(429);
-    expect(((await forceRetry.json()) as { code: string }).code).toBe('REGEN_COOLDOWN');
-
-    // 客户端恢复：非 force 重连 → 服务端按缓存回放终态。
-    const recovered = await collectSse(`${base}/api/cities/CN-350500/generate`, {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({}),
+      body: JSON.stringify({ jobId: meta.jobId }),
     });
     expect(recovered.status).toBe(200);
+    expect(recovered.events[0]!.event).toBe('notice');
+    expect(recovered.events[0]!.data.code).toBe('RESUMED_TERMINAL');
     const done = recovered.events.at(-1)!;
     expect(done.event).toBe('done');
     expect(done.data.status).toBe('complete');
-    // 终态内容随回放下发。
     const identity = recovered.events.find(
       (item) => item.event === 'module' && item.data.name === 'identity',
     );
     expect(identity).toBeDefined();
-    expect((identity!.data.data as { oneLinePersona: string }).oneLinePersona).toContain('刺桐港');
+    expect((identity!.data as { fromCache?: boolean }).fromCache).toBe(true);
 
-    // 不重复生成、不重复计费：重连任务 0 次 LLM 调用，生成器总调用次数不变。
-    expect(gated.calls).toBe(callsAfterFirst);
-    const rows = db
-      .prepare('SELECT job_id, status, llm_calls FROM generation_jobs ORDER BY started_at')
-      .all() as Array<{ job_id: string; status: string; llm_calls: number }>;
-    expect(rows).toHaveLength(2);
-    expect(rows[0]!.status).toBe('done');
-    expect(rows[1]!.llm_calls).toBe(0);
-    // 最终展示内容：GET 返回完整档案。
-    const hit = await fetch(`${base}/api/cities/CN-350500`);
-    expect(hit.status).toBe(200);
-    const body = (await hit.json()) as { identity: { oneLinePersona: string } | null };
-    expect(body.identity?.oneLinePersona).toContain('刺桐港');
+    // 恢复没有新增任务、没有生成器调用、没有账本记录、没有档案写入。
+    expect(countJobs(db)).toBe(1);
+    expect(billing.calls.length).toBe(callsAfter);
+    expect(jobs.countLlmCallsSince('1970-01-01T00:00:00.000Z')).toBe(llmAfter);
+    expect(await readPublishedArchive(base, 'CN-350500')).toEqual(before);
   });
 
-  it('重连竞态：并入运行中任务后恰好完成，仍能收到 done 终态', async () => {
-    // 复现场景：客户端在服务端完成前后之间重连（非 force）——必须并入运行中的任务，
-    // 并随任务收尾拿到 done，而不是新建刷新或卡在无终态。
-    const gated = new GatedCompleteGenerator();
-    const { db, app } = setup(gated);
+  it('部分完成且含失败模块：恢复回放 partial 终态与失败提示，不自动重试失败模块', async () => {
+    const billing = new BillingGenerator();
+    billing.failModules = ['dataPulse', 'localSoul'];
+    const { db, app } = setup(billing);
     const base = await listen(app);
     const jobs = new JobRepo(db);
 
@@ -889,105 +970,367 @@ describe('SSE 断线恢复：服务端已完成、客户端丢失 done', () => {
       {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ force: true }),
+        body: JSON.stringify({ force: true, attemptId: 'attempt-partial' }),
       },
-      (events) => events.filter((item) => item.event === 'module').length >= 3,
+      (events) => events.some((item) => item.event === 'meta'),
     );
-    expect(first.status).toBe(200);
+    const meta = first.events.find((item) => item.event === 'meta')!.data as { jobId: string };
     await first.cancel();
-    expect(jobs.getRunning('CN-350500')).not.toBeNull();
-
-    // 非 force 重连：任务仍在运行（最后一个模块被挂起）→ 必须并入而非新建。
-    const reconnected = await openSse(
-      `${base}/api/cities/CN-350500/generate`,
-      {
-        method: 'POST',
-        headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({}),
-      },
-      (events) => events.some((item) => item.event === 'notice' && item.data.code === 'ATTACHED'),
-    );
-    expect(reconnected.status).toBe(200);
-    expect(
-      reconnected.events.some((item) => item.event === 'notice' && item.data.code === 'ATTACHED'),
-    ).toBe(true);
-
-    // 并入确认后任务才收尾：同一条连接必须随完成收到 done。
-    gated.releaseLast();
-    await reconnected.readUntil((events) => events.some((item) => item.event === 'done'));
-    const done = reconnected.events.at(-1)!;
-    expect(done.event).toBe('done');
-    expect(done.data.status).toBe('complete');
-    await reconnected.cancel();
-
-    // 竞态未产生第二个任务；Mock 不冒充付费调用，llm_calls 保持 0。
     await waitFor(async () => jobs.getRunning('CN-350500') === null, 10_000, 50, '任务收尾');
-    expect(gated.calls).toBe(MODULE_NAMES.length);
-    const rows = db.prepare('SELECT COUNT(*) AS n FROM generation_jobs').get() as { n: number };
-    expect(rows.n).toBe(1);
-    const job = db
-      .prepare('SELECT status, llm_calls FROM generation_jobs')
-      .get() as { status: string; llm_calls: number };
-    expect(job.status).toBe('done');
-    expect(job.llm_calls).toBe(0);
-  });
+    const callsAfter = billing.calls.length;
+    const llmAfter = jobs.countLlmCallsSince('1970-01-01T00:00:00.000Z');
+    const before = await readPublishedArchive(base, 'CN-350500');
+    expect(before.status).toBe('partial');
 
-  it('部分完成：截断后重连得到 partial 终态', async () => {
-    const gated = new GatedCompleteGenerator();
-    gated.failModules = ['dataPulse']; // 7 卷成功、1 卷失败 → partial
-    const { app } = setup(gated);
-    const base = await listen(app);
-    const first = await openSse(
-      `${base}/api/cities/CN-350500/generate`,
-      {
-        method: 'POST',
-        headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ force: true }),
-      },
-      (events) => events.filter((item) => item.event === 'module').length >= 5,
-    );
-    expect(first.status).toBe(200);
-    await first.cancel();
-    await waitFor(
-      async () => (await fetch(`${base}/api/cities/CN-350500`)).status === 200,
-      10_000,
-      50,
-      'partial 发布',
-    );
-
-    const recovered = await collectSse(`${base}/api/cities/CN-350500/generate`, {
+    const recovered = await collectSse(`${base}/api/cities/CN-350500/generate/resume`, {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({}),
+      body: JSON.stringify({ jobId: meta.jobId }),
     });
     const done = recovered.events.at(-1)!;
     expect(done.event).toBe('done');
     expect(done.data.status).toBe('partial');
-    expect(done.data.failedModules).toEqual(['dataPulse']);
-    // 终态内容随回放下发（identity 有值，失败卷不带内容）。
-    const identity = recovered.events.find(
-      (item) => item.event === 'module' && item.data.name === 'identity',
-    );
-    expect(identity).toBeDefined();
-    expect((identity!.data.data as { oneLinePersona: string }).oneLinePersona).toContain('刺桐港');
+    expect(done.data.failedModules).toEqual(['localSoul', 'dataPulse']);
+    const failed = recovered.events
+      .filter((item) => item.event === 'module_error')
+      .map((item) => item.data.name);
+    expect(failed.sort()).toEqual(['dataPulse', 'localSoul']);
+    // 失败卷不携带内容；其余卷以 fromCache 回放。
+    expect(
+      recovered.events.some(
+        (item) => item.event === 'module' && item.data.name === 'dataPulse',
+      ),
+    ).toBe(false);
+    expect(
+      recovered.events.some(
+        (item) => item.event === 'module' && item.data.name === 'identity',
+      ),
+    ).toBe(true);
+
+    expect(countJobs(db)).toBe(1);
+    expect(billing.calls.length).toBe(callsAfter);
+    expect(jobs.countLlmCallsSince('1970-01-01T00:00:00.000Z')).toBe(llmAfter);
+    expect(await readPublishedArchive(base, 'CN-350500')).toEqual(before);
   });
 
-  it('未达发布门槛：重连得到 429 COOLDOWN 并保留服务端信息', async () => {
-    const failing = new MockGenerator({ delayMs: 1, failModules: [...MODULE_NAMES] });
+  it('场景 A：保留旧内容但最近一次尝试失败 → 恢复只回放失败提示与旧内容，不重跑 identity', async () => {
+    const billing = new BillingGenerator();
+    const { db, app } = setup(billing);
+    const base = await listen(app);
+    const jobs = new JobRepo(db);
+
+    // 首次生成：全部成功，建立可读档案与 identity 旧内容。
+    const seed = await collectSse(`${base}/api/cities/CN-350500/generate`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ attemptId: 'attempt-a-1' }),
+    });
+    expect(seed.events.at(-1)?.data.status).toBe('complete');
+    const identityBefore = (await readPublishedArchive(base, 'CN-350500')).identity;
+    expect(identityBefore).not.toBeNull();
+
+    // force 刷新：identity 失败，旧内容按 P0 规则保留（lastAttempt=failed）。
+    billing.failModules = ['identity'];
+    const refresh = await openSse(
+      `${base}/api/cities/CN-350500/generate`,
+      {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ force: true, attemptId: 'attempt-a-2' }),
+      },
+      (events) => events.some((item) => item.event === 'meta'),
+    );
+    const refreshMeta = refresh.events.find((item) => item.event === 'meta')!.data as {
+      jobId: string;
+    };
+    await refresh.cancel();
+    await waitFor(async () => jobs.getRunning('CN-350500') === null, 10_000, 50, '刷新收尾');
+
+    const callsAfterRefresh = billing.calls.length;
+    const llmAfterRefresh = jobs.countLlmCallsSince('1970-01-01T00:00:00.000Z');
+    const beforeResume = await readPublishedArchive(base, 'CN-350500');
+    expect(beforeResume.identity).toEqual(identityBefore);
+
+    // 客户端丢失 done 后恢复：带 jobId 的只读回放。
+    const recovered = await collectSse(`${base}/api/cities/CN-350500/generate/resume`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ jobId: refreshMeta.jobId }),
+    });
+    const done = recovered.events.at(-1)!;
+    expect(done.data.status).toBe('complete');
+    expect(done.data.failedModules).toEqual(['identity']);
+    const errorEvent = recovered.events.find(
+      (item) => item.event === 'module_error' && item.data.name === 'identity',
+    );
+    expect(errorEvent?.data.code).toBe('LLM_TIMEOUT');
+    const retained = recovered.events.find(
+      (item) =>
+        item.event === 'module' &&
+        item.data.name === 'identity' &&
+        item.data.fromCache === true,
+    );
+    expect(retained).toBeDefined();
+    expect((retained!.data as { data: unknown }).data).toEqual(identityBefore);
+
+    // 再按 attemptId 恢复一次：仍不新增任务/调用/账本/档案写入。
+    const again = await collectSse(`${base}/api/cities/CN-350500/generate/resume`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ attemptId: 'attempt-a-2' }),
+    });
+    expect(again.events.at(-1)?.data.status).toBe('complete');
+
+    expect(countJobs(db)).toBe(2); // 首次生成 + force 刷新；恢复 0 新增
+    expect(billing.calls.length).toBe(callsAfterRefresh);
+    expect(jobs.countLlmCallsSince('1970-01-01T00:00:00.000Z')).toBe(llmAfterRefresh);
+    expect(await readPublishedArchive(base, 'CN-350500')).toEqual(beforeResume);
+    // 失败提示与旧内容在 GET 口径下同样同时可见。
+    const hit = await fetch(`${base}/api/cities/CN-350500`);
+    const body = (await hit.json()) as {
+      identity: unknown;
+      meta: { moduleStatus: Record<string, string>; moduleAttempts?: Record<string, { code: string }> };
+    };
+    expect(body.meta.moduleStatus.identity).toBe('ok');
+    expect(body.meta.moduleAttempts?.identity?.code).toBe('LLM_TIMEOUT');
+    expect(body.identity).toEqual(identityBefore);
+  });
+
+  it('场景 B：预算恰好耗尽后仍可恢复已完成终态（恢复不经过预算入口）', async () => {
+    const billing = new BillingGenerator();
+    billing.billOnly = 'identity';
+    const { db, app } = setup(billing);
+    const base = await listen(app);
+    const jobs = new JobRepo(db);
+
+    // 用掉除最后一次之外的全部预算（只写逐次调用日志，不伪造任务汇总）。
+    for (let i = 0; i < config.llm.dailyCallLimit - 1; i += 1) {
+      jobs.recordLlmCall('budget-seed', 'CN-900000', new Date().toISOString());
+    }
+    const generated = await collectSse(`${base}/api/cities/CN-350500/generate`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ attemptId: 'attempt-budget' }),
+    });
+    expect(generated.events.at(-1)?.data.status).toBe('complete');
+    const meta = generated.events.find((item) => item.event === 'meta')!.data as { jobId: string };
+    expect(jobs.countLlmCallsSince('1970-01-01T00:00:00.000Z')).toBe(config.llm.dailyCallLimit);
+
+    // 预算入口确实已耗尽：新的生成被 503 拦截。
+    const blocked = await fetch(`${base}/api/cities/CN-350500/generate`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ force: true }),
+    });
+    expect(blocked.status).toBe(503);
+    expect(((await blocked.json()) as { code: string }).code).toBe('BUDGET_EXCEEDED');
+
+    // 恢复不受预算入口影响：200 + 终态，且不记账。
+    const recovered = await collectSse(`${base}/api/cities/CN-350500/generate/resume`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ jobId: meta.jobId }),
+    });
+    expect(recovered.status).toBe(200);
+    expect(recovered.events.at(-1)?.data.status).toBe('complete');
+    expect(countJobs(db)).toBe(1);
+    expect(jobs.countLlmCallsSince('1970-01-01T00:00:00.000Z')).toBe(
+      config.llm.dailyCallLimit,
+    );
+    expect((await fetch(`${base}/api/cities/CN-350500`)).status).toBe(200);
+  });
+
+  it('恢复过程中原任务恰好结束：并入同一任务并收到 done，不产生第二个任务', async () => {
+    const gated = new GatedCompleteGenerator();
+    const { db, app } = setup(gated);
+    const base = await listen(app);
+    const jobs = new JobRepo(db);
+
+    const first = await openSse(
+      `${base}/api/cities/CN-350500/generate`,
+      {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ force: true, attemptId: 'attempt-race' }),
+      },
+      (events) => events.some((item) => item.event === 'meta'),
+    );
+    const meta = first.events.find((item) => item.event === 'meta')!.data as { jobId: string };
+    await first.cancel();
+    expect(jobs.getRunning('CN-350500')).not.toBeNull();
+
+    const resumed = await openSse(
+      `${base}/api/cities/CN-350500/generate/resume`,
+      {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ jobId: meta.jobId }),
+      },
+      (events) => events.some((item) => item.event === 'notice' && item.data.code === 'RESUMED'),
+    );
+    expect(resumed.status).toBe(200);
+    expect(
+      resumed.events.some((item) => item.event === 'notice' && item.data.code === 'RESUMED'),
+    ).toBe(true);
+
+    // 恢复连接已并入后任务才收尾：同一连接必须收到 done。
+    gated.releaseLast();
+    await resumed.readUntil((events) => events.some((item) => item.event === 'done'));
+    const done = resumed.events.at(-1)!;
+    expect(done.event).toBe('done');
+    expect(done.data.status).toBe('complete');
+    await resumed.cancel();
+
+    await waitFor(async () => jobs.getRunning('CN-350500') === null, 10_000, 50, '任务收尾');
+    expect(gated.calls).toBe(MODULE_NAMES.length);
+    expect(countJobs(db)).toBe(1);
+  });
+
+  it('收到 meta 前断线：按 attemptId 多次恢复仍只有一个任务；未知 attemptId 明确不可恢复', async () => {
+    const hanging = new HangingGenerator();
+    const { db, app } = setup(hanging);
+    const base = await listen(app);
+    const jobs = new JobRepo(db);
+
+    // 首次请求已到服务端，但客户端在读到 meta 之前就断线（只保留 attemptId）。
+    const response = await fetch(`${base}/api/cities/CN-350500/generate`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ attemptId: 'attempt-meta-lost' }),
+    });
+    expect(response.status).toBe(200);
+    await response.body?.cancel();
+    await waitFor(async () => countJobs(db) === 1, 10_000, 50, '首次任务已创建');
+
+    // 多次恢复都只并入同一个任务（读到回放的 meta 为止）。
+    for (let round = 0; round < 2; round += 1) {
+      const resumed = await openSse(
+        `${base}/api/cities/CN-350500/generate/resume`,
+        {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ attemptId: 'attempt-meta-lost' }),
+        },
+        (events) => events.some((item) => item.event === 'meta'),
+      );
+      expect(
+        resumed.events.some((item) => item.event === 'notice' && item.data.code === 'RESUMED'),
+      ).toBe(true);
+      const meta = resumed.events.find((item) => item.event === 'meta')!.data as {
+        jobId: string;
+        attemptId?: string;
+      };
+      expect(meta.attemptId).toBe('attempt-meta-lost');
+      expect(meta.jobId).toBeTruthy();
+      await resumed.cancel();
+    }
+    expect(countJobs(db)).toBe(1);
+    expect(hanging.calls).toBe(1);
+
+    // 手动「继续展卷」等价于再一次恢复：仍只有一个任务。
+    const manual = await openSse(
+      `${base}/api/cities/CN-350500/generate/resume`,
+      {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ attemptId: 'attempt-meta-lost' }),
+      },
+      (events) => events.some((item) => item.event === 'notice'),
+    );
+    await manual.cancel();
+    expect(countJobs(db)).toBe(1);
+
+    // 客户端标识不属于任何任务：明确 409，不顶替、不新建。
+    const unknown = await fetch(`${base}/api/cities/CN-350500/generate/resume`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ attemptId: 'attempt-never-arrived' }),
+    });
+    expect(unknown.status).toBe(409);
+    expect(((await unknown.json()) as { code: string }).code).toBe('RESUME_UNAVAILABLE');
+    expect(countJobs(db)).toBe(1);
+    expect(hanging.calls).toBe(1);
+  });
+
+  it('显式单卷重试与自动恢复的区别：重试新建任务并计费，恢复不新增', async () => {
+    const billing = new BillingGenerator();
+    const { db, app } = setup(billing);
+    const base = await listen(app);
+    const jobs = new JobRepo(db);
+
+    const seed = await collectSse(`${base}/api/cities/CN-350500/generate`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ attemptId: 'attempt-retry-seed' }),
+    });
+    expect(seed.events.at(-1)?.data.status).toBe('complete');
+
+    billing.failModules = ['identity'];
+    const refresh = await collectSse(`${base}/api/cities/CN-350500/generate`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ force: true, attemptId: 'attempt-retry-1' }),
+    });
+    expect(refresh.events.at(-1)?.data.status).toBe('complete');
+    const refreshMeta = refresh.events.find((item) => item.event === 'meta')!.data as {
+      jobId: string;
+    };
+    const callsAfterRefresh = billing.calls.length;
+    const llmAfterRefresh = jobs.countLlmCallsSince('1970-01-01T00:00:00.000Z');
+    const beforeRetry = await readPublishedArchive(base, 'CN-350500');
+
+    // 自动恢复：不新增任务、不调用生成器、不记账、不改档案。
+    const recovered = await collectSse(`${base}/api/cities/CN-350500/generate/resume`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ jobId: refreshMeta.jobId }),
+    });
+    expect(recovered.events.at(-1)?.data.failedModules).toEqual(['identity']);
+    expect(countJobs(db)).toBe(2);
+    expect(billing.calls.length).toBe(callsAfterRefresh);
+    expect(jobs.countLlmCallsSince('1970-01-01T00:00:00.000Z')).toBe(llmAfterRefresh);
+    expect(await readPublishedArchive(base, 'CN-350500')).toEqual(beforeRetry);
+
+    // 用户显式单卷重试：只生成 identity，新建任务、正常计费、档案版本递增。
+    billing.failModules = [];
+    const retried = await collectSse(`${base}/api/cities/CN-350500/generate`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ modules: ['identity'], attemptId: 'attempt-retry-2' }),
+    });
+    const retriedDone = retried.events.at(-1)!;
+    expect(retriedDone.event).toBe('done');
+    expect(retriedDone.data.status).toBe('complete');
+    expect(countJobs(db)).toBe(3);
+    expect(billing.calls.length).toBe(callsAfterRefresh + 1);
+    expect(jobs.countLlmCallsSince('1970-01-01T00:00:00.000Z')).toBe(llmAfterRefresh + 1);
+    const afterRetry = await readPublishedArchive(base, 'CN-350500');
+    expect(afterRetry.dataVersion).toBeGreaterThan(beforeRetry.dataVersion);
+    expect(afterRetry.generatedAt).not.toBe(beforeRetry.generatedAt);
+    // 重试成功后 failure 提示清除（与 GET 口径一致）。
+    const hit = await fetch(`${base}/api/cities/CN-350500`);
+    const body = (await hit.json()) as {
+      meta: { moduleAttempts?: Record<string, { code: string }> };
+    };
+    expect(body.meta.moduleAttempts?.identity).toBeUndefined();
+  });
+
+  it('未达发布门槛：恢复得到 429 COOLDOWN，不暴露未发布内容', async () => {
+    const failing = new BillingGenerator();
+    failing.failModules = [...MODULE_NAMES];
     const { app } = setup(failing);
     const base = await listen(app);
     const first = await collectSse(`${base}/api/cities/CN-350500/generate`, {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ force: true }),
+      body: JSON.stringify({ force: true, attemptId: 'attempt-unpublished' }),
     });
     expect(first.events.at(-1)?.data.status).toBe('unpublished');
 
-    // 非 force 重连：未发布 + 冷却 → 明确的业务终态（客户端据此展示冷却，而不是无限重试）。
-    const retry = await fetch(`${base}/api/cities/CN-350500/generate`, {
+    const retry = await fetch(`${base}/api/cities/CN-350500/generate/resume`, {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({}),
+      body: JSON.stringify({ attemptId: 'attempt-unpublished' }),
     });
     expect(retry.status).toBe(429);
     const body = (await retry.json()) as { code: string; retryAfterSec: number };

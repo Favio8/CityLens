@@ -84,7 +84,7 @@
 | 诗词意象 | 已由离线规则生成意象：原文逐字命中 + 本城地名库 + 古称/人工简称表（含苏州「太湖」、西安「终南」人工条目，坐标待人工核对）；前端悬停批注气泡与诗境地图高亮已浏览器实测 | 覆盖不完整：少数诗原文既无本地地名也无固定词表中的泛指意象，`imageryMap` 为空；泛指意象注释来自固定词表，仍需人工复核 |
 | 重新生成 | 预置保护提示、确认弹窗、增量生成、冷却；2026-11-11 ego-browser 实测四步（取消/确认/冷却 429/预置保护）全过 | — |
 | 无 Key 策略 | 产品负责人 2026-11-11 确认线上全程配置官方 LLM Key（`.env` 已配置 StepFun）；无 Key 分支（本地快照生成、标 `degraded`）仅作开发自测保留，PRD 3.5 已加 v1.1.1 注记 | 未缓存城市在无 Key 时仍会生成部分档案（设计取舍），不会出现 PRD AC-14 的「尚未收录」整页状态 |
-| 网络失败 | 2026-11-11 三层真实断网实测（用户侧/服务侧/LLM 黑洞）全部通过，见 AC-18；2026-11-14 三轮补充：首次连接拒绝/读取中断/EOF 统一有界重连与「继续展卷」入口，见 2.6 | — |
+| 网络失败 | 2026-11-11 三层真实断网实测（用户侧/服务侧/LLM 黑洞）全部通过，见 AC-18；2026-11-14 三轮补充：首次连接拒绝/读取中断/EOF 统一有界重连与「继续展卷」入口；2026-11-14 四轮拆分只读恢复契约（`/generate/resume` + `jobId/attemptId`），恢复不新增任务/不调用生成器/不记账/不写档案，见 2.7 | 恢复路径未在真实断网下重复实测；已有三层断网实测覆盖基础可用性 |
 | 真实 LLM 端到端 | 2026-11-11 通过 StepFun 官方接口实测：镇江、宁波两座新城 8/8 卷成卷，档案 `generator.model=step-3.7-flash@stepfun` | identity 净耗时 3.62s / 4.78s，**均超出 PRD 3.3 的 3.5s 目标**（可用模型均为推理型；2026-11-14 更正旧文档「3.62s 达标」的失实记录，v1.2 批准以流式骨架屏兜底，不实现本地降级）；总耗时 150.6s / 164.7s（2026-11-14 已实现 180s 总截止，见 2.3）；真实输出仍需人工复核 |
 | 文物图片 | Wikidata P18 + Commons 抓取 36 件候选，22 件成功下载并带署名/许可证；运行期零外部图片请求（CDP 实测）；22/22 条程序化交叉核对（逐张表见 7.4） | 14 件 Wikidata 无 P18 图片，故不配图；许可证适用性、图片与文物的对应关系仍需人工复核 |
 | 行政区轮廓 | `data:geo` 自动抓取、结构校验、缓存与来源清单；已实现 `--source=tianditu` 备选源（GCJ-02 已标注，不默认启用） | 默认来源 DataV.GeoAtlas 的授权条款与审图号未完成人工确认，公开上线前必须合规审校 |
@@ -116,10 +116,49 @@
 | 项 | 修复内容 | 回归验证 |
 |---|---|---|
 | 问题一 网络异常与 EOF 统一恢复 | `CityStreamController` 把三类异常纳入同一套有界恢复：首次 `fetch` 拒绝（连接层 TypeError）、响应体读取中断（`reader.read` 报错）、缺少 `done` 的 EOF——统一走 `reconnectOrFail`（有界次数 + 退避），切城/关闭页面等主动取消（AbortError）保持静默不触发重连；`isRecoverableStreamError` 区分可恢复网络异常与明确业务错误，服务端 `code/message/retryAfterSec` 原样保留并进入终态（不再一律 NETWORK_ERROR）；重连**不再发送 force**——服务端据此并入仍在运行的任务（跳过冷却/预算门槛）或在已完成时按缓存回放终态，不重复生成、不重复计费、不绕过刷新冷却；重连耗尽后提供实际可用的「继续展卷」入口（非 force 复用原任务），用户不再只能点击 force 重新生成 | `cityStream.test.ts` +6 项（首次连接失败后重连成功、读取中断后重连成功、重连不再发送 force、持续失败耗尽后非 force 入口可用、COOLDOWN 业务错误不重连且保留服务端信息、等待重连期间切城静默）；已用旧行为对照实验确认 5 项新测试在修复前失败 |
-| 问题二 恢复「服务端已完成、客户端丢失 done」 | 复现死局：首次 force 生成服务端完成、客户端未收到 done；旧客户端重连仍发 force → 200 后 429 REGEN_COOLDOWN → REQUEST_FAILED，无法恢复已完成档案。修复：重连改为非 force——任务仍在运行则并入（ATTACHED + 回放，随任务收尾在同一连接收到 `done`）；任务已完成则按缓存立即回放终态档案（读取 `meta`/模块内容，不新建刷新、不重复计费、不绕过 5 分钟刷新冷却，也不会把仍在运行时读到的旧缓存误判为本轮完成）；预置城市保护与鉴权在所有路径生效 | `archiveRoutes.test.ts` +4 项真实接口集成测试：① 全部完成（截断后非 force 重连读到 `complete` 终态与 identity 内容；共 2 个任务、第二个任务 0 次 LLM 调用、生成器总调用次数不变；GET 返回完整档案；并断言旧行为 force 重连被 429 拦截）；② 部分完成（partial 终态 + failedModules + 终态内容回放）；③ 未达发布门槛（429 COOLDOWN + retryAfterSec，业务终态不无限重试）；④ 重连竞态（并入运行中任务后恰好完成：ATTACHED → release → 同连接收到 done，仅 1 个任务、无重复生成） |
+| 问题二 恢复「服务端已完成、客户端丢失 done」 | 复现死局：首次 force 生成服务端完成、客户端未收到 done；旧客户端重连仍发 force → 200 后 429 REGEN_COOLDOWN → REQUEST_FAILED，无法恢复已完成档案。修复：重连改为非 force——任务仍在运行则并入（ATTACHED + 回放，随任务收尾在同一连接收到 `done`）；任务已完成则按缓存立即回放终态档案（读取 `meta`/模块内容，不新建刷新、不重复计费、不绕过 5 分钟刷新冷却，也不会把仍在运行时读到的旧缓存误判为本轮完成）；预置城市保护与鉴权在所有路径生效 | `archiveRoutes.test.ts` +4 项真实接口集成测试：① 全部完成（截断后非 force 重连读到 `complete` 终态与 identity 内容；共 2 个任务、第二个任务 0 次 LLM 调用、生成器总调用次数不变；GET 返回完整档案；并断言旧行为 force 重连被 429 拦截）；② 部分完成（partial 终态 + failedModules + 终态内容回放）；③ 未达发布门槛（429 COOLDOWN + retryAfterSec，业务终态不无限重试）；④ 重连竞态（并入运行中任务后恰好完成：ATTACHED → release → 同连接收到 done，仅 1 个任务、无重复生成）。**2026-11-14 四轮更正**：其中「全部完成」用例当时断言「共 2 个任务」，等于允许恢复新增第二个生成任务；该预期已在四轮改为 1 个任务，恢复改走只读 `/generate/resume`，见 2.7 |
 | 问题三 旧内容与最新刷新失败同时可见 | 复现序列 `module_error(identity)` → `module(identity, fromCache=true)` → `done(failedModules=['identity'])`：旧实现 errors 被清空、CityPage 只展示内容，失败提示与单卷重试一起消失。修复：契约扩展（均为可选字段，向后兼容）——`Meta.moduleAttempts` 随档案下发每模块「最近一次失败尝试」（`cacheService.latestAttempt` 兼容 `verification.lastAttempt` 与无旧内容时的根对象两种存储形态，成功重跑由 `saveModule` 覆盖清除），`SseModuleEvent.fromCache` 标记旧内容回放；客户端把「当前可用内容」与「最近一次尝试结果」分开处理：fromCache 回放不清空 errors，`handleDone` 补拉档案时合并档案带回的失败记录（成功重跑的模块不会复活过期提示）；CityPage 在旧内容下方展示「本次更新失败（code），继续展示旧内容」并提供单卷重试，真正生成成功后才清除提示 | `cityStream.test.ts` +3 项（fromCache 回放不清失败记录、真正生成成功才清除、`archiveToErrors` 从缓存档案带回失败记录）；`npm run e2e` 场景 3 改用 identity（种子档案里有合格旧内容）：刷新失败后旧 persona 回放仍在、失败提示可见、identity 单卷重试入口存在、其他卷不受影响 |
 
-### 2.7 未完成 / 未实测
+### 2.7 收尾修复四轮（2026-11-14，恢复语义拆分与只读恢复契约）
+
+> 本轮专项修复「断线恢复仍可能重新生成并计费」。先复现两个场景，再补能让旧版本失败的回归，最后拆分语义。原有跨日预算、180s 硬截止、配置隔离、旧档案保护等实现原样保留。
+
+**复现（修复前）**
+
+| 场景 | 操作 | 旧结果 |
+|---|---|---|
+| A 保留旧内容 + lastAttempt 失败 | 已有可读档案 → force 刷新 identity 失败 → 旧内容保留 → 客户端丢失 done → `force:false` 恢复 | 创建第二个 `generation_jobs`；生成器调用与 `llm_call_log` 从 1 增至 2；失败模块被再次纳入生成计划 |
+| B 预算恰好耗尽 | 原任务成功并消费最后一次预算 → 丢失 done → `force:false` 恢复 | 被普通生成入口的预算检查拦截，返回 503 `BUDGET_EXCEEDED` |
+
+根因：普通非 force `POST /generate` 仍进入 `JobManager.start`；`reusableModules` 只排除「可用且最近一次尝试未失败」的模块，failed / `lastAttempt` 失败的模块会被重新纳入生成计划。因此「增量生成」与「只读恢复」不能共用同一入口。
+
+**修复：三类语义显式拆分**
+
+| 语义 | 入口 | 行为 |
+|---|---|---|
+| 用户开始生成 / 刷新 | `POST /api/cities/:cityId/generate`（可带 `force` / `modules` / `attemptId`） | 正常创建任务、增量复用、失败模块重试、按真实请求计费 |
+| 用户显式重试失败模块 | 同上，`modules: [name]` | 只规划明确选择的模块；正常创建任务与计费 |
+| 网络中断恢复 | `POST /api/cities/:cityId/generate/resume`（`{ jobId?, attemptId? }`） | 只并入运行中原任务或只读回放终态；不创建任务、不调用生成器、不记账、不写档案 |
+
+**恢复契约要点**
+
+- 稳定任务标识：`meta.jobId` + 客户端发起的 `attemptId`（落库到 `generation_jobs.attempt_id`；老库由 `openDb` 幂等补列，历史行为 NULL，不伪造）。首次请求已到服务端但客户端未收到 meta 时，仍可按 `attemptId` 精确定位原任务；若请求从未到达服务端，返回 `RESUME_UNAVAILABLE`，绝不再建第二个任务。
+- 原任务运行中：`{kind:'attached'}` 并入同一 runtime，回放已有事件，随任务收尾在同一连接收到 `done`。
+- 原任务已结束：`{kind:'terminal'}` 只读回放 `meta → theme → module(fromCache) → module_error → done`；失败提示取自档案 `moduleAttempts`，与 GET 口径一致，不复活已成功重跑的旧失败。
+- 不可恢复：`RESUME_UNAVAILABLE` / `JOB_NOT_RESUMABLE`（进程重启遗留 running）/ `JOB_MISMATCH`（任务不属于此城），HTTP 409；客户端展示明确说明与「重新展卷」入口，由用户显式触发新生成。
+- 未发布档案：恢复与 GET 同一访问限制——冷却中 429 `COOLDOWN`，否则 409 `JOB_UNPUBLISHED`，绝不回放模块内容。
+- 预算耗尽：恢复不经过预算入口，已完成终态仍可读取；预置城市保护、鉴权与刷新冷却规则不变（恢复本身不创建刷新）。
+- 兼容路径：不带 `jobId/attemptId` 时只认同城最近 30 分钟内的任务；更早视为过期，避免回放陈旧历史。
+
+**验证**
+
+- `jobManager.test.ts` +5 项（终态回放不新增任务/调用/档案写入、运行中按 attemptId 并入、保留旧内容 + `lastAttempt` 失败、恢复窗口过期、未知/跨城/重启遗留）。
+- `archiveRoutes.test.ts` 恢复套件重写为 9 项：全部完成、partial + failed、场景 A、场景 B（预算恰好耗尽）、恢复竞态、meta 前断线多次恢复、显式单卷重试与恢复的区别、未达发布门槛。断言包含原 jobId、`generation_jobs` 数量、生成器调用次数、`llm_call_log` 数量、`dataVersion` / `generatedAt` 与最终终态；原先「恢复新增第二个任务」的测试预期已纠正为 1 个任务。
+- `cityStream.test.ts` 28 项：恢复只调用 `/generate/resume` 且携带 jobId/attemptId；meta 前断线仍携带 attemptId；恢复不可用不自动重新生成；「继续展卷」只走恢复接口。
+- `server/db/migration.test.ts` 2 项：老库在隔离副本上补列且保留历史行；重复打开幂等。
+- `npm run e2e` 27/27 通过，新增场景 7：浏览器内截断 generate 流的 done，客户端自动恢复后 `generation_jobs` 0→1、`llm_call_log` 0→0、生成器日志 0→8 条（仅用户触发的一轮），再等 2 秒无自动重试，档案 `dataVersion/generatedAt` 与旧内容不变。
+
+### 2.8 未完成 / 未实测
 
 | 项 | 原因 |
 |---|---|
@@ -148,7 +187,7 @@
 | AC-14 | **通过（设计取舍，用户 2026-11-11 确认）** | 产品负责人确认线上全程配置官方 LLM Key（`.env` 已配置 StepFun）。实测：预置城市（西安）与已缓存城市（宁波，`fromCache=true`）功能完整；未缓存城市（镇江、徐州）配置 Key 后正常流式生成。无 Key 分支（本地快照生成、标 `degraded`）仅作开发自测保留，PRD 3.5 已加 v1.1.1 注记；预算路径：`LLM_DAILY_CALL_LIMIT` 超限返回 503 `BUDGET_EXCEEDED`（`rateLimiter.test.ts` 覆盖），前端经 `useCityStream` 映射为错误态并在 hero 展示原因（2026-11-11 新增：error 态 fatal 提示不再不可见）。**2026-11-14 一轮加强（P1）**：预算改为「真正发请求前原子检查 + 记账」；`startOfToday` 修正为北京时间当日零点（UTC-8h）。**2026-11-14 二轮加强（P1）**：记账改为逐次调用日志 `llm_call_log.called_at`（实际请求时间所属北京日期），同一个任务跨午夜连续调用也受当日额度约束；迁移前历史调用无逐次时间戳、不补造；后台今日用量与额度检查同一口径 |
 | AC-16 | **通过（2026-11-13 复跑，中位数判定；2026-11-14 复测四轮全记录）** | 用 lighthouse@13、生产构建 + 生产服务端托管 `client/dist`，`--port` 复用预热 Chrome；Desktop 3 轮、Mobile 2 轮（`.lighthouse/ac16-desktop-r1~r3-final.json` / `ac16-mobile-r1~r2-final.json` / `ac16-summary-final.json`）。**Desktop Performance 0.79 / 0.82 / 0.99，中位数 0.82 ≥ 0.80；Mobile 0.89 / 0.90，中位数 0.895 ≥ 0.70；SEO 0.92；Accessibility 1.00**。中位指标：Desktop FCP 0.61s / LCP 3.12s / observed LCP 202ms / TBT 0ms / CLS 0.048 / SI 0.89s；Mobile FCP 0.90s / LCP 0.90s / observed LCP 180ms / TBT 326ms / CLS 0.076 / SI 3.87s。01 卷引文改用 `.quote-serif` 系统宋体栈，避免 2.7MB Noto 子集字体进入 LCP；LCP 元素切换为 hero「西安」，其余标题/诗词仍用 Noto Serif SC。**判定：Desktop 与 Mobile 均达标，AC-16 通过**。复现：生产服务端 :8788 + 已启动 Chrome 调试端口，`node node_modules/lighthouse/cli/index.js http://127.0.0.1:8788/city/CN-610100 --port=<port> --preset=desktop --only-categories=performance,seo,accessibility --output=json --output-path=.lighthouse/ac16-desktop.json`（Mobile 去掉 `--preset=desktop` 并加 `--form-factor=mobile --screenEmulation.mobile`）。**2026-11-14 复测（同命令、同页面，四轮全部记录，未挑选）**：Desktop 0.98 / 0.98（FCP 0.6s / LCP 0.6s / CLS 0.048–0.049 / TBT 40–50ms / SI 1.3s）、Mobile 0.75 / 0.72（FCP 3.2s / LCP 3.2s / CLS 0.076 / TBT 380–480ms / SI 4.4–4.5s），SEO 0.92 / A11y 1.00 四轮一致；中位数 Desktop 0.98 ≥ 0.80、Mobile 0.75 ≥ 0.70，仍达标。Mobile 的 FCP/LCP 与 11-13 轮次不同（3.2s vs 0.90s）系本机负载与 Chrome 版本差异，按「记录真实条件」原则原样保留，报告存 `.lighthouse/ac16-20261114-*.json` |
 | AC-17 | **通过** | `npm run verify`：6/6 城市通过，48 卷；Schema、来源登记、逐字诗词、诗词归属本城、跨城重复、模块完整性、年代、坐标 180km、数值量级全部 0 错误。注：这是程序化自测，不等于事实正确；人工复核见 7.2 |
-| AC-18 | **通过** | 2026-11-11 三层实测（证据 `.screenshots/ac18/`）：① **用户侧断外网**（ego-browser CDP 屏蔽 wikidata/wikipedia/open-meteo/tavily/tianditu/stepfun）：预置西安、缓存宁波 8 卷 + 一日路线 + 小测验完整渲染，无白屏、无 JS 错误（瓦片失败属预期降级）；② **服务端真实断网**（`NODE_USE_ENV_PROXY=1` + 黑洞代理，:8789）：预置/缓存城市同样完整可用（`已为你复用`）；③ **LLM 不可用**（:8791 将 `LLM_BASE_URL` 指向黑洞）：桂林 force 重生成 SSE 显示 7 个 LLM 模块全部 `module_error code=LLM_TIMEOUT retryable=true`（2026-11-11 将网络类错误由 SCHEMA_INVALID 改映射为 LLM_TIMEOUT），而 **dataPulse 仅靠本地侦察正常成卷（degraded，气候 12 个月完整）**——单模块失败隔离成立；`done status=unpublished` 优雅收尾无白屏。每小时 10 座新城限流触发时展示「同一 IP 每小时最多生成 10 座新城市」错误屏与重试入口。单模块「重试此卷」按钮在流式页面渲染（`CityPage`），重试路径由 `archiveRoutes.test.ts` 覆盖。**2026-11-14 二轮加强**：`npm run e2e` 16/16 通过，其中失败重试 4 项断言（重试入口/其他卷不受影响/档案未下架/重试后无白屏）与并入重连 1 项接口集成测试均在此路径上。**2026-11-14 三轮加强**：`npm run e2e` 19/19 通过，场景 3 改用 identity（种子档案含合格旧内容）后新增 3 项断言——刷新失败后旧 persona 回放仍在、失败提示「本次更新失败，继续展示旧内容」可见、失败卷（identity）提供单卷重试入口；首次连接拒绝/读取中断/EOF 三类异常的有界重连与「继续展卷」入口由 `cityStream.test.ts` 与 `archiveRoutes.test.ts` 集成测试覆盖（见 2.6） |
+| AC-18 | **通过** | 2026-11-11 三层实测（证据 `.screenshots/ac18/`）：① **用户侧断外网**（ego-browser CDP 屏蔽 wikidata/wikipedia/open-meteo/tavily/tianditu/stepfun）：预置西安、缓存宁波 8 卷 + 一日路线 + 小测验完整渲染，无白屏、无 JS 错误（瓦片失败属预期降级）；② **服务端真实断网**（`NODE_USE_ENV_PROXY=1` + 黑洞代理，:8789）：预置/缓存城市同样完整可用（`已为你复用`）；③ **LLM 不可用**（:8791 将 `LLM_BASE_URL` 指向黑洞）：桂林 force 重生成 SSE 显示 7 个 LLM 模块全部 `module_error code=LLM_TIMEOUT retryable=true`（2026-11-11 将网络类错误由 SCHEMA_INVALID 改映射为 LLM_TIMEOUT），而 **dataPulse 仅靠本地侦察正常成卷（degraded，气候 12 个月完整）**——单模块失败隔离成立；`done status=unpublished` 优雅收尾无白屏。每小时 10 座新城限流触发时展示「同一 IP 每小时最多生成 10 座新城市」错误屏与重试入口。单模块「重试此卷」按钮在流式页面渲染（`CityPage`），重试路径由 `archiveRoutes.test.ts` 覆盖。**2026-11-14 二轮加强**：`npm run e2e` 16/16 通过，其中失败重试 4 项断言（重试入口/其他卷不受影响/档案未下架/重试后无白屏）与并入重连 1 项接口集成测试均在此路径上。**2026-11-14 三轮加强**：`npm run e2e` 19/19 通过，场景 3 改用 identity（种子档案含合格旧内容）后新增 3 项断言——刷新失败后旧 persona 回放仍在、失败提示「本次更新失败，继续展示旧内容」可见、失败卷（identity）提供单卷重试入口；首次连接拒绝/读取中断/EOF 三类异常的有界重连与「继续展卷」入口由 `cityStream.test.ts` 与 `archiveRoutes.test.ts` 集成测试覆盖（见 2.6）。**2026-11-14 四轮加强**：`npm run e2e` 27/27 通过，新增场景 7「丢失 done 后的只读恢复」——浏览器内截断 generate 流的 done，客户端自动走 `/generate/resume`；断言生成接口仅 1 次、恢复接口 ≥1 次、`generation_jobs` 0→1、`llm_call_log` 0→0、生成器日志 0→8 条且 2 秒内不再增长、旧内容与失败提示同时可见、档案 `dataVersion/generatedAt` 不变（见 2.7） |
 | AC-19 | **通过** | 2026-11-11 干净副本复跑：`.cleancheck`（排除 node_modules/dist/.git/*.db/.env/.trae）内 `npm ci`（457 包，21s）→ `npm run setup`（342 城/1480 别名/6 城 48 卷）→ `npm run verify`（6/6）→ `npm run dev`（Vite 767ms 就绪）；页面与接口抽查全部 200，详见第 4 节 |
 
 ## 4. AC-19 干净环境复核记录
@@ -175,7 +214,7 @@
 npm run check             # typecheck + test + build（普通测试不依赖真实密钥与外网缓存）
 npm run check:full        # setup + verify + check（初始化后的完整校验入口）
 npm run typecheck          # 服务端 + 前端 TypeScript strict
-npm test                   # 238 项单元/集成测试（28 个文件）
+npm test                   # 253 项单元/集成测试（29 个文件）
 npm run verify             # 六城预置档案合规校验
 npm run e2e                # 可执行浏览器回归（CDP，自起服务端与 Chrome，隔离运行期缓存）
 npm run archives:audit     # 非预置档案只读校验（失败模块及原因，不删改数据）
@@ -190,16 +229,22 @@ npx tsx scripts/rebuild_failed_archives.ts         # 重建失败/未发布档�
 npm run archives:clean-unpublished                 # dry-run 列出未发布档案；--apply 才删除
 ```
 
-最终门禁（2026-11-14 三轮修复后复跑，全过；verify/audit 使用隔离数据库副本，真实数据库只读）：
+最终门禁（2026-11-14 四轮修复后复跑，全过；verify/audit 使用隔离数据库副本，真实数据库只读）：
 
 ```text
 npm run typecheck   ✓ 无错误（server + client）
-npm test            ✓ 238 passed（28 files）
+npm test            ✓ 253 passed（29 files）
 npm run verify      ✓ 通过 6/6（隔离副本：六城 48 卷 0 错误）
-npm run build       ✓ built in ~12s
-npm run e2e         ✓ 19/19 通过（隔离临时库 + 隔离运行期缓存）
+npm run build       ✓ built in ~10s
+npm run e2e         ✓ 27/27 通过（隔离临时库 + 隔离运行期缓存）
 npm run archives:audit ✓ 20 份非预置档案、5 个失败模块及原因（只读，隔离副本）
 ```
+
+真实数据库（`server/data/citylens.db`）在本轮验证前后保持只读：`attempt_id` 列尚未写入真实库，
+迁移只在隔离副本上验证；首次启动服务端时 `openDb` 才会幂等补列。本轮另记录一次
+`Worker exited unexpectedly`（复现 1 次、随后单文件连续 3 轮与全量 253 项均未再现）；
+已顺带加固测试资源清理（先取消 SSE 读取器、再关服务、最后关内存库），但**不以重复运行冒充定位完成**，
+根因仍未确认，保留记录。
 
 干净环境复跑（AC-19）见第 4 节；本机 `npm ci` 需先精简 PATH，见 6.3。
 
@@ -270,8 +315,9 @@ curl "http://localhost:8787/api/cities/CN-610100"
 - 一日路线快照回退的首个请求（本城无本地快照）需联网抓取 Wikidata，约 5–15s，之后走本地缓存；Wikidata 不可用时返回 404 并提示，前端显示「路线未能生成」降级卡。
 - 知识小测验仍要求档案已生成（题目依赖 identity/chronicle/气候等档案事实字段，快照只有景点/文物/人物，不足以出题）。
 - **预算记账迁移（2026-11-14 二轮）**：每日预算改按 `llm_call_log.called_at`（实际请求时间）统计。迁移前发生的 LLM 调用只有任务级 `llm_calls` 汇总、没有逐次时间戳，**不补造历史记录**；因此升级后「今日调用」从日志启用起计算，可能低于历史任务汇总，属预期。`generation_jobs.llm_calls` 仍按任务累加，仅作展示。
-- **2026-11-14 二轮更新**：E2E 关键路径已有可执行回归（`npm run e2e`，CDP 零依赖，**19/19 通过**，2026-11-14 三轮起场景 3 增加「已有合格旧内容 → 刷新失败 → 旧内容仍在且可以单卷重试」断言），覆盖搜索/缓存/失败重试/应用内切城竞态/对比/分享海报；数据库与运行期缓存全部隔离在临时目录（`DB_PATH` + `CITYLENS_RUNTIME_DIR`）；写型场景只对自建隔离服务端执行，`E2E_BASE_URL` 指向外部服务时显式 SKIP。未模拟的外部依赖仅剩实时天气（Open-Meteo current），失败即回退气候基线，不影响断言。
-- **2026-11-14 三轮剩余事项**：本轮三个复现问题（网络异常/EOF 统一恢复、服务端已完成客户端丢失 done、旧内容与最新失败同时可见）已全部关闭；仍未完成的全部是人工事项——7.2 表 17 项签字（含人工事实、图片许可、地图审校）、本地 5 个失败模块（徐州 relics、扬州 landmarks/poetics、福州 poetics、天水 localSoul）按负责人要求保持原状未重新生成。流式恢复路径的真实网络异常（用户侧断网）已在 2026-11-11 三层实测覆盖，本轮新增的有界重连 EOF/读取中断路径由单元与接口测试覆盖，未在真实断网下重复实测。
+- **2026-11-14 二轮更新**：E2E 关键路径已有可执行回归（`npm run e2e`，CDP 零依赖，**27/27 通过**；2026-11-14 四轮新增场景 7「丢失 done 后的只读恢复」），覆盖搜索/缓存/失败重试/应用内切城竞态/对比/分享海报/断线恢复；数据库与运行期缓存全部隔离在临时目录（`DB_PATH` + `CITYLENS_RUNTIME_DIR`）；写型场景只对自建隔离服务端执行，`E2E_BASE_URL` 指向外部服务时显式 SKIP。未模拟的外部依赖仅剩实时天气（Open-Meteo current），失败即回退气候基线，不影响断言。
+- **2026-11-14 四轮更正（撤回三轮结论）**：三轮曾写「三个复现问题已全部关闭」。四轮独立复现证明该结论**不准确**——断线恢复仍走普通 `POST /generate`（仅去掉 force），会进入 `JobManager.start`：场景 A 在「旧内容保留 + lastAttempt 失败」后恢复会新增第二个 `generation_jobs` 并再次调用生成器/记账；场景 B 在原任务恰好耗尽预算后恢复会被预算入口 503 拦截。现已拆分为独立只读恢复契约 `/generate/resume` + `jobId/attemptId` 稳定标识，并用路由级计数器与浏览器场景 7 证明：恢复不新增任务、不调用生成器、不写 `llm_call_log`、不修改 `dataVersion/generatedAt`。**仍未完成的只有人工事项**：7.2 表 17 项签字（含人工事实、图片许可、地图审校）、本地 5 个失败模块（徐州 relics、扬州 landmarks/poetics、福州 poetics、天水 localSoul）按负责人要求保持原状未重新生成。真实断网（用户侧）仍沿用 2026-11-11 三层实测；本轮新增的恢复路径由单元、接口与浏览器回归覆盖，未在真实断网下重复实测。
+- **2026-11-14 四轮遗留记录**：本轮测试期间出现过一次 `Worker exited unexpectedly`（Vitest worker 非正常退出，单文件运行时、3 项已通过后发生）。随后同一文件连续 3 轮、全量 253 项均未复现；已加固测试资源清理（`afterEach` 先取消全部 SSE 读取器 → 关闭 Fastify → 关闭内存库），但未定位根因，如实保留记录，不以重复运行冒充定位完成。
 - 本地 26 份 partial 档案（20 非预置 + 6 预置）中 5 个模块为 failed 状态（徐州 relics、扬州 landmarks/poetics、福州 poetics、天水 localSoul，原因见 `npm run archives:audit` 只读报告）；已按要求保持原状，未删除档案、未放宽校验、未重新生成。
 
 ## 7. 人工复核记录
