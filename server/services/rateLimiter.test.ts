@@ -119,12 +119,76 @@ describe('每日预算', () => {
     if (!blocked.allowed) expect(blocked.code).toBe('BUDGET_EXCEEDED');
   });
 
-  it('startOfToday 按 Asia/Shanghai 日界切分', () => {
-    // 2026-11-10 15:30 UTC = 北京 23:30，仍属当日
+  it('startOfToday 按 Asia/Shanghai 日界切分（北京时间当日零点的 UTC 值）', () => {
+    // 2026-11-10 15:30 UTC = 北京 23:30，仍属 11 月 10 日；
+    // 北京时间 11-10 00:00 = UTC 11-09 16:00。
     const before = new Date('2026-11-10T15:30:00.000Z');
-    expect(startOfToday(before)).toBe('2026-11-10T00:00:00.000Z');
-    // 2026-11-10 16:30 UTC = 北京 2026-11-11 00:30，已跨入次日
+    expect(startOfToday(before)).toBe('2026-11-09T16:00:00.000Z');
+    // 2026-11-10 16:30 UTC = 北京 2026-11-11 00:30，已跨入次日；
+    // 北京时间 11-11 00:00 = UTC 11-10 16:00。
     const after = new Date('2026-11-10T16:30:00.000Z');
-    expect(startOfToday(after)).toBe('2026-11-11T00:00:00.000Z');
+    expect(startOfToday(after)).toBe('2026-11-10T16:00:00.000Z');
+    // 北京时间当日零点整：UTC 16:00 属于新的一天。
+    const boundary = new Date('2026-11-10T16:00:00.000Z');
+    expect(startOfToday(boundary)).toBe('2026-11-10T16:00:00.000Z');
+    const justBefore = new Date('2026-11-10T15:59:59.999Z');
+    expect(startOfToday(justBefore)).toBe('2026-11-09T16:00:00.000Z');
+  });
+
+  it('跨日运行的任务按北京日界重新计数', () => {
+    const now = new Date('2026-11-10T16:30:00.000Z');
+    const { jobs, limiter } = setup({ now: () => now, dailyCallLimit: 50 });
+    // 昨天（北京 11-10）用掉 49 次。
+    const yesterdayJob = createJob(jobs, 'CN-610001', 'hash', '2026-11-10T10:00:00.000Z');
+    jobs.incrementLlmCalls(yesterdayJob, 49);
+    expect(limiter.checkBudget().allowed).toBe(true);
+    // 北京 11-11 的新任务：额度全新。
+    const todayJob = createJob(jobs, 'CN-610002', 'hash', now.toISOString());
+    expect(limiter.consumeForJob(todayJob)).toBe(true);
+  });
+});
+
+describe('LLM 预算原子记账（consumeForJob）', () => {
+  it('剩余一次额度时放行最后一次调用，随后拒绝', () => {
+    const now = new Date('2026-11-10T10:00:00.000Z');
+    const { jobs, limiter } = setup({ now: () => now, dailyCallLimit: 3 });
+    const jobId = createJob(jobs, 'CN-610001', 'hash', now.toISOString());
+    jobs.incrementLlmCalls(jobId, 2);
+    expect(limiter.consumeForJob(jobId)).toBe(true);
+    expect(limiter.consumeForJob(jobId)).toBe(false);
+    expect(jobs.get(jobId)?.llmCalls).toBe(3);
+  });
+
+  it('并发任务总量不突破预算（事务内统计+记账）', () => {
+    const now = new Date('2026-11-10T10:00:00.000Z');
+    const { jobs, limiter } = setup({ now: () => now, dailyCallLimit: 5 });
+    const jobIds = Array.from({ length: 5 }, (_, i) =>
+      createJob(jobs, `CN-61000${i}`, 'hash', now.toISOString()),
+    );
+    const results = jobIds.map((jobId) => limiter.consumeForJob(jobId));
+    expect(results.every((allowed) => allowed)).toBe(true);
+    // 第 6 个任务（跨任务）再请求即被拒绝，总量恰为 5。
+    const extra = createJob(jobs, 'CN-610009', 'hash', now.toISOString());
+    expect(limiter.consumeForJob(extra)).toBe(false);
+    const used = jobs
+      .listRecent(10)
+      .reduce((sum, job) => sum + job.llmCalls, 0);
+    expect(used).toBe(5);
+  });
+
+  it('午夜前后（北京 00:00）跨日的调用分别计入两日', () => {
+    const justBefore = new Date('2026-11-10T15:59:59.000Z');
+    const justAfter = new Date('2026-11-10T16:00:01.000Z');
+    const { jobs } = setup();
+    const limiterBefore = new RateLimiter(jobs, { now: () => justBefore, dailyCallLimit: 2 });
+    const jobA = createJob(jobs, 'CN-610001', 'hash', justBefore.toISOString());
+    expect(limiterBefore.consumeForJob(jobA)).toBe(true);
+    expect(limiterBefore.consumeForJob(jobA)).toBe(true);
+    expect(limiterBefore.consumeForJob(jobA)).toBe(false);
+
+    const limiterAfter = new RateLimiter(jobs, { now: () => justAfter, dailyCallLimit: 2 });
+    const jobB = createJob(jobs, 'CN-610002', 'hash', justAfter.toISOString());
+    // 新的一天：额度重置。
+    expect(limiterAfter.consumeForJob(jobB)).toBe(true);
   });
 });

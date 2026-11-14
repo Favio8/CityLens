@@ -49,7 +49,7 @@ export function CityPage() {
   const { cityId = '' } = useParams();
   const location = useLocation();
   const hint = (location.state as { hint?: string | null } | null)?.hint ?? null;
-  const { state, retryModule, regenerate } = useCityStream(cityId);
+  const { state, startGeneration, retryModule, regenerate } = useCityStream(cityId);
   const { openSearch } = useSearch();
   const { isFavorite, toggleFavorite, addRecent } = useLocalLibrary();
 
@@ -121,7 +121,8 @@ export function CityPage() {
         title="展卷未成"
         description={state.fatal?.message ?? '生成过程出现未知错误，请稍后重试。'}
         actionLabel="重新展卷"
-        onAction={() => void regenerate()}
+        // 非 force 重试：服务端会并入仍在运行的任务并回放事件，已生成的卷不丢失。
+        onAction={() => void startGeneration()}
       />
     );
   }

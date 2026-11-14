@@ -83,6 +83,13 @@ export interface GenerateInput {
   poetryCorpus?: PoetryCorpus | null;
   /** 城市侦察结果（由 jobManager 统一加载，避免每个模块重复联网）。 */
   recon?: CityRecon | null;
+  /** 单次生成总截止信号：超时后取消进行中的上游请求，迟到结果不得落库。 */
+  signal?: AbortSignal;
+  /**
+   * 真正发出 LLM 请求前的原子额度检查与记账（含重试请求）。
+   * 纯本地模块 / Mock / 缓存命中不会调用，不冒充付费 LLM 调用。
+   */
+  onLlmCall?: () => void;
 }
 
 export interface GeneratedModule {
@@ -427,8 +434,6 @@ export class MockGenerator implements ModuleGenerator {
 /* -------------------------------------------------------------------------- */
 
 const LLM_SOURCE_ID = 'S-LLM-CURATION';
-/** 当前生效的大模型配置；每次生成开始时由 DeepSeekGenerator 写入。 */
-let activeLlmConfig: LlmRuntimeConfig = envLlmConfig();
 
 const PROVIDER_LABELS: Record<LlmRuntimeConfig['provider'], string> = {
   deepseek: 'DeepSeek',
@@ -436,11 +441,12 @@ const PROVIDER_LABELS: Record<LlmRuntimeConfig['provider'], string> = {
   custom: '自定义 LLM',
 };
 
-function llmSource(): SourceRef {
+/** 来源标题随调用上下文中的配置生成，不读取任何跨任务共享的可变状态。 */
+function llmSource(config: LlmRuntimeConfig): SourceRef {
   return {
     id: LLM_SOURCE_ID,
     type: 'llm_curation',
-    title: `${PROVIDER_LABELS[activeLlmConfig.provider]} 结构化整理（${activeLlmConfig.model}）`,
+    title: `${PROVIDER_LABELS[config.provider]} 结构化整理（${config.model}）`,
     retrievedAt: '2026-11-10T00:00:00.000Z',
   };
 }
@@ -456,18 +462,27 @@ const SYSTEM_PROMPT =
   '无法确认的内容写「待考」。';
 
 /** 以 fetch + SSE 流式读取 OpenAI 兼容接口，返回完整文本。 */
-async function callDeepSeek(messages: ChatMessage[]): Promise<string> {
+async function callDeepSeek(
+  config: LlmRuntimeConfig,
+  input: GenerateInput,
+  messages: ChatMessage[],
+): Promise<string> {
   const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), activeLlmConfig.timeoutMs);
+  const timer = setTimeout(() => controller.abort(), config.timeoutMs);
+  // 单次生成总截止：与单模块超时共同作用于同一个控制器。
+  const onDeadline = (): void => controller.abort();
+  input.signal?.addEventListener('abort', onDeadline, { once: true });
   try {
-    const response = await fetch(`${activeLlmConfig.baseUrl}/chat/completions`, {
+    // 记账与额度检查必须在真正发出请求前完成（实际重试请求同样计数）。
+    input.onLlmCall?.();
+    const response = await fetch(`${config.baseUrl}/chat/completions`, {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
-        authorization: `Bearer ${activeLlmConfig.apiKey}`,
+        authorization: `Bearer ${config.apiKey}`,
       },
       body: JSON.stringify({
-        model: activeLlmConfig.model,
+        model: config.model,
         stream: true,
         temperature: 0.3,
         messages,
@@ -519,6 +534,7 @@ async function callDeepSeek(messages: ChatMessage[]): Promise<string> {
     throw new GenerationError('LLM_NETWORK', `大模型请求失败：${(error as Error).message}`);
   } finally {
     clearTimeout(timer);
+    input.signal?.removeEventListener('abort', onDeadline);
   }
 }
 
@@ -550,10 +566,13 @@ function asText(value: unknown): string {
   return typeof value === 'string' ? value.trim() : '';
 }
 
-async function llmIdentity(input: GenerateInput): Promise<GeneratedModule> {
+async function llmIdentity(
+  input: GenerateInput,
+  config: LlmRuntimeConfig,
+): Promise<GeneratedModule> {
   const recon = input.recon ?? null;
   const context = reconContext(recon, 900);
-  const text = await callDeepSeek([
+  const text = await callDeepSeek(config, input, [
     { role: 'system', content: SYSTEM_PROMPT },
     {
       role: 'user',
@@ -571,8 +590,9 @@ async function llmIdentity(input: GenerateInput): Promise<GeneratedModule> {
   }
   const base = buildIdentity(input);
   const data = { ...(base.data as Record<string, unknown>) };
-  const sources = [...base.sources, llmSource(), ...(recon?.sources ?? [])];
-  const sourceRefs = [DICTIONARY_SOURCE_ID, llmSource().id];
+  const curationSource = llmSource(config);
+  const sources = [...base.sources, curationSource, ...(recon?.sources ?? [])];
+  const sourceRefs = [DICTIONARY_SOURCE_ID, curationSource.id];
   const wikiSource = reconSource(recon, 'wikipedia');
   const wikidataSource = reconSource(recon, 'wikidata');
 
@@ -616,7 +636,10 @@ async function llmIdentity(input: GenerateInput): Promise<GeneratedModule> {
   };
 }
 
-async function llmChronicle(input: GenerateInput): Promise<GeneratedModule> {
+async function llmChronicle(
+  input: GenerateInput,
+  config: LlmRuntimeConfig,
+): Promise<GeneratedModule> {
   const dynasties = getDynasties();
   if (!dynasties || dynasties.dynasties.length === 0) {
     throw new GenerationError('NO_FACTS', '缺少本地朝代年表');
@@ -626,7 +649,7 @@ async function llmChronicle(input: GenerateInput): Promise<GeneratedModule> {
     .join('、');
   const recon = input.recon ?? null;
   const context = reconContext(recon, 1800);
-  const text = await callDeepSeek([
+  const text = await callDeepSeek(config, input, [
     { role: 'system', content: SYSTEM_PROMPT },
     {
       role: 'user',
@@ -669,6 +692,7 @@ async function llmChronicle(input: GenerateInput): Promise<GeneratedModule> {
       input.city.center,
       gazetteer,
     );
+    const curationSource = llmSource(config);
     return [
       {
         eraName: dynasty.name,
@@ -680,7 +704,7 @@ async function llmChronicle(input: GenerateInput): Promise<GeneratedModule> {
         relicToday,
         centerCoord: anchor.coordinates,
         sourceRefs: [
-          llmSource().id,
+          curationSource.id,
           DYNASTY_SOURCE.id,
           ...(wikiSource ? [wikiSource.id] : []),
         ],
@@ -694,12 +718,15 @@ async function llmChronicle(input: GenerateInput): Promise<GeneratedModule> {
   return {
     status: 'degraded',
     verification: 'pending_human_review',
-    sources: [llmSource(), DYNASTY_SOURCE, ...(recon?.sources ?? [])],
+    sources: [llmSource(config), DYNASTY_SOURCE, ...(recon?.sources ?? [])],
     data,
   };
 }
 
-async function llmLandmarks(input: GenerateInput): Promise<GeneratedModule> {
+async function llmLandmarks(
+  input: GenerateInput,
+  config: LlmRuntimeConfig,
+): Promise<GeneratedModule> {
   const snapshot = input.snapshot ?? (await loadCitySnapshot(input.city));
   if (!snapshot || snapshot.landmarks.length === 0) {
     throw new GenerationError('NO_FACTS', '本地快照无可用景点实体');
@@ -709,7 +736,7 @@ async function llmLandmarks(input: GenerateInput): Promise<GeneratedModule> {
     name: landmark.name,
     heritage: landmark.heritageDesignations,
   }));
-  const text = await callDeepSeek([
+  const text = await callDeepSeek(config, input, [
     { role: 'system', content: SYSTEM_PROMPT },
     {
       role: 'user',
@@ -754,7 +781,10 @@ async function llmLandmarks(input: GenerateInput): Promise<GeneratedModule> {
   return { status: 'degraded', verification: 'pending_human_review', sources, data };
 }
 
-async function llmRelics(input: GenerateInput): Promise<GeneratedModule> {
+async function llmRelics(
+  input: GenerateInput,
+  config: LlmRuntimeConfig,
+): Promise<GeneratedModule> {
   const registry = input.registry ?? getRelicsRegistry();
   const snapshot = input.snapshot ?? (await loadCitySnapshot(input.city));
   const localRelics =
@@ -767,7 +797,7 @@ async function llmRelics(input: GenerateInput): Promise<GeneratedModule> {
     name: relic.name,
     era: relic.era,
   }));
-  const text = await callDeepSeek([
+  const text = await callDeepSeek(config, input, [
     { role: 'system', content: SYSTEM_PROMPT },
     {
       role: 'user',
@@ -837,12 +867,15 @@ function leaksFigureFields(texts: Array<string | undefined>): boolean {
   return texts.some((text) => typeof text === 'string' && FIGURE_LEAK_PATTERN.test(text));
 }
 
-async function llmFigures(input: GenerateInput): Promise<GeneratedModule> {
+async function llmFigures(
+  input: GenerateInput,
+  config: LlmRuntimeConfig,
+): Promise<GeneratedModule> {
   const snapshot = input.snapshot ?? (await loadCitySnapshot(input.city));
   if (!snapshot || snapshot.figures.length === 0) {
     throw new GenerationError('NO_FACTS', '本地快照无可用人物实体');
   }
-  const text = await callDeepSeek([
+  const text = await callDeepSeek(config, input, [
     { role: 'system', content: SYSTEM_PROMPT },
     {
       role: 'user',
@@ -911,7 +944,10 @@ async function llmFigures(input: GenerateInput): Promise<GeneratedModule> {
   };
 }
 
-async function llmPoetics(input: GenerateInput): Promise<GeneratedModule> {
+async function llmPoetics(
+  input: GenerateInput,
+  config: LlmRuntimeConfig,
+): Promise<GeneratedModule> {
   const index = input.poetryCorpus
     ? buildPoetryIndex(input.poetryCorpus)
     : getPoetryIndex();
@@ -926,7 +962,7 @@ async function llmPoetics(input: GenerateInput): Promise<GeneratedModule> {
     dynasty: poem.dynasty,
     lines: poem.lines,
   }));
-  const text = await callDeepSeek([
+  const text = await callDeepSeek(config, input, [
     { role: 'system', content: SYSTEM_PROMPT },
     {
       role: 'user',
@@ -978,10 +1014,13 @@ async function llmPoetics(input: GenerateInput): Promise<GeneratedModule> {
   };
 }
 
-async function llmLocalSoul(input: GenerateInput): Promise<GeneratedModule> {
+async function llmLocalSoul(
+  input: GenerateInput,
+  config: LlmRuntimeConfig,
+): Promise<GeneratedModule> {
   const recon = input.recon ?? null;
   const context = reconContext(recon, 1600);
-  const text = await callDeepSeek([
+  const text = await callDeepSeek(config, input, [
     { role: 'system', content: SYSTEM_PROMPT },
     {
       role: 'user',
@@ -997,18 +1036,19 @@ async function llmLocalSoul(input: GenerateInput): Promise<GeneratedModule> {
   ]);
   const parsed = parseJsonObject(text);
   const webSource = reconSource(recon, 'web_search');
+  const curationSource = llmSource(config);
   const ichItems = asArray(parsed.ichItems).map((item) => ({
     name: asText(item.name),
     level: ['national', 'provincial'].includes(asText(item.level))
       ? (asText(item.level) as 'national' | 'provincial')
       : ('待考' as const),
     intro: asText(item.intro),
-    sourceRefs: [llmSource().id, ...(webSource ? [webSource.id] : [])],
+    sourceRefs: [curationSource.id, ...(webSource ? [webSource.id] : [])],
   }));
   return {
     status: 'degraded',
     verification: 'pending_human_review',
-    sources: [llmSource(), ...(recon?.sources ?? [])],
+    sources: [curationSource, ...(recon?.sources ?? [])],
     data: {
       aiCurated: true,
       foods: asArray(parsed.foods),
@@ -1092,7 +1132,6 @@ export class DeepSeekGenerator implements ModuleGenerator {
   }
 
   async generate(input: GenerateInput): Promise<GeneratedModule> {
-    activeLlmConfig = this.settings;
     let lastError: unknown = null;
     for (let attempt = 0; attempt < 2; attempt += 1) {
       try {
@@ -1115,22 +1154,25 @@ export class DeepSeekGenerator implements ModuleGenerator {
   }
 
   private generateOnce(input: GenerateInput): Promise<GeneratedModule> {
+    // 配置随调用上下文显式传递：并行任务与后台配置变更都不会互相污染。
+    const config = this.settings;
     switch (input.module) {
       case 'identity':
-        return llmIdentity(input);
+        return llmIdentity(input, config);
       case 'chronicle':
-        return llmChronicle(input);
+        return llmChronicle(input, config);
       case 'landmarks':
-        return llmLandmarks(input);
+        return llmLandmarks(input, config);
       case 'relics':
-        return llmRelics(input);
+        return llmRelics(input, config);
       case 'figures':
-        return llmFigures(input);
+        return llmFigures(input, config);
       case 'poetics':
-        return llmPoetics(input);
+        return llmPoetics(input, config);
       case 'localSoul':
-        return llmLocalSoul(input);
+        return llmLocalSoul(input, config);
       case 'dataPulse':
+        // dataPulse 只用本地侦察产物，不发 LLM 请求（不计预算）。
         return llmDataPulse(input);
       default:
         throw new GenerationError('NO_FACTS', `模块 ${String(input.module)} 暂无可用事实来源`);

@@ -23,6 +23,7 @@ export function hashIp(ip: string, salt: string): string {
  * 「今日」起点：固定按 Asia/Shanghai 日界计算。
  * 服务端可能以 UTC 部署（容器默认时区），若用服务器本地日界，
  * 「今日 LLM 调用 / 预算」会与「请明日再试」的北京时间预期错位。
+ * Asia/Shanghai 为固定 UTC+8（无夏令时）：北京时间当日零点 = UTC 当日零点前 8 小时。
  */
 export function startOfToday(now = new Date()): string {
   const parts = new Intl.DateTimeFormat('en-CA', {
@@ -32,8 +33,9 @@ export function startOfToday(now = new Date()): string {
     day: '2-digit',
   }).formatToParts(now);
   const part = (type: string): number => Number(parts.find((item) => item.type === type)?.value ?? '0');
-  const utcMidnight = Date.UTC(part('year'), part('month') - 1, part('day'));
-  return new Date(utcMidnight).toISOString();
+  const SHANGHAI_OFFSET_MS = 8 * 60 * 60 * 1000;
+  const beijingMidnightUtc = Date.UTC(part('year'), part('month') - 1, part('day')) - SHANGHAI_OFFSET_MS;
+  return new Date(beijingMidnightUtc).toISOString();
 }
 
 export interface RateLimiterOptions {
@@ -102,5 +104,21 @@ export class RateLimiter {
       };
     }
     return { allowed: true };
+  }
+
+  /**
+   * 真正发出 LLM 请求前的原子额度检查与记账。
+   * better-sqlite3 同步执行，事务内「统计 + 记账」不会被并发任务拆开，
+   * 因此并行任务总量不会突破每日预算；重试请求同样计数。
+   * 返回 false 表示预算已用尽，调用方必须放弃本次请求。
+   */
+  consumeForJob(jobId: string): boolean {
+    const since = startOfToday(this.now());
+    return this.jobs.transaction(() => {
+      const used = this.jobs.sumLlmCallsSince(since);
+      if (used >= this.dailyLimit) return false;
+      this.jobs.incrementLlmCalls(jobId, 1);
+      return true;
+    });
   }
 }

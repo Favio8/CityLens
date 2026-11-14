@@ -8,7 +8,8 @@ import { openDb, type Db } from '../db';
 import { ArchiveRepo } from '../db/archiveRepo';
 import { JobRepo } from '../db/jobRepo';
 import { hashIp } from '../services/rateLimiter';
-import { MockGenerator } from '../services/llmGenerator';
+import { GenerationError, MockGenerator, type ModuleGenerator } from '../services/llmGenerator';
+import type { GenerateInput, GeneratedModule } from '../services/llmGenerator';
 import { setFactSnapshot, type FactSnapshot } from '../services/presetData';
 import { resetWeatherCache } from '../services/weatherService';
 
@@ -51,6 +52,21 @@ async function collectSse(url: string, init?: RequestInit): Promise<SseResult> {
     }
   }
   return { status: response.status, events };
+}
+
+/** 可在两次生成之间切换「identity 失败」的生成器（P0 路由级复现）。 */
+class SwitchableGenerator implements ModuleGenerator {
+  failIdentity = false;
+  readonly name = 'switchable';
+  readonly promptVersion = 'switchable-v1';
+  private readonly inner = new MockGenerator({ delayMs: 1 });
+
+  async generate(input: GenerateInput): Promise<GeneratedModule> {
+    if (this.failIdentity && input.module === 'identity') {
+      throw new GenerationError('LLM_TIMEOUT', '模拟失败：模块 identity 超时');
+    }
+    return this.inner.generate(input);
+  }
 }
 
 function setup(generator = new MockGenerator({ delayMs: 5 })) {
@@ -254,6 +270,225 @@ describe('保护与限流', () => {
     });
     expect(response.status).toBe(403);
     expect(((await response.json()) as { code: string }).code).toBe('PRESET_LOCKED');
+  });
+
+  it('P0：force 重新生成 identity 失败后旧档案保持可读，且不被冷却', async () => {
+    // 预置一份可公开读取的 partial 档案（identity + landmarks + 其余 ok）。
+    const db = openDb(':memory:');
+    const insertCity = db.prepare(
+      `INSERT INTO cities
+         (city_id, standard_name, province, admin_level, pinyin, english_name, center_lng, center_lat, hot_rank)
+       VALUES (?, ?, ?, 'prefecture', ?, ?, ?, ?, ?)`,
+    );
+    insertCity.run('CN-350500', '泉州', '福建省', 'quanzhou', 'Quanzhou', 118.6757, 24.8741, null);
+    const archiveRepo = new ArchiveRepo(db);
+    const generatedAt = '2026-11-11T00:00:00.000Z';
+    archiveRepo.ensureArchive({
+      cityId: 'CN-350500',
+      status: 'partial',
+      themePalette: DEFAULT_THEME_PALETTE,
+      sources: [],
+      isPreset: false,
+      generator: null,
+      generatedAt,
+    });
+    const identityData = {
+      standardName: '泉州',
+      aliases: ['刺桐'],
+      center: [118.6757, 24.8741],
+      area: { value: PENDING, sourceRefs: [] },
+      population: { value: PENDING, sourceRefs: [] },
+      climateType: { value: PENDING, sourceRefs: [] },
+      adminDivisions: { value: PENDING, sourceRefs: [] },
+      oneLinePersona: '刺桐港的风帆驶进了今天的泉州。',
+      sourceRefs: [],
+      verification: 'pending_human_review',
+    };
+    for (const name of MODULE_NAMES) {
+      // chronicle/localSoul/dataPulse 预置为失败（无旧内容），保持 partial 发布状态。
+      const failed = name === 'chronicle' || name === 'localSoul' || name === 'dataPulse';
+      archiveRepo.saveModule({
+        cityId: 'CN-350500',
+        name,
+        status: failed ? 'failed' : 'ok',
+        data: failed
+          ? null
+          : name === 'identity'
+            ? identityData
+            : name === 'landmarks'
+              ? [
+                  {
+                    entityRef: 'Q-1',
+                    name: '开元寺',
+                    category: 'must_visit',
+                    bestSeason: PENDING,
+                    reason: '宋代遗构，闽南佛教寺院代表。',
+                    placeName: '泉州开元寺',
+                    coordinates: [118.5767, 24.8717],
+                    coordSource: 'local_gazetteer',
+                    sourceRefs: [],
+                    verification: 'pending_human_review',
+                  },
+                ]
+              : name === 'relics'
+                ? [
+                    {
+                      registryId: 'R-1',
+                      name: '洛阳桥',
+                      era: '宋',
+                      museumOrSite: '泉州洛阳桥',
+                      protectionLevel: '国保',
+                      findSpot: '待考',
+                      story: '宋代跨海梁式石桥，闽南交通史见证。',
+                      coordinates: null,
+                      sourceRefs: [],
+                      verification: 'pending_human_review',
+                    },
+                  ]
+                : name === 'figures'
+                  ? [
+                      {
+                        entityRef: 'Q-2',
+                        name: '李贽',
+                        dynasty: '明',
+                        birthYear: 1527,
+                        deathYear: 1602,
+                        relationType: 'native',
+                        evidence: { property: 'birthplace', value: '泉州' },
+                        cityBond: '李贽出身泉州，明代思想家。',
+                        highlights: '著《焚书》《藏书》，晚年寓居麻城。',
+                        sites: [],
+                        sourceRefs: [],
+                        verification: 'pending_human_review',
+                      },
+                    ]
+                  : name === 'poetics'
+                    ? [
+                        {
+                          poemId: 'P-1',
+                          title: '测试诗',
+                          author: '测试人',
+                          dynasty: '唐',
+                          lines: ['刺桐花谢刺桐长'],
+                          background: '待考',
+                          relationType: 'direct',
+                          imageryMap: [],
+                          sourceRefs: [],
+                          verification: 'pending_human_review',
+                        },
+                      ]
+                    : {
+                        gdpSeries: [{ year: 2025, value: null }],
+                        popSeries: [{ year: 2025, value: null }],
+                        statMeta: {
+                          gdp: { unit: '亿元', caliber: '地区生产总值（现价）', sourceRefs: [] },
+                          pop: { unit: '万人', caliber: '年末常住人口', sourceRefs: [] },
+                        },
+                        climateMonthly: [],
+                        climateMeta: { period: '1991–2020', station: '待考', sourceRefs: [] },
+                      },
+        verification: {},
+        generatedAt,
+      });
+    }
+    archiveRepo.updateStatus('CN-350500', 'partial', generatedAt);
+
+    // 让 Mock 能重新生成 landmarks/figures（其余模块在 Mock 下仍 NO_FACTS）。
+    setFactSnapshot('CN-350500', {
+      cityId: 'CN-350500',
+      cityName: '泉州',
+      cityQid: 'Q41705',
+      center: [118.6757, 24.8741],
+      retrievedAt: generatedAt,
+      sourceRef: {
+        id: 'S-WD-CN-350500',
+        type: 'wikidata',
+        title: 'Wikidata 事实快照 · 泉州',
+        retrievedAt: generatedAt,
+      },
+      landmarks: [
+        {
+          entityId: 'Q1',
+          name: '开元寺',
+          coordinates: [118.5767, 24.8717],
+          kind: '寺庙',
+          heritageDesignations: [],
+          description: null,
+          sitelinks: 9,
+        },
+      ],
+      relics: [],
+      figures: [
+        {
+          entityId: 'Q2',
+          name: '李贽',
+          relationType: 'native',
+          evidence: { property: 'birthplace', value: '泉州' },
+          birthYear: 1527,
+          deathYear: 1602,
+          description: null,
+          sitelinks: 12,
+        },
+      ],
+      failures: [],
+    } satisfies FactSnapshot);
+
+    const switchable = new SwitchableGenerator();
+    const app = buildApp({ db, generator: switchable });
+    runningApps.push(app);
+    await app.listen({ port: 0, host: '127.0.0.1' });
+    const base = `http://127.0.0.1:${(app.server.address() as AddressInfo).port}`;
+
+    // 生成前：档案可公开读取。
+    const before = await fetch(`${base}/api/cities/CN-350500`);
+    expect(before.status).toBe(200);
+
+    // force 刷新，identity 失败。
+    switchable.failIdentity = true;
+    const second = await collectSse(`${base}/api/cities/CN-350500/generate`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ force: true }),
+    });
+    expect(second.status).toBe(200);
+    expect(second.events.at(-1)?.data.status).toBe('partial');
+    expect(second.events.at(-1)?.data.failedModules).toContain('identity');
+    // 失败信号与保留内容同时下发。
+    expect(
+      second.events.some(
+        (item) => item.event === 'module_error' && item.data.name === 'identity',
+      ),
+    ).toBe(true);
+    expect(
+      second.events.some(
+        (item) =>
+          item.event === 'module' &&
+          item.data.name === 'identity' &&
+          item.data.fromCache === true,
+      ),
+    ).toBe(true);
+
+    // 旧档案仍可公开读取，identity 旧内容仍在，未进入冷却。
+    const hit = await fetch(`${base}/api/cities/CN-350500`);
+    expect(hit.status).toBe(200);
+    const body = (await hit.json()) as {
+      fromCache: boolean;
+      identity: { oneLinePersona: string } | null;
+      meta: { status: string; moduleStatus: Record<string, string> };
+    };
+    expect(body.fromCache).toBe(true);
+    expect(body.meta.status).toBe('partial');
+    expect(body.identity?.oneLinePersona).toBe('刺桐港的风帆驶进了今天的泉州。');
+    expect(body.meta.moduleStatus.identity).toBe('ok');
+
+    // 未发布才有的冷却不存在：可立即再次请求生成（不会 429）。
+    const again = await fetch(`${base}/api/cities/CN-350500/generate`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ modules: ['landmarks'] }),
+    });
+    expect(again.status).toBe(200);
+    await again.body?.cancel();
   });
 
   it('整体失败后进入冷却，GET 与再次生成均返回 429', async () => {

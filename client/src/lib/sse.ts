@@ -8,6 +8,7 @@ export interface RawSseEvent {
 /**
  * 逐块解析 text/event-stream。仅处理 `event:` 与 `data:` 字段，
  * 支持 `:` 注释与空行分隔；遇到 ping 交由调用方忽略。
+ * 传入 signal 时，abort 会立即解除阻塞中的 read（不等上游自行断流）。
  */
 export async function consumeSse(
   response: Response,
@@ -31,10 +32,22 @@ export async function consumeSse(
     if (eventName) onEvent({ event: eventName, data: dataLines.join('\n') });
   };
 
+  // 中止即视为流结束：与真实 EOF 走同一条收尾路径（由调用方决定重连或报错）。
+  const abortPromise = new Promise<{ done: true; value: undefined }>((resolve) => {
+    if (signal?.aborted) {
+      resolve({ done: true, value: undefined });
+      return;
+    }
+    signal?.addEventListener(
+      'abort',
+      () => resolve({ done: true, value: undefined }),
+      { once: true },
+    );
+  });
+
   try {
     for (;;) {
-      if (signal?.aborted) break;
-      const { done, value } = await reader.read();
+      const { done, value } = await Promise.race([reader.read(), abortPromise]);
       if (done) break;
       buffer += decoder.decode(value, { stream: true });
       // 事件之间以空行分隔，兼容 \r\n

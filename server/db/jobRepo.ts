@@ -125,6 +125,14 @@ export class JobRepo {
       .run(delta, jobId);
   }
 
+  /**
+   * 暴露事务：供「统计 + 记账」这类必须原子执行的复合操作使用
+   * （better-sqlite3 同步执行，事务内不会被并发任务拆开）。
+   */
+  transaction<T>(fn: () => T): T {
+    return this.db.transaction(fn)();
+  }
+
   /** 同一请求方对同一城市最近一次 force 任务（用于 5 分钟冷却）。 */
   findRecentForce(cityId: string, requesterHash: string, sinceIso: string): JobRecord | null {
     const row = this.db

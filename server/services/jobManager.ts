@@ -1,14 +1,16 @@
 /**
  * 生成任务编排（PRD 2.2 / 3.5）。
  * 同城单飞：内存 runtime + generation_jobs 唯一索引双保险；
- * 增量生成：已通过校验的 ok 模块默认跳过；
- * 模块级失败保留旧内容；整体失败进入 10 分钟冷却。
+ * 增量生成：已通过校验且最近一次尝试未失败的模块默认跳过；
+ * 模块级失败保留旧内容（区分「当前可用内容」与「最近一次生成尝试失败」）；
+ * 整体失败进入 10 分钟冷却；单次生成受 180s 总截止约束（PRD v1.2）。
  */
 import { randomUUID } from 'node:crypto';
 import type { ModuleErrorCode, ModuleName, SourceRef, ThemePalette } from '../../shared/schema';
 import { MODULE_NAMES } from '../../shared/schema';
 import { computeArchiveStatus } from '../../shared/validators';
 import type { ArchiveRepo } from '../db/archiveRepo';
+import { hasUsableModuleContent } from '../db/archiveRepo';
 import type { CityBrief, CityRepo } from '../db/cityRepo';
 import type { JobRepo } from '../db/jobRepo';
 import { ApiError } from '../errors';
@@ -51,6 +53,8 @@ export interface JobRuntime {
   startedAt: number;
   sources: Map<string, SourceRef>;
   themePalette: ThemePalette;
+  /** 单次生成总截止的中止信号；超时后取消进行中的上游请求。 */
+  deadlineAbort: AbortController;
 }
 
 export interface StartJobInput {
@@ -66,19 +70,34 @@ export interface StartJobResult {
   attached: boolean;
 }
 
+/** LLM 预算记账：在真正发出请求前原子地检查并记一次调用。 */
+export interface LlmBudget {
+  consume(jobId: string): boolean;
+}
+
 export interface JobManagerDeps {
   archiveRepo: ArchiveRepo;
   jobRepo: JobRepo;
   cityRepo: CityRepo;
   generator: ModuleGenerator;
+  budget: LlmBudget;
   now?: () => Date;
+  /** 单次生成总截止（PRD v1.2：180s），覆盖侦察、生成与重试全过程。 */
+  deadlineMs?: number;
+  /** 崩溃遗留任务判定阈值；必须大于 deadlineMs，避免误杀活跃任务。 */
   staleAfterMs?: number;
 }
 
 const DEFAULT_MODULES = [...MODULE_NAMES];
+/** PRD v1.2：单模块超时 60s（LLM_TIMEOUT_MS）、单次生成总上限 180s。 */
+const DEFAULT_DEADLINE_MS = 180_000;
+/** stale 阈值取总截止 + 120s 余量：活跃任务不会被他城 start 误判为崩溃遗留。 */
+const DEFAULT_STALE_AFTER_MS = DEFAULT_DEADLINE_MS + 120_000;
 
 function toModuleErrorCode(code: string): ModuleErrorCode {
-  if (code === 'LLM_TIMEOUT' || code === 'NO_FACTS') return code;
+  if (code === 'LLM_TIMEOUT' || code === 'NO_FACTS' || code === 'BUDGET_EXCEEDED') return code;
+  // 总截止到达：对模块表现为可重试的超时。
+  if (code === 'GENERATION_DEADLINE') return 'LLM_TIMEOUT';
   // 网络类失败（连接失败 / 接口错误）归入 LLM_TIMEOUT：可重试、不误导为结构问题。
   if (code === 'LLM_NETWORK' || code === 'LLM_HTTP_ERROR') return 'LLM_TIMEOUT';
   if (code === 'SOURCE_MISSING' || code === 'VERIFY_FAILED') return 'VERIFY_FAILED';
@@ -106,11 +125,13 @@ export function collectSourceRefs(value: unknown, out = new Set<string>()): Set<
 export class JobManager {
   private readonly runtimes = new Map<string, JobRuntime>();
   private readonly now: () => Date;
+  private readonly deadlineMs: number;
   private readonly staleAfterMs: number;
 
   constructor(private readonly deps: JobManagerDeps) {
     this.now = deps.now ?? (() => new Date());
-    this.staleAfterMs = deps.staleAfterMs ?? 120_000;
+    this.deadlineMs = deps.deadlineMs ?? DEFAULT_DEADLINE_MS;
+    this.staleAfterMs = deps.staleAfterMs ?? DEFAULT_STALE_AFTER_MS;
   }
 
   getRuntime(cityId: string): JobRuntime | undefined {
@@ -176,6 +197,7 @@ export class JobManager {
         (bundle?.archive.sources ?? []).map((source) => [source.id, source] as const),
       ),
       themePalette: bundle?.archive.themePalette ?? DEFAULT_THEME_PALETTE,
+      deadlineAbort: new AbortController(),
     };
     this.runtimes.set(input.city.cityId, runtime);
 
@@ -244,26 +266,55 @@ export class JobManager {
   private async run(runtime: JobRuntime, input: StartJobInput): Promise<void> {
     const failed: ModuleName[] = [];
     const jobStartedAt = Date.now();
+    const deadlineAt = runtime.startedAt + this.deadlineMs;
+    let deadlineExceeded = false;
+    let budgetExhausted = false;
+    this.armDeadlineTimer(runtime, deadlineAt);
     try {
       // 非预置城市先做一次城市侦察：维基百科、Wikidata、Tavily、气候与官方统计。
       // 侦察失败不阻断生成，各模块会按 NO_FACTS 降级。
-      const reconStartedAt = Date.now();
-      const recon = input.city.isPreset ? null : await loadCityRecon(input.city);
-      if (recon) {
-        console.log(
-          `[gen] city=${input.city.cityId} recon ms=${Date.now() - reconStartedAt}`,
-        );
+      let recon = null;
+      if (!input.city.isPreset && this.now().getTime() < deadlineAt) {
+        const reconStartedAt = Date.now();
+        recon = await loadCityRecon(input.city);
+        if (recon) {
+          console.log(
+            `[gen] city=${input.city.cityId} recon ms=${Date.now() - reconStartedAt}`,
+          );
+        }
       }
       for (const module of runtime.planned) {
+        // 总截止覆盖侦察、生成与重试：到达后不再开始新模块。
+        if (this.now().getTime() >= deadlineAt) {
+          deadlineExceeded = true;
+          break;
+        }
+        if (budgetExhausted) break;
         const moduleStartedAt = Date.now();
-        this.deps.jobRepo.incrementLlmCalls(runtime.jobId);
         try {
           const generated = await this.deps.generator.generate({
             city: input.city,
             module,
             aliases: input.aliases,
             recon,
+            signal: runtime.deadlineAbort.signal,
+            onLlmCall: () => {
+              // 真正发出 LLM 请求前的原子额度检查与记账（重试请求同样计数）。
+              if (!this.deps.budget.consume(runtime.jobId)) {
+                throw new GenerationError(
+                  'BUDGET_EXCEEDED',
+                  '今日 LLM 调用预算已用尽，请明日再试',
+                );
+              }
+            },
           });
+          // 迟到结果不得落库：生成完成后再次核对总截止。
+          if (this.now().getTime() >= deadlineAt) {
+            throw new GenerationError(
+              'GENERATION_DEADLINE',
+              `模块 ${module} 超过单次生成总截止（${this.deadlineMs}ms），结果未落库`,
+            );
+          }
           const data = validateModuleData(module, generated.data);
           const used = collectSourceRefs(data);
           const missing = [...used].filter(
@@ -283,6 +334,7 @@ export class JobManager {
             data,
             verification: { status: generated.verification },
             generatedAt: this.now().toISOString(),
+            sources: generated.sources,
           });
           this.emit(runtime, 'module', {
             seq: runtime.seq + 1,
@@ -319,12 +371,39 @@ export class JobManager {
             retryable: code !== 'NO_FACTS',
           });
           failed.push(module);
+          if (code === 'BUDGET_EXCEEDED') budgetExhausted = true;
         }
+      }
+
+      // 失败但仍持有可用旧内容的模块：补发 fromCache 事件，
+      // 使 SSE 与 GET /api/cities/:id 对可用内容的读取口径一致。
+      const retained = new Map<ModuleName, { status: 'ok' | 'degraded'; data: unknown }>();
+      if (failed.length > 0) {
+        for (const record of this.deps.archiveRepo.listModules(runtime.cityId)) {
+          if (!failed.includes(record.name)) continue;
+          if (hasUsableModuleContent(record)) {
+            retained.set(record.name, {
+              status: record.status as 'ok' | 'degraded',
+              data: record.data,
+            });
+          }
+        }
+      }
+      for (const [name, content] of retained) {
+        this.emit(runtime, 'module', {
+          seq: runtime.seq + 1,
+          name,
+          status: content.status,
+          data: content.data,
+          sources: [],
+          fromCache: true,
+        });
       }
 
       const bundle = loadBundle(this.deps.archiveRepo, runtime.cityId);
       const statusMap = bundle ? moduleStatusMap(bundle) : {};
-      // 发布规则针对整份档案判定：单模块重试不能因本次只尝试 1 个模块而把已发布档案打回 unpublished。
+      // 发布规则针对整份档案判定：模块状态只反映「当前可用内容」，
+      // 单次尝试失败不会把已发布档案打回 unpublished。
       const status = computeArchiveStatus(statusMap, MODULE_NAMES);
       const generatedAt = this.now().toISOString();
       this.deps.archiveRepo.setMeta(runtime.cityId, {
@@ -348,6 +427,37 @@ export class JobManager {
         failed,
         cooldownUntil,
       );
+      if (deadlineExceeded) {
+        // 明确终止结果：已发布档案走非致命 notice；未发布走 error + 冷却。
+        if (status === 'unpublished') {
+          this.emit(runtime, 'error', {
+            seq: runtime.seq + 1,
+            code: 'GENERATION_DEADLINE',
+            message: `本次生成超过 ${Math.round(this.deadlineMs / 1000)} 秒总截止，未达到成卷门槛`,
+            retryAfterSec: FAILURE_COOLDOWN_MS / 1000,
+          });
+        } else {
+          this.emit(runtime, 'notice', {
+            seq: runtime.seq + 1,
+            code: 'GENERATION_DEADLINE',
+            message: `本次生成已达 ${Math.round(this.deadlineMs / 1000)} 秒总截止，已停止继续展卷；已成之卷不受影响，可单独重试未成之卷。`,
+          });
+        }
+      }
+      if (budgetExhausted && status === 'unpublished') {
+        this.emit(runtime, 'error', {
+          seq: runtime.seq + 1,
+          code: 'BUDGET_EXCEEDED',
+          message: '今日 LLM 调用预算已用尽，请明日再试',
+          retryAfterSec: FAILURE_COOLDOWN_MS / 1000,
+        });
+      } else if (budgetExhausted) {
+        this.emit(runtime, 'notice', {
+          seq: runtime.seq + 1,
+          code: 'BUDGET_EXCEEDED',
+          message: '今日 LLM 调用预算已用尽，剩余未生成的卷请明日再试；已成之卷不受影响。',
+        });
+      }
       this.emit(runtime, 'done', {
         seq: runtime.seq + 1,
         cityId: runtime.cityId,
@@ -357,34 +467,58 @@ export class JobManager {
         dataVersion: bundle?.archive.dataVersion ?? 1,
       });
       console.log(
-        `[gen] city=${runtime.cityId} done status=${status} modules=${runtime.planned.length} failed=${failed.length} total=${Date.now() - jobStartedAt}ms`,
+        `[gen] city=${runtime.cityId} done status=${status} modules=${runtime.planned.length} failed=${failed.length} deadline=${deadlineExceeded} total=${Date.now() - jobStartedAt}ms`,
       );
       this.finish(runtime);
     } catch (error) {
       this.failRuntime(runtime, error);
+    } finally {
+      runtime.deadlineAbort.abort();
     }
+  }
+
+  /** 武装实时截止定时器；注入时钟的测试由循环内的时钟检查负责。 */
+  private armDeadlineTimer(runtime: JobRuntime, deadlineAt: number): void {
+    const delay = deadlineAt - Date.now();
+    if (delay <= 0 || delay > this.deadlineMs) return;
+    const timer = setTimeout(() => runtime.deadlineAbort.abort(), delay);
+    timer.unref?.();
   }
 
   private failRuntime(runtime: JobRuntime, error: unknown): void {
     if (runtime.finished) return;
     const message = error instanceof Error ? error.message : String(error);
     const code = error instanceof GenerationError ? error.code : 'INTERNAL_ERROR';
-    const cooldownUntil = new Date(this.now().getTime() + FAILURE_COOLDOWN_MS).toISOString();
-    this.deps.archiveRepo.updateStatus(runtime.cityId, 'unpublished', this.now().toISOString());
-    this.deps.jobRepo.finish(runtime.jobId, 'failed', [], cooldownUntil);
+    const generatedAt = this.now().toISOString();
+    // 崩溃/异常中断同样不得把已有可用内容下架：按当前模块状态重算发布状态。
+    const bundle = loadBundle(this.deps.archiveRepo, runtime.cityId);
+    const status = bundle
+      ? computeArchiveStatus(moduleStatusMap(bundle), MODULE_NAMES)
+      : 'unpublished';
+    const cooldownUntil =
+      status === 'unpublished'
+        ? new Date(this.now().getTime() + FAILURE_COOLDOWN_MS).toISOString()
+        : null;
+    this.deps.archiveRepo.updateStatus(runtime.cityId, status, generatedAt);
+    this.deps.jobRepo.finish(
+      runtime.jobId,
+      status === 'complete' ? 'done' : status === 'partial' ? 'partial' : 'failed',
+      [],
+      cooldownUntil,
+    );
     this.emit(runtime, 'error', {
       seq: runtime.seq + 1,
       code,
       message,
-      retryAfterSec: FAILURE_COOLDOWN_MS / 1000,
+      ...(cooldownUntil ? { retryAfterSec: FAILURE_COOLDOWN_MS / 1000 } : {}),
     });
     this.emit(runtime, 'done', {
       seq: runtime.seq + 1,
       cityId: runtime.cityId,
-      status: 'unpublished',
+      status,
       failedModules: [],
-      generatedAt: this.now().toISOString(),
-      dataVersion: 1,
+      generatedAt,
+      dataVersion: bundle?.archive.dataVersion ?? 1,
     });
     this.finish(runtime);
   }

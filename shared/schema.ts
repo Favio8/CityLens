@@ -763,6 +763,7 @@ export const MODULE_ERROR_CODES = [
   'SCHEMA_INVALID',
   'VERIFY_FAILED',
   'NO_FACTS',
+  'BUDGET_EXCEEDED',
 ] as const;
 export type ModuleErrorCode = (typeof MODULE_ERROR_CODES)[number];
 

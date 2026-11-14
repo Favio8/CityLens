@@ -63,6 +63,25 @@ export interface ArchiveWriteInput {
   generatedAt: string;
 }
 
+/** 「最近一次生成尝试失败」记录：与模块的可用状态（status）分开保存。 */
+export interface ModuleAttemptRecord {
+  status: 'failed';
+  code?: string;
+  message?: string;
+  /** 尝试时间；仓储层统一以 generatedAt 覆盖写入。 */
+  at?: string;
+}
+
+/** 模块行当前是否持有「可用的合格内容」（ok/degraded 且 data 非空）。 */
+export function hasUsableModuleContent(
+  row: { status: string; data?: unknown; data_json?: string | null } | undefined,
+): boolean {
+  if (!row) return false;
+  if (row.status !== 'ok' && row.status !== 'degraded') return false;
+  // DB 行用 data_json 判定；仓储层 ModuleRecord 用 data 判定。
+  return 'data_json' in row ? row.data_json != null : row.data != null;
+}
+
 function parseJson<T>(raw: string | null, fallback: T): T {
   if (!raw) return fallback;
   try {
@@ -163,7 +182,11 @@ export class ArchiveRepo {
       );
   }
 
-  /** 模块通过校验后原子替换，并递增 data_version。 */
+  /**
+   * 模块通过校验后原子替换，并递增 data_version。
+   * 传入 sources 时在同一事务内合并进档案 sources_json：
+   * 避免生成途中被其他访客读到「引用了未登记来源」的半成品模块。
+   */
   saveModule(input: {
     cityId: string;
     name: ModuleName;
@@ -171,6 +194,7 @@ export class ArchiveRepo {
     data: unknown;
     verification: unknown;
     generatedAt: string;
+    sources?: SourceRef[];
   }): void {
     const transaction = this.db.transaction(() => {
       this.db
@@ -192,24 +216,72 @@ export class ArchiveRepo {
           JSON.stringify(input.verification ?? {}),
           input.generatedAt,
         );
-      this.db
-        .prepare(
-          `UPDATE city_archives
-           SET data_version = data_version + 1, updated_at = ?
-           WHERE city_id = ?`,
-        )
-        .run(input.generatedAt, input.cityId);
+      let sourcesJson: string | null = null;
+      if (input.sources && input.sources.length > 0) {
+        const row = this.db
+          .prepare('SELECT sources_json FROM city_archives WHERE city_id = ?')
+          .get(input.cityId) as { sources_json: string } | undefined;
+        if (row) {
+          const merged = new Map<string, SourceRef>(
+            parseJson<SourceRef[]>(row.sources_json, []).map((source) => [source.id, source]),
+          );
+          for (const source of input.sources) merged.set(source.id, source);
+          sourcesJson = JSON.stringify([...merged.values()]);
+        }
+      }
+      if (sourcesJson !== null) {
+        this.db
+          .prepare(
+            `UPDATE city_archives
+             SET sources_json = ?, data_version = data_version + 1, updated_at = ?
+             WHERE city_id = ?`,
+          )
+          .run(sourcesJson, input.generatedAt, input.cityId);
+      } else {
+        this.db
+          .prepare(
+            `UPDATE city_archives
+             SET data_version = data_version + 1, updated_at = ?
+             WHERE city_id = ?`,
+          )
+          .run(input.generatedAt, input.cityId);
+      }
     });
     transaction();
   }
 
-  /** 模块失败：保留旧 data_json，只更新状态与校验记录。 */
+  /**
+   * 模块失败：区分「当前可用内容」与「最近一次生成尝试失败」。
+   * - 已有合格旧内容（ok/degraded 且 data 非空）：保留可用状态与数据，
+   *   只把本次失败记入 verification.lastAttempt；档案不下架、旧内容不隐藏。
+   * - 没有旧内容：按原发布门槛置 failed（首次生成失败路径不变）。
+   */
   markModuleFailed(
     cityId: string,
     name: ModuleName,
-    verification: unknown,
+    attempt: ModuleAttemptRecord,
     generatedAt: string,
   ): void {
+    const current = this.db
+      .prepare(
+        'SELECT status, data_json, verification_json FROM city_modules WHERE city_id = ? AND module_name = ?',
+      )
+      .get(cityId, name) as
+      | { status: string; data_json: string | null; verification_json: string }
+      | undefined;
+    if (hasUsableModuleContent(current)) {
+      const existing = parseJson<Record<string, unknown>>(current!.verification_json, {});
+      const merged: Record<string, unknown> = {
+        ...existing,
+        lastAttempt: { ...attempt, at: generatedAt } satisfies ModuleAttemptRecord,
+      };
+      this.db
+        .prepare(
+          `UPDATE city_modules SET verification_json = ? WHERE city_id = ? AND module_name = ?`,
+        )
+        .run(JSON.stringify(merged), cityId, name);
+      return;
+    }
     this.db
       .prepare(
         `INSERT INTO city_modules
@@ -219,7 +291,7 @@ export class ArchiveRepo {
            status = 'failed',
            verification_json = excluded.verification_json`,
       )
-      .run(cityId, name, JSON.stringify(verification ?? {}), generatedAt);
+      .run(cityId, name, JSON.stringify(attempt), generatedAt);
   }
 
   updateStatus(cityId: string, status: ArchiveStatus, generatedAt?: string): void {

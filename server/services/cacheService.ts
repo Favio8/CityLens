@@ -83,10 +83,21 @@ export function reusableModules(bundle: ArchiveBundle | null): Set<ModuleName> {
   const result = new Set<ModuleName>();
   if (!bundle) return result;
   for (const name of MODULE_NAMES) {
-    const status = bundle.modules.get(name)?.status;
-    if (status === 'ok' || status === 'degraded') result.add(name);
+    const record = bundle.modules.get(name);
+    const status = record?.status;
+    // 最近一次生成尝试失败的模块即使有旧内容也要重试（单卷重试按钮依赖此口径）。
+    if ((status === 'ok' || status === 'degraded') && !lastAttemptFailed(record)) {
+      result.add(name);
+    }
   }
   return result;
+}
+
+/** verification.lastAttempt.status === 'failed'：最近一次生成尝试失败（内容可能仍可用）。 */
+export function lastAttemptFailed(module: ModuleRecord | undefined): boolean {
+  if (!module) return false;
+  const verification = module.verification as { lastAttempt?: { status?: string } } | null;
+  return verification?.lastAttempt?.status === 'failed';
 }
 
 export function cooldownSeconds(untilIso: string, now = Date.now()): number {

@@ -39,8 +39,17 @@ export function buildApp(options: BuildAppOptions = {}) {
   const mapSettings = new MapSettingsService(db);
   const searchSettings = new SearchSettingsService(db);
   const generator = options.generator ?? createGenerator(llmSettings);
-  const jobManager = new JobManager({ archiveRepo, jobRepo, cityRepo: repo, generator });
   const rateLimiter = new RateLimiter(jobRepo, { dailyCallLimit: config.llm.dailyCallLimit });
+  const jobManager = new JobManager({
+    archiveRepo,
+    jobRepo,
+    cityRepo: repo,
+    generator,
+    // 预算在真正发出 LLM 请求前原子检查与记账（含重试；Mock/本地模块不计费）。
+    budget: {
+      consume: (jobId: string) => rateLimiter.consumeForJob(jobId),
+    },
+  });
 
   app.register(cors, {
     origin: (origin, callback) => callback(null, isOriginAllowed(origin ?? undefined)),
