@@ -89,6 +89,11 @@ export class JobRepo {
       if ((error as { code?: string }).code === 'SQLITE_CONSTRAINT_UNIQUE') return null;
       throw error;
     }
+    // 主 attemptId 同步登记到绑定表：之后并入的客户端标识写进同一张表，
+    // 恢复时任意绑定标识都能定位到本任务。
+    if (input.attemptId) {
+      this.bindAttempt(input.jobId, input.cityId, input.attemptId);
+    }
     const row = this.db
       .prepare('SELECT * FROM generation_jobs WHERE job_id = ?')
       .get(input.jobId) as JobRow;
@@ -109,16 +114,39 @@ export class JobRepo {
     return row ? toRecord(row) : null;
   }
 
-  /** 按客户端尝试标识定位同城任务（断线恢复在未收到 meta 时的稳定标识）。 */
+  /**
+   * 按客户端尝试标识定位同城任务（断线恢复在未收到 meta 时的稳定标识）。
+   * 命中范围：任务主 attemptId（generation_jobs.attempt_id，含老库回填）
+   * 与绑定表里登记的并入客户端标识（generation_job_attempts）。
+   */
   findByAttempt(cityId: string, attemptId: string): JobRecord | null {
     const row = this.db
       .prepare(
         `SELECT * FROM generation_jobs
-         WHERE city_id = ? AND attempt_id = ?
+         WHERE city_id = ? AND (
+           attempt_id = ?
+           OR job_id IN (
+             SELECT job_id FROM generation_job_attempts
+             WHERE city_id = ? AND attempt_id = ?
+           )
+         )
          ORDER BY started_at DESC, rowid DESC LIMIT 1`,
       )
-      .get(cityId, attemptId) as JobRow | undefined;
+      .get(cityId, attemptId, cityId, attemptId) as JobRow | undefined;
     return row ? toRecord(row) : null;
+  }
+
+  /**
+   * 把某个客户端尝试标识绑定到既有任务（并入时调用；只增不改）。
+   * (job_id, attempt_id) 主键保证重复绑定无副作用，也不改动任务其它列。
+   */
+  bindAttempt(jobId: string, cityId: string, attemptId: string): void {
+    this.db
+      .prepare(
+        `INSERT OR IGNORE INTO generation_job_attempts (job_id, city_id, attempt_id, bound_at)
+         VALUES (?, ?, ?, ?)`,
+      )
+      .run(jobId, cityId, attemptId, new Date().toISOString());
   }
 
   /** 同城最近一次任务（无 jobId/attemptId 的兼容恢复路径）。 */

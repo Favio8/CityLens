@@ -12,7 +12,7 @@
 | Node.js | v24.15.0 |
 | npm | 11.12.1 |
 | 浏览器 | Chrome（无头模式，CDP 视口模拟 375 / 768 / 1280） |
-| 日期 | 2026-11-10（首轮）；2026-11-11（官方 LLM / Lighthouse / 三层断网 / 数据补全 / 四大新功能 / 干净环境复跑 / 最终门禁 / PRD 对照完备性检查与偏差修复）；2026-11-14（P0/P1 缺陷修复轮：重新生成失败下架 / 预算日界与原子记账 / 并发配置隔离 / 180s 总截止 / SSE 恢复与切城保护 / 可重复交付，见 2.3）；2026-11-14 二轮（跨日预算按实际请求时间记账 / 生成硬截止真正结束等待 / 重新生成与重连完整生命周期 / E2E 可信度，见 2.5）；2026-11-14 三轮（网络异常与 EOF 统一恢复 / 服务端已完成客户端丢失 done 的恢复 / 旧内容与最新刷新失败同时可见，见 2.6） |
+| 日期 | 2026-11-10（首轮）；2026-11-11（官方 LLM / Lighthouse / 三层断网 / 数据补全 / 四大新功能 / 干净环境复跑 / 最终门禁 / PRD 对照完备性检查与偏差修复）；2026-11-14（P0/P1 缺陷修复轮：重新生成失败下架 / 预算日界与原子记账 / 并发配置隔离 / 180s 总截止 / SSE 恢复与切城保护 / 可重复交付，见 2.3）；2026-11-14 二轮（跨日预算按实际请求时间记账 / 生成硬截止真正结束等待 / 重新生成与重连完整生命周期 / E2E 可信度，见 2.5）；2026-11-14 三轮（网络异常与 EOF 统一恢复 / 服务端已完成客户端丢失 done 的恢复 / 旧内容与最新刷新失败同时可见，见 2.6）；2026-11-14 五轮（并发并入任务的断线恢复边界：并入客户端 attemptId 绑定，见 2.8） |
 | 模式 | 初测无 Key（模拟 LLM + 无底图）；2026-11-10 复测改用本机 Magpie 网关（`zcode/GLM-5.2`）、`ADMIN_TOKEN` 与天地图双 Key（浏览器端 + 服务器端）；`ENABLE_IMAGES=true`（本地 Commons 图片）；2026-11-11 起改用用户提供的 **StepFun 官方 Key**（`https://api.stepfun.com/step_plan/v1`，`step-3.7-flash`，经 `.env` 配置，`llmSettingsSource=env`） |
 
 命令统一在项目根目录执行；本机部分终端存在 PATH 超长问题，详见 6.3。
@@ -158,7 +158,47 @@
 - `server/db/migration.test.ts` 2 项：老库在隔离副本上补列且保留历史行；重复打开幂等。
 - `npm run e2e` 27/27 通过，新增场景 7：浏览器内截断 generate 流的 done，客户端自动恢复后 `generation_jobs` 0→1、`llm_call_log` 0→0、生成器日志 0→8 条（仅用户触发的一轮），再等 2 秒无自动重试，档案 `dataVersion/generatedAt` 与旧内容不变。
 
-### 2.8 未完成 / 未实测
+### 2.8 收尾修复五轮（2026-11-14，并发并入恢复边界）
+
+> 本轮专项修复「并发并入任务的断线恢复边界」。先复现，再补能让旧版本失败的回归，最后修复。只读恢复契约、预算记账、硬截止、旧档案保护等既有实现原样保留。
+
+**复现（修复前）**
+
+| 步骤 | 操作 | 旧结果 |
+|---|---|---|
+| 1 | A 使用 `attemptId=A` 创建任务 | 任务创建，`generation_jobs.attempt_id=A` |
+| 2 | B 使用 `attemptId=B` 请求同城生成 | 200 并入 A 的任务，但 B 的标识被丢弃（`start` 发现既有 runtime 直接返回，不登记并入方 attemptId） |
+| 3 | B 尚未收到 meta 就断线 | 客户端只保留 `attemptId=B` |
+| 4 | B 使用 `attemptId=B` 调用恢复接口 | 运行中：`attemptId=B !== runtime.attemptId=A` 不匹配 → 落入 `findByAttempt` 查无此标识 → **RESUME_UNAVAILABLE**；任务结束后同样查无此标识 → **RESUME_UNAVAILABLE**（A 始终可正常恢复） |
+
+根因：`JobManager.start` 在并入路径直接返回既有 runtime，并入客户端的 `attemptId` 既不进内存也不落库；恢复时运行中匹配只比对发起方标识，库内定位只有 `generation_jobs.attempt_id` 单列。
+
+**修复：attemptId 绑定原任务**
+
+| 环节 | 行为 |
+|---|---|
+| 数据模型 | 新增 `generation_job_attempts(job_id, city_id, attempt_id, bound_at)` 绑定表（主键 `job_id+attempt_id`，索引 `city_id+attempt_id`）；主 attemptId 仍保留在 `generation_jobs.attempt_id`，旧读取口径不变 |
+| 迁移 | `openDb` 在 schema 之后把历史 `attempt_id` 回填进绑定表（`INSERT OR IGNORE ... SELECT`，只搬既有值，不伪造；NULL 与空串跳过）；重复打开幂等 |
+| 创建 | `JobRepo.create` 成功后同步登记主 attemptId 绑定 |
+| 并入 | `JobManager.start` 在「既有 runtime」与「创建竞争失败」两条并入路径调用 `bindAttempt`：并入方标识写入 `runtime.attemptIds` 集合并持久绑定到原任务，原发起方标识保留 |
+| 运行中恢复 | `resume` 的 attemptId 匹配改为命中 `runtime.attemptIds` 集合内任意标识（A、B、C 均并入同一 runtime） |
+| 结束后/重启后恢复 | `JobRepo.findByAttempt` 同时匹配主标识列与绑定表（按 `started_at DESC` 取最新），任务结束与服务重启后仍稳定定位同一 jobId |
+
+**只读与边界保持**
+
+- 恢复接口仍只读：不新增任务、不调用生成器、不记账本、不写档案（`data_version` / `generated_at` 不变）；绑定只发生在 `start` 的并入路径。
+- 未知标识不盲目匹配：`findByAttempt` 精确匹配且按城过滤，查无即 `RESUME_UNAVAILABLE`，不自动开始新生成。
+- 跨城隔离、未发布档案限制（冷却 429 / `JOB_UNPUBLISHED`）、显式单卷重试（新建任务并计费）行为不变。
+
+**验证**
+
+- `jobManager.test.ts` +5 项（运行中并入恢复同一 jobId、完成后恢复 + 重启后稳定定位、多个并入客户端 B/C、跨城标识双向隔离、未知标识不匹配且不新建）；修复前 3 项按复现结果失败（`expected 'unavailable' to be 'attached'/'terminal'`）。
+- `archiveRoutes.test.ts` +1 项真实接口集成测试：A 建任务读 meta → B 并入后在 meta 前断开 → `findByAttempt` 已登记 B → B 只带 attemptId 恢复得到 `RESUMED` 且回放 meta 的 jobId 与 A 一致 → 放行收尾后同一连接收到 `done` → 结束后 B/A 再恢复均为 `RESUMED_TERMINAL` 同一 jobId；断言 `generation_jobs` 恒为 1、生成器调用次数、`llm_call_log` 数量、档案签名在恢复前后不变；未知 attemptId 仍 409 `RESUME_UNAVAILABLE`。修复前该用例在 `findByAttempt` 断言处失败（返回 undefined）。
+- `server/db/migration.test.ts` +1 项（隔离副本）：老库（无绑定表）重开后历史 attempt 回填、可按 attemptId 恢复、历史 NULL 不伪造、跨城不匹配、重复打开幂等。
+- `npm run check`：typecheck（server/client）、260 项测试、生产构建全部通过。顺带修复一处**既有**时间炸弹断言：`jobManager.test.ts` 总截止用例用真实时钟判定注入时钟产生的冷却，真实时间走过注入基准（2026-11-14T10:11:30Z）后必然失败（与本轮改动无关，修复前已失败）；改为与注入时钟对齐，语义不变。
+- `npm run verify`（隔离副本）：6/6 预置城市通过。`npm run archives:audit`（隔离副本）：20 份档案、5 个模块需要关注（徐州 relics、扬州 landmarks/poetics、福州 poetics、天水 localSoul，均为历史失败记录，与 2.3 基线一致）。`npm run e2e`：27/27 通过（含场景 7 只读恢复）。真实数据库全程只读（迁移与数据校验均用 `VACUUM INTO` 隔离副本，已验证原库无绑定表、副本有）。
+
+### 2.9 未完成 / 未实测
 
 | 项 | 原因 |
 |---|---|

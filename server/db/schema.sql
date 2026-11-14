@@ -73,6 +73,20 @@ CREATE INDEX IF NOT EXISTS idx_job_requester ON generation_jobs(requester_hash, 
 CREATE INDEX IF NOT EXISTS idx_job_city ON generation_jobs(city_id, started_at);
 CREATE INDEX IF NOT EXISTS idx_job_attempt ON generation_jobs(city_id, attempt_id);
 
+-- attemptId 绑定：同城单飞下，后到的客户端会并入既有任务（A 创建、B/C 并入）。
+-- 每个客户端发起的 attemptId 都登记到原任务，未收到 meta 就断线后也能恢复到同一 jobId。
+-- 主 attemptId 仍保留在 generation_jobs.attempt_id（旧读取口径不变）；
+-- 老库由 openDb 在 schema 之后把历史 attempt_id 回填进本表（只搬既有值，不伪造）。
+CREATE TABLE IF NOT EXISTS generation_job_attempts (
+    job_id     TEXT NOT NULL REFERENCES generation_jobs(job_id) ON DELETE CASCADE,
+    city_id    TEXT NOT NULL,
+    attempt_id TEXT NOT NULL,
+    bound_at   TEXT NOT NULL,
+    PRIMARY KEY (job_id, attempt_id)
+);
+
+CREATE INDEX IF NOT EXISTS idx_job_attempt_binding ON generation_job_attempts(city_id, attempt_id);
+
 -- 逐次 LLM 调用日志：每日预算按「实际请求发生时间」所属北京日期记账。
 -- 任务可能跨午夜运行，用 generation_jobs.started_at 汇总会把次日的调用算到前一天。
 -- 迁移前的历史调用只有任务级 llm_calls 汇总、没有逐次时间戳，一律不补造记录。

@@ -892,9 +892,11 @@ describe('P1：单次生成总截止（180s）', () => {
     expect(byName.get('landmarks')?.status).toBe('failed');
     expect(byName.get('landmarks')?.data).toBeNull();
     // 未达发布门槛 → 任务失败并冷却。
+    // 冷却时间基于注入时钟计算：判定时刻与注入时钟对齐（真实时钟走过注入基准后，
+    // 旧基准产生的冷却会自然过期，用真实 now 判定会把这条断言变成时间炸弹）。
     const job = jobRepo.listRecent(1)[0]!;
     expect(job.status).toBe('failed');
-    expect(jobRepo.findActiveCooldown(CITY_ID, new Date().toISOString())).not.toBeNull();
+    expect(jobRepo.findActiveCooldown(CITY_ID, clock.now.toISOString())).not.toBeNull();
   });
 
   it('已有可用档案时到达总截止：档案不下架、无冷却、notice 明确提示', async () => {
@@ -1430,5 +1432,243 @@ describe('恢复契约：只读回放与并入运行中任务', () => {
     expect(notResumable).toMatchObject({ kind: 'unavailable', code: 'JOB_NOT_RESUMABLE' });
     // 恢复失败不得顺带创建任务（仅上面手工写入的 2 条）。
     expect(jobCount(context.jobRepo)).toBe(2);
+  });
+});
+
+/* -------------------------------------------------------------------------- */
+/* 并发并入恢复边界：并入客户端的 attemptId 绑定                               */
+/* -------------------------------------------------------------------------- */
+
+describe('并发并入：并入客户端的断线恢复边界', () => {
+  /** 复现序列：A 建任务 → B 同城生成并入 → B 未收到 meta 断线 → B 按 attemptId 恢复。 */
+  async function joinBeforeMeta(attemptIds: string[]): Promise<{
+    context: ReturnType<typeof setup>;
+    gated: LastModuleGate;
+    runtime: JobRuntime;
+    jobId: string;
+  }> {
+    const gated = new LastModuleGate();
+    const context = setup({ generator: gated });
+    const started = context.manager.start({
+      city: context.city,
+      aliases: [],
+      requesterHash: 'hash-a',
+      force: false,
+      modules: [...MODULE_NAMES],
+      attemptId: 'attempt-a',
+    });
+    expect(started.attached).toBe(false);
+    // 等到最后一个模块挂起：任务仍在运行，其余模块已生成完毕。
+    await vi.waitFor(() => expect(context.counting.count).toBe(MODULE_NAMES.length));
+    for (const [index, attemptId] of attemptIds.entries()) {
+      const joined = context.manager.start({
+        city: context.city,
+        aliases: [],
+        requesterHash: `hash-joiner-${index}`,
+        force: false,
+        modules: [...MODULE_NAMES],
+        attemptId,
+      });
+      expect(joined.attached).toBe(true);
+      expect(joined.runtime.jobId).toBe(started.runtime.jobId);
+    }
+    return { context, gated, runtime: started.runtime, jobId: started.runtime.jobId };
+  }
+
+  it('运行中并入：B 未收到 meta 即断线，按 attemptId 恢复到同一 jobId', async () => {
+    const { context, gated, runtime, jobId } = await joinBeforeMeta(['attempt-b']);
+
+    // B 只保留 attemptId（从未收到 meta）：必须并入同一 runtime。
+    const resumedB = context.manager.resume({
+      city: context.city,
+      aliases: [],
+      attemptId: 'attempt-b',
+    });
+    expect(resumedB.kind).toBe('attached');
+    if (resumedB.kind !== 'attached') throw new Error('expected attached');
+    expect(resumedB.runtime.jobId).toBe(jobId);
+
+    // A 的发起标识同时保留：同样恢复到同一 jobId。
+    const resumedA = context.manager.resume({
+      city: context.city,
+      aliases: [],
+      attemptId: 'attempt-a',
+    });
+    expect(resumedA.kind).toBe('attached');
+    if (resumedA.kind !== 'attached') throw new Error('expected attached');
+    expect(resumedA.runtime.jobId).toBe(jobId);
+
+    // 并入与恢复都不新增任务、不增加生成器调用。
+    expect(context.jobRepo.listRecent(10).length).toBe(1);
+
+    const donePromise = waitDone(runtime, context.manager);
+    gated.releaseLast();
+    const done = await donePromise;
+    expect(done.status).toBe('complete');
+    expect(context.counting.count).toBe(MODULE_NAMES.length);
+    expect(context.jobRepo.listRecent(10).length).toBe(1);
+  });
+
+  it('完成后恢复：并入客户端按 attemptId 回放同一 jobId，重启后定位仍稳定', async () => {
+    const { context, gated, runtime, jobId } = await joinBeforeMeta(['attempt-b']);
+    const donePromise = waitDone(runtime, context.manager);
+    gated.releaseLast();
+    await donePromise;
+
+    const archiveBefore = context.archiveRepo.getArchive(CITY_ID)!;
+    const modulesBefore = JSON.stringify(context.archiveRepo.listModules(CITY_ID));
+    const jobsBefore = context.jobRepo.listRecent(100).length;
+
+    // 任务结束后 B 按 attemptId 恢复：终态回放同一 jobId。
+    const resumedB = context.manager.resume({
+      city: context.city,
+      aliases: [],
+      attemptId: 'attempt-b',
+    });
+    expect(resumedB.kind).toBe('terminal');
+    if (resumedB.kind !== 'terminal') throw new Error('expected terminal');
+    expect(resumedB.jobId).toBe(jobId);
+    expect(resumedB.status).toBe('complete');
+    const metaB = resumedB.events.find((event) => event.event === 'meta')!.data as {
+      jobId: string;
+    };
+    expect(metaB.jobId).toBe(jobId);
+
+    // A 的标识同样定位到同一任务。
+    const resumedA = context.manager.resume({
+      city: context.city,
+      aliases: [],
+      attemptId: 'attempt-a',
+    });
+    expect(resumedA.kind).toBe('terminal');
+    if (resumedA.kind !== 'terminal') throw new Error('expected terminal');
+    expect(resumedA.jobId).toBe(jobId);
+
+    // 服务重启（同 DB 全新 manager）：并入标识仍稳定定位到同一 jobId，且不生成。
+    const counting = new CountingGenerator(new FixedGenerator());
+    const restartManager = new JobManager({
+      archiveRepo: context.archiveRepo,
+      jobRepo: context.jobRepo,
+      cityRepo: context.cityRepo,
+      generator: counting,
+      budget: { consume: () => true },
+    });
+    const afterRestart = restartManager.resume({
+      city: context.city,
+      aliases: [],
+      attemptId: 'attempt-b',
+    });
+    expect(afterRestart.kind).toBe('terminal');
+    if (afterRestart.kind !== 'terminal') throw new Error('expected terminal');
+    expect(afterRestart.jobId).toBe(jobId);
+    expect(counting.count).toBe(0);
+
+    // 只读断言：任务数、生成器调用、账本、档案元数据均不变。
+    expect(context.jobRepo.listRecent(100).length).toBe(jobsBefore);
+    expect(context.counting.count).toBe(MODULE_NAMES.length);
+    expect(context.jobRepo.countLlmCallsSince('1970-01-01T00:00:00.000Z')).toBe(0);
+    const archiveAfter = context.archiveRepo.getArchive(CITY_ID)!;
+    expect(archiveAfter.dataVersion).toBe(archiveBefore.dataVersion);
+    expect(archiveAfter.generatedAt).toBe(archiveBefore.generatedAt);
+    expect(JSON.stringify(context.archiveRepo.listModules(CITY_ID))).toBe(modulesBefore);
+  });
+
+  it('多个并入客户端：B、C 的标识都绑定原任务，结束后都能恢复同一 jobId', async () => {
+    const { context, gated, runtime, jobId } = await joinBeforeMeta(['attempt-b', 'attempt-c']);
+
+    for (const attemptId of ['attempt-b', 'attempt-c']) {
+      const resumed = context.manager.resume({ city: context.city, aliases: [], attemptId });
+      expect(resumed.kind).toBe('attached');
+      if (resumed.kind !== 'attached') throw new Error('expected attached');
+      expect(resumed.runtime.jobId).toBe(jobId);
+    }
+    expect(context.jobRepo.listRecent(10).length).toBe(1);
+
+    const donePromise = waitDone(runtime, context.manager);
+    gated.releaseLast();
+    await donePromise;
+
+    for (const attemptId of ['attempt-b', 'attempt-c']) {
+      const resumed = context.manager.resume({ city: context.city, aliases: [], attemptId });
+      expect(resumed.kind).toBe('terminal');
+      if (resumed.kind !== 'terminal') throw new Error('expected terminal');
+      expect(resumed.jobId).toBe(jobId);
+    }
+    expect(context.counting.count).toBe(MODULE_NAMES.length);
+    expect(context.jobRepo.listRecent(10).length).toBe(1);
+  });
+
+  it('跨城隔离：attemptId 只在本城解析，不会匹配其他城市的任务', async () => {
+    const context = setup({ generator: new FixedGenerator() });
+    // 另一座城先用同一个 attemptId 字符串完成任务。
+    const other = context.manager.start({
+      city: context.otherCity,
+      aliases: [],
+      requesterHash: 'hash-other',
+      force: false,
+      modules: ['identity'],
+      attemptId: 'attempt-shared',
+    });
+    await waitDone(other.runtime, context.manager);
+
+    // 本城拿该 attemptId 恢复：不得跨城匹配。
+    const crossCity = context.manager.resume({
+      city: context.city,
+      aliases: [],
+      attemptId: 'attempt-shared',
+    });
+    expect(crossCity).toMatchObject({ kind: 'unavailable', code: 'RESUME_UNAVAILABLE' });
+
+    // 本城自己的任务照常按 attemptId 恢复。
+    const own = context.manager.start({
+      city: context.city,
+      aliases: [],
+      requesterHash: 'hash',
+      force: false,
+      modules: ['identity'],
+      attemptId: 'attempt-own',
+    });
+    await waitDone(own.runtime, context.manager);
+    const ownResume = context.manager.resume({
+      city: context.city,
+      aliases: [],
+      attemptId: 'attempt-own',
+    });
+    expect(ownResume.kind).toBe('terminal');
+    if (ownResume.kind !== 'terminal') throw new Error('expected terminal');
+    expect(ownResume.jobId).toBe(own.runtime.jobId);
+
+    // 反向：拿本城的 attemptId 去别的城恢复，同样不得跨城匹配。
+    const reverse = context.manager.resume({
+      city: context.otherCity,
+      aliases: [],
+      attemptId: 'attempt-own',
+    });
+    expect(reverse).toMatchObject({ kind: 'unavailable', code: 'RESUME_UNAVAILABLE' });
+  });
+
+  it('未知标识：不盲目匹配运行中任务，也不自动新建生成', async () => {
+    const { context, gated, runtime } = await joinBeforeMeta(['attempt-b']);
+
+    // 运行中任务的存在不能让未知 attemptId 蒙混过关。
+    const unknown = context.manager.resume({
+      city: context.city,
+      aliases: [],
+      attemptId: 'attempt-never-seen',
+    });
+    expect(unknown).toMatchObject({ kind: 'unavailable', code: 'RESUME_UNAVAILABLE' });
+    expect(context.jobRepo.listRecent(10).length).toBe(1);
+    expect(context.counting.count).toBe(MODULE_NAMES.length);
+
+    // 无标识的兼容恢复仍只认同城运行中任务（行为不变）。
+    const legacy = context.manager.resume({ city: context.city, aliases: [] });
+    expect(legacy.kind).toBe('attached');
+    if (legacy.kind !== 'attached') throw new Error('expected attached');
+    expect(legacy.runtime.jobId).toBe(runtime.jobId);
+
+    gated.releaseLast();
+    await waitDone(runtime, context.manager);
+    expect(context.counting.count).toBe(MODULE_NAMES.length);
+    expect(context.jobRepo.listRecent(10).length).toBe(1);
   });
 });

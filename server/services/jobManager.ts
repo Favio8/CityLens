@@ -1,6 +1,8 @@
 /**
  * 生成任务编排（PRD 2.2 / 3.5）。
  * 同城单飞：内存 runtime + generation_jobs 唯一索引双保险；
+ * 并发并入：后到客户端并入既有任务时，其 attemptId 绑定到原任务（保留原发起方标识），
+ * 未收到 meta 就断线后也能恢复到同一 jobId；
  * 增量生成：已通过校验且最近一次尝试未失败的模块默认跳过；
  * 模块级失败保留旧内容（区分「当前可用内容」与「最近一次生成尝试失败」）；
  * 整体失败进入 10 分钟冷却；单次生成受 180s 总截止约束（PRD v1.2）。
@@ -52,6 +54,12 @@ export interface JobRuntime {
   cityId: string;
   /** 客户端发起的生成尝试标识；旧客户端为空。 */
   attemptId: string | null;
+  /**
+   * 已绑定到本任务的全部客户端尝试标识（含发起方与并入客户端）。
+   * 断线恢复时命中集合内任意标识都并入同一 runtime；
+   * 任务结束后由 generation_job_attempts 持久承接，重启后仍可定位。
+   */
+  attemptIds: Set<string>;
   requested: ModuleName[];
   planned: ModuleName[];
   reusable: ModuleName[];
@@ -189,7 +197,12 @@ export class JobManager {
   /** 同步完成“新建或并入”，返回后调用方即可 attach 并写 SSE。 */
   start(input: StartJobInput): StartJobResult {
     const existing = this.runtimes.get(input.city.cityId);
-    if (existing && !existing.finished) return { runtime: existing, attached: true };
+    if (existing && !existing.finished) {
+      // 并入：把并入客户端的 attemptId 绑定到原任务（保留原发起方标识），
+      // 使其在未收到 meta 就断线后仍能恢复到同一 jobId。
+      this.bindAttempt(existing, input.attemptId);
+      return { runtime: existing, attached: true };
+    }
 
     const now = this.now();
     const staleIso = new Date(now.getTime() - this.staleAfterMs).toISOString();
@@ -224,7 +237,11 @@ export class JobManager {
     });
     if (!created) {
       const racing = this.runtimes.get(input.city.cityId);
-      if (racing && !racing.finished) return { runtime: racing, attached: true };
+      if (racing && !racing.finished) {
+        // 与并发创建者竞争失败：并入已胜出的 runtime，同样绑定并入方标识。
+        this.bindAttempt(racing, input.attemptId);
+        return { runtime: racing, attached: true };
+      }
       // 进程重启后 DB 里的 running 任务尚未被判 stale：按 409 冲突返回，而非 500。
       throw new ApiError('JOB_CONFLICT', '同城已有生成任务，请稍后重试', 409);
     }
@@ -234,6 +251,7 @@ export class JobManager {
       jobId,
       cityId: input.city.cityId,
       attemptId: input.attemptId ?? null,
+      attemptIds: new Set(input.attemptId ? [input.attemptId] : []),
       requested,
       planned,
       reusable: [...reusable],
@@ -297,6 +315,16 @@ export class JobManager {
   }
 
   /**
+   * 把某个客户端尝试标识绑定到运行中的原任务（幂等；保留已有标识）。
+   * 内存集合负责运行中恢复；持久绑定负责任务结束/重启后的恢复。
+   */
+  private bindAttempt(runtime: JobRuntime, attemptId: string | undefined): void {
+    if (!attemptId || runtime.attemptIds.has(attemptId)) return;
+    runtime.attemptIds.add(attemptId);
+    this.deps.jobRepo.bindAttempt(runtime.jobId, runtime.cityId, attemptId);
+  }
+
+  /**
    * 断线恢复：只并入运行中的原任务，或只读回放已结束任务的终态。
    * 这里绝不调用 start、绝不创建 generation_jobs、绝不调用生成器或记账，
    * 也不写档案（data_version / generated_at 保持不变）。
@@ -305,11 +333,12 @@ export class JobManager {
     const cityId = input.city.cityId;
     const active = this.runtimes.get(cityId);
     if (active && !active.finished) {
-      // jobId 是任务主键，优先；未收到 meta 时用 attemptId；两者皆无则并入该城运行中任务。
+      // jobId 是任务主键，优先；未收到 meta 时用 attemptId（含并入客户端绑定的标识）；
+      // 两者皆无则并入该城运行中任务。
       const matches = input.jobId
         ? input.jobId === active.jobId
         : input.attemptId
-          ? input.attemptId === active.attemptId
+          ? active.attemptIds.has(input.attemptId)
           : true;
       if (matches) return { kind: 'attached', runtime: active };
     }

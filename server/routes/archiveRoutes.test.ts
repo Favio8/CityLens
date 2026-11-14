@@ -144,6 +144,38 @@ class GatedCompleteGenerator implements ModuleGenerator {
   }
 }
 
+/**
+ * 计费 + 末模块挂起的生成器：并发并入恢复专项。
+ * 每次调用都记账（onLlmCall），dataPulse 挂起以制造「原任务仍在运行」窗口。
+ */
+class GatedBillingGenerator implements ModuleGenerator {
+  readonly name = 'gated-billing';
+  readonly promptVersion = 'gated-billing-v1';
+  calls = 0;
+  private release: (() => void) | null = null;
+
+  releaseLast(): void {
+    this.release?.();
+    this.release = null;
+  }
+
+  async generate(input: GenerateInput): Promise<GeneratedModule> {
+    this.calls += 1;
+    input.onLlmCall?.();
+    if (input.module === 'dataPulse') {
+      await new Promise<void>((resolve) => {
+        this.release = resolve;
+      });
+    }
+    return {
+      status: 'ok',
+      verification: 'verified_by_source',
+      sources: [{ id: 'S-OK', type: 'preset_manual', title: '测试来源', retrievedAt: generatedAt }],
+      data: completeModuleData(input.module),
+    };
+  }
+}
+
 const generatedAt = '2026-11-14T00:00:00.000Z';
 
 /**
@@ -1250,6 +1282,118 @@ describe('恢复契约：断线只读恢复，不重新生成计费', () => {
     expect(((await unknown.json()) as { code: string }).code).toBe('RESUME_UNAVAILABLE');
     expect(countJobs(db)).toBe(1);
     expect(hanging.calls).toBe(1);
+  });
+
+  it('并发并入：B 并入 A 的任务后未收到 meta 即断线，按 attemptId 恢复到同一 jobId', async () => {
+    const gated = new GatedBillingGenerator();
+    const { db, app } = setup(gated);
+    const base = await listen(app);
+    const jobs = new JobRepo(db);
+
+    // A 创建任务并读到 meta（持有 jobId 与自己的 attemptId）。
+    const first = await openSse(
+      `${base}/api/cities/CN-350500/generate`,
+      {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ force: true, attemptId: 'attempt-a' }),
+      },
+      (events) => events.some((item) => item.event === 'meta'),
+    );
+    expect(first.status).toBe(200);
+    const meta = first.events.find((item) => item.event === 'meta')!.data as {
+      jobId: string;
+      attemptId?: string;
+    };
+    expect(meta.attemptId).toBe('attempt-a');
+    await first.cancel();
+    expect(jobs.getRunning('CN-350500')).not.toBeNull();
+    const callsAfterStart = gated.calls;
+
+    // B 对同城发起生成：服务端并入 A 的任务；B 在读到 meta 之前断开（只保留 attemptId）。
+    const joined = await fetch(`${base}/api/cities/CN-350500/generate`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ attemptId: 'attempt-b' }),
+    });
+    expect(joined.status).toBe(200);
+    await joined.body?.cancel();
+    // 并入即绑定：B 的标识登记到原任务（修复前被丢弃，恢复必然失败）。
+    expect(jobs.findByAttempt('CN-350500', 'attempt-b')?.jobId).toBe(meta.jobId);
+    expect(countJobs(db)).toBe(1);
+    expect(gated.calls).toBe(callsAfterStart); // 并入不触发任何新生成
+
+    // B 只带 attemptId 恢复：并入同一任务，回放 meta 的 jobId 与 A 一致。
+    const resumed = await openSse(
+      `${base}/api/cities/CN-350500/generate/resume`,
+      {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ attemptId: 'attempt-b' }),
+      },
+      (events) => events.some((item) => item.event === 'meta'),
+    );
+    expect(resumed.status).toBe(200);
+    expect(
+      resumed.events.some((item) => item.event === 'notice' && item.data.code === 'RESUMED'),
+    ).toBe(true);
+    expect(
+      (resumed.events.find((item) => item.event === 'meta')!.data as { jobId: string }).jobId,
+    ).toBe(meta.jobId);
+
+    // 放行收尾：并入连接随原任务一起收到 done。
+    gated.releaseLast();
+    await resumed.readUntil((events) => events.some((item) => item.event === 'done'));
+    const done = resumed.events.at(-1)!;
+    expect(done.event).toBe('done');
+    expect(done.data.status).toBe('complete');
+    await resumed.cancel();
+    await waitFor(async () => jobs.getRunning('CN-350500') === null, 10_000, 50, '任务收尾');
+
+    const callsAfterDone = gated.calls;
+    const llmAfterDone = jobs.countLlmCallsSince('1970-01-01T00:00:00.000Z');
+    const archiveAtFinish = await readPublishedArchive(base, 'CN-350500');
+
+    // 任务结束后 B 再按 attemptId 恢复：终态回放同一 jobId（修复前 RESUME_UNAVAILABLE）。
+    const afterFinish = await collectSse(`${base}/api/cities/CN-350500/generate/resume`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ attemptId: 'attempt-b' }),
+    });
+    expect(afterFinish.status).toBe(200);
+    expect(afterFinish.events[0]!.data.code).toBe('RESUMED_TERMINAL');
+    expect(
+      (afterFinish.events.find((item) => item.event === 'meta')!.data as { jobId: string }).jobId,
+    ).toBe(meta.jobId);
+    expect(afterFinish.events.at(-1)!.data.status).toBe('complete');
+
+    // A 的 attemptId 同样定位到同一任务。
+    const byA = await collectSse(`${base}/api/cities/CN-350500/generate/resume`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ attemptId: 'attempt-a' }),
+    });
+    expect(byA.status).toBe(200);
+    expect(
+      (byA.events.find((item) => item.event === 'meta')!.data as { jobId: string }).jobId,
+    ).toBe(meta.jobId);
+
+    // 只读断言：任务数、生成器调用、账本、档案元数据在恢复前后不变。
+    expect(countJobs(db)).toBe(1);
+    expect(gated.calls).toBe(callsAfterDone);
+    expect(jobs.countLlmCallsSince('1970-01-01T00:00:00.000Z')).toBe(llmAfterDone);
+    expect(await readPublishedArchive(base, 'CN-350500')).toEqual(archiveAtFinish);
+
+    // 未知标识仍然明确不可恢复，不顶替、不新建。
+    const unknown = await fetch(`${base}/api/cities/CN-350500/generate/resume`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ attemptId: 'attempt-never-arrived' }),
+    });
+    expect(unknown.status).toBe(409);
+    expect(((await unknown.json()) as { code: string }).code).toBe('RESUME_UNAVAILABLE');
+    expect(countJobs(db)).toBe(1);
+    expect(gated.calls).toBe(callsAfterDone);
   });
 
   it('显式单卷重试与自动恢复的区别：重试新建任务并计费，恢复不新增', async () => {

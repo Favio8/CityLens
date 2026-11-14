@@ -23,6 +23,20 @@ function migrateBeforeSchema(db: Db): void {
   }
 }
 
+/**
+ * 幂等迁移：把 generation_jobs.attempt_id 的历史值回填进 attempt 绑定表，
+ * 使绑定表引入之前的任务在恢复接口里仍可按 attemptId 定位（只搬既有值，不伪造）。
+ * 必须在 schema.sql 之后执行（绑定表由 schema 创建）。
+ */
+function backfillJobAttempts(db: Db): void {
+  db.exec(`
+    INSERT OR IGNORE INTO generation_job_attempts (job_id, city_id, attempt_id, bound_at)
+    SELECT job_id, city_id, attempt_id, started_at
+    FROM generation_jobs
+    WHERE attempt_id IS NOT NULL AND attempt_id <> ''
+  `);
+}
+
 /** 打开数据库并确保表结构存在。WAL 模式 + 外键约束。 */
 export function openDb(path: string = config.dbPath): Db {
   if (path !== ':memory:') mkdirSync(dirname(path), { recursive: true });
@@ -31,6 +45,7 @@ export function openDb(path: string = config.dbPath): Db {
   db.pragma('foreign_keys = ON');
   migrateBeforeSchema(db);
   db.exec(SCHEMA_SQL);
+  backfillJobAttempts(db);
   return db;
 }
 
