@@ -1,0 +1,136 @@
+/**
+ * e2e 辅助：为测试城市预置一份可公开读取的 partial 档案。
+ *
+ * 用途：Mock LLM 下 chronicle/localSoul/dataPulse 永远 NO_FACTS，新城市无法达到
+ * 发布门槛；预置档案后即可在浏览器里回归「force 重生成 → 模块失败 → 重试」路径。
+ * 只写 e2e 自己的临时数据库（DB_PATH 指向临时目录），绝不触碰真实数据库。
+ */
+import { PENDING } from '../shared/schema';
+import { openDb } from '../server/db';
+import { ArchiveRepo } from '../server/db/archiveRepo';
+
+const cityId = process.env.E2E_CITY ?? 'CN-321100';
+const generatedAt = new Date().toISOString();
+const palette = {
+  light: { primary: '#8C3F2B', secondary: '#4A4E54', accent: '#C89B40' },
+  dark: { primary: '#D2957F', secondary: '#A8ADB4', accent: '#E0B860' },
+};
+
+const db = openDb();
+const city = db
+  .prepare('SELECT city_id, standard_name FROM cities WHERE city_id = ?')
+  .get(cityId) as { city_id: string; standard_name: string } | undefined;
+if (!city) {
+  console.error(`[e2e-seed] 城市 ${cityId} 不在词典中，请先 seed`);
+  process.exit(1);
+}
+
+const repo = new ArchiveRepo(db);
+repo.ensureArchive({
+  cityId,
+  status: 'partial',
+  themePalette: palette,
+  sources: [
+    { id: 'S-E2E', type: 'preset_manual', title: 'e2e 预置来源', retrievedAt: generatedAt },
+  ],
+  isPreset: false,
+  generator: null,
+  generatedAt,
+});
+
+const data: Record<string, unknown> = {
+  identity: {
+    standardName: city.standard_name,
+    aliases: [city.standard_name],
+    center: [118.0, 32.0],
+    area: { value: PENDING, sourceRefs: [] },
+    population: { value: PENDING, sourceRefs: [] },
+    climateType: { value: PENDING, sourceRefs: [] },
+    adminDivisions: { value: PENDING, sourceRefs: [] },
+    oneLinePersona: '一座用于回归测试的江城。',
+    sourceRefs: ['S-E2E'],
+    verification: 'pending_human_review',
+  },
+  landmarks: [
+    {
+      entityRef: 'Q-E2E-1',
+      name: '测试景点',
+      category: 'must_visit',
+      bestSeason: PENDING,
+      reason: 'e2e 预置景点，用于浏览器回归。',
+      placeName: city.standard_name,
+      coordinates: null,
+      coordSource: 'city_center',
+      sourceRefs: ['S-E2E'],
+      verification: 'pending_human_review',
+    },
+  ],
+  relics: [
+    {
+      registryId: 'R-E2E-1',
+      name: '测试文物',
+      era: '待考',
+      museumOrSite: '测试馆',
+      protectionLevel: '待考',
+      findSpot: PENDING,
+      story: 'e2e 预置文物，用于浏览器回归。',
+      coordinates: null,
+      sourceRefs: ['S-E2E'],
+      verification: 'pending_human_review',
+    },
+  ],
+  figures: [
+    {
+      entityRef: 'Q-E2E-2',
+      name: '测试人物',
+      dynasty: '待考',
+      birthYear: PENDING,
+      deathYear: PENDING,
+      relationType: 'native',
+      evidence: { property: 'birthplace', value: city.standard_name },
+      cityBond: 'e2e 预置人物，用于浏览器回归。',
+      highlights: 'e2e 预置生平，用于浏览器回归。',
+      sites: [],
+      sourceRefs: ['S-E2E'],
+      verification: 'pending_human_review',
+    },
+  ],
+  poetics: [
+    {
+      poemId: 'P-E2E-1',
+      title: '测试诗',
+      author: '测试人',
+      dynasty: '唐',
+      lines: ['测试诗句一行'],
+      background: PENDING,
+      relationType: 'direct',
+      imageryMap: [],
+      sourceRefs: ['S-E2E'],
+      verification: 'pending_human_review',
+    },
+  ],
+};
+
+for (const [name, value] of Object.entries(data)) {
+  repo.saveModule({
+    cityId,
+    name: name as 'identity',
+    status: 'ok',
+    data: value,
+    verification: { status: 'pending_human_review' },
+    generatedAt,
+  });
+}
+// chronicle/localSoul/dataPulse 无旧内容：重生成失败时会展示错误卡与重试入口。
+for (const name of ['chronicle', 'localSoul', 'dataPulse'] as const) {
+  repo.saveModule({
+    cityId,
+    name,
+    status: 'failed',
+    data: null,
+    verification: { status: 'failed' },
+    generatedAt,
+  });
+}
+repo.updateStatus(cityId, 'partial', generatedAt);
+console.log(`[e2e-seed] 已为 ${city.standard_name}（${cityId}）预置 partial 档案`);

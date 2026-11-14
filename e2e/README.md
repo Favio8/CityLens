@@ -6,7 +6,33 @@
 > 2026-11-13 分享海报复跑：脚本 `C:/Users/19949/ego/citylens-share-20261113/round-*.mjs`，截图 `.screenshots/share-20261113/`。
 > 所有脚本存档于 `C:/Users/19949/ego/<目标>-20261111/round-*.mjs`，截图存档于项目 `.screenshots/`。
 
-## 运行方式
+## 可执行回归（2026-11-14 新增，零新增依赖）
+
+`e2e/regression.mjs` 基于 Chrome DevTools Protocol（Node 内置 WebSocket），
+自建临时数据库 + 模拟 LLM + 预置档案，**不依赖真实密钥与外网缓存**：
+
+```bash
+npm run e2e                 # 完整跑一遍（自起服务端 :8799 与 headless Chrome）
+E2E_KEEP=1 npm run e2e      # 保留服务端/Chrome 便于调试
+```
+
+| # | 场景 | 断言 |
+|---|---|---|
+| 1 | 搜索直达 | 「长安」→ 跳转 `/city/CN-610100`，页面含西安 |
+| 2 | 缓存城市 | 预置西安「已为你复用」、八卷 + 行旅工具分区齐全、身份卷渲染 |
+| 3 | 失败重试 | force 重生成（SIMULATE_FAIL=chronicle）后失败卷有「重试此卷」、其他卷正常、档案未下架、重试后无白屏 |
+| 4 | 快速切城 | A→B→A：各城只展示自己的档案，无旧城残留 |
+| 5 | 双城对比 | `/compare?cities=CN-610100,CN-330100` 双城 + 经济指标渲染 |
+| 6 | 分享海报 | 「分享此卷」→「生成海报」→ canvas/图片预览出现 |
+
+2026-11-14 实测结果：**12/12 通过**（搜索 1、缓存 3、失败重试 4、切城 2、对比 1、海报 1）。
+
+实现要点：
+- 测试城市（默认镇江 CN-321100）缺失侦察缓存时写入一次性 stub，结束后清理，保证离线可重复；
+- `e2e/seed-partial-archive.ts` 只写 e2e 自己的临时数据库（`DB_PATH` 指向系统临时目录），绝不触碰真实数据库；
+- Chrome 路径按 `E2E_CHROME` → 常见安装路径自动探测（Chrome / Edge）。
+
+## 运行方式（ego-browser 人工走查）
 
 ```powershell
 # PowerShell 5.1 无 heredoc，且 -e 参数不能含双引号/中文：

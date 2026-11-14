@@ -75,12 +75,12 @@ CityLens/
 │  └─ data/                # 构建期产物（词典/诗词库/快照/名录/地名库）
 ├─ shared/                 # schema.ts / validators.ts / theme.ts
 ├─ scripts/                # 构建期数据管线
-└─ docs/PRD.md             # CityLens 读城 PRD v1.1
+└─ docs/PRD.md             # CityLens 读城 PRD v1.2
 ```
 
 ## 快速开始（干净环境）
 
-要求 Node.js ≥ 20，npm ≥ 10。
+要求 Node.js ≥ 22.19.0（`undici@8` 与 `lighthouse@13` 的实际下限），npm ≥ 10。
 
 ```bash
 npm ci
@@ -121,9 +121,19 @@ npm run seed              # 重新导入词典（幂等）
 npm run verify            # 校验预置档案：Schema / 来源 / 坐标 / 年份 / 诗词逐字
 npm run data:refresh      # 依次刷新全部外部数据并重建预置档案
 
-# 维护：LLM 连通性测试与未发布档案清理
+# 维护：LLM 连通性测试、未发布档案清理、只读校验与抽查材料导出
 npm run test:llm                                  # 读取 .env 后向配置的 LLM 发起最小请求
 npm run archives:clean-unpublished                 # dry-run 列出未发布档案；--apply 才真正删除
+npm run archives:audit                            # 非预置档案只读校验（失败模块及原因）
+npm run fact-check                                # 导出逐条事实抽查材料（只读，docs/fact-check-*.md）
+```
+
+## 检查入口（可重复执行）
+
+```bash
+npm run check             # typecheck + test + build（不依赖真实密钥与外网缓存）
+npm run check:full        # setup + verify + check（初始化后的完整校验）
+npm run e2e               # 可执行浏览器回归（CDP 零依赖，自起服务端与 Chrome）
 ```
 
 构建期脚本的网络失败会以非 0 退出并保留旧产物，不会伪造快照；失败原因写入产物 `failures` 字段，并同步记录到验收文档。
@@ -307,12 +317,12 @@ curl.exe http://localhost:8787/api/cities/CN-350500
 单元测试与类型检查：
 
 ```bash
-npm test            # 166 项（23 个文件）：schema/校验/规范化/编排/SSE/主题色/真实 LLM 解析/按需快照/城市侦察/对比/路线/测验/天气/海报/诗词语料归属回归
+npm test            # 214 项（28 个文件）：schema/校验/规范化/编排/SSE/主题色/真实 LLM 解析/按需快照/城市侦察/对比/路线/测验/天气/海报/诗词语料归属回归/流式状态机/预算与截止/档案仓储
 npm run typecheck   # server + client 的 tsc --noEmit
 npm run test:llm    # LLM 提供方连通性测试（读 .env，可用参数覆盖）
 ```
 
-实现要点：同一城市生成请求由数据库唯一部分索引 `uq_running_job` 保证单飞；失败任务冷却 10 分钟、无档案城市冷却 5 分钟；每小时最多生成 10 座新城市；每日 LLM 调用受 `LLM_DAILY_CALL_LIMIT` 预算约束；已 `ok`/`degraded` 的模块在增量重生成时复用，不重复调用 LLM。
+实现要点：同一城市生成请求由数据库唯一部分索引 `uq_running_job` 保证单飞；失败任务冷却 10 分钟、无档案城市冷却 5 分钟；每小时最多生成 10 座新城市；每日 LLM 调用受 `LLM_DAILY_CALL_LIMIT` 预算约束（真正发出请求前原子检查与记账，重试同样计数，Mock/本地模块不计费）；单次生成受 180s 总截止约束（PRD v1.2），超时取消上游、迟到结果不落库；已 `ok`/`degraded` 且最近一次尝试未失败的模块在增量重生成时复用，不重复调用 LLM；重新生成失败时已有合格内容保持可用（失败只记入 `verification.lastAttempt`），档案不下架。
 
 ## 数据真实性
 

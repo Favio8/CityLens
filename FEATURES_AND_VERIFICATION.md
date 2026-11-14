@@ -12,7 +12,7 @@
 | Node.js | v24.15.0 |
 | npm | 11.12.1 |
 | 浏览器 | Chrome（无头模式，CDP 视口模拟 375 / 768 / 1280） |
-| 日期 | 2026-11-10（首轮）；2026-11-11（官方 LLM / Lighthouse / 三层断网 / 数据补全 / 四大新功能 / 干净环境复跑 / 最终门禁 / PRD 对照完备性检查与偏差修复） |
+| 日期 | 2026-11-10（首轮）；2026-11-11（官方 LLM / Lighthouse / 三层断网 / 数据补全 / 四大新功能 / 干净环境复跑 / 最终门禁 / PRD 对照完备性检查与偏差修复）；2026-11-14（P0/P1 缺陷修复轮：重新生成失败下架 / 预算日界与原子记账 / 并发配置隔离 / 180s 总截止 / SSE 恢复与切城保护 / 可重复交付，见 2.3） |
 | 模式 | 初测无 Key（模拟 LLM + 无底图）；2026-11-10 复测改用本机 Magpie 网关（`zcode/GLM-5.2`）、`ADMIN_TOKEN` 与天地图双 Key（浏览器端 + 服务器端）；`ENABLE_IMAGES=true`（本地 Commons 图片）；2026-11-11 起改用用户提供的 **StepFun 官方 Key**（`https://api.stepfun.com/step_plan/v1`，`step-3.7-flash`，经 `.env` 配置，`llmSettingsSource=env`） |
 
 命令统一在项目根目录执行；本机部分终端存在 PATH 超长问题，详见 6.3。
@@ -34,7 +34,7 @@
 | 字体 | Noto Serif SC / Inter / JetBrains Mono 自托管 woff2，无外部 CDN |
 | 本地书房 | 收藏与最近浏览（localStorage），刷新保留 |
 | 预置档案 | 六城（西安、杭州、成都、北京、苏州、洛阳）经管线组装，每城 8 卷，共 48 卷 |
-| 08 数说城市 | 6 座预置城市全部落库：GDP / 常住人口来自 2025 年各市统计公报与政府数据页，气候为 Open-Meteo ERA5 1991–2020 聚合；GDP 折线、人口柱状、气温/降水双轴图均带单位、口径与来源；有效点不足 3 个时自动降级为文字列表 |
+| 08 数说城市 | 6 座预置城市全部落库：GDP / 常住人口来自 2021–2025 年各市统计公报序列与政府数据页，气候为 Open-Meteo ERA5 1991–2020 聚合；GDP 折线、人口柱状、气温/降水双轴图均带单位、口径与来源；有效点不足 3 个时自动降级为文字列表 |
 | 新城市城市侦察 | 非预置城市首次访问先并行读取维基百科摘要、Wikidata 人口/面积、Open-Meteo 气候与 Tavily 检索结果，并抓取官方统计公报中的 GDP/常住人口；人物候选额外用中文维基百科「XX市人」分类补充（安阳实测 3 → 10 位候选，最终成卡 6 位，单卡 cityBond 66–89 字）。结果缓存到 `server/data/recon/<cityId>.json` 与 `fact_snapshot/<cityId>.json`。南京、天水实测 8/8 卷生成，二次访问 `fromCache=true`；区县统计公报会被标题校验排除 |
 | 自动校验 | `npm run verify`：Schema / 来源登记 / 诗词逐字与归属本城 / 跨城重复 / 模块完整性 / 年代 / 坐标 180km / 数值量级 |
 | 真实 LLM 适配 | DeepSeek 兼容接口（fetch + SSE），结构化 JSON、候选约束、事实回填、失败重试一次 |
@@ -78,18 +78,29 @@
 
 | 项 | 完成部分 | 缺口与原因 |
 |---|---|---|
-| 诗词覆盖扩展 | 语料从 6 城扩至 148 城、2,702 首：预置 6 城各上限 150 首，24 座重点城市各 50 首，其余有诗城市最多 20 首；非预置城市首次生成即可出诗词卷 | 仍有约 194 座城市在语料中无诗；青岛、厦门各仅 3 首，合肥 7 首、天津 20 首 |
+| 诗词覆盖扩展 | 语料从 6 城扩至 148 城、2,702 首：预置 6 城各上限 150 首，24 座重点城市各 50 首，其余有诗城市最多 20 首；非预置城市首次生成即可出诗词卷 | 语料关键词覆盖 337 城：148 城有诗，189 城暂无可考诗作（342 城词典中另有 5 城未建关键词）；青岛 2 首、厦门 3 首、合肥 7 首、天津 3 首（2026-11-14 按 `verified_poetry_corpus.json` 逐城复核更正，旧文档「天津 20 首、青岛 3 首」有误） |
 | 08 数说城市年份覆盖 | 六城 GDP/常住人口均为 2021–2025 官方公报序列（西安 2021 人口缺失保持 null）；非预置城市可由侦察生成气候卷，GDP/人口命中官方公报时填入 | 天水等未检索到本城公报的城市 GDP/人口全为 `null`，仅显示气候图 |
 | 地图联动 | 景点、文物、名人三个模块均内嵌地图；卡片 ↔ Marker 双向联动；无坐标条目「全域印记」复位 | 名人地图只在关联证据能解析到本地地名时出现（西安 6/6、北京 5/6、洛阳 1/2；杭州、成都、苏州为 0/5、0/2、0/6，字段为区县/乡镇名，地名库无法按本城解析）。缺坐标时模块明确提示，不臆测点位 |
 | 诗词意象 | 已由离线规则生成意象：原文逐字命中 + 本城地名库 + 古称/人工简称表（含苏州「太湖」、西安「终南」人工条目，坐标待人工核对）；前端悬停批注气泡与诗境地图高亮已浏览器实测 | 覆盖不完整：少数诗原文既无本地地名也无固定词表中的泛指意象，`imageryMap` 为空；泛指意象注释来自固定词表，仍需人工复核 |
 | 重新生成 | 预置保护提示、确认弹窗、增量生成、冷却；2026-11-11 ego-browser 实测四步（取消/确认/冷却 429/预置保护）全过 | — |
 | 无 Key 策略 | 产品负责人 2026-11-11 确认线上全程配置官方 LLM Key（`.env` 已配置 StepFun）；无 Key 分支（本地快照生成、标 `degraded`）仅作开发自测保留，PRD 3.5 已加 v1.1.1 注记 | 未缓存城市在无 Key 时仍会生成部分档案（设计取舍），不会出现 PRD AC-14 的「尚未收录」整页状态 |
 | 网络失败 | 2026-11-11 三层真实断网实测（用户侧/服务侧/LLM 黑洞）全部通过，见 AC-18 | — |
-| 真实 LLM 端到端 | 2026-11-11 通过 StepFun 官方接口实测：镇江、宁波两座新城 8/8 卷成卷，档案 `generator.model=step-3.7-flash@stepfun` | identity 净耗时 3.62s（达标）/ 4.78s（超 3.5s 目标——可用模型均为推理型）；总耗时 150.6s / 164.7s（v1.2 上限放宽至 180s 后达标）；真实输出仍需人工复核 |
+| 真实 LLM 端到端 | 2026-11-11 通过 StepFun 官方接口实测：镇江、宁波两座新城 8/8 卷成卷，档案 `generator.model=step-3.7-flash@stepfun` | identity 净耗时 3.62s / 4.78s，**均超出 PRD 3.3 的 3.5s 目标**（可用模型均为推理型；2026-11-14 更正旧文档「3.62s 达标」的失实记录，v1.2 批准以流式骨架屏兜底，不实现本地降级）；总耗时 150.6s / 164.7s（2026-11-14 已实现 180s 总截止，见 2.3）；真实输出仍需人工复核 |
 | 文物图片 | Wikidata P18 + Commons 抓取 36 件候选，22 件成功下载并带署名/许可证；运行期零外部图片请求（CDP 实测）；22/22 条程序化交叉核对（逐张表见 7.4） | 14 件 Wikidata 无 P18 图片，故不配图；许可证适用性、图片与文物的对应关系仍需人工复核 |
 | 行政区轮廓 | `data:geo` 自动抓取、结构校验、缓存与来源清单；已实现 `--source=tianditu` 备选源（GCJ-02 已标注，不默认启用） | 默认来源 DataV.GeoAtlas 的授权条款与审图号未完成人工确认，公开上线前必须合规审校 |
 
-### 2.3 未完成 / 未实测
+### 2.3 收尾修复（2026-11-14，P0/P1 缺陷修复轮）
+
+| 项 | 修复内容 | 回归验证 |
+|---|---|---|
+| P0 重新生成失败下架旧档案 | 模块行区分「当前可用内容」（status）与「最近一次生成尝试」（`verification.lastAttempt`）：已有合格旧内容时失败不再打回 `failed`/`unpublished`，档案保持可读、不进入冷却；`saveModule` 在同一事务内合并来源登记；崩溃恢复按模块状态重算发布状态；失败但保留内容的模块补发 `fromCache` 事件，SSE 与 GET 口径一致；`reusableModules` 排除上次失败的模块，单卷重试可重新生成 | `jobManager.test.ts` +8 项（身份卷/普通卷/全量刷新失败、首次失败门槛、刷新中访客读旧内容）、`archiveRepo.test.ts` +4 项、`archiveRoutes.test.ts` +1 项路由级回归 |
+| P1 预算日界与记账 | `startOfToday` 修正为北京时间当日零点（UTC-8h，纠正错误测试预期）；LLM 调用改为「真正发请求前原子检查 + 记账」（`RateLimiter.consumeForJob` 事务内统计与记账），重试请求同样计数，Mock/本地模块/缓存命中不计费，并发任务不突破预算；预算耗尽即中止且不再发起上游请求 | `rateLimiter.test.ts` +4 项（剩余一次额度、并发总量、午夜跨日、跨日重计）、`deepseekGenerator.test.ts` +2 项 |
+| P1 并发模型配置隔离 | 移除模块级可变 `activeLlmConfig`；提供方配置（模型/地址/Key/超时/来源元数据）随调用上下文显式传递，并行生成器与后台配置变更互不污染 | `deepseekGenerator.test.ts` 双提供方并发测试（URL/模型/来源标题分别正确）+ 配置变更不污染在途调用 |
+| P1 生成总截止与任务恢复 | 单次生成 180s 总截止（PRD v1.2）覆盖侦察、生成、重试；到达后取消上游请求、丢弃迟到结果（不落库）、SSE 输出明确终止结果（error/notice + done）；已成功内容与既有可用档案保留；stale 判定上调至 300s，活跃任务不会被他城 start 误判为崩溃遗留 | `jobManager.test.ts` +5 项（注入时钟 + 模拟上游，不实际等待 180s） |
+| P1 SSE 恢复与城市切换保护 | 新增框架无关 `CityStreamController`：请求批次令牌保护一切异步回写；done 前 EOF/中断时有界自动重连（复用服务端单飞任务与回放，保留已收模块），耗尽后给出明确重试入口；done 未发布按服务端状态收尾（冷却/未收录）；`consumeSse` abort 即时解除阻塞读 | `client/src/lib/cityStream.test.ts` 12 项（截断流、重连耗尽、A→B→A、迟到补拉、close 静默、回放幂等） |
+| P2 可重复交付 | `engines.node` 对齐 `>=22.19.0`（undici 8 / lighthouse 13 实际要求）；新增 `npm run check` / `check:full` / `e2e` / `archives:audit` / `fact-check` 入口；`e2e/regression.mjs` 零依赖 CDP 回归 12/12 通过（搜索/缓存/失败重试/切城/对比/海报，离线可重复） | `npm run check` 全绿；e2e 12/12；`archives:audit` 只读报告 20 份非预置档案、5 个失败模块及原因 |
+
+### 2.4 未完成 / 未实测
 
 | 项 | 原因 |
 |---|---|
@@ -104,20 +115,19 @@
 | AC-01 | **通过** | `curl /api/cities/search`：`长安`→西安 CN-610100；`Xi'an`→西安；`金陵`→南京 CN-320100；`Lin'an`→杭州 CN-330100 且 `hint=临安区为杭州市辖区；南宋都城临安即今杭州`。数据库无重复档案（seed 幂等） |
 | AC-02 | **通过** | `suzhou`→候选 苏州/宿州；`taizhou`→台州/泰州；`fuzhou`→福州/抚州，均含省份与简介；`毫州`→自动纠正为亳州并提示；均返回 `status=ambiguous`，前端弹消歧卡 |
 | AC-03 | **通过** | GET 已生成城市返回 `fromCache=true`；服务端日志 `[CACHE HIT] latency=1ms`，响应 200（端到端含进程启动 0.21s）；页面状态栏显示「已为你复用」与成卷时间；缓存路径不调用 LLM |
-| AC-04 | **通过（功能性）** | 2026-11-11 官方 StepFun 接口（`https://api.stepfun.com/step_plan/v1`，模型 `step-3.7-flash`，用户提供 Key）实测两座全新城市：镇江 CN-321100 8/8 卷成卷；宁波 CN-330200 8/8 卷成卷（poetics `ok`，其余 `degraded`，`partial` 发布），档案 `generator.model=step-3.7-flash@stepfun`，二次访问 `fromCache=true`（51ms）。计时（服务端 `[gen]` 日志）：meta 46ms / 11ms（<300ms 达标）；侦察 5.5s / 6.4s；identity 净耗时 3.62s（镇江，达标）/ 4.78s（宁波，**超出 3.5s 目标**——该 Key 可用模型 step-3.5-flash / step-3.7-flash / step-5-preview 均为推理型，单调用含推理 token，`reasoning_effort=low` 实测仍需 4.7s）；chronicle 22.1s / 40.1s；poetics 44.4s / 28.3s（均 <60s 单模块超时）；总耗时 150.6s / 164.7s（超出 PRD 90s 总上限，项目未实现总上限熔断）；无失败重试（一次通过，failed=0）。连通性脚本 `npm run test:llm`（`scripts/test_llm_provider.ts`）输出 `OK http=200 latency=783ms`。PRD 3.3「identity 3.5s 本地降级」路径未实现，列入已知限制 |
+| AC-04 | **通过（功能性）** | 2026-11-11 官方 StepFun 接口（`https://api.stepfun.com/step_plan/v1`，模型 `step-3.7-flash`，用户提供 Key）实测两座全新城市：镇江 CN-321100 8/8 卷成卷；宁波 CN-330200 8/8 卷成卷（poetics `ok`，其余 `degraded`，`partial` 发布），档案 `generator.model=step-3.7-flash@stepfun`，二次访问 `fromCache=true`（51ms）。计时（服务端 `[gen]` 日志）：meta 46ms / 11ms（<300ms 达标）；侦察 5.5s / 6.4s；identity 净耗时 **3.62s（镇江）/ 4.78s（宁波），两者均超出 PRD 3.3 的 3.5s 目标**（该 Key 可用模型 step-3.5-flash / step-3.7-flash / step-5-preview 均为推理型，单调用含推理 token，`reasoning_effort=low` 实测仍需 4.7s；旧文档曾将 3.62s 记为「达标」，2026-11-14 按原始日志更正）；chronicle 22.1s / 40.1s；poetics 44.4s / 28.3s（均 <60s 单模块超时）；总耗时 150.6s / 164.7s（超出 PRD 90s 总上限；2026-11-14 已按 v1.2 实现 180s 总截止，见 2.3）；无失败重试（一次通过，failed=0）。连通性脚本 `npm run test:llm`（`scripts/test_llm_provider.ts`）输出 `OK http=200 latency=783ms`。PRD 3.3「identity 3.5s 本地降级」路径未实现（v1.2 批准以流式骨架屏兜底），列入已知限制 |
 | AC-05 | **通过** | CDP 用真实指针事件实测（1280×900）：① 快速右甩松手，凭松手速度直接吸附到 `唐`（index 3）；② 向左拖出轨道 70px，阻尼位移仅 -29px，松手回弹到 index 0（thumbX=0）；③ 慢拖到 1.45 节点后停住松手，吸附到最近节点 1，采样 534→497→443→386→369→368（单调收敛、无过冲，符合 ζ=1）；④ 点击「唐」后水印「长安」、`618—907` 与「今日遗存坐标 →」同步出现。今日遗存参照点由本城地名库解析，无坐标节点显示「坐标待考」；界面明示点位来自今日遗存而非古城址中心 |
 | AC-06 | **通过** | CDP 实测（西安）：景点、文物、名人、诗境共 4 张地图同时挂载；文物卡「图上寻迹 →」弹出「阿房宫」气泡且卡片进入选中态；名人卡「图上寻迹 →」弹出「长安」气泡且人物卡高亮。Marker 点击回滚卡片由 `onSelect` 实现；无坐标条目显示「全域印记」并复位地图。名人地图仅在人物关联证据可解析时出现，见 2.2 |
 | AC-07 | **通过** | CDP 实测（西安）：#poetics 内诗境地图存在，2 个「长安」意象词；`mouseover` 后出现批注气泡，文本为「诗中出现的地名，坐标取自本地地名库（WGS84）。地理意象 · 已同步诗境地图」，对应意象芯片进入选中态；泛指意象不触发地图。意象词由后端 `deriveImagery` 生成，全部逐字出现在原文；覆盖不全的诗显示为空，见 2.2 |
 | AC-08 | **通过** | 2026-11-11 ego-browser（用户指定）实测四步全过（截图 `.screenshots/ac08/`，脚本存档 `C:/Users/19949/ego/ac08-20261111/round-01.mjs`）：① 非预置城市（宁波 CN-330200）点「重新生成」→ 确认框出现 → 点「取消」→ fetch 插桩显示 generate 请求数 = 0、页面无变化；② 再次点击 → 「确认重读」→ 进入流式（generate 请求 = 1）→ 完成，hero「数据版本」v9 → v17（原子替换并递增）；③ 5 分钟内再次点击 → hero 状态区显示「同一城市 5 分钟内只能强制刷新一次，请 140 秒后再试」（429 REGEN_COOLDOWN，2026-11-11 新增 error 态 fatal 提示渲染）；④ 预置城市（西安）点击 → 「预置馆藏受保护」。增量语义由 `archiveRoutes.test.ts` 覆盖 |
 | AC-09 | **通过** | `亚特兰蒂斯市`、`asdfghjkl` 返回 `status=none`，不报错；CDP 实测 `/city/CN-000000` 显示「版图中暂无此城」、8 个热门名城链接（西安/杭州/成都/北京/苏州/洛阳带「馆藏」标记）与「重新搜索」；页面无 JS 异常 |
 | AC-10 | **通过（视觉/主题）** | `theme.test.ts` 4 项、`cityThemes.test.ts` 3 项：六城明暗配色对比度达标、`ensureContrast` 生效；`prefers-reduced-motion` 下粒子与大位移动画降级。2026-11-11 ego-browser 复测：夜间模式逐页截图（`.screenshots/a11y/dark-home.png`、`dark-city.png`）；键盘走查：搜索模态 Tab 在对话框内循环、Esc 关闭并还原焦点；`:focus-visible` 全局样式存在（`global.css:137`）；axe（wcag2a/2aa/best-practice）扫描首页/城市页/对比页/404 页，应用自身 0 违规（修复了 section 无可及名称、横向滚动容器不可聚焦两项；残留告警均为 ego-browser 扩展自身注入的 DOM）。人工视觉走查（对比度观感）留 7.2 签字 |
-| AC-15 | **通过** | 2026-11-11 复测（ego-browser + CDP 视口模拟）：375/768/1280 三档 `scrollWidth=clientWidth`（无横向滚动）、4 张地图正常挂载、「如果只有一天 / 随堂小测」新区块在三档均渲染；375 下显示「双指移动地图」提示；地图区域滚轮上滑页面 scrollY 0→400（地图不拦截垂直滚动）；新增一日路线/小测验/海报入口在 hero 操作区。截图 `.screenshots/a11y/resp-*.png` |
+| AC-15 | **通过（2026-11-11 复测；2026-11-14 双重复测）** | 375/768/1280 三档 `scrollWidth=clientWidth`（无横向滚动）；375 下 4 张地图正常挂载、文物地图高度 240px、启用双指协作手势并显示「双指移动地图」提示；地图区域滚轮上滑页面 scrollY 0→400（地图不拦截垂直滚动）；1280×900 与 375×812 截图核对无文字重叠（768 沿用 758/768 记录）；「如果只有一天 / 随堂小测」新区块与海报入口在三档均渲染。证据 `.screenshots/a11y/resp-*.png`。**2026-11-14 复测一（可执行回归 `npm run e2e`，12/12 通过）**：含切城与页面渲染路径。**2026-11-14 复测二（CDP `Emulation.setDeviceMetricsOverride` 真实设备视口，生产服务端 :8788）**：375×812 scrollWidth=375=clientWidth、768×1024 758=758、1280×900 1270=1270，三档均 10 个分区、含「西安」、出现「已为你复用」，全部 PASS。**注意**：旧文档曾将本编号拆成两条重复记录（三档走查 + 无横向滚动），2026-11-14 合并为本条 |
 | AC-11 | **通过** | CDP 实测：点击「收入藏书阁」→ 重新进入西安仍显示「已收入藏书阁」；localStorage 预置 25 条最近浏览后访问杭州，`recents` 变为 20 条、首条为 CN-330100、无重复（`unique=20`） |
-| AC-12 | **通过** | `archiveRoutes.test.ts`：5 模块通过、3 模块失败后 `partial` 发布；整体失败进入冷却；增量生成第二次只重试失败模块；单模块请求不会把已发布档案打回 `unpublished`（对抗性审查后新增回归测试）；`SIMULATE_FAIL` 可复现 |
+| AC-12 | **通过** | `archiveRoutes.test.ts`：5 模块通过、3 模块失败后 `partial` 发布；整体失败进入冷却；增量生成第二次只重试失败模块；单模块请求不会把已发布档案打回 `unpublished`（对抗性审查后新增回归测试）；`SIMULATE_FAIL` 可复现。**2026-11-14 加强（P0）**：force 重生成失败不再把已发布档案打回 `unpublished`——已有合格旧内容时失败只记入 `verification.lastAttempt`，档案保持可读、不进入冷却；首次生成失败仍按原门槛 unpublished + 冷却 |
 | AC-13 | **通过** | `jobManager.test.ts` 10 并发只建 1 个 runtime；`archiveRoutes.test.ts` 10 并发均收到 `done`，模块不重复生成 |
-| AC-14 | **通过（设计取舍，用户 2026-11-11 确认）** | 产品负责人确认线上全程配置官方 LLM Key（`.env` 已配置 StepFun）。实测：预置城市（西安）与已缓存城市（宁波，`fromCache=true`）功能完整；未缓存城市（镇江、徐州）配置 Key 后正常流式生成。无 Key 分支（本地快照生成、标 `degraded`）仅作开发自测保留，PRD 3.5 已加 v1.1.1 注记；预算路径：`LLM_DAILY_CALL_LIMIT` 超限返回 503 `BUDGET_EXCEEDED`（`rateLimiter.test.ts` 覆盖），前端经 `useCityStream` 映射为错误态并在 hero 展示原因（2026-11-11 新增：error 态 fatal 提示不再不可见） |
-| AC-15 | **通过** | CDP 实测（新增内嵌地图后复测）：1280 下 `scrollWidth=1280`、375 下 `scrollWidth=375`，均无页面横向滚动；375 下 4 张地图正常挂载，文物地图高度 240px，地图启用双指协作手势；1280×900 截图与 375×812 截图核对无文字重叠。768 沿用上一轮 758/768 记录 |
-| AC-16 | **通过（2026-11-13 复跑，中位数判定）** | 用 lighthouse@13、生产构建 + 生产服务端托管 `client/dist`，`--port` 复用预热 Chrome；Desktop 3 轮、Mobile 2 轮（`.lighthouse/ac16-desktop-r1~r3-final.json` / `ac16-mobile-r1~r2-final.json` / `ac16-summary-final.json`）。**Desktop Performance 0.79 / 0.82 / 0.99，中位数 0.82 ≥ 0.80；Mobile 0.89 / 0.90，中位数 0.895 ≥ 0.70；SEO 0.92；Accessibility 1.00**。中位指标：Desktop FCP 0.61s / LCP 3.12s / observed LCP 202ms / TBT 0ms / CLS 0.048 / SI 0.89s；Mobile FCP 0.90s / LCP 0.90s / observed LCP 180ms / TBT 326ms / CLS 0.076 / SI 3.87s。01 卷引文改用 `.quote-serif` 系统宋体栈，避免 2.7MB Noto 子集字体进入 LCP；LCP 元素切换为 hero「西安」，其余标题/诗词仍用 Noto Serif SC。**判定：Desktop 与 Mobile 均达标，AC-16 通过**。复现：生产服务端 :8788 + 已启动 Chrome 调试端口，`node node_modules/lighthouse/cli/index.js http://127.0.0.1:8788/city/CN-610100 --port=<port> --preset=desktop --only-categories=performance,seo,accessibility --output=json --output-path=.lighthouse/ac16-desktop.json`（Mobile 去掉 `--preset=desktop` 并加 `--form-factor=mobile --screenEmulation.mobile`） |
+| AC-14 | **通过（设计取舍，用户 2026-11-11 确认）** | 产品负责人确认线上全程配置官方 LLM Key（`.env` 已配置 StepFun）。实测：预置城市（西安）与已缓存城市（宁波，`fromCache=true`）功能完整；未缓存城市（镇江、徐州）配置 Key 后正常流式生成。无 Key 分支（本地快照生成、标 `degraded`）仅作开发自测保留，PRD 3.5 已加 v1.1.1 注记；预算路径：`LLM_DAILY_CALL_LIMIT` 超限返回 503 `BUDGET_EXCEEDED`（`rateLimiter.test.ts` 覆盖），前端经 `useCityStream` 映射为错误态并在 hero 展示原因（2026-11-11 新增：error 态 fatal 提示不再不可见）。**2026-11-14 加强（P1）**：预算改为「真正发出 LLM 请求前原子检查 + 记账」（事务内统计与记账，重试请求同样计数；Mock/本地模块/缓存命中不计费）；`startOfToday` 修正为北京时间当日零点（UTC-8h），跨日运行按北京日界重新计数 |
+| AC-16 | **通过（2026-11-13 复跑，中位数判定；2026-11-14 复测四轮全记录）** | 用 lighthouse@13、生产构建 + 生产服务端托管 `client/dist`，`--port` 复用预热 Chrome；Desktop 3 轮、Mobile 2 轮（`.lighthouse/ac16-desktop-r1~r3-final.json` / `ac16-mobile-r1~r2-final.json` / `ac16-summary-final.json`）。**Desktop Performance 0.79 / 0.82 / 0.99，中位数 0.82 ≥ 0.80；Mobile 0.89 / 0.90，中位数 0.895 ≥ 0.70；SEO 0.92；Accessibility 1.00**。中位指标：Desktop FCP 0.61s / LCP 3.12s / observed LCP 202ms / TBT 0ms / CLS 0.048 / SI 0.89s；Mobile FCP 0.90s / LCP 0.90s / observed LCP 180ms / TBT 326ms / CLS 0.076 / SI 3.87s。01 卷引文改用 `.quote-serif` 系统宋体栈，避免 2.7MB Noto 子集字体进入 LCP；LCP 元素切换为 hero「西安」，其余标题/诗词仍用 Noto Serif SC。**判定：Desktop 与 Mobile 均达标，AC-16 通过**。复现：生产服务端 :8788 + 已启动 Chrome 调试端口，`node node_modules/lighthouse/cli/index.js http://127.0.0.1:8788/city/CN-610100 --port=<port> --preset=desktop --only-categories=performance,seo,accessibility --output=json --output-path=.lighthouse/ac16-desktop.json`（Mobile 去掉 `--preset=desktop` 并加 `--form-factor=mobile --screenEmulation.mobile`）。**2026-11-14 复测（同命令、同页面，四轮全部记录，未挑选）**：Desktop 0.98 / 0.98（FCP 0.6s / LCP 0.6s / CLS 0.048–0.049 / TBT 40–50ms / SI 1.3s）、Mobile 0.75 / 0.72（FCP 3.2s / LCP 3.2s / CLS 0.076 / TBT 380–480ms / SI 4.4–4.5s），SEO 0.92 / A11y 1.00 四轮一致；中位数 Desktop 0.98 ≥ 0.80、Mobile 0.75 ≥ 0.70，仍达标。Mobile 的 FCP/LCP 与 11-13 轮次不同（3.2s vs 0.90s）系本机负载与 Chrome 版本差异，按「记录真实条件」原则原样保留，报告存 `.lighthouse/ac16-20261114-*.json` |
 | AC-17 | **通过** | `npm run verify`：6/6 城市通过，48 卷；Schema、来源登记、逐字诗词、诗词归属本城、跨城重复、模块完整性、年代、坐标 180km、数值量级全部 0 错误。注：这是程序化自测，不等于事实正确；人工复核见 7.2 |
 | AC-18 | **通过** | 2026-11-11 三层实测（证据 `.screenshots/ac18/`）：① **用户侧断外网**（ego-browser CDP 屏蔽 wikidata/wikipedia/open-meteo/tavily/tianditu/stepfun）：预置西安、缓存宁波 8 卷 + 一日路线 + 小测验完整渲染，无白屏、无 JS 错误（瓦片失败属预期降级）；② **服务端真实断网**（`NODE_USE_ENV_PROXY=1` + 黑洞代理，:8789）：预置/缓存城市同样完整可用（`已为你复用`）；③ **LLM 不可用**（:8791 将 `LLM_BASE_URL` 指向黑洞）：桂林 force 重生成 SSE 显示 7 个 LLM 模块全部 `module_error code=LLM_TIMEOUT retryable=true`（2026-11-11 将网络类错误由 SCHEMA_INVALID 改映射为 LLM_TIMEOUT），而 **dataPulse 仅靠本地侦察正常成卷（degraded，气候 12 个月完整）**——单模块失败隔离成立；`done status=unpublished` 优雅收尾无白屏。每小时 10 座新城限流触发时展示「同一 IP 每小时最多生成 10 座新城市」错误屏与重试入口。单模块「重试此卷」按钮在流式页面渲染（`CityPage`），重试路径由 `archiveRoutes.test.ts` 覆盖 |
 | AC-19 | **通过** | 2026-11-11 干净副本复跑：`.cleancheck`（排除 node_modules/dist/.git/*.db/.env/.trae）内 `npm ci`（457 包，21s）→ `npm run setup`（342 城/1480 别名/6 城 48 卷）→ `npm run verify`（6/6）→ `npm run dev`（Vite 767ms 就绪）；页面与接口抽查全部 200，详见第 4 节 |
@@ -143,9 +153,14 @@
 ## 5. 关键自测命令
 
 ```bash
+npm run check             # typecheck + test + build（普通测试不依赖真实密钥与外网缓存）
+npm run check:full        # setup + verify + check（初始化后的完整校验入口）
 npm run typecheck          # 服务端 + 前端 TypeScript strict
-npm test                   # 170 项单元/集成测试（25 个文件）
+npm test                   # 214 项单元/集成测试（28 个文件）
 npm run verify             # 六城预置档案合规校验
+npm run e2e                # 可执行浏览器回归（CDP，自起服务端与 Chrome，离线可重复）
+npm run archives:audit     # 非预置档案只读校验（失败模块及原因，不删改数据）
+npm run fact-check         # 导出逐条事实抽查材料（只读，供人工复核）
 npm run test:llm           # LLM 提供方连通性测试（读 .env，支持 --base-url/--model/--api-key/--timeout-ms 覆盖）
 npm run data:geo           # 抓取并缓存六城行政区轮廓（--source=tianditu 可选备选源）
 npm run data:images        # 抓取 Wikidata/Commons 文物图片与许可
@@ -156,13 +171,14 @@ npx tsx scripts/rebuild_failed_archives.ts         # 重建失败/未发布档�
 npm run archives:clean-unpublished                 # dry-run 列出未发布档案；--apply 才删除
 ```
 
-最终门禁（2026-11-11，当前代码版本，四条全过）：
+最终门禁（2026-11-14，P0/P1 修复后复跑，四条全过）：
 
 ```text
 npm run typecheck   ✓ 无错误
-npm test            ✓ 170 passed（25 files）
+npm test            ✓ 214 passed（28 files）
 npm run verify      ✓ 通过 6/6
-npm run build       ✓ built in ~6–10s
+npm run build       ✓ built in ~9.5s
+npm run e2e         ✓ 12/12 通过（2026-11-14，离线可重复）
 ```
 
 干净环境复跑（AC-19）见第 4 节；本机 `npm ci` 需先精简 PATH，见 6.3。
@@ -220,12 +236,12 @@ curl "http://localhost:8787/api/cities/CN-610100"
 - 诗词意象覆盖不完整：少数诗原文既无本地地名、也无固定词表泛指词（人工简称表现含苏州「太湖」、西安「终南」，坐标待人工核对），`imageryMap` 为空；未用模型补写以避免幻觉。
 - 名人地图依赖人物关联证据的字段形态：杭州、成都、苏州的 `birthplace/deathplace` 为区县或乡镇名（如「临安区」「郫都区」「姑苏村」），本地地名库无法按本城解析，故这些城市的名人模块不绘制点位，仅显示说明。
 - 非预置城市的年代轴为 LLM 生成，`validateNarrativeYears` 已接入并会丢弃年表外年份的节点；已用 StepFun 官方接口实测真实生成，`verification` 仍为 `pending_human_review`。
-- PRD 3.3 的「identity 3.5s 本地降级」路径未实现（v1.2 已确认保持：流式骨架屏 + 逐卷显影兜底等待体验）；PRD 90s 总耗时上限已由产品负责人放宽至 180s（v1.2，见 PRD 0.3），当前仍不设总熔断。StepFun 实测：identity 净耗时 3.62s（达标）/ 4.78s（超标，可用模型均为推理型），总耗时 150.6s / 164.7s（放宽后达标）。
+- PRD 3.3 的「identity 3.5s 本地降级」路径未实现（v1.2 已确认保持：流式骨架屏 + 逐卷显影兜底等待体验）；PRD 90s 总耗时上限已由产品负责人放宽至 180s（v1.2，见 PRD 0.3），**2026-11-14 已实现 180s 总截止熔断**（超时取消上游、迟到结果不落库、SSE 明确终止，见 2.3）。StepFun 实测：identity 净耗时 3.62s / 4.78s，**均超出 3.5s 目标**（可用模型均为推理型，如实记录，未把 3.62s 记成达标）；总耗时 150.6s / 164.7s（放宽后达标）。
 - SSE/CORS 已收紧：生产只允许 `APP_ORIGINS` 中的来源，开发放行 localhost；公网部署仍需配置该变量并建议置于反向代理之后。
 - 预置诗词选题重复度问题已处理：新增同题/同组诗/高频三字片段去重；成都「将赴成都草堂」组诗现最多 1 首、苏州太湖石题咏最多 2 首、西安同题应制诗不再重复。剩余少数主题相近但题名不同的诗仍保留。
 - 未缓存城市在无 Key 时仍生成部分档案，与 PRD AC-14 文案不一致（设计取舍，产品负责人 2026-11-11 确认线上全程配置官方 Key）。
 - 真实 LLM 已通过 StepFun 官方接口实测（镇江、宁波 8/8 卷）；天地图瓦片已实测 144 张、服务端检索 405 条，人工视觉走查与坐标偏移核对仍待用户完成。Commons 图片已完成本地抓取、展示实测与 22/22 程序化交叉核对，语义对应与许可适用性待人工复核。
-- 非预置城市已改为「先侦察、再生成、后缓存」：维基百科/Wikidata/Open-Meteo/Tavily + 官方公报；诗词库覆盖 148 城（2,702 首），其余城市仍显示「此卷暂缺」；约 194 座城市暂无诗词。
+- 非预置城市已改为「先侦察、再生成、后缓存」：维基百科/Wikidata/Open-Meteo/Tavily + 官方公报；诗词库覆盖 148 城（2,702 首），其余城市仍显示「此卷暂缺」；语料关键词覆盖 337 城，其中 189 城暂无可考诗作（2026-11-14 按语料产物逐城复核，旧文档「约 194 座」有误）。
 - 六城 GDP/常住人口已补齐 2021–2025 官方公报序列（西安 2021 人口缺失保持 null）；`dataPulse` 气候仍为 ERA5 1991–2020 聚合值——实时天气由新增的 `WeatherStrip`（Open-Meteo current）单独提供。非预置城市若未检索到本城公报，GDP/人口全为 `null`。
 - 城市侦察依赖运行时网络：首次生成一座新城市会多 10–30s（维基百科 + Wikidata + 两次检索 + 气候 + 公报抓取）；检索结果缓存 7 天、侦察结果缓存 30 天，失败负缓存 10 分钟；Tavily 中文检索质量一般，且国内访问维基百科通常需要 `HTTPS_PROXY`。
 - 行政区轮廓默认来源（DataV.GeoAtlas）的授权与审图号未确认；公开上线前必须完成合规审校或替换来源（已实现 `--source=tianditu` 备选，manifest 标注 GCJ-02，不默认启用）。
@@ -233,7 +249,8 @@ curl "http://localhost:8787/api/cities/CN-610100"
 - Lighthouse 绝对分数本机不可信（Chrome 冷启动污染计时），AC-16 的达标判定需在正常机器按记录命令复跑。
 - 一日路线快照回退的首个请求（本城无本地快照）需联网抓取 Wikidata，约 5–15s，之后走本地缓存；Wikidata 不可用时返回 404 并提示，前端显示「路线未能生成」降级卡。
 - 知识小测验仍要求档案已生成（题目依赖 identity/chronicle/气候等档案事实字段，快照只有景点/文物/人物，不足以出题）。
-- E2E 关键路径（12 条）以文档化人工脚本形式记录于 `e2e/README.md`，未接入自动化 CI。
+- **2026-11-14 更新**：E2E 关键路径已有可执行回归（`npm run e2e`，CDP 零依赖，12/12 通过，覆盖搜索/缓存/失败重试/切城/对比/海报）；ego-browser 人工走查脚本仍存档于 `e2e/README.md` 与 `C:/Users/19949/ego/`，作为演示与人工复核证据。
+- 本地 26 份 partial 档案（20 非预置 + 6 预置）中 5 个模块为 failed 状态（徐州 relics、扬州 landmarks/poetics、福州 poetics、天水 localSoul，原因见 `npm run archives:audit` 只读报告）；已按要求保持原状，未删除档案、未放宽校验、未重新生成。
 
 ## 7. 人工复核记录
 
@@ -316,3 +333,9 @@ npm run dev
 | CN-610100_Q806929.jpg | eecc | Public domain | https://commons.wikimedia.org/wiki/File:Banpo.jpg | CN-610100:Q806929 | 西安·半坡遗址 |
 
 > 数据勘误（2026-11-11）：`CN-610100:Q806929` 半坡遗址的上游 Wikidata P276 误标为「和田市」（坐标 109.0475,34.2744 属西安），已在 `scripts/build_relics_registry.ts` 与 `server/services/cityFactSnapshot.ts` 中加入人工校正，该字段改为「待考」，不填入无法核验的替代值。其余 36 件候选中文物 14 件无 P18 图片，保持无图。
+
+### 7.5 逐条事实抽查材料（2026-11-14 导出）
+
+`npm run fact-check` 从本地档案只读导出 8 城（六座预置 + 安阳、镇江）抽查材料：
+每城 5 个景点、5 位人物、5 首诗词，逐条列出来源（档案来源表）与 `verification` 状态，
+输出至 `docs/fact-check-2026-11-14.md`。该材料**不是复核结论**，仅供产品负责人逐条核对原始来源。

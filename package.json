@@ -10,7 +10,7 @@
     "client"
   ],
   "engines": {
-    "node": ">=20"
+    "node": ">=22.19.0"
   },
   "scripts": {
     "dev": "concurrently -n server,client -c cyan,magenta \"npm:dev:server\" \"npm:dev:client\"",
@@ -26,6 +26,11 @@
     "archives:clean-unpublished": "tsx scripts/clean_unpublished_archives.ts",
     "test": "vitest run",
     "typecheck": "tsc -p server/tsconfig.json --noEmit && tsc -p client/tsconfig.json --noEmit",
+    "check": "npm run typecheck && npm test && npm run build",
+    "check:full": "npm run setup && npm run verify && npm run check",
+    "archives:audit": "tsx scripts/audit_archives.ts",
+    "fact-check": "tsx scripts/export_fact_check.ts",
+    "e2e": "node e2e/regression.mjs",
     "data:dictionary": "tsx scripts/build_city_dictionary.ts",
     "data:poetry": "tsx scripts/build_poetry_corpus.ts",
     "data:stats": "tsx scripts/build_stats_baseline.ts",
