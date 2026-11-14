@@ -269,6 +269,7 @@ Key 只保存在本地 SQLite，读取接口只返回 `sk-…abcd` 掩码。
 | `LLM_DAILY_CALL_LIMIT` | 每日 LLM 调用预算 | `500` |
 | `ENABLE_IMAGES` | 是否启用 Commons 图片 | `false` |
 | `IP_HASH_SALT` | 请求方 IP 哈希盐，生产环境必须修改 | `citylens-dev-salt` |
+| `CITYLENS_RUNTIME_DIR` | 运行期缓存目录（城市侦察/检索/气候/用量/按需事实快照）；默认同 `server/data`，测试与干净复跑可指向独立临时目录 | 空（即 `server/data`） |
 | `SIMULATE_FAIL` | 模拟指定模块失败，如 `poetics,figures` | 空 |
 | `MOCK_LLM` | 强制使用模拟 LLM（即使配置了真实 Key） | 空（未配置 Key 时自动开启） |
 | `MOCK_LLM_DELAY_MS` | 模拟 LLM 单模块延迟，用于观察流式时序 | `150` |
@@ -317,12 +318,12 @@ curl.exe http://localhost:8787/api/cities/CN-350500
 单元测试与类型检查：
 
 ```bash
-npm test            # 214 项（28 个文件）：schema/校验/规范化/编排/SSE/主题色/真实 LLM 解析/按需快照/城市侦察/对比/路线/测验/天气/海报/诗词语料归属回归/流式状态机/预算与截止/档案仓储
+npm test            # 225 项（28 个文件）：schema/校验/规范化/编排/SSE/主题色/真实 LLM 解析/按需快照/城市侦察/对比/路线/测验/天气/海报/诗词语料归属回归/流式状态机/预算与截止/档案仓储
 npm run typecheck   # server + client 的 tsc --noEmit
 npm run test:llm    # LLM 提供方连通性测试（读 .env，可用参数覆盖）
 ```
 
-实现要点：同一城市生成请求由数据库唯一部分索引 `uq_running_job` 保证单飞；失败任务冷却 10 分钟、无档案城市冷却 5 分钟；每小时最多生成 10 座新城市；每日 LLM 调用受 `LLM_DAILY_CALL_LIMIT` 预算约束（真正发出请求前原子检查与记账，重试同样计数，Mock/本地模块不计费）；单次生成受 180s 总截止约束（PRD v1.2），超时取消上游、迟到结果不落库；已 `ok`/`degraded` 且最近一次尝试未失败的模块在增量重生成时复用，不重复调用 LLM；重新生成失败时已有合格内容保持可用（失败只记入 `verification.lastAttempt`），档案不下架。
+实现要点：同一城市生成请求由数据库唯一部分索引 `uq_running_job` 保证单飞；失败任务冷却 10 分钟、无档案城市冷却 5 分钟；每小时最多生成 10 座新城市；每日 LLM 调用受 `LLM_DAILY_CALL_LIMIT` 预算约束（真正发出请求前原子检查与记账，按实际请求时间记入 `llm_call_log`，任务跨午夜运行不串日；重试同样计数，Mock/本地模块不计费）；单次生成受 180s 总截止约束（PRD v1.2），上游挂起或忽略取消时编排层也会按时收尾并发送唯一 `done`，迟到结果不落库；断线重连并入已有任务时不受刷新冷却与预算入口影响；已 `ok`/`degraded` 且最近一次尝试未失败的模块在增量重生成时复用，不重复调用 LLM；重新生成失败时已有合格内容保持可用（失败只记入 `verification.lastAttempt`），档案不下架。
 
 ## 数据真实性
 

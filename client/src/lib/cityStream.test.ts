@@ -284,6 +284,95 @@ describe('CityStreamController：流中断与有界重连', () => {
     expect(h.streamCalls[3]!.options.force).toBeFalsy();
   });
 
+  it('缓存命中后重新生成：流被截断时重连，不被上一轮 done 阻止', async () => {
+    // 复现：缓存命中时 state.done 非空；重新生成后流在新 done 前 EOF，
+    // 旧实现沿用该 done 判断「已完成」→ 不重连 → 页面停在生成状态。
+    const h = harness({ cache: 'hit', reconnectDelayMs: 1 });
+    h.controller.openCity(CITY_A);
+    await tick();
+    expect(h.latest().phase).toBe('ready');
+    expect(h.latest().done).not.toBeNull();
+
+    void h.controller.startGeneration();
+    await tick();
+    expect(h.streamCalls).toHaveLength(1);
+    h.streams[0]!.send([META_EVENT(CITY_A), MODULE_EVENT('identity', 2)]);
+    await tick();
+    h.streams[0]!.close();
+    await tick();
+    await tick();
+
+    // 必须自动重连（并入服务端任务并回放）。
+    expect(h.streamCalls).toHaveLength(2);
+    h.streams[1]!.send([
+      META_EVENT(CITY_A),
+      MODULE_EVENT('identity', 2),
+      MODULE_EVENT('landmarks', 3),
+      DONE_EVENT(CITY_A, 4),
+    ]);
+    await tick();
+    h.streams[1]!.close();
+    await tick();
+
+    const state = h.latest();
+    expect(state.phase).toBe('ready');
+    expect(state.done?.cityId).toBe(CITY_A);
+    expect(Object.keys(state.modules).sort()).toEqual(['identity', 'landmarks']);
+  });
+
+  it('第二次生成同样具备截断恢复能力', async () => {
+    const h = harness({ cache: 'hit', reconnectDelayMs: 1 });
+    h.controller.openCity(CITY_A);
+    await tick();
+    // 第一轮：完整成功。
+    void h.controller.startGeneration();
+    await tick();
+    h.streams[0]!.send([META_EVENT(CITY_A), MODULE_EVENT('identity', 2), DONE_EVENT(CITY_A, 3)]);
+    await tick();
+    h.streams[0]!.close();
+    await tick();
+    expect(h.latest().phase).toBe('ready');
+
+    // 第二轮：再次生成，流被截断 → 仍应重连。
+    void h.controller.startGeneration();
+    await tick();
+    expect(h.streamCalls).toHaveLength(2);
+    h.streams[1]!.send([META_EVENT(CITY_A), MODULE_EVENT('landmarks', 2)]);
+    await tick();
+    h.streams[1]!.close();
+    await tick();
+    await tick();
+    expect(h.streamCalls).toHaveLength(3);
+    h.streams[2]!.send([META_EVENT(CITY_A), DONE_EVENT(CITY_A, 3)]);
+    await tick();
+    h.streams[2]!.close();
+    await tick();
+    expect(h.latest().phase).toBe('ready');
+    expect(h.latest().done?.cityId).toBe(CITY_A);
+  });
+
+  it('切城期间的重连不会覆盖新城市', async () => {
+    const h = harness({ cache: 'hit', reconnectDelayMs: 1 });
+    h.controller.openCity(CITY_A);
+    await tick();
+    void h.controller.startGeneration();
+    await tick();
+    h.streams[0]!.send([META_EVENT(CITY_A), MODULE_EVENT('identity', 2)]);
+    await tick();
+    h.streams[0]!.close();
+    await tick();
+    // 重连等待中切到 B。
+    h.controller.openCity(CITY_B);
+    await tick();
+    expect(h.latest().meta?.cityId).toBe(CITY_B);
+    const streamsBefore = h.streamCalls.length;
+    await tick();
+    await tick();
+    // 旧批次的重连被批次令牌拦截，不得为 A 新建流。
+    expect(h.streamCalls.length).toBe(streamsBefore);
+    expect(h.latest().meta?.cityId).toBe(CITY_B);
+  });
+
   it('流内 error 事件：进入错误态并保留原因', async () => {
     const h = harness();
     h.controller.openCity(CITY_A);

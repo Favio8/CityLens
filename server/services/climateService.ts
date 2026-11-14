@@ -27,7 +27,7 @@ interface ClimatePayload {
   };
 }
 
-const CACHE_DIR = resolve(config.dataDir, 'climate');
+const CACHE_DIR = resolve(config.runtimeDir, 'climate');
 const TTL_MS = 180 * 24 * 60 * 60 * 1000;
 const inflight = new Map<string, Promise<ClimateMonth[] | null>>();
 const failedAt = new Map<string, number>();

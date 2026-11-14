@@ -467,6 +467,10 @@ async function callDeepSeek(
   input: GenerateInput,
   messages: ChatMessage[],
 ): Promise<string> {
+  // 已经取消（任务总截止已到 / 前端取消）：不得记账、不得发请求。
+  if (input.signal?.aborted) {
+    throw new GenerationError('LLM_TIMEOUT', '大模型请求已取消（总截止已到）');
+  }
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), config.timeoutMs);
   // 单次生成总截止：与单模块超时共同作用于同一个控制器。
@@ -489,6 +493,10 @@ async function callDeepSeek(
       }),
       signal: controller.signal,
     });
+    // 迟到响应：取消后不得继续读取使用。
+    if (input.signal?.aborted) {
+      throw new GenerationError('LLM_TIMEOUT', '大模型响应已取消（总截止已到）');
+    }
     if (!response.ok || !response.body) {
       throw new GenerationError('LLM_HTTP_ERROR', `大模型接口返回 ${response.status}`);
     }
@@ -727,7 +735,7 @@ async function llmLandmarks(
   input: GenerateInput,
   config: LlmRuntimeConfig,
 ): Promise<GeneratedModule> {
-  const snapshot = input.snapshot ?? (await loadCitySnapshot(input.city));
+  const snapshot = input.snapshot ?? (await loadCitySnapshot(input.city, input.signal));
   if (!snapshot || snapshot.landmarks.length === 0) {
     throw new GenerationError('NO_FACTS', '本地快照无可用景点实体');
   }
@@ -786,7 +794,7 @@ async function llmRelics(
   config: LlmRuntimeConfig,
 ): Promise<GeneratedModule> {
   const registry = input.registry ?? getRelicsRegistry();
-  const snapshot = input.snapshot ?? (await loadCitySnapshot(input.city));
+  const snapshot = input.snapshot ?? (await loadCitySnapshot(input.city, input.signal));
   const localRelics =
     registry?.relics.filter((relic) => relic.cityId === input.city.cityId) ?? [];
   const relics =
@@ -871,7 +879,7 @@ async function llmFigures(
   input: GenerateInput,
   config: LlmRuntimeConfig,
 ): Promise<GeneratedModule> {
-  const snapshot = input.snapshot ?? (await loadCitySnapshot(input.city));
+  const snapshot = input.snapshot ?? (await loadCitySnapshot(input.city, input.signal));
   if (!snapshot || snapshot.figures.length === 0) {
     throw new GenerationError('NO_FACTS', '本地快照无可用人物实体');
   }

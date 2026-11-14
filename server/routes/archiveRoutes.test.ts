@@ -69,7 +69,69 @@ class SwitchableGenerator implements ModuleGenerator {
   }
 }
 
-function setup(generator = new MockGenerator({ delayMs: 5 })) {
+/** 永不返回的生成器：用于让任务保持 running，验证并入路径。 */
+class HangingGenerator implements ModuleGenerator {
+  readonly name = 'hanging';
+  readonly promptVersion = 'hanging-v1';
+  async generate(): Promise<GeneratedModule> {
+    return new Promise<GeneratedModule>(() => undefined);
+  }
+}
+
+/** 打开一条 SSE 流并读取事件，直到满足 until 条件（不等待 done，便于测试挂起任务）。 */
+async function openSse(
+  url: string,
+  init: RequestInit | undefined,
+  until: (events: SseRecord[]) => boolean = (events) =>
+    events.some((item) => item.event === 'meta'),
+): Promise<{
+  status: number;
+  events: SseRecord[];
+  cancel: () => Promise<void>;
+}> {
+  const response = await fetch(url, init);
+  const events: SseRecord[] = [];
+  if (!response.ok || !response.body) {
+    return { status: response.status, events, cancel: async () => undefined };
+  }
+  const reader = response.body.getReader();
+  const decoder = new TextDecoder();
+  let buffer = '';
+  const readMore = async (): Promise<SseRecord | null> => {
+    for (;;) {
+      const boundary = buffer.indexOf('\n\n');
+      if (boundary !== -1) {
+        const block = buffer.slice(0, boundary);
+        buffer = buffer.slice(boundary + 2);
+        const eventLine = block.split('\n').find((line) => line.startsWith('event: '));
+        const dataLine = block.split('\n').find((line) => line.startsWith('data: '));
+        if (!eventLine) continue;
+        const event = eventLine.slice(7).trim();
+        const data = dataLine ? (JSON.parse(dataLine.slice(6)) as Record<string, unknown>) : {};
+        const record: SseRecord = { event, data };
+        events.push(record);
+        return record;
+      }
+      const { done, value } = await reader.read();
+      if (done) return null;
+      buffer += decoder.decode(value, { stream: true });
+    }
+  };
+  for (let guard = 0; guard < 64; guard += 1) {
+    if (until(events)) break;
+    const record = await readMore();
+    if (!record) break;
+  }
+  return {
+    status: response.status,
+    events,
+    cancel: async () => {
+      await reader.cancel();
+    },
+  };
+}
+
+function setup(generator: ModuleGenerator = new MockGenerator({ delayMs: 5 })) {
   const db = openDb(':memory:');
   const insertCity = db.prepare(
     `INSERT INTO cities
@@ -489,6 +551,70 @@ describe('保护与限流', () => {
     });
     expect(again.status).toBe(200);
     await again.body?.cancel();
+  });
+
+  it('重连并入已有 force 任务：不被 5 分钟刷新冷却或预算入口拦截', async () => {
+    // 复现：断线重连会再次 POST force；旧实现先查刷新冷却（429）与预算（503），
+    // 导致客户端永远无法并入仍在运行的任务。
+    const hanging = new HangingGenerator();
+    const { db, app } = setup(hanging);
+    const base = await listen(app);
+
+    // 第一次 force 创建任务（生成器挂起，任务保持 running）。
+    const first = await openSse(`${base}/api/cities/CN-350500/generate`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ force: true }),
+    });
+    expect(first.status).toBe(200);
+    expect(first.events.some((item) => item.event === 'meta')).toBe(true);
+
+    // 耗尽今日预算：入口检查若仍生效，重连会被 503 拦截。
+    // （用另一座城市记账，避免与正在运行的任务争抢同城单飞位。）
+    const jobs = new JobRepo(db);
+    const seedJob = jobs.create({
+      jobId: 'budget-seed',
+      cityId: 'CN-900000',
+      force: false,
+      modules: ['identity'],
+      requesterHash: 'seed',
+      startedAt: new Date().toISOString(),
+    })!;
+    for (let i = 0; i < config.llm.dailyCallLimit; i += 1) {
+      jobs.recordLlmCall(seedJob.jobId, 'CN-900000', new Date().toISOString());
+    }
+
+    // 同一 IP 立即再次 force（模拟重连）：必须并入而不是 429/503。
+    const second = await openSse(
+      `${base}/api/cities/CN-350500/generate`,
+      {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ force: true }),
+      },
+      (events) => events.some((item) => item.event === 'notice' && item.data.code === 'ATTACHED'),
+    );
+    expect(second.status).toBe(200);
+    expect(
+      second.events.some((item) => item.event === 'notice' && item.data.code === 'ATTACHED'),
+    ).toBe(true);
+
+    // 并入不新增任务、不新增 LLM 调用。
+    const rows = db.prepare('SELECT COUNT(*) AS n FROM generation_jobs').get() as { n: number };
+    expect(rows.n).toBe(2); // budget-seed + 正在运行的任务
+    const running = jobs.getRunning('CN-350500')!;
+    expect(running.llmCalls).toBe(0);
+
+    // 预置城市保护仍然生效（并入路径不绕过鉴权）。
+    const presetForce = await fetch(`${base}/api/cities/CN-610100/generate`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ force: true }),
+    });
+    expect(presetForce.status).toBe(403);
+
+    await first.cancel();
+    await second.cancel();
   });
 
   it('整体失败后进入冷却，GET 与再次生成均返回 429', async () => {

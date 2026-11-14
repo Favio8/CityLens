@@ -363,4 +363,25 @@ describe('P1：LLM 预算记账与截止取消', () => {
     controller.abort();
     await expect(pending).rejects.toMatchObject({ code: 'LLM_TIMEOUT' });
   });
+
+  it('收到已经取消的 signal：不记账、不发请求', async () => {
+    // 复现：上游在请求前已被取消时，旧实现仍会发出一次请求并执行一次记账。
+    const controller = new AbortController();
+    controller.abort();
+    const fetchMock = vi.fn();
+    vi.stubGlobal('fetch', fetchMock);
+    const onLlmCall = vi.fn();
+    const generator = new DeepSeekGenerator(config());
+    await expect(
+      generator.generate({
+        city: CITY,
+        module: 'identity',
+        aliases: ['长安'],
+        signal: controller.signal,
+        onLlmCall,
+      }),
+    ).rejects.toMatchObject({ code: 'LLM_TIMEOUT' });
+    expect(fetchMock).not.toHaveBeenCalled();
+    expect(onLlmCall).not.toHaveBeenCalled();
+  });
 });

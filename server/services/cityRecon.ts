@@ -55,7 +55,7 @@ interface ReconFile extends CityRecon {
   version: 1;
 }
 
-const RECON_DIR = resolve(config.dataDir, 'recon');
+const RECON_DIR = resolve(config.runtimeDir, 'recon');
 const TTL_MS = 30 * 24 * 60 * 60 * 1000;
 const memory = new Map<string, CityRecon>();
 const inflight = new Map<string, Promise<CityRecon | null>>();
@@ -317,8 +317,16 @@ async function buildRecon(city: CityBrief): Promise<CityRecon> {
   return { ...base, sources: buildSources(base, retrievedAt) };
 }
 
-/** 读取（或按需构建）城市侦察结果；失败时返回 null，不阻断生成。 */
-export async function loadCityRecon(city: CityBrief): Promise<CityRecon | null> {
+/**
+ * 读取（或按需构建）城市侦察结果；失败时返回 null，不阻断生成。
+ * 传入 signal（任务总截止）时：已取消直接放弃，构建过程中取消则 race 出 null；
+ * 侦察内部的单次检索仍受各自超时约束，取消后其结果被丢弃、不写入档案。
+ */
+export async function loadCityRecon(
+  city: CityBrief,
+  signal?: AbortSignal,
+): Promise<CityRecon | null> {
+  if (signal?.aborted) return null;
   const cached = readCache(city.cityId);
   if (cached) return cached;
   const failed = failedAt.get(city.cityId) ?? 0;
@@ -343,7 +351,17 @@ export async function loadCityRecon(city: CityBrief): Promise<CityRecon | null> 
       inflight.delete(city.cityId);
     });
   inflight.set(city.cityId, task);
-  return task;
+  if (!signal) return task;
+  return Promise.race([
+    task,
+    new Promise<CityRecon | null>((resolve) => {
+      if (signal.aborted) {
+        resolve(null);
+        return;
+      }
+      signal.addEventListener('abort', () => resolve(null), { once: true });
+    }),
+  ]);
 }
 
 /** 测试用：清空内存缓存。 */

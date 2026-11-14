@@ -177,6 +177,8 @@ export class CityStreamController {
   private archiveController: AbortController | null = null;
   private autoStartedBatch = -1;
   private reconnects = 0;
+  /** 本轮生成的完成标记：与 state.done（可能是上一轮/缓存的 done）严格区分。 */
+  private runDone = false;
   private readonly maxReconnects: number;
   private readonly reconnectDelayMs: number;
   private readonly wait: (ms: number, signal: AbortSignal) => Promise<void>;
@@ -260,6 +262,8 @@ export class CityStreamController {
     this.batch += 1;
     const batch = this.batch;
     this.reconnects = 0;
+    // 新一轮生成：完成标记只属于本轮，绝不能用上一轮（或缓存）的 done 判断本轮结束。
+    this.runDone = false;
     this.abortStream();
     const controller = new AbortController();
     this.streamController = controller;
@@ -267,7 +271,10 @@ export class CityStreamController {
     this.commit(
       {
         ...this.state,
+        // 保留已缓存的模块/档案/主题（旧内容不闪退），只重置本轮相关状态。
         phase: 'streaming_init',
+        done: null,
+        errors: {},
         fatal: null,
         fromCache: false,
         notice: null,
@@ -293,8 +300,8 @@ export class CityStreamController {
       }
       await this.deps.consume(response, (event) => this.handleEvent(event, batch), controller.signal);
       if (!this.isCurrent(batch)) return;
-      // 流正常结束但未收到 done：网络中断或被截断，走有界重连。
-      if (this.state.done === null) {
+      // 流正常结束但本轮未收到 done：网络中断或被截断，走有界重连。
+      if (!this.runDone) {
         await this.reconnectOrFail(options, batch);
       }
     } catch (error) {
@@ -459,6 +466,8 @@ export class CityStreamController {
     if (event.event === 'done') {
       const parsed = SseDoneEventSchema.safeParse(payload);
       if (!parsed.success) return;
+      // 本轮完成标记先落定：即使随后的档案补拉被切城取消，重连判断也已生效。
+      this.runDone = true;
       void this.handleDone(parsed.data, batch);
       return;
     }
@@ -539,6 +548,8 @@ export class CityStreamController {
     // isCurrent 已保证没有更新批次的任务在跑（startGeneration 会递增批次）。
     this.batch += 1;
     const nextBatch = this.batch;
+    // 重连也是「一次新的连接尝试」：完成标记重新计。
+    this.runDone = false;
     const controller = new AbortController();
     this.streamController = controller;
     try {
@@ -555,7 +566,7 @@ export class CityStreamController {
         controller.signal,
       );
       if (!this.isCurrent(nextBatch)) return;
-      if (this.state.done === null) {
+      if (!this.runDone) {
         await this.reconnectOrFail(options, nextBatch);
       }
     } catch (error) {

@@ -2,11 +2,12 @@
  * 非预置城市的按需 Wikidata 事实快照。
  *
  * - 生成时若本城没有本地快照，实时查询 Wikidata（5 个 SPARQL 查询并行），
- *   结果写入 server/data/fact_snapshot/<cityId>.json，后续生成直接复用；
+ *   结果写入运行期目录（默认 server/data/fact_snapshot/，可用 CITYLENS_RUNTIME_DIR 隔离），
+ *   后续生成直接复用；预置快照仍从 dataDir 读取；
  * - 查询失败或全部为空时返回 null，不伪造数据，让模块按 NO_FACTS 降级；
  * - 产物与构建期快照同构，供景点、文物、人物三个模块共用。
  */
-import { mkdirSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import {
   formatYear,
@@ -321,7 +322,7 @@ async function buildSnapshot(city: CityBrief, cityQid: string): Promise<FactSnap
   };
 
   try {
-    const dir = resolve(config.dataDir, 'fact_snapshot');
+    const dir = RUNTIME_SNAPSHOT_DIR;
     mkdirSync(dir, { recursive: true });
     writeFileSync(
       resolve(dir, `${city.cityId}.json`),
@@ -341,9 +342,15 @@ async function buildSnapshot(city: CityBrief, cityQid: string): Promise<FactSnap
 /**
  * 读取或按需构建本城事实快照。
  * 已有本地快照时同步返回；否则联网构建，失败返回 null（模块按 NO_FACTS 降级）。
+ * 传入 signal（任务总截止）时：已取消直接放弃；构建中取消则 race 出 null，
+ * 迟到结果被丢弃，不会写入档案。
  */
-export function loadCitySnapshot(city: CityBrief): Promise<FactSnapshot | null> {
-  const existing = getFactSnapshot(city.cityId);
+export function loadCitySnapshot(
+  city: CityBrief,
+  signal?: AbortSignal,
+): Promise<FactSnapshot | null> {
+  // 读取顺序：进程内存/预置产物（dataDir）→ 运行期目录（runtimeDir）→ 联网构建。
+  const existing = getFactSnapshot(city.cityId) ?? readRuntimeSnapshot(city.cityId);
   if (existing) return Promise.resolve(existing);
 
   const failed = failedAt.get(city.cityId);
@@ -359,6 +366,7 @@ export function loadCitySnapshot(city: CityBrief): Promise<FactSnapshot | null> 
     failedAt.set(city.cityId, Date.now());
     return Promise.resolve(null);
   }
+  if (signal?.aborted) return Promise.resolve(null);
 
   const task = buildSnapshot(city, qid)
     .then((snapshot) => {
@@ -377,7 +385,35 @@ export function loadCitySnapshot(city: CityBrief): Promise<FactSnapshot | null> 
       inflight.delete(city.cityId);
     });
   inflight.set(city.cityId, task);
-  return task;
+  if (!signal) return task;
+  return Promise.race([
+    task,
+    new Promise<FactSnapshot | null>((resolve) => {
+      if (signal.aborted) {
+        resolve(null);
+        return;
+      }
+      signal.addEventListener('abort', () => resolve(null), { once: true });
+    }),
+  ]);
+}
+
+/** 运行期生成的快照目录（可用 CITYLENS_RUNTIME_DIR 隔离）；预置快照仍读 dataDir。 */
+const RUNTIME_SNAPSHOT_DIR = resolve(config.runtimeDir, 'fact_snapshot');
+const PRESET_SNAPSHOT_DIR = resolve(config.dataDir, 'fact_snapshot');
+
+/** 读取运行期目录下的快照（隔离缓存时优先命中；预置产物由 getFactSnapshot 负责）。 */
+function readRuntimeSnapshot(cityId: string): FactSnapshot | null {
+  if (RUNTIME_SNAPSHOT_DIR === PRESET_SNAPSHOT_DIR) return null;
+  const path = resolve(RUNTIME_SNAPSHOT_DIR, `${cityId}.json`);
+  if (!existsSync(path)) return null;
+  try {
+    const snapshot = JSON.parse(readFileSync(path, 'utf8')) as FactSnapshot;
+    setFactSnapshot(cityId, snapshot);
+    return snapshot;
+  } catch {
+    return null;
+  }
 }
 
 /**

@@ -154,22 +154,29 @@ export function registerArchiveRoutes(app: FastifyInstance, deps: ArchiveRouteDe
         }
       }
 
-      const rateDecision = force
-        ? rateLimiter.checkRegen(requesterHash, city.cityId)
-        : archive && archive.status !== 'unpublished'
-          ? ({ allowed: true } as const)
-          : rateLimiter.checkNewCity(requesterHash);
-      if (!rateDecision.allowed) {
-        throw new ApiError(
-          rateDecision.code,
-          rateDecision.message,
-          429,
-          rateDecision.retryAfterSec,
-        );
-      }
-      const budget = rateLimiter.checkBudget();
-      if (!budget.allowed) {
-        throw new ApiError(budget.code, budget.message, 503, budget.retryAfterSec);
+      // 并入既有任务（断线重连 / 多端同看）：服务端任务仍在运行，
+      // 不得被「再次创建刷新」的 5 分钟冷却或预算入口误拦——并入本身不新增 LLM 调用。
+      // 预置城市保护与上面的鉴权检查在任何路径都生效。
+      const activeRuntime = jobManager.getRuntime(city.cityId);
+      const attaching = activeRuntime !== undefined && !activeRuntime.finished;
+      if (!attaching) {
+        const rateDecision = force
+          ? rateLimiter.checkRegen(requesterHash, city.cityId)
+          : archive && archive.status !== 'unpublished'
+            ? ({ allowed: true } as const)
+            : rateLimiter.checkNewCity(requesterHash);
+        if (!rateDecision.allowed) {
+          throw new ApiError(
+            rateDecision.code,
+            rateDecision.message,
+            429,
+            rateDecision.retryAfterSec,
+          );
+        }
+        const budget = rateLimiter.checkBudget();
+        if (!budget.allowed) {
+          throw new ApiError(budget.code, budget.message, 503, budget.retryAfterSec);
+        }
       }
 
       const { runtime, attached } = jobManager.start({

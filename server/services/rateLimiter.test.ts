@@ -111,12 +111,60 @@ describe('每日预算', () => {
     const now = new Date('2026-11-10T10:00:00.000Z');
     const { jobs, limiter } = setup({ now: () => now, dailyCallLimit: 50 });
     const jobId = createJob(jobs, 'CN-610001', 'hash', now.toISOString());
-    jobs.incrementLlmCalls(jobId, 49);
+    for (let i = 0; i < 49; i += 1) jobs.recordLlmCall(jobId, 'CN-610001', now.toISOString());
     expect(limiter.checkBudget().allowed).toBe(true);
-    jobs.incrementLlmCalls(jobId, 1);
+    jobs.recordLlmCall(jobId, 'CN-610001', now.toISOString());
     const blocked = limiter.checkBudget();
     expect(blocked.allowed).toBe(false);
     if (!blocked.allowed) expect(blocked.code).toBe('BUDGET_EXCEEDED');
+  });
+
+  it('同一个任务跨午夜连续调用：按实际请求时间记账，不因任务开始于前一天而放行', () => {
+    // 任务开始于北京 11-10 23:59:59；调用发生于北京 11-11 00:00:01。
+    const beforeMidnight = new Date('2026-11-10T15:59:59.000Z');
+    const afterMidnight = new Date('2026-11-10T16:00:01.000Z');
+    const { jobs, limiter } = setup({ now: () => afterMidnight, dailyCallLimit: 1 });
+    const jobId = createJob(jobs, 'CN-610001', 'hash', beforeMidnight.toISOString());
+    // 第一次调用记入北京 11-11。
+    expect(limiter.consumeForJob(jobId, 'CN-610001')).toBe(true);
+    // 同一任务继续调用：11-11 额度已用尽，必须拒绝（旧实现按任务开始时间汇总会放行）。
+    expect(limiter.consumeForJob(jobId, 'CN-610001')).toBe(false);
+    expect(limiter.consumeForJob(jobId, 'CN-610001')).toBe(false);
+    // 今日（北京 11-11）实际用量为 1。
+    expect(jobs.countLlmCallsSince(startOfToday(afterMidnight))).toBe(1);
+    // 任务自身的 llm_calls 仍为 1（按任务汇总的口径保留，用于展示）。
+    expect(jobs.get(jobId)?.llmCalls).toBe(1);
+  });
+
+  it('跨午夜前的调用计入当天，跨日后重新计数', () => {
+    const justBefore = new Date('2026-11-10T15:59:59.000Z');
+    const justAfter = new Date('2026-11-10T16:00:01.000Z');
+    const { jobs } = setup();
+    const limiterBefore = new RateLimiter(jobs, { now: () => justBefore, dailyCallLimit: 1 });
+    const jobId = createJob(jobs, 'CN-610001', 'hash', justBefore.toISOString());
+    expect(limiterBefore.consumeForJob(jobId, 'CN-610001')).toBe(true);
+    expect(limiterBefore.consumeForJob(jobId, 'CN-610001')).toBe(false);
+    // 北京 11-10 当天恰好 1 次。
+    expect(jobs.countLlmCallsSince(startOfToday(justBefore))).toBe(1);
+
+    const limiterAfter = new RateLimiter(jobs, { now: () => justAfter, dailyCallLimit: 1 });
+    // 新的一天（北京 11-11）：额度重置。
+    expect(limiterAfter.consumeForJob(jobId, 'CN-610001')).toBe(true);
+    // 11-11 当天 1 次；总日志 2 次（前一次属于 11-10，不被今天看到）。
+    expect(jobs.countLlmCallsSince(startOfToday(justAfter))).toBe(1);
+    expect(jobs.countLlmCallsSince(startOfToday(justBefore))).toBe(2);
+  });
+
+  it('历史任务（无逐次调用记录）不伪造归属，按任务汇总列仅作展示', () => {
+    const now = new Date('2026-11-10T10:00:00.000Z');
+    const { jobs, limiter } = setup({ now: () => now, dailyCallLimit: 50 });
+    const jobId = createJob(jobs, 'CN-610001', 'hash', now.toISOString());
+    // 迁移前的历史调用只有任务级汇总，没有逐次时间戳：不补造记录。
+    jobs.incrementLlmCalls(jobId, 49);
+    expect(jobs.countLlmCallsSince(startOfToday(now))).toBe(0);
+    expect(limiter.consumeForJob(jobId, 'CN-610001')).toBe(true);
+    // 任务级汇总照常累加（展示口径），与逐次记账互不覆盖。
+    expect(jobs.get(jobId)?.llmCalls).toBe(50);
   });
 
   it('startOfToday 按 Asia/Shanghai 日界切分（北京时间当日零点的 UTC 值）', () => {
@@ -140,11 +188,13 @@ describe('每日预算', () => {
     const { jobs, limiter } = setup({ now: () => now, dailyCallLimit: 50 });
     // 昨天（北京 11-10）用掉 49 次。
     const yesterdayJob = createJob(jobs, 'CN-610001', 'hash', '2026-11-10T10:00:00.000Z');
-    jobs.incrementLlmCalls(yesterdayJob, 49);
+    for (let i = 0; i < 49; i += 1) {
+      jobs.recordLlmCall(yesterdayJob, 'CN-610001', '2026-11-10T10:00:00.000Z');
+    }
     expect(limiter.checkBudget().allowed).toBe(true);
     // 北京 11-11 的新任务：额度全新。
     const todayJob = createJob(jobs, 'CN-610002', 'hash', now.toISOString());
-    expect(limiter.consumeForJob(todayJob)).toBe(true);
+    expect(limiter.consumeForJob(todayJob, 'CN-610002')).toBe(true);
   });
 });
 
@@ -153,10 +203,13 @@ describe('LLM 预算原子记账（consumeForJob）', () => {
     const now = new Date('2026-11-10T10:00:00.000Z');
     const { jobs, limiter } = setup({ now: () => now, dailyCallLimit: 3 });
     const jobId = createJob(jobs, 'CN-610001', 'hash', now.toISOString());
-    jobs.incrementLlmCalls(jobId, 2);
-    expect(limiter.consumeForJob(jobId)).toBe(true);
-    expect(limiter.consumeForJob(jobId)).toBe(false);
-    expect(jobs.get(jobId)?.llmCalls).toBe(3);
+    jobs.recordLlmCall(jobId, 'CN-610001', now.toISOString());
+    jobs.recordLlmCall(jobId, 'CN-610001', now.toISOString());
+    expect(limiter.consumeForJob(jobId, 'CN-610001')).toBe(true);
+    expect(limiter.consumeForJob(jobId, 'CN-610001')).toBe(false);
+    // 逐次日志 3 条（预算口径）；任务级汇总只累计经 consumeForJob 的调用。
+    expect(jobs.countLlmCallsSince(startOfToday(now))).toBe(3);
+    expect(jobs.get(jobId)?.llmCalls).toBe(1);
   });
 
   it('并发任务总量不突破预算（事务内统计+记账）', () => {
@@ -165,15 +218,12 @@ describe('LLM 预算原子记账（consumeForJob）', () => {
     const jobIds = Array.from({ length: 5 }, (_, i) =>
       createJob(jobs, `CN-61000${i}`, 'hash', now.toISOString()),
     );
-    const results = jobIds.map((jobId) => limiter.consumeForJob(jobId));
+    const results = jobIds.map((jobId, i) => limiter.consumeForJob(jobId, `CN-61000${i}`));
     expect(results.every((allowed) => allowed)).toBe(true);
     // 第 6 个任务（跨任务）再请求即被拒绝，总量恰为 5。
     const extra = createJob(jobs, 'CN-610009', 'hash', now.toISOString());
-    expect(limiter.consumeForJob(extra)).toBe(false);
-    const used = jobs
-      .listRecent(10)
-      .reduce((sum, job) => sum + job.llmCalls, 0);
-    expect(used).toBe(5);
+    expect(limiter.consumeForJob(extra, 'CN-610009')).toBe(false);
+    expect(jobs.countLlmCallsSince(startOfToday(now))).toBe(5);
   });
 
   it('午夜前后（北京 00:00）跨日的调用分别计入两日', () => {
@@ -182,13 +232,13 @@ describe('LLM 预算原子记账（consumeForJob）', () => {
     const { jobs } = setup();
     const limiterBefore = new RateLimiter(jobs, { now: () => justBefore, dailyCallLimit: 2 });
     const jobA = createJob(jobs, 'CN-610001', 'hash', justBefore.toISOString());
-    expect(limiterBefore.consumeForJob(jobA)).toBe(true);
-    expect(limiterBefore.consumeForJob(jobA)).toBe(true);
-    expect(limiterBefore.consumeForJob(jobA)).toBe(false);
+    expect(limiterBefore.consumeForJob(jobA, 'CN-610001')).toBe(true);
+    expect(limiterBefore.consumeForJob(jobA, 'CN-610001')).toBe(true);
+    expect(limiterBefore.consumeForJob(jobA, 'CN-610001')).toBe(false);
 
     const limiterAfter = new RateLimiter(jobs, { now: () => justAfter, dailyCallLimit: 2 });
     const jobB = createJob(jobs, 'CN-610002', 'hash', justAfter.toISOString());
     // 新的一天：额度重置。
-    expect(limiterAfter.consumeForJob(jobB)).toBe(true);
+    expect(limiterAfter.consumeForJob(jobB, 'CN-610002')).toBe(true);
   });
 });

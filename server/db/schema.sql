@@ -69,6 +69,18 @@ CREATE UNIQUE INDEX IF NOT EXISTS uq_running_job ON generation_jobs(city_id) WHE
 CREATE INDEX IF NOT EXISTS idx_job_requester ON generation_jobs(requester_hash, started_at);
 CREATE INDEX IF NOT EXISTS idx_job_city ON generation_jobs(city_id, started_at);
 
+-- 逐次 LLM 调用日志：每日预算按「实际请求发生时间」所属北京日期记账。
+-- 任务可能跨午夜运行，用 generation_jobs.started_at 汇总会把次日的调用算到前一天。
+-- 迁移前的历史调用只有任务级 llm_calls 汇总、没有逐次时间戳，一律不补造记录。
+CREATE TABLE IF NOT EXISTS llm_call_log (
+    id        INTEGER PRIMARY KEY AUTOINCREMENT,
+    job_id    TEXT NOT NULL,
+    city_id   TEXT NOT NULL,
+    called_at TEXT NOT NULL
+);
+
+CREATE INDEX IF NOT EXISTS idx_llm_call_log_at ON llm_call_log(called_at);
+
 -- 档案发布与缓存查询辅助索引
 CREATE INDEX IF NOT EXISTS idx_archive_status ON city_archives(status);
 

@@ -94,7 +94,7 @@ export class RateLimiter {
   }
 
   checkBudget(): RateDecision {
-    const used = this.jobs.sumLlmCallsSince(startOfToday(this.now()));
+    const used = this.jobs.countLlmCallsSince(startOfToday(this.now()));
     if (used >= this.dailyLimit) {
       return {
         allowed: false,
@@ -110,13 +110,17 @@ export class RateLimiter {
    * 真正发出 LLM 请求前的原子额度检查与记账。
    * better-sqlite3 同步执行，事务内「统计 + 记账」不会被并发任务拆开，
    * 因此并行任务总量不会突破每日预算；重试请求同样计数。
+   * 记账按 calledAt（实际请求时间）所属北京日期归属，任务跨午夜运行不串日；
+   * 迁移前的历史调用没有逐次时间戳，不补造记录（见 llm_call_log 注释）。
    * 返回 false 表示预算已用尽，调用方必须放弃本次请求。
    */
-  consumeForJob(jobId: string): boolean {
+  consumeForJob(jobId: string, cityId: string, calledAt?: string): boolean {
     const since = startOfToday(this.now());
+    const at = calledAt ?? this.now().toISOString();
     return this.jobs.transaction(() => {
-      const used = this.jobs.sumLlmCallsSince(since);
+      const used = this.jobs.countLlmCallsSince(since);
       if (used >= this.dailyLimit) return false;
+      this.jobs.recordLlmCall(jobId, cityId, at);
       this.jobs.incrementLlmCalls(jobId, 1);
       return true;
     });

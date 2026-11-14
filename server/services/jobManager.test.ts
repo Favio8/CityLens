@@ -1081,4 +1081,94 @@ describe('P1：单次生成总截止（180s）', () => {
     expect(jobRepo.get('stale-leftover')?.status).toBe('failed');
     expect(jobRepo.get('stale-leftover')?.cooldownUntil).not.toBeNull();
   });
+
+  it('上游永不返回且忽略取消时，编排层按时结束并发送唯一终止结果', async () => {
+    // 复现：deadlineMs=30，上游既不 resolve 也不响应 abort。
+    const hanging = new (class implements ModuleGenerator {
+      readonly name = 'hanging-forever';
+      readonly promptVersion = 'hanging-v1';
+      async generate(): Promise<GeneratedModule> {
+        return new Promise<GeneratedModule>(() => undefined); // 永不 settle
+      }
+    })();
+    const { manager, jobRepo, archiveRepo, city } = setup({
+      generator: hanging,
+      deadlineMs: 30,
+    });
+    const events = await collectStream(
+      manager.start({
+        city,
+        aliases: [],
+        requesterHash: 'hash',
+        force: false,
+        modules: ['identity'],
+      }).runtime,
+      manager,
+    );
+    // 必须收到唯一终止结果（旧实现会一直挂起，没有 done）。
+    const done = events.at(-1)!;
+    expect(done.event).toBe('done');
+    expect(done.data.status).toBe('unpublished');
+    expect(events.filter((event) => event.event === 'done')).toHaveLength(1);
+    // 任务状态正确收尾，不残留 running。
+    const job = jobRepo.listRecent(1)[0]!;
+    expect(job.status).toBe('failed');
+    expect(jobRepo.getRunning(CITY_ID)).toBeNull();
+    // 没有任何内容被这个挂起的模块污染。
+    expect(archiveRepo.listModules(CITY_ID).every((m) => m.status === 'failed')).toBe(true);
+  });
+
+  it('上游忽略取消但迟到返回：迟到结果不落库，任务已收尾', async () => {
+    const late = new (class implements ModuleGenerator {
+      readonly name = 'late-ignoring-abort';
+      readonly promptVersion = 'late-v1';
+      async generate(input: GenerateInput): Promise<GeneratedModule> {
+        void input.signal; // 明确忽略取消
+        await new Promise((resolve) => setTimeout(resolve, 150));
+        return {
+          status: 'ok',
+          verification: 'verified_by_source',
+          sources: [TEST_SOURCE],
+          data: fixedModuleData(input.module),
+        };
+      }
+    })();
+    const { manager, archiveRepo, city } = setup({ generator: late, deadlineMs: 30 });
+    const events = await collectStream(
+      manager.start({
+        city,
+        aliases: [],
+        requesterHash: 'hash',
+        force: false,
+        modules: ['identity'],
+      }).runtime,
+      manager,
+    );
+    expect(events.at(-1)!.event).toBe('done');
+    // 截止之后才返回的内容不得成为可用内容。
+    const identity = archiveRepo.listModules(CITY_ID).find((m) => m.name === 'identity');
+    expect(identity?.status).not.toBe('ok');
+    expect(identity?.data).toBeNull();
+  });
+
+  it('预先到达截止时不开始任何模块，直接收尾', async () => {
+    const clock = { now: new Date('2026-11-14T10:00:00.000Z') };
+    const { manager, counting, city } = setup({
+      generator: new FixedGenerator(),
+      now: () => clock.now,
+      deadlineMs: 0,
+    });
+    const events = await collectStream(
+      manager.start({
+        city,
+        aliases: [],
+        requesterHash: 'hash',
+        force: false,
+        modules: ['identity'],
+      }).runtime,
+      manager,
+    );
+    expect(events.at(-1)!.data.status).toBe('unpublished');
+    expect(counting.calls).toEqual([]);
+  });
 });

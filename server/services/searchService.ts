@@ -39,8 +39,8 @@ interface CacheEntry {
   fetchedAt: string;
 }
 
-const CACHE_DIR = resolve(config.dataDir, 'search_cache');
-const USAGE_FILE = resolve(config.dataDir, 'search_usage.json');
+const CACHE_DIR = resolve(config.runtimeDir, 'search_cache');
+const USAGE_FILE = resolve(config.runtimeDir, 'search_usage.json');
 const TTL_MS = 7 * 24 * 60 * 60 * 1000;
 const NEGATIVE_TTL_MS = 10 * 60 * 1000;
 const negativeCache = new Map<string, number>();

@@ -12,7 +12,7 @@
 | Node.js | v24.15.0 |
 | npm | 11.12.1 |
 | 浏览器 | Chrome（无头模式，CDP 视口模拟 375 / 768 / 1280） |
-| 日期 | 2026-11-10（首轮）；2026-11-11（官方 LLM / Lighthouse / 三层断网 / 数据补全 / 四大新功能 / 干净环境复跑 / 最终门禁 / PRD 对照完备性检查与偏差修复）；2026-11-14（P0/P1 缺陷修复轮：重新生成失败下架 / 预算日界与原子记账 / 并发配置隔离 / 180s 总截止 / SSE 恢复与切城保护 / 可重复交付，见 2.3） |
+| 日期 | 2026-11-10（首轮）；2026-11-11（官方 LLM / Lighthouse / 三层断网 / 数据补全 / 四大新功能 / 干净环境复跑 / 最终门禁 / PRD 对照完备性检查与偏差修复）；2026-11-14（P0/P1 缺陷修复轮：重新生成失败下架 / 预算日界与原子记账 / 并发配置隔离 / 180s 总截止 / SSE 恢复与切城保护 / 可重复交付，见 2.3）；2026-11-14 二轮（跨日预算按实际请求时间记账 / 生成硬截止真正结束等待 / 重新生成与重连完整生命周期 / E2E 可信度，见 2.5） |
 | 模式 | 初测无 Key（模拟 LLM + 无底图）；2026-11-10 复测改用本机 Magpie 网关（`zcode/GLM-5.2`）、`ADMIN_TOKEN` 与天地图双 Key（浏览器端 + 服务器端）；`ENABLE_IMAGES=true`（本地 Commons 图片）；2026-11-11 起改用用户提供的 **StepFun 官方 Key**（`https://api.stepfun.com/step_plan/v1`，`step-3.7-flash`，经 `.env` 配置，`llmSettingsSource=env`） |
 
 命令统一在项目根目录执行；本机部分终端存在 PATH 超长问题，详见 6.3。
@@ -66,7 +66,7 @@
 | 首屏性能（2026-11-13） | 字体 preload + Noto Serif `font-display: optional`；01 卷引文 `.quote-serif` 系统宋体栈；路由回退/阅读骨架 ≥120vh；地图 `DeferredCityMap` 进入视口再挂载；一日路线 `content-visibility: auto`；Lighthouse Desktop 中位数 0.82 / Mobile 0.895 |
 | 可访问性 | `跳到正文` 跳转链接、`<main id="main-content">`、section `aria-labelledby`、横向滚动容器 `tabIndex+role=group`、模态/对话框 focus trap（Tab 循环 + Esc + 焦点还原）；axe（wcag2a/2aa/best-practice）应用自身 0 违规 |
 | PRD 偏差修复（2026-11-11 产品视角检查） | 卷目导航补 daytrip/quiz 入口（按成卷状态过滤）；ATTACHED 并入提示（SSE `notice` 事件 + 前端状态条）；缓存命中朱砂印章「藏书阁已收录 · 为你秒速展卷」3s 渐隐；页脚补「内容由 AI 整合，请以权威资料为准」；检索下拉补英文名与「匹配古称：XX」格式；PRD 回写 v1.2（实时天气纳入/P2 交付/耗时上限放宽 60s·180s/SSE notice/移除 GSAP 死依赖） |
-| 后台 LLM 预算 | `/admin` 大模型卡片显示「今日调用 x / 预算 y（剩余 z）」（`jobRepo.sumLlmCallsSince`）；保存/恢复配置时保留预算字段 |
+| 后台 LLM 预算 | `/admin` 大模型卡片显示「今日调用 x / 预算 y（剩余 z）」（`jobRepo.countLlmCallsSince`，逐次调用日志口径，与额度检查一致）；保存/恢复配置时保留预算字段 |
 | 诗词覆盖扩展 | 语料 137 → **148 城、2,702 首**：新增石家庄、秦皇岛、保定、张家口、承德、沈阳、大连、哈尔滨、南通、连云港、宿迁、舟山、丽水、蚌埠、马鞍山 15 城关键词（其中 12 城有诗；承德/舟山/哈尔滨暂无可考诗作，不以泛称凑数）。**2026-11-11 对抗性审查修复跨城误配**：「天津桥」不再归属天津（17 首洛阳诗回归洛阳，天津仅留 3 首直沽/盘山古诗）、福州「西湖」（52→35）、哈尔滨「上京」、蚌埠「钟离」、郑州「黄河」、青岛「琅琊→琅琊台」；`poetryCorpus.test.ts` 4 项回归 fixture 锁定归属规则 |
 | 统计序列补全 | 六城 GDP/常住人口补齐 **2021–2025 官方公报序列**；修正原有错误数据：北京 GDP（原 44350.7/45222.4/47353.7/49670.2 → 官方 40269.6/41610.9/43760.7/49843.1/52073.4）、杭州 GDP（原 19110/19660/20960/21838 → 官方 18109/18753/20059/21860/23011）；北京/杭州/成都/苏州/洛阳人口序列逐份公报回填；`statsBaseline.test.ts` 锁定成都完整序列与「西安 2021 人口缺失保持 null」 |
 | 失败档案重建 | `scripts/rebuild_failed_archives.ts`：删快照/侦察缓存后 force 重生成 16 城，12 城零失败；天水/扬州/福州/徐州 partial 发布；`llmGenerator` 新增 FIGURE_LEAK 过滤（LLM 输出泄漏 `birthplace` 等字段即丢弃该人物）；`archiveRepo.deleteUnpublished()` + `scripts/clean_unpublished_archives.ts`（dry-run 默认）清理未发布档案 |
@@ -100,7 +100,16 @@
 | P1 SSE 恢复与城市切换保护 | 新增框架无关 `CityStreamController`：请求批次令牌保护一切异步回写；done 前 EOF/中断时有界自动重连（复用服务端单飞任务与回放，保留已收模块），耗尽后给出明确重试入口；done 未发布按服务端状态收尾（冷却/未收录）；`consumeSse` abort 即时解除阻塞读 | `client/src/lib/cityStream.test.ts` 12 项（截断流、重连耗尽、A→B→A、迟到补拉、close 静默、回放幂等） |
 | P2 可重复交付 | `engines.node` 对齐 `>=22.19.0`（undici 8 / lighthouse 13 实际要求）；新增 `npm run check` / `check:full` / `e2e` / `archives:audit` / `fact-check` 入口；`e2e/regression.mjs` 零依赖 CDP 回归 12/12 通过（搜索/缓存/失败重试/切城/对比/海报，离线可重复） | `npm run check` 全绿；e2e 12/12；`archives:audit` 只读报告 20 份非预置档案、5 个失败模块及原因 |
 
-### 2.4 未完成 / 未实测
+### 2.5 收尾修复二轮（2026-11-14，跨日预算 / 硬截止 / 生命周期 / E2E 可信度）
+
+| 项 | 修复内容 | 回归验证 |
+|---|---|---|
+| P1 跨日预算按实际请求时间记账 | 新增 `llm_call_log` 逐次调用日志表：每次真实 LLM 请求记录 `called_at`，每日预算只按**实际请求时间**所属北京日期统计（`JobRepo.countLlmCallsSince`），任务跨午夜运行不再串日；`generation_jobs.llm_calls` 保留为任务级汇总（展示口径）；迁移前的历史调用没有逐次时间戳，**不补造记录**，今日用量自日志启用起计算；后台 `/admin` 今日用量与额度检查改用同一口径 | `rateLimiter.test.ts` +4 项：同一个任务跨午夜连续调用（预算 1 时第三次必拒）、跨午夜前后分别计入两天、历史任务不伪造归属、剩余一次额度边界 |
+| P1 生成硬截止真正结束等待 | `JobManager.run` 用截止竞争 Promise 包裹侦察与每个模块生成：上游永不返回或忽略取消时，编排层到点结束等待、标记模块失败、发送唯一 `done` 终止结果；迟到结果/迟到拒绝全部吞掉且不落库；截止定时器在 `finally` 统一清理，收尾幂等；取消信号传递到侦察（`loadCityRecon(city, signal)`）、按需快照（`loadCitySnapshot(city, signal)`）与 LLM；`callDeepSeek` 在**请求前**检查已取消信号——已取消时不记账、不发请求，迟到响应也不继续读取 | `jobManager.test.ts` +3 项（上游挂起 110ms 内收尾、迟到 150ms 结果不落库、预先截止不启动模块）、`deepseekGenerator.test.ts` +1 项（已取消 signal：0 次 fetch、0 次记账） |
+| P1 重新生成与重连完整生命周期 | `CityStreamController` 增加**每轮独立的完成标记** `runDone`：重新生成/重连都重置该标记，重连判断不再沿用上一轮或缓存的 `state.done`（修复「缓存命中后重新生成被截断→页面停在生成状态」）；重新生成时重置 `done/errors/notice` 但保留模块/档案/主题（旧内容不闪退）；路由层区分「创建任务」与「并入任务」：并入已有运行任务时跳过刷新冷却与预算入口（并入不新增 LLM 调用），预置城市保护与鉴权在任何路径都生效 | `cityStream.test.ts` +3 项（缓存命中→重生成→截断→重连、第二次生成同样可恢复、切城期间重连不覆盖新城市）；`archiveRoutes.test.ts` +1 项真实接口集成测试（耗尽预算后重连仍 200 + ATTACHED，仅 1 个任务、0 次 LLM 调用，预置 force 仍 403） |
+| P2 E2E 可信度 | 海报断言限定在分享弹窗内预览 `<img>` 并校验 750×1334 与导出 PNG（捕获 Blob 类型/体积），另加失败注入用例证明断言有牙；切城改为应用内导航 + 注入 fetch 延迟制造真实迟到响应，用 SPA 标记验证无整页刷新；数据库与全部运行期缓存改到临时目录（新增 `CITYLENS_RUNTIME_DIR`，侦察/检索/气候/用量/按需快照全部隔离，预置产物只读）；写型场景只对自建隔离服务端执行，`E2E_BASE_URL` 外部服务时显式 SKIP；失败输出页面诊断、进程按树结束 | `npm run e2e` **16/16 通过**（含 3 项海报断言、4 项切城竞态断言） |
+
+### 2.6 未完成 / 未实测
 
 | 项 | 原因 |
 |---|---|
@@ -126,10 +135,10 @@
 | AC-11 | **通过** | CDP 实测：点击「收入藏书阁」→ 重新进入西安仍显示「已收入藏书阁」；localStorage 预置 25 条最近浏览后访问杭州，`recents` 变为 20 条、首条为 CN-330100、无重复（`unique=20`） |
 | AC-12 | **通过** | `archiveRoutes.test.ts`：5 模块通过、3 模块失败后 `partial` 发布；整体失败进入冷却；增量生成第二次只重试失败模块；单模块请求不会把已发布档案打回 `unpublished`（对抗性审查后新增回归测试）；`SIMULATE_FAIL` 可复现。**2026-11-14 加强（P0）**：force 重生成失败不再把已发布档案打回 `unpublished`——已有合格旧内容时失败只记入 `verification.lastAttempt`，档案保持可读、不进入冷却；首次生成失败仍按原门槛 unpublished + 冷却 |
 | AC-13 | **通过** | `jobManager.test.ts` 10 并发只建 1 个 runtime；`archiveRoutes.test.ts` 10 并发均收到 `done`，模块不重复生成 |
-| AC-14 | **通过（设计取舍，用户 2026-11-11 确认）** | 产品负责人确认线上全程配置官方 LLM Key（`.env` 已配置 StepFun）。实测：预置城市（西安）与已缓存城市（宁波，`fromCache=true`）功能完整；未缓存城市（镇江、徐州）配置 Key 后正常流式生成。无 Key 分支（本地快照生成、标 `degraded`）仅作开发自测保留，PRD 3.5 已加 v1.1.1 注记；预算路径：`LLM_DAILY_CALL_LIMIT` 超限返回 503 `BUDGET_EXCEEDED`（`rateLimiter.test.ts` 覆盖），前端经 `useCityStream` 映射为错误态并在 hero 展示原因（2026-11-11 新增：error 态 fatal 提示不再不可见）。**2026-11-14 加强（P1）**：预算改为「真正发出 LLM 请求前原子检查 + 记账」（事务内统计与记账，重试请求同样计数；Mock/本地模块/缓存命中不计费）；`startOfToday` 修正为北京时间当日零点（UTC-8h），跨日运行按北京日界重新计数 |
+| AC-14 | **通过（设计取舍，用户 2026-11-11 确认）** | 产品负责人确认线上全程配置官方 LLM Key（`.env` 已配置 StepFun）。实测：预置城市（西安）与已缓存城市（宁波，`fromCache=true`）功能完整；未缓存城市（镇江、徐州）配置 Key 后正常流式生成。无 Key 分支（本地快照生成、标 `degraded`）仅作开发自测保留，PRD 3.5 已加 v1.1.1 注记；预算路径：`LLM_DAILY_CALL_LIMIT` 超限返回 503 `BUDGET_EXCEEDED`（`rateLimiter.test.ts` 覆盖），前端经 `useCityStream` 映射为错误态并在 hero 展示原因（2026-11-11 新增：error 态 fatal 提示不再不可见）。**2026-11-14 一轮加强（P1）**：预算改为「真正发请求前原子检查 + 记账」；`startOfToday` 修正为北京时间当日零点（UTC-8h）。**2026-11-14 二轮加强（P1）**：记账改为逐次调用日志 `llm_call_log.called_at`（实际请求时间所属北京日期），同一个任务跨午夜连续调用也受当日额度约束；迁移前历史调用无逐次时间戳、不补造；后台今日用量与额度检查同一口径 |
 | AC-16 | **通过（2026-11-13 复跑，中位数判定；2026-11-14 复测四轮全记录）** | 用 lighthouse@13、生产构建 + 生产服务端托管 `client/dist`，`--port` 复用预热 Chrome；Desktop 3 轮、Mobile 2 轮（`.lighthouse/ac16-desktop-r1~r3-final.json` / `ac16-mobile-r1~r2-final.json` / `ac16-summary-final.json`）。**Desktop Performance 0.79 / 0.82 / 0.99，中位数 0.82 ≥ 0.80；Mobile 0.89 / 0.90，中位数 0.895 ≥ 0.70；SEO 0.92；Accessibility 1.00**。中位指标：Desktop FCP 0.61s / LCP 3.12s / observed LCP 202ms / TBT 0ms / CLS 0.048 / SI 0.89s；Mobile FCP 0.90s / LCP 0.90s / observed LCP 180ms / TBT 326ms / CLS 0.076 / SI 3.87s。01 卷引文改用 `.quote-serif` 系统宋体栈，避免 2.7MB Noto 子集字体进入 LCP；LCP 元素切换为 hero「西安」，其余标题/诗词仍用 Noto Serif SC。**判定：Desktop 与 Mobile 均达标，AC-16 通过**。复现：生产服务端 :8788 + 已启动 Chrome 调试端口，`node node_modules/lighthouse/cli/index.js http://127.0.0.1:8788/city/CN-610100 --port=<port> --preset=desktop --only-categories=performance,seo,accessibility --output=json --output-path=.lighthouse/ac16-desktop.json`（Mobile 去掉 `--preset=desktop` 并加 `--form-factor=mobile --screenEmulation.mobile`）。**2026-11-14 复测（同命令、同页面，四轮全部记录，未挑选）**：Desktop 0.98 / 0.98（FCP 0.6s / LCP 0.6s / CLS 0.048–0.049 / TBT 40–50ms / SI 1.3s）、Mobile 0.75 / 0.72（FCP 3.2s / LCP 3.2s / CLS 0.076 / TBT 380–480ms / SI 4.4–4.5s），SEO 0.92 / A11y 1.00 四轮一致；中位数 Desktop 0.98 ≥ 0.80、Mobile 0.75 ≥ 0.70，仍达标。Mobile 的 FCP/LCP 与 11-13 轮次不同（3.2s vs 0.90s）系本机负载与 Chrome 版本差异，按「记录真实条件」原则原样保留，报告存 `.lighthouse/ac16-20261114-*.json` |
 | AC-17 | **通过** | `npm run verify`：6/6 城市通过，48 卷；Schema、来源登记、逐字诗词、诗词归属本城、跨城重复、模块完整性、年代、坐标 180km、数值量级全部 0 错误。注：这是程序化自测，不等于事实正确；人工复核见 7.2 |
-| AC-18 | **通过** | 2026-11-11 三层实测（证据 `.screenshots/ac18/`）：① **用户侧断外网**（ego-browser CDP 屏蔽 wikidata/wikipedia/open-meteo/tavily/tianditu/stepfun）：预置西安、缓存宁波 8 卷 + 一日路线 + 小测验完整渲染，无白屏、无 JS 错误（瓦片失败属预期降级）；② **服务端真实断网**（`NODE_USE_ENV_PROXY=1` + 黑洞代理，:8789）：预置/缓存城市同样完整可用（`已为你复用`）；③ **LLM 不可用**（:8791 将 `LLM_BASE_URL` 指向黑洞）：桂林 force 重生成 SSE 显示 7 个 LLM 模块全部 `module_error code=LLM_TIMEOUT retryable=true`（2026-11-11 将网络类错误由 SCHEMA_INVALID 改映射为 LLM_TIMEOUT），而 **dataPulse 仅靠本地侦察正常成卷（degraded，气候 12 个月完整）**——单模块失败隔离成立；`done status=unpublished` 优雅收尾无白屏。每小时 10 座新城限流触发时展示「同一 IP 每小时最多生成 10 座新城市」错误屏与重试入口。单模块「重试此卷」按钮在流式页面渲染（`CityPage`），重试路径由 `archiveRoutes.test.ts` 覆盖 |
+| AC-18 | **通过** | 2026-11-11 三层实测（证据 `.screenshots/ac18/`）：① **用户侧断外网**（ego-browser CDP 屏蔽 wikidata/wikipedia/open-meteo/tavily/tianditu/stepfun）：预置西安、缓存宁波 8 卷 + 一日路线 + 小测验完整渲染，无白屏、无 JS 错误（瓦片失败属预期降级）；② **服务端真实断网**（`NODE_USE_ENV_PROXY=1` + 黑洞代理，:8789）：预置/缓存城市同样完整可用（`已为你复用`）；③ **LLM 不可用**（:8791 将 `LLM_BASE_URL` 指向黑洞）：桂林 force 重生成 SSE 显示 7 个 LLM 模块全部 `module_error code=LLM_TIMEOUT retryable=true`（2026-11-11 将网络类错误由 SCHEMA_INVALID 改映射为 LLM_TIMEOUT），而 **dataPulse 仅靠本地侦察正常成卷（degraded，气候 12 个月完整）**——单模块失败隔离成立；`done status=unpublished` 优雅收尾无白屏。每小时 10 座新城限流触发时展示「同一 IP 每小时最多生成 10 座新城市」错误屏与重试入口。单模块「重试此卷」按钮在流式页面渲染（`CityPage`），重试路径由 `archiveRoutes.test.ts` 覆盖。**2026-11-14 二轮加强**：`npm run e2e` 16/16 通过，其中失败重试 4 项断言（重试入口/其他卷不受影响/档案未下架/重试后无白屏）与并入重连 1 项接口集成测试均在此路径上 |
 | AC-19 | **通过** | 2026-11-11 干净副本复跑：`.cleancheck`（排除 node_modules/dist/.git/*.db/.env/.trae）内 `npm ci`（457 包，21s）→ `npm run setup`（342 城/1480 别名/6 城 48 卷）→ `npm run verify`（6/6）→ `npm run dev`（Vite 767ms 就绪）；页面与接口抽查全部 200，详见第 4 节 |
 
 ## 4. AC-19 干净环境复核记录
@@ -156,9 +165,9 @@
 npm run check             # typecheck + test + build（普通测试不依赖真实密钥与外网缓存）
 npm run check:full        # setup + verify + check（初始化后的完整校验入口）
 npm run typecheck          # 服务端 + 前端 TypeScript strict
-npm test                   # 214 项单元/集成测试（28 个文件）
+npm test                   # 225 项单元/集成测试（28 个文件）
 npm run verify             # 六城预置档案合规校验
-npm run e2e                # 可执行浏览器回归（CDP，自起服务端与 Chrome，离线可重复）
+npm run e2e                # 可执行浏览器回归（CDP，自起服务端与 Chrome，隔离运行期缓存）
 npm run archives:audit     # 非预置档案只读校验（失败模块及原因，不删改数据）
 npm run fact-check         # 导出逐条事实抽查材料（只读，供人工复核）
 npm run test:llm           # LLM 提供方连通性测试（读 .env，支持 --base-url/--model/--api-key/--timeout-ms 覆盖）
@@ -171,14 +180,15 @@ npx tsx scripts/rebuild_failed_archives.ts         # 重建失败/未发布档�
 npm run archives:clean-unpublished                 # dry-run 列出未发布档案；--apply 才删除
 ```
 
-最终门禁（2026-11-14，P0/P1 修复后复跑，四条全过）：
+最终门禁（2026-11-14 二轮修复后复跑，全过）：
 
 ```text
 npm run typecheck   ✓ 无错误
-npm test            ✓ 214 passed（28 files）
+npm test            ✓ 225 passed（28 files）
 npm run verify      ✓ 通过 6/6
-npm run build       ✓ built in ~9.5s
-npm run e2e         ✓ 12/12 通过（2026-11-14，离线可重复）
+npm run build       ✓ built in ~7s
+npm run e2e         ✓ 16/16 通过（隔离临时库 + 隔离运行期缓存）
+npm run archives:audit ✓ 20 份非预置档案、5 个失败模块及原因（只读）
 ```
 
 干净环境复跑（AC-19）见第 4 节；本机 `npm ci` 需先精简 PATH，见 6.3。
@@ -249,7 +259,8 @@ curl "http://localhost:8787/api/cities/CN-610100"
 - Lighthouse 绝对分数本机不可信（Chrome 冷启动污染计时），AC-16 的达标判定需在正常机器按记录命令复跑。
 - 一日路线快照回退的首个请求（本城无本地快照）需联网抓取 Wikidata，约 5–15s，之后走本地缓存；Wikidata 不可用时返回 404 并提示，前端显示「路线未能生成」降级卡。
 - 知识小测验仍要求档案已生成（题目依赖 identity/chronicle/气候等档案事实字段，快照只有景点/文物/人物，不足以出题）。
-- **2026-11-14 更新**：E2E 关键路径已有可执行回归（`npm run e2e`，CDP 零依赖，12/12 通过，覆盖搜索/缓存/失败重试/切城/对比/海报）；ego-browser 人工走查脚本仍存档于 `e2e/README.md` 与 `C:/Users/19949/ego/`，作为演示与人工复核证据。
+- **预算记账迁移（2026-11-14 二轮）**：每日预算改按 `llm_call_log.called_at`（实际请求时间）统计。迁移前发生的 LLM 调用只有任务级 `llm_calls` 汇总、没有逐次时间戳，**不补造历史记录**；因此升级后「今日调用」从日志启用起计算，可能低于历史任务汇总，属预期。`generation_jobs.llm_calls` 仍按任务累加，仅作展示。
+- **2026-11-14 二轮更新**：E2E 关键路径已有可执行回归（`npm run e2e`，CDP 零依赖，**16/16 通过**），覆盖搜索/缓存/失败重试/应用内切城竞态/对比/分享海报；数据库与运行期缓存全部隔离在临时目录（`DB_PATH` + `CITYLENS_RUNTIME_DIR`）；写型场景只对自建隔离服务端执行，`E2E_BASE_URL` 指向外部服务时显式 SKIP。未模拟的外部依赖仅剩实时天气（Open-Meteo current），失败即回退气候基线，不影响断言。
 - 本地 26 份 partial 档案（20 非预置 + 6 预置）中 5 个模块为 failed 状态（徐州 relics、扬州 landmarks/poetics、福州 poetics、天水 localSoul，原因见 `npm run archives:audit` 只读报告）；已按要求保持原状，未删除档案、未放宽校验、未重新生成。
 
 ## 7. 人工复核记录

@@ -22,6 +22,12 @@ export const config = {
   nodeEnv: process.env.NODE_ENV ?? 'development',
   dbPath: process.env.DB_PATH ?? resolve(DATA_DIR, 'citylens.db'),
   dataDir: DATA_DIR,
+  /**
+   * 运行期缓存目录（城市侦察 / 检索 / 气候 / 用量 / 按需事实快照）。
+   * 默认与 dataDir 一致；测试与干净复跑可用 CITYLENS_RUNTIME_DIR 指到独立临时目录，
+   * 避免读写用户现有缓存。构建期产物（词典/诗词库/名录等）始终在 dataDir。
+   */
+  runtimeDir: process.env.CITYLENS_RUNTIME_DIR?.trim() || DATA_DIR,
   clientDist: resolve(ROOT_DIR, 'client/dist'),
   llm: {
     apiKey: process.env.LLM_API_KEY?.trim() ?? '',

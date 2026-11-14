@@ -70,9 +70,9 @@ export interface StartJobResult {
   attached: boolean;
 }
 
-/** LLM 预算记账：在真正发出请求前原子地检查并记一次调用。 */
+/** LLM 预算记账：在真正发出请求前原子地检查并记一次调用（按实际请求时间归属北京日期）。 */
 export interface LlmBudget {
-  consume(jobId: string): boolean;
+  consume(jobId: string, cityId: string, calledAt?: string): boolean;
 }
 
 export interface JobManagerDeps {
@@ -104,6 +104,11 @@ function toModuleErrorCode(code: string): ModuleErrorCode {
   return 'SCHEMA_INVALID';
 }
 
+/** 总截止竞争 Promise 的拒绝：用于把「编排层停止等待」与「上游自身失败」区分开。 */
+function isDeadlineError(error: unknown): boolean {
+  return error instanceof GenerationError && error.code === 'GENERATION_DEADLINE';
+}
+
 /** 递归收集模块数据里的 sourceRefs，确保都能在 sources 中找到。 */
 export function collectSourceRefs(value: unknown, out = new Set<string>()): Set<string> {
   if (Array.isArray(value)) {
@@ -127,11 +132,14 @@ export class JobManager {
   private readonly now: () => Date;
   private readonly deadlineMs: number;
   private readonly staleAfterMs: number;
+  /** 注入了时钟（测试）：截止判定以循环内的时钟检查为准，不武装实时定时器。 */
+  private readonly usesInjectedClock: boolean;
 
   constructor(private readonly deps: JobManagerDeps) {
     this.now = deps.now ?? (() => new Date());
     this.deadlineMs = deps.deadlineMs ?? DEFAULT_DEADLINE_MS;
     this.staleAfterMs = deps.staleAfterMs ?? DEFAULT_STALE_AFTER_MS;
+    this.usesInjectedClock = deps.now !== undefined;
   }
 
   getRuntime(cityId: string): JobRuntime | undefined {
@@ -267,47 +275,65 @@ export class JobManager {
     const failed: ModuleName[] = [];
     const jobStartedAt = Date.now();
     const deadlineAt = runtime.startedAt + this.deadlineMs;
+    const timers = new Set<ReturnType<typeof setTimeout>>();
     let deadlineExceeded = false;
     let budgetExhausted = false;
-    this.armDeadlineTimer(runtime, deadlineAt);
+    this.armDeadlineTimer(runtime, deadlineAt, timers);
     try {
       // 非预置城市先做一次城市侦察：维基百科、Wikidata、Tavily、气候与官方统计。
       // 侦察失败不阻断生成，各模块会按 NO_FACTS 降级。
       let recon = null;
-      if (!input.city.isPreset && this.now().getTime() < deadlineAt) {
-        const reconStartedAt = Date.now();
-        recon = await loadCityRecon(input.city);
-        if (recon) {
-          console.log(
-            `[gen] city=${input.city.cityId} recon ms=${Date.now() - reconStartedAt}`,
-          );
+      if (!input.city.isPreset) {
+        if (this.now().getTime() >= deadlineAt) {
+          deadlineExceeded = true;
+        } else {
+          const reconStartedAt = Date.now();
+          // 取消信号随调用传递：侦察边界响应 abort，已取消则直接放弃。
+          const reconWork = loadCityRecon(input.city, runtime.deadlineAbort.signal);
+          reconWork.catch(() => undefined);
+          try {
+            recon = await Promise.race([reconWork, this.deadlineRejection(deadlineAt, timers)]);
+          } catch (error) {
+            if (!isDeadlineError(error)) throw error;
+            deadlineExceeded = true;
+          }
+          if (recon) {
+            console.log(
+              `[gen] city=${input.city.cityId} recon ms=${Date.now() - reconStartedAt}`,
+            );
+          }
         }
       }
       for (const module of runtime.planned) {
         // 总截止覆盖侦察、生成与重试：到达后不再开始新模块。
-        if (this.now().getTime() >= deadlineAt) {
+        if (deadlineExceeded || this.now().getTime() >= deadlineAt) {
           deadlineExceeded = true;
           break;
         }
         if (budgetExhausted) break;
         const moduleStartedAt = Date.now();
+        // 上游可能永不返回或忽略取消：与截止竞争，编排层按时结束等待。
+        const work = this.deps.generator.generate({
+          city: input.city,
+          module,
+          aliases: input.aliases,
+          recon,
+          signal: runtime.deadlineAbort.signal,
+          onLlmCall: () => {
+            // 真正发出 LLM 请求前的原子额度检查与记账（重试请求同样计数，
+            // 按实际请求时间归属北京日期，任务跨午夜运行不串日）。
+            if (!this.deps.budget.consume(runtime.jobId, runtime.cityId)) {
+              throw new GenerationError(
+                'BUDGET_EXCEEDED',
+                '今日 LLM 调用预算已用尽，请明日再试',
+              );
+            }
+          },
+        });
+        // 迟到结果/迟到拒绝都必须被吞掉：不得影响收尾，也不得落库。
+        work.catch(() => undefined);
         try {
-          const generated = await this.deps.generator.generate({
-            city: input.city,
-            module,
-            aliases: input.aliases,
-            recon,
-            signal: runtime.deadlineAbort.signal,
-            onLlmCall: () => {
-              // 真正发出 LLM 请求前的原子额度检查与记账（重试请求同样计数）。
-              if (!this.deps.budget.consume(runtime.jobId)) {
-                throw new GenerationError(
-                  'BUDGET_EXCEEDED',
-                  '今日 LLM 调用预算已用尽，请明日再试',
-                );
-              }
-            },
-          });
+          const generated = await Promise.race([work, this.deadlineRejection(deadlineAt, timers)]);
           // 迟到结果不得落库：生成完成后再次核对总截止。
           if (this.now().getTime() >= deadlineAt) {
             throw new GenerationError(
@@ -347,6 +373,8 @@ export class JobManager {
             `[gen] city=${runtime.cityId} module=${module} status=${generated.status} ms=${Date.now() - moduleStartedAt}`,
           );
         } catch (error) {
+          const deadlineHit = isDeadlineError(error);
+          if (deadlineHit) deadlineExceeded = true;
           const rawCode =
             error instanceof GenerationError
               ? error.code
@@ -372,6 +400,7 @@ export class JobManager {
           });
           failed.push(module);
           if (code === 'BUDGET_EXCEEDED') budgetExhausted = true;
+          if (deadlineHit) break;
         }
       }
 
@@ -473,16 +502,57 @@ export class JobManager {
     } catch (error) {
       this.failRuntime(runtime, error);
     } finally {
+      // 清理截止定时器并取消上游（幂等：重复 abort 无副作用）。
+      for (const timer of timers) clearTimeout(timer);
+      timers.clear();
       runtime.deadlineAbort.abort();
     }
   }
 
-  /** 武装实时截止定时器；注入时钟的测试由循环内的时钟检查负责。 */
-  private armDeadlineTimer(runtime: JobRuntime, deadlineAt: number): void {
+  /** 武装实时截止定时器：到点取消进行中的上游请求。注入时钟的测试不武装。 */
+  private armDeadlineTimer(
+    runtime: JobRuntime,
+    deadlineAt: number,
+    timers: Set<ReturnType<typeof setTimeout>>,
+  ): void {
+    if (this.usesInjectedClock) return;
     const delay = deadlineAt - Date.now();
     if (delay <= 0 || delay > this.deadlineMs) return;
     const timer = setTimeout(() => runtime.deadlineAbort.abort(), delay);
     timer.unref?.();
+    timers.add(timer);
+  }
+
+  /**
+   * 截止竞争Promise：到点 reject，让编排层结束对上游的等待。
+   * - 已过截止：立即 reject；
+   * - 注入时钟（测试）：返回永不 settle 的 Promise，由循环内时钟检查负责；
+   * - 其余：真实定时器 reject，并在 work 先完成时被安全吞掉。
+   */
+  private deadlineRejection(
+    deadlineAt: number,
+    timers: Set<ReturnType<typeof setTimeout>>,
+  ): Promise<never> {
+    const error = new GenerationError(
+      'GENERATION_DEADLINE',
+      `单次生成总截止（${this.deadlineMs}ms）已到，停止等待上游`,
+    );
+    if (this.usesInjectedClock) return new Promise<never>(() => undefined);
+    const delay = deadlineAt - Date.now();
+    if (delay <= 0) {
+      const rejected = Promise.reject(error);
+      rejected.catch(() => undefined);
+      return rejected;
+    }
+    if (delay > this.deadlineMs) return new Promise<never>(() => undefined);
+    const promise = new Promise<never>((_resolve, reject) => {
+      const timer = setTimeout(() => reject(error), delay);
+      timer.unref?.();
+      timers.add(timer);
+    });
+    // work 先完成时该 Promise 才会 reject：预先挂一个空 catch，避免未处理拒绝。
+    promise.catch(() => undefined);
+    return promise;
   }
 
   private failRuntime(runtime: JobRuntime, error: unknown): void {

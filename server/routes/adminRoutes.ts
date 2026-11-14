@@ -191,8 +191,9 @@ export function registerAdminRoutes(app: FastifyInstance, deps: AdminRouteDeps):
     const map = mapSettings.publicSettings();
     const search = searchSettings.publicSettings();
     const images = getRelicImages();
-    // 今日 LLM 调用与每日预算（与 rateLimiter.checkBudget 同口径）。
-    const callsToday = jobRepo.sumLlmCallsSince(startOfToday());
+    // 今日 LLM 调用与每日预算：与 rateLimiter.checkBudget 同一口径（逐次调用日志，
+    // 按实际请求时间所属北京日期统计；迁移前无逐次时间戳的历史调用不计入，不补造）。
+    const callsToday = jobRepo.countLlmCallsSince(startOfToday());
     const dailyBudget = config.llm.dailyCallLimit;
     return {
       llm,

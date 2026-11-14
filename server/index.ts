@@ -45,9 +45,10 @@ export function buildApp(options: BuildAppOptions = {}) {
     jobRepo,
     cityRepo: repo,
     generator,
-    // 预算在真正发出 LLM 请求前原子检查与记账（含重试；Mock/本地模块不计费）。
+    // 预算在真正发出 LLM 请求前原子检查与记账（按实际请求时间归属北京日期；
+    // Mock/本地模块不计费）。
     budget: {
-      consume: (jobId: string) => rateLimiter.consumeForJob(jobId),
+      consume: (jobId: string, cityId: string) => rateLimiter.consumeForJob(jobId, cityId),
     },
   });
 

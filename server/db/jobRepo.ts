@@ -126,6 +126,25 @@ export class JobRepo {
   }
 
   /**
+   * 记录一次真实 LLM 调用（按实际发生时间）。
+   * 与 generation_jobs.llm_calls（任务级汇总，仅作展示）并行维护：
+   * 每日预算只认这里的 called_at，任务跨午夜运行也不会串日。
+   */
+  recordLlmCall(jobId: string, cityId: string, calledAt: string): void {
+    this.db
+      .prepare('INSERT INTO llm_call_log (job_id, city_id, called_at) VALUES (?, ?, ?)')
+      .run(jobId, cityId, calledAt);
+  }
+
+  /** 实际请求时间不早于 sinceIso 的 LLM 调用次数（每日预算唯一口径）。 */
+  countLlmCallsSince(sinceIso: string): number {
+    const row = this.db
+      .prepare('SELECT COUNT(*) AS n FROM llm_call_log WHERE called_at >= ?')
+      .get(sinceIso) as { n: number };
+    return row.n;
+  }
+
+  /**
    * 暴露事务：供「统计 + 记账」这类必须原子执行的复合操作使用
    * （better-sqlite3 同步执行，事务内不会被并发任务拆开）。
    */
@@ -152,13 +171,6 @@ export class JobRepo {
          WHERE requester_hash = ? AND started_at >= ?`,
       )
       .get(requesterHash, sinceIso) as { n: number };
-    return row.n;
-  }
-
-  sumLlmCallsSince(sinceIso: string): number {
-    const row = this.db
-      .prepare('SELECT COALESCE(SUM(llm_calls), 0) AS n FROM generation_jobs WHERE started_at >= ?')
-      .get(sinceIso) as { n: number };
     return row.n;
   }
 
