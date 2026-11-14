@@ -165,6 +165,25 @@ export function CityPage() {
         </div>
       ) : null}
 
+      {/* 流中断且重连耗尽：提供「继续展卷」入口——非 force 请求会并入/回放原任务，
+          不会创建新刷新、不会重复扣额度，也不会被 5 分钟刷新冷却拦截。 */}
+      {state.phase === 'error' && state.fatal?.code === 'STREAM_INTERRUPTED' ? (
+        <div className="page-shell pt-4">
+          <div className="mx-auto flex w-fit flex-wrap items-center gap-3 rounded-full border bg-[var(--bg-elevated)] px-4 py-2 hairline">
+            <span className="text-[11px] tracking-[0.14em] text-[var(--text-secondary)]" role="status">
+              {state.fatal.message}
+            </span>
+            <button
+              type="button"
+              onClick={() => void startGeneration()}
+              className="ink-btn px-3 py-1.5 text-[10px]"
+            >
+              继续展卷
+            </button>
+          </div>
+        </div>
+      ) : null}
+
       <div className="page-shell pb-10">
         {state.phase === 'reading' || !meta ? (
           <ReadingSkeleton cityId={cityId} />
@@ -174,6 +193,17 @@ export function CityPage() {
             {MODULE_TITLES.map(([name, index, title]) => {
               const module = state.modules[name];
               const error = state.errors[name];
+              // 旧内容与最新失败同时可见：有失败记录就始终提供单卷重试入口，
+              // 无论本轮是否有可展示的旧内容。
+              const retryButton = error ? (
+                <button
+                  type="button"
+                  onClick={() => retryModule(name)}
+                  className="ink-btn px-3 py-1.5 text-[10px]"
+                >
+                  重试此卷
+                </button>
+              ) : null;
               return (
                 <SectionShell
                   key={name}
@@ -181,18 +211,11 @@ export function CityPage() {
                   index={index}
                   title={title}
                   aside={
-                    module ? (
+                    retryButton ??
+                    (module ? (
                       <span className="mono text-[10px] tracking-[0.16em] text-[var(--text-secondary)]">
                         {module.status === 'degraded' ? '降级成卷' : '已成卷'}
                       </span>
-                    ) : error ? (
-                      <button
-                        type="button"
-                        onClick={() => retryModule(name)}
-                        className="ink-btn px-3 py-1.5 text-[10px]"
-                      >
-                        重试此卷
-                      </button>
                     ) : state.phase === 'ready' ? (
                       <span className="mono text-[10px] tracking-[0.16em] text-[var(--text-secondary)]">
                         暂缺
@@ -201,7 +224,7 @@ export function CityPage() {
                       <span className="mono text-[10px] tracking-[0.16em] text-[var(--text-secondary)]">
                         显影中
                       </span>
-                    )
+                    ))
                   }
                 >
                   {module ? (
@@ -217,6 +240,14 @@ export function CityPage() {
                           palette={state.theme ?? meta.themePalette}
                         />
                       </ErrorBoundary>
+                      {error ? (
+                        <p
+                          className="mt-3 rounded-sm border border-[var(--city-primary)]/40 bg-[var(--bg-elevated)] px-3 py-2 text-[11px] leading-relaxed text-[var(--text-secondary)]"
+                          role="status"
+                        >
+                          本次更新失败（{error.code}），继续展示旧内容；可单独重试此卷，不影响其他卷。
+                        </p>
+                      ) : null}
                     </Reveal>
                   ) : (
                     <Reveal>

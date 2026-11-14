@@ -95,6 +95,39 @@ export function archiveToModules(
   return result;
 }
 
+/**
+ * 从缓存档案取回「最近一次生成尝试失败」记录。
+ * 刷新失败但旧内容仍可用时，整页刷新后也要能看到失败提示与单卷重试入口。
+ */
+export function archiveToErrors(
+  archive: CityArchiveResponse,
+): Partial<Record<ModuleName, SseModuleErrorEvent>> {
+  const result: Partial<Record<ModuleName, SseModuleErrorEvent>> = {};
+  const attempts = archive.meta.moduleAttempts ?? {};
+  for (const [name, attempt] of Object.entries(attempts)) {
+    if (!attempt || attempt.status !== 'failed') continue;
+    result[name as ModuleName] = {
+      seq: 0,
+      name: name as ModuleName,
+      code: attempt.code,
+      retryable: attempt.code !== 'NO_FACTS',
+    };
+  }
+  return result;
+}
+
+/**
+ * 是否「可恢复的网络类异常」：连接失败（fetch TypeError）、响应体读取中断、
+ * 以及没有业务错误体的非 ok 响应。这类异常与「缺少 done 的 EOF」走同一条
+ * 有界重连流程；带明确业务码的错误（COOLDOWN/BUDGET_EXCEEDED/…）不重连。
+ */
+export function isRecoverableStreamError(error: unknown): boolean {
+  if (error instanceof ApiRequestError) {
+    return error.code === 'REQUEST_FAILED';
+  }
+  return true;
+}
+
 export function mapApiError(error: ApiRequestError): Partial<CityStreamState> {
   switch (error.code) {
     case 'NOT_GENERATED':
@@ -215,6 +248,8 @@ export class CityStreamController {
             phase: 'ready',
             archive,
             modules: archiveToModules(archive),
+            // 刷新失败但旧内容可用的模块：缓存读取也要带回失败提示与重试入口。
+            errors: archiveToErrors(archive),
             meta: archive.meta,
             theme: archive.meta.themePalette,
             fromCache: true,
@@ -306,8 +341,17 @@ export class CityStreamController {
       }
     } catch (error) {
       if (!this.isCurrent(batch)) return;
+      // 主动取消（切城 / 关闭 / 重新开始）：静默，不重连。
       if ((error as Error).name === 'AbortError') return;
+      // 可恢复的网络类异常（连接失败、响应体读取中断、无业务错误体）：
+      // 与「缺少 done 的 EOF」走同一条有界恢复流程。
+      if (isRecoverableStreamError(error)) {
+        await this.reconnectOrFail(options, batch);
+        return;
+      }
       if (error instanceof ApiRequestError) {
+        // 明确的业务错误（冷却 / 预算 / 未配置 / 鉴权失败…）：保留服务端
+        // code、message、retryAfterSec，直接终态，不做无谓重连。
         this.commit({ ...this.state, ...mapApiError(error) }, batch);
         return;
       }
@@ -431,6 +475,7 @@ export class CityStreamController {
     if (event.event === 'module') {
       const parsed = SseModuleEventSchema.safeParse(payload);
       if (!parsed.success) return;
+      const fromCache = parsed.data.fromCache === true;
       this.commit(
         {
           ...this.state,
@@ -444,9 +489,13 @@ export class CityStreamController {
               sources: parsed.data.sources,
             },
           },
-          errors: Object.fromEntries(
-            Object.entries(this.state.errors).filter(([key]) => key !== parsed.data.name),
-          ) as Partial<Record<ModuleName, SseModuleErrorEvent>>,
+          // 真正生成成功才清除失败提示；旧内容回放（fromCache）必须保留本轮失败记录，
+          // 否则「本次更新失败，继续展示旧内容」与单卷重试入口会一起消失。
+          errors: fromCache
+            ? this.state.errors
+            : (Object.fromEntries(
+                Object.entries(this.state.errors).filter(([key]) => key !== parsed.data.name),
+              ) as Partial<Record<ModuleName, SseModuleErrorEvent>>),
         },
         batch,
       );
@@ -504,6 +553,9 @@ export class CityStreamController {
           theme: archive.meta.themePalette,
           fromCache: false,
           phase: 'ready',
+          // 缓存重新读取同样要保留「最近一次尝试失败」：回放终态时单卷重试入口不消失。
+          // 成功重跑的模块已被服务端清除 lastAttempt，不会复活过期失败提示。
+          errors: { ...this.state.errors, ...archiveToErrors(archive) },
         },
         batch,
       );
@@ -519,7 +571,15 @@ export class CityStreamController {
     }
   }
 
-  /** 有界重连：复用服务端单飞任务（并入并回放），保留已收到的模块。 */
+  /**
+   * 有界重连：复用服务端单飞任务（并入并回放），保留已收到的模块。
+   * 关键约束：
+   * - 重连**不再发送 force**：force 的语义是「创建一次新刷新」，会撞上 5 分钟刷新冷却；
+   *   而重连的目的是恢复原任务——非 force 请求在服务端会并入仍在运行的任务，
+   *   或在任务已完成时按缓存立即回放终态（不重复生成、不重复计费）。
+   * - 非 ok 响应必须解析服务端错误体，保留 code/message/retryAfterSec，
+   *   区分「可再试一次的网络异常」与「明确的业务终态（冷却/预算/鉴权）」。
+   */
   private async reconnectOrFail(options: GenerateOptions, batch: number): Promise<void> {
     if (!this.isCurrent(batch)) return;
     if (this.reconnects >= this.maxReconnects) {
@@ -529,7 +589,7 @@ export class CityStreamController {
           phase: 'error',
           fatal: {
             code: 'STREAM_INTERRUPTED',
-            message: '读城流中断，已生成的卷不会丢失，点击重新展卷即可继续',
+            message: '读城流中断，已生成的卷不会丢失；点击「继续展卷」即可接着读（不会重新扣额度）',
           },
         },
         batch,
@@ -537,7 +597,7 @@ export class CityStreamController {
       return;
     }
     this.reconnects += 1;
-    // 本批次的流已正常结束：先释放句柄，等待期间允许取消（切换城市/重新开始）。
+    // 本批次的流已结束：先释放句柄，等待期间允许取消（切换城市/重新开始）。
     this.streamController = null;
     try {
       await this.wait(this.reconnectDelayMs, new AbortController().signal);
@@ -555,10 +615,22 @@ export class CityStreamController {
     try {
       const cityId = this.cityId;
       if (!cityId) return;
-      const response = await this.deps.fetchStream(cityId, options, controller.signal);
+      // 恢复原任务：剥离 force（见方法注释）。
+      const recoverOptions: GenerateOptions = { ...options, force: false };
+      const response = await this.deps.fetchStream(cityId, recoverOptions, controller.signal);
       if (!this.isCurrent(nextBatch)) return;
       if (!response.ok || !response.body) {
-        throw new ApiRequestError('REQUEST_FAILED', '重连失败，请稍后重试', response.status);
+        const payload = (await response.json().catch(() => null)) as {
+          code?: string;
+          message?: string;
+          retryAfterSec?: number;
+        } | null;
+        throw new ApiRequestError(
+          payload?.code ?? 'REQUEST_FAILED',
+          payload?.message ?? `重连失败（HTTP ${response.status}）`,
+          response.status,
+          payload?.retryAfterSec,
+        );
       }
       await this.deps.consume(
         response,
@@ -571,8 +643,15 @@ export class CityStreamController {
       }
     } catch (error) {
       if (!this.isCurrent(nextBatch)) return;
+      // 主动取消：静默。
       if ((error as Error).name === 'AbortError') return;
+      // 可恢复的网络异常：继续有界重连。
+      if (isRecoverableStreamError(error)) {
+        await this.reconnectOrFail(options, nextBatch);
+        return;
+      }
       if (error instanceof ApiRequestError) {
+        // 明确的业务终态（如未达发布门槛后的 COOLDOWN）：保留服务端信息收尾。
         this.commit({ ...this.state, ...mapApiError(error) }, nextBatch);
         return;
       }

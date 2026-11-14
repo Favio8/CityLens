@@ -176,6 +176,26 @@ export const GeneratorInfoSchema = z.object({
   promptVersion: z.string().min(1),
 });
 
+/**
+ * 「最近一次生成尝试失败」记录（与模块的可用状态分开）。
+ * 模块可能仍有合格旧内容（status=ok/degraded），但最新一次刷新失败了——
+ * 两端都要能同时表达这两件事，所以它是可选字段，老客户端可直接忽略。
+ */
+export const MODULE_ATTEMPT_CODES = [
+  'LLM_TIMEOUT',
+  'SCHEMA_INVALID',
+  'VERIFY_FAILED',
+  'NO_FACTS',
+  'BUDGET_EXCEEDED',
+] as const;
+export const ModuleAttemptSchema = z.object({
+  status: z.literal('failed'),
+  code: z.enum(MODULE_ATTEMPT_CODES),
+  message: z.string().optional(),
+  at: IsoDateSchema,
+});
+export type ModuleAttempt = z.infer<typeof ModuleAttemptSchema>;
+
 export const MetaSchema = z.object({
   cityId: CityIdSchema,
   standardName: z.string().min(1),
@@ -187,6 +207,11 @@ export const MetaSchema = z.object({
   generatedAt: IsoDateSchema,
   status: ArchiveStatusSchema,
   moduleStatus: z.record(ModuleNameSchema, ModuleStatusSchema),
+  /**
+   * 可选：各模块「最近一次生成尝试失败」记录（内容可能仍可用）。
+   * 缓存读取时随档案下发，使「旧内容 + 本次刷新失败」在整页刷新后依然可见。
+   */
+  moduleAttempts: z.record(ModuleNameSchema, ModuleAttemptSchema).optional(),
   generator: GeneratorInfoSchema.nullable(),
   isPreset: z.boolean(),
   themePalette: ThemePaletteSchema,
@@ -749,6 +774,8 @@ export const SseModuleEventSchema = z.object({
   status: z.enum(['ok', 'degraded']),
   data: z.unknown(),
   sources: z.array(SourceRefSchema),
+  /** true 表示这是「刷新失败后补发的旧内容回放」，不是本轮新生成成功。 */
+  fromCache: z.boolean().optional(),
 });
 export type SseModuleEvent = z.infer<typeof SseModuleEventSchema>;
 
@@ -766,6 +793,7 @@ export const MODULE_ERROR_CODES = [
   'BUDGET_EXCEEDED',
 ] as const;
 export type ModuleErrorCode = (typeof MODULE_ERROR_CODES)[number];
+export const ModuleErrorCodeSchema = z.enum(MODULE_ERROR_CODES);
 
 export const SseModuleErrorEventSchema = z.object({
   seq: z.number().int().nonnegative(),

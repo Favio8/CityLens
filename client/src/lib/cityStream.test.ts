@@ -9,6 +9,8 @@ import { ApiRequestError } from './api';
 import { consumeSse } from './sse';
 import {
   CityStreamController,
+  archiveToErrors,
+  archiveToModules,
   initialStreamState,
   type CityStreamState,
 } from './cityStream';
@@ -159,12 +161,21 @@ function harness(options: {
   /** hit：缓存命中（不自动生成）；miss：NOT_GENERATED（自动发起生成，默认）。 */
   cache?: 'hit' | 'miss';
   fetchArchive?: (cityId: string) => Promise<CityArchiveResponse>;
+  /** 按顺序编排第 N 次流的行为：默认都是可手动投递的正常流。 */
+  streamScript?: Array<
+    | { kind: 'stream' }
+    | { kind: 'reject' }
+    | { kind: 'readError'; events?: Array<{ event: string; data: unknown }> }
+    | { kind: 'http'; status: number; body: unknown }
+  >;
 } = {}): Harness {
   const states: CityStreamState[] = [initialStreamState];
   const streams: FakeStream[] = [];
   const streamCalls: Array<{ cityId: string; options: { force?: boolean; modules?: string[] } }> = [];
   const archiveCalls: string[] = [];
   const cache = options.cache ?? 'miss';
+  const script = options.streamScript ?? [];
+  let streamIndex = 0;
   const controller = new CityStreamController({
     fetchArchive: (cityId) => {
       archiveCalls.push(cityId);
@@ -175,6 +186,40 @@ function harness(options: {
     },
     fetchStream: (cityId, opts, signal) => {
       streamCalls.push({ cityId, options: { force: opts.force, modules: opts.modules } });
+      const step = script[streamIndex] ?? { kind: 'stream' as const };
+      streamIndex += 1;
+      if (step.kind === 'reject') {
+        // 首次连接异常（连接被拒 / DNS 失败）：fetch 层 TypeError。
+        return Promise.reject(new TypeError('fetch failed'));
+      }
+      if (step.kind === 'http') {
+        return Promise.resolve(
+          new Response(JSON.stringify(step.body), {
+            status: step.status,
+            headers: { 'content-type': 'application/json' },
+          }),
+        );
+      }
+      if (step.kind === 'readError') {
+        // 响应体读取中断：先异步吐若干事件再 error
+        // （同步 error 会清空队列，事件将永远读不到）。
+        const encoder = new TextEncoder();
+        let index = 0;
+        const body = new ReadableStream<Uint8Array>({
+          pull(controller) {
+            if (index < (step.events ?? []).length) {
+              const item = (step.events ?? [])[index]!;
+              index += 1;
+              controller.enqueue(
+                encoder.encode(`event: ${item.event}\ndata: ${JSON.stringify(item.data)}\n\n`),
+              );
+              return;
+            }
+            controller.error(new TypeError('network error'));
+          },
+        });
+        return Promise.resolve(new Response(body, { status: 200 }));
+      }
       const fake = fakeStream(signal);
       streams.push(fake);
       return Promise.resolve(new Response(fake.stream, { status: 200 }));
@@ -558,6 +603,233 @@ describe('CityStreamController：城市切换保护', () => {
     const before = h.states.length;
     await tick();
     expect(h.states.length).toBe(before);
+  });
+});
+
+/* -------------------------------------------------------------------------- */
+/* 统一网络异常 / EOF 恢复                                                     */
+/* -------------------------------------------------------------------------- */
+
+describe('CityStreamController：网络异常与 EOF 统一恢复', () => {
+  it('首次连接异常（fetch 拒绝）后走有界重连并成功', async () => {
+    const h = harness({
+      reconnectDelayMs: 1,
+      streamScript: [{ kind: 'reject' }, { kind: 'stream' }],
+    });
+    h.controller.openCity(CITY_A);
+    await tick();
+    await tick();
+    // 必须自动重连（旧实现只请求一次就进入 NETWORK_ERROR）。
+    expect(h.streamCalls).toHaveLength(2);
+    h.streams[0]!.send([META_EVENT(CITY_A), MODULE_EVENT('identity', 2), DONE_EVENT(CITY_A, 3)]);
+    await tick();
+    h.streams[0]!.close();
+    await tick();
+    expect(h.latest().phase).toBe('ready');
+    expect(h.latest().done?.cityId).toBe(CITY_A);
+  });
+
+  it('响应体读取异常后走有界重连并成功', async () => {
+    const h = harness({
+      reconnectDelayMs: 1,
+      streamScript: [
+        { kind: 'readError', events: [META_EVENT(CITY_A), MODULE_EVENT('identity', 2)] },
+        { kind: 'stream' },
+      ],
+    });
+    h.controller.openCity(CITY_A);
+    await tick();
+    await tick();
+    await tick();
+    expect(h.streamCalls).toHaveLength(2);
+    // 中断前收到的模块被保留。
+    expect(Object.keys(h.latest().modules)).toEqual(['identity']);
+    h.streams[0]!.send([META_EVENT(CITY_A), DONE_EVENT(CITY_A, 3)]);
+    await tick();
+    h.streams[0]!.close();
+    await tick();
+    expect(h.latest().phase).toBe('ready');
+  });
+
+  it('重连不再发送 force（恢复原任务，避免刷新冷却）', async () => {
+    const h = harness({
+      cache: 'hit',
+      reconnectDelayMs: 1,
+      streamScript: [{ kind: 'stream' }, { kind: 'stream' }],
+    });
+    h.controller.openCity(CITY_A);
+    await tick();
+    void h.controller.regenerate(); // 用户主动 force 刷新
+    await tick();
+    expect(h.streamCalls[0]!.options.force).toBe(true);
+    h.streams[0]!.send([META_EVENT(CITY_A), MODULE_EVENT('identity', 2)]);
+    await tick();
+    h.streams[0]!.close(); // 截断，无 done
+    await tick();
+    await tick();
+    expect(h.streamCalls).toHaveLength(2);
+    // 重连必须剥离 force：服务端据此并入原任务而非创建新刷新。
+    expect(h.streamCalls[1]!.options.force).toBe(false);
+  });
+
+  it('持续失败耗尽后给出可用的「继续展卷」入口（非 force）', async () => {
+    const h = harness({
+      maxReconnects: 2,
+      reconnectDelayMs: 1,
+      streamScript: [
+        { kind: 'stream' },
+        { kind: 'reject' },
+        { kind: 'reject' },
+        { kind: 'stream' },
+      ],
+    });
+    h.controller.openCity(CITY_A);
+    await tick();
+    h.streams[0]!.send([META_EVENT(CITY_A)]);
+    await tick();
+    h.streams[0]!.close();
+    await tick();
+    await tick();
+    await tick();
+    const state = h.latest();
+    expect(state.phase).toBe('error');
+    expect(state.fatal?.code).toBe('STREAM_INTERRUPTED');
+    expect(h.streamCalls).toHaveLength(3);
+    // 入口 = 再次 startGeneration（非 force）：服务端会并入/回放原任务。
+    void h.controller.startGeneration();
+    await tick();
+    expect(h.streamCalls).toHaveLength(4);
+    expect(h.streamCalls[3]!.options.force).toBeFalsy();
+  });
+
+  it('业务错误（COOLDOWN）不重连，保留服务端 code/message/retryAfterSec', async () => {
+    const h = harness({
+      reconnectDelayMs: 1,
+      streamScript: [
+        { kind: 'stream' },
+        {
+          kind: 'http',
+          status: 429,
+          body: { code: 'COOLDOWN', message: '该城上次生成失败，冷却中（剩余 120 秒）', retryAfterSec: 120 },
+        },
+      ],
+    });
+    h.controller.openCity(CITY_A);
+    await tick();
+    h.streams[0]!.send([META_EVENT(CITY_A)]);
+    await tick();
+    h.streams[0]!.close(); // 截断 → 重连
+    await tick();
+    await tick();
+    await tick();
+    const state = h.latest();
+    expect(state.phase).toBe('cooldown');
+    expect(state.fatal?.code).toBe('COOLDOWN');
+    expect(state.fatal?.retryAfterSec).toBe(120);
+    expect(state.fatal?.message).toContain('冷却中');
+    // 明确的业务终态不再重连。
+    expect(h.streamCalls).toHaveLength(2);
+  });
+
+  it('等待重连期间切城：静默取消，不为旧城市新建流', async () => {
+    const h = harness({
+      cache: 'hit',
+      reconnectDelayMs: 30,
+      streamScript: [{ kind: 'stream' }],
+    });
+    h.controller.openCity(CITY_A);
+    await tick();
+    void h.controller.startGeneration();
+    await tick();
+    h.streams[0]!.send([META_EVENT(CITY_A)]);
+    await tick();
+    h.streams[0]!.close();
+    h.controller.openCity(CITY_B); // 重连等待期间切城
+    await tick();
+    expect(h.latest().meta?.cityId).toBe(CITY_B);
+    const before = h.streamCalls.length;
+    await tick();
+    await tick();
+    expect(h.streamCalls.length).toBe(before);
+    expect(h.latest().meta?.cityId).toBe(CITY_B);
+  });
+});
+
+/* -------------------------------------------------------------------------- */
+/* 旧内容 + 最新失败同时可见                                                   */
+/* -------------------------------------------------------------------------- */
+
+describe('CityStreamController：旧内容与最新失败同时可见', () => {
+  it('旧内容回放（fromCache）不清除本轮失败记录', async () => {
+    // 复现事件序列：module_error(identity) → module(identity, fromCache) → done
+    const h = harness({ cache: 'hit', reconnectDelayMs: 1 });
+    h.controller.openCity(CITY_A);
+    await tick();
+    void h.controller.regenerate();
+    await tick();
+    h.streams[0]!.send([
+      META_EVENT(CITY_A),
+      { event: 'module_error', data: { seq: 2, name: 'identity', code: 'LLM_TIMEOUT', retryable: true } },
+      { event: 'module', data: { ...MODULE_EVENT('identity', 3).data, fromCache: true } },
+      {
+        event: 'done',
+        data: {
+          seq: 4,
+          cityId: CITY_A,
+          status: 'partial',
+          failedModules: ['identity'],
+          generatedAt: '2026-11-14T00:00:00.000Z',
+          dataVersion: 2,
+        },
+      },
+    ]);
+    await tick();
+    h.streams[0]!.close();
+    await tick();
+    await tick();
+    const state = h.latest();
+    // 旧内容仍在，失败记录也仍在（旧实现会被 fromCache 回放清空）。
+    expect(state.modules.identity).toBeDefined();
+    expect(state.errors.identity?.code).toBe('LLM_TIMEOUT');
+    expect(state.done?.failedModules).toEqual(['identity']);
+  });
+
+  it('真正生成成功后清除该模块的失败记录', async () => {
+    const h = harness({ cache: 'hit', reconnectDelayMs: 1 });
+    h.controller.openCity(CITY_A);
+    await tick();
+    void h.controller.regenerate();
+    await tick();
+    h.streams[0]!.send([
+      META_EVENT(CITY_A),
+      { event: 'module_error', data: { seq: 2, name: 'identity', code: 'LLM_TIMEOUT', retryable: true } },
+    ]);
+    await tick();
+    expect(h.latest().errors.identity).toBeDefined();
+    // 重试成功后：普通 module 事件（非 fromCache）清除失败提示。
+    h.streams[0]!.send([MODULE_EVENT('identity', 3), DONE_EVENT(CITY_A, 4)]);
+    await tick();
+    h.streams[0]!.close();
+    await tick();
+    await tick();
+    expect(h.latest().errors.identity).toBeUndefined();
+    expect(h.latest().modules.identity).toBeDefined();
+  });
+
+  it('缓存读取带回最近一次失败记录（archiveToErrors）', async () => {
+    const cached = archive(CITY_A);
+    cached.meta.moduleAttempts = {
+      identity: { status: 'failed', code: 'LLM_TIMEOUT', at: '2026-11-14T00:00:00.000Z' },
+    };
+    const errors = archiveToErrors(cached);
+    expect(errors.identity).toMatchObject({ name: 'identity', code: 'LLM_TIMEOUT', retryable: true });
+
+    const h = harness({ cache: 'hit', fetchArchive: () => Promise.resolve(cached) });
+    h.controller.openCity(CITY_A);
+    await tick();
+    expect(h.latest().phase).toBe('ready');
+    // 失败提示随缓存一起带回（供单卷重试入口使用）。
+    expect(h.latest().errors.identity?.code).toBe('LLM_TIMEOUT');
   });
 });
 

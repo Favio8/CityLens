@@ -225,7 +225,8 @@ async function setupEnvironment() {
     NODE_ENV: 'production',
     MOCK_LLM: 'true',
     MOCK_LLM_DELAY_MS: '0',
-    SIMULATE_FAIL: 'chronicle',
+    // identity 在种子档案里有合格旧内容：刷新失败时必须「旧内容仍在 + 失败提示 + 单卷重试」。
+    SIMULATE_FAIL: 'identity',
     ENABLE_IMAGES: 'false',
     LLM_API_KEY: '',
     TAVILY_API_KEY: '',
@@ -426,7 +427,7 @@ async function scenarioCachedCity() {
 }
 
 async function scenarioFailureRetry() {
-  console.log('[e2e] 场景 3：失败重试（SIMULATE_FAIL=chronicle，force 重生成）');
+  console.log('[e2e] 场景 3：刷新失败（SIMULATE_FAIL=identity，force 重生成）');
   if (EXTERNAL_BASE) {
     skip('失败重试（写型场景）', 'E2E_BASE_URL 指向外部服务，禁止写操作');
     return;
@@ -453,13 +454,34 @@ async function scenarioFailureRetry() {
     `[...document.querySelectorAll('button')].filter((b) => b.textContent.includes('重试此卷')).length`,
   );
   check('失败卷展示重试入口', retryCount > 0, `retry buttons=${retryCount}`);
-  const identityRendered = await cdp.evaluate(
+  // 旧内容与最新刷新失败同时可见：identity 有合格旧内容，刷新失败后旧内容不得被清空。
+  const oldIdentity = await cdp.evaluate(
     `(() => {
        const section = document.querySelector('#identity');
+       return Boolean(
+         section && section.textContent && section.textContent.includes('一座用于回归测试的'),
+       );
+     })()`,
+  );
+  check('刷新失败后旧内容仍在（identity 旧 persona 回放）', Boolean(oldIdentity));
+  const failureNotice = await cdp.evaluate(
+    `document.body.innerText.includes('本次更新失败') && document.body.innerText.includes('继续展示旧内容')`,
+  );
+  check('失败提示说明「本次更新失败，继续展示旧内容」', Boolean(failureNotice));
+  const identityRetry = await cdp.evaluate(
+    `(() => {
+       const section = document.querySelector('#identity');
+       return Boolean(section && section.textContent && section.textContent.includes('重试此卷'));
+     })()`,
+  );
+  check('失败卷（identity）提供单卷重试入口', Boolean(identityRetry));
+  const landmarksRendered = await cdp.evaluate(
+    `(() => {
+       const section = document.querySelector('#landmarks');
        return Boolean(section && section.textContent && section.textContent.length > 40);
      })()`,
   );
-  check('单模块失败不影响其他卷', Boolean(identityRendered));
+  check('单模块失败不影响其他卷', Boolean(landmarksRendered));
   const noCooldown = await cdp.evaluate(`!document.body.innerText.includes('此城刚刚起卷')`);
   check('重生成失败后档案未下架', Boolean(noCooldown));
   await clickByText('button', '重试此卷');

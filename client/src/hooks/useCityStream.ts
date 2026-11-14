@@ -12,6 +12,7 @@ import { getCityArchive } from '../lib/api';
 import { consumeSse } from '../lib/sse';
 import {
   CityStreamController,
+  archiveToErrors,
   archiveToModules,
   initialStreamState,
   type CityStreamState,
@@ -20,7 +21,7 @@ import {
   type StreamedModule,
 } from '../lib/cityStream';
 
-export { archiveToModules };
+export { archiveToErrors, archiveToModules };
 export type { CityStreamState, StreamPhase, StreamedModule };
 
 export function useCityStream(cityId: string) {

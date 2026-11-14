@@ -1,6 +1,6 @@
 import type { AddressInfo } from 'node:net';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { MODULE_NAMES, PENDING } from '../../shared/schema';
+import { MODULE_NAMES, PENDING, type ModuleName } from '../../shared/schema';
 import { DEFAULT_THEME_PALETTE } from '../../shared/cityThemes';
 import { buildApp } from '../index';
 import { config } from '../config';
@@ -78,6 +78,160 @@ class HangingGenerator implements ModuleGenerator {
   }
 }
 
+/** 八卷全部成功的生成器；最后一个模块可挂起，用于制造「服务端未完成」窗口。 */
+class GatedCompleteGenerator implements ModuleGenerator {
+  readonly name = 'gated-complete';
+  readonly promptVersion = 'gated-v1';
+  calls = 0;
+  /** 模拟这些模块失败（用于 partial 场景）。 */
+  failModules: ModuleName[] = [];
+  private release: (() => void) | null = null;
+
+  /** 放行最后挂起的模块，让服务端任务收尾。 */
+  releaseLast(): void {
+    this.release?.();
+    this.release = null;
+  }
+
+  async generate(input: GenerateInput): Promise<GeneratedModule> {
+    this.calls += 1;
+    if (this.failModules.includes(input.module)) {
+      throw new GenerationError('LLM_TIMEOUT', `模拟失败：模块 ${input.module} 超时`);
+    }
+    if (input.module === 'dataPulse') {
+      await new Promise<void>((resolve) => {
+        this.release = resolve;
+      });
+    }
+    return {
+      status: 'ok',
+      verification: 'verified_by_source',
+      sources: [{ id: 'S-OK', type: 'preset_manual', title: '测试来源', retrievedAt: generatedAt }],
+      data: completeModuleData(input.module),
+    };
+  }
+}
+
+const generatedAt = '2026-11-14T00:00:00.000Z';
+
+/** GatedCompleteGenerator 使用的合法模块数据（sourceRefs 指向生成器提供的 S-OK）。 */
+function completeModuleData(module: ModuleName): unknown {
+  const refs = ['S-OK'];
+  switch (module) {
+    case 'identity':
+      return {
+        standardName: '泉州',
+        aliases: ['刺桐'],
+        center: [118.6757, 24.8741],
+        area: { value: PENDING, sourceRefs: refs },
+        population: { value: PENDING, sourceRefs: refs },
+        climateType: { value: PENDING, sourceRefs: refs },
+        adminDivisions: { value: PENDING, sourceRefs: refs },
+        oneLinePersona: '刺桐港的风帆驶进了今天的泉州。',
+        sourceRefs: refs,
+        verification: 'pending_human_review',
+      };
+    case 'landmarks':
+      return [
+        {
+          entityRef: 'Q-1',
+          name: '开元寺',
+          category: 'must_visit',
+          bestSeason: PENDING,
+          reason: '宋代遗构，闽南佛教寺院代表。',
+          placeName: '泉州开元寺',
+          coordinates: [118.5767, 24.8717],
+          coordSource: 'local_gazetteer',
+          sourceRefs: refs,
+          verification: 'pending_human_review',
+        },
+      ];
+    case 'relics':
+      return [
+        {
+          registryId: 'R-1',
+          name: '洛阳桥',
+          era: '宋',
+          museumOrSite: '泉州洛阳桥',
+          protectionLevel: '国保',
+          findSpot: '待考',
+          story: '宋代跨海梁式石桥，闽南交通史见证。',
+          coordinates: null,
+          sourceRefs: refs,
+          verification: 'pending_human_review',
+        },
+      ];
+    case 'figures':
+      return [
+        {
+          entityRef: 'Q-2',
+          name: '李贽',
+          dynasty: '明',
+          birthYear: 1527,
+          deathYear: 1602,
+          relationType: 'native',
+          evidence: { property: 'birthplace', value: '泉州' },
+          cityBond: '李贽出身泉州，明代思想家。',
+          highlights: '著《焚书》《藏书》，晚年寓居麻城。',
+          sites: [],
+          sourceRefs: refs,
+          verification: 'pending_human_review',
+        },
+      ];
+    case 'poetics':
+      return [
+        {
+          poemId: 'P-1',
+          title: '测试诗',
+          author: '测试人',
+          dynasty: '唐',
+          lines: ['刺桐花谢刺桐长'],
+          background: PENDING,
+          relationType: 'direct',
+          imageryMap: [],
+          sourceRefs: refs,
+          verification: 'pending_human_review',
+        },
+      ];
+    case 'chronicle':
+      return [
+        {
+          eraName: '唐',
+          startYear: 618,
+          endYear: 907,
+          periodRange: '618—907',
+          ancientCityName: '泉州',
+          keyEvents: '唐代设泉州，港口贸易渐兴。',
+          relicToday: '开元寺',
+          centerCoord: null,
+          sourceRefs: refs,
+          verification: 'pending_human_review',
+        },
+      ];
+    case 'localSoul':
+      return {
+        aiCurated: true,
+        foods: [{ name: '面线糊', flavor: '清鲜', origin: '闽南' }],
+        dialects: [{ word: '咱厝', pronunciation: 'lan cu', meaning: '我家', example: '咱厝人' }],
+        ichItems: [{ name: '南音', level: '待考', intro: '闽南传统音乐', sourceRefs: refs }],
+        festivals: [{ name: '元宵', season: '正月十五', custom: '闹花灯' }],
+      };
+    case 'dataPulse':
+      return {
+        gdpSeries: [{ year: 2025, value: null }],
+        popSeries: [{ year: 2025, value: null }],
+        statMeta: {
+          gdp: { unit: '亿元', caliber: '地区生产总值（现价）', sourceRefs: refs },
+          pop: { unit: '万人', caliber: '年末常住人口', sourceRefs: refs },
+        },
+        climateMonthly: [],
+        climateMeta: { period: '1991–2020', station: '待考', sourceRefs: refs },
+      };
+    default:
+      throw new Error('未知模块');
+  }
+}
+
 /** 打开一条 SSE 流并读取事件，直到满足 until 条件（不等待 done，便于测试挂起任务）。 */
 async function openSse(
   url: string,
@@ -87,12 +241,19 @@ async function openSse(
 ): Promise<{
   status: number;
   events: SseRecord[];
+  /** 继续读取同一条连接，直到满足条件或流结束（用于并入任务后等待其收尾）。 */
+  readUntil: (predicate: (events: SseRecord[]) => boolean) => Promise<void>;
   cancel: () => Promise<void>;
 }> {
   const response = await fetch(url, init);
   const events: SseRecord[] = [];
   if (!response.ok || !response.body) {
-    return { status: response.status, events, cancel: async () => undefined };
+    return {
+      status: response.status,
+      events,
+      readUntil: async () => undefined,
+      cancel: async () => undefined,
+    };
   }
   const reader = response.body.getReader();
   const decoder = new TextDecoder();
@@ -125,10 +286,34 @@ async function openSse(
   return {
     status: response.status,
     events,
+    readUntil: async (predicate) => {
+      for (let guard = 0; guard < 256; guard += 1) {
+        if (predicate(events)) return;
+        const record = await readMore();
+        if (!record) return;
+      }
+    },
     cancel: async () => {
       await reader.cancel();
     },
   };
+}
+
+/** 轮询等待条件成立（服务端任务收尾等异步状态）。 */
+async function waitFor(
+  predicate: () => Promise<boolean> | boolean,
+  timeoutMs: number,
+  intervalMs: number,
+  label: string,
+): Promise<void> {
+  const deadline = Date.now() + timeoutMs;
+  for (;;) {
+    if (await predicate()) return;
+    if (Date.now() >= deadline) {
+      throw new Error(`waitFor 超时：${label}`);
+    }
+    await new Promise((resolve) => setTimeout(resolve, intervalMs));
+  }
 }
 
 function setup(generator: ModuleGenerator = new MockGenerator({ delayMs: 5 })) {
@@ -616,7 +801,202 @@ describe('保护与限流', () => {
     await first.cancel();
     await second.cancel();
   });
+});
 
+/**
+ * 「服务端已完成、客户端丢失 done」的恢复路径（问题二）。
+ * 客户端重连必须是非 force：服务端据此并入仍在运行的任务，或在任务已完成时
+ * 按缓存立即回放终态——不重复生成、不重复计费、不绕过刷新冷却。
+ */
+describe('SSE 断线恢复：服务端已完成、客户端丢失 done', () => {
+  it('全部完成：截断后非 force 重连读取终态档案，不重复生成计费', async () => {
+    const gated = new GatedCompleteGenerator();
+    const { db, app } = setup(gated);
+    const base = await listen(app);
+    const jobs = new JobRepo(db);
+
+    // 第一次 force 生成：读到第 7 个模块后取消（模拟客户端丢失 done）。
+    const first = await openSse(
+      `${base}/api/cities/CN-350500/generate`,
+      {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ force: true }),
+      },
+      (events) => events.filter((item) => item.event === 'module').length >= 7,
+    );
+    expect(first.status).toBe(200);
+    await first.cancel();
+    // 此刻服务端任务仍在运行（最后一个模块被挂起）。
+    expect(jobs.getRunning('CN-350500')).not.toBeNull();
+
+    // 服务端任务随后完成——客户端永远收不到它的 done（复现的丢失场景）。
+    gated.releaseLast();
+    await waitFor(async () => jobs.getRunning('CN-350500') === null, 10_000, 50, '任务收尾');
+    const callsAfterFirst = gated.calls;
+
+    // 旧客户端行为（重连仍发 force）：被 5 分钟刷新冷却拦截，进入无法恢复的终态。
+    const forceRetry = await fetch(`${base}/api/cities/CN-350500/generate`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ force: true }),
+    });
+    expect(forceRetry.status).toBe(429);
+    expect(((await forceRetry.json()) as { code: string }).code).toBe('REGEN_COOLDOWN');
+
+    // 客户端恢复：非 force 重连 → 服务端按缓存回放终态。
+    const recovered = await collectSse(`${base}/api/cities/CN-350500/generate`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({}),
+    });
+    expect(recovered.status).toBe(200);
+    const done = recovered.events.at(-1)!;
+    expect(done.event).toBe('done');
+    expect(done.data.status).toBe('complete');
+    // 终态内容随回放下发。
+    const identity = recovered.events.find(
+      (item) => item.event === 'module' && item.data.name === 'identity',
+    );
+    expect(identity).toBeDefined();
+    expect((identity!.data.data as { oneLinePersona: string }).oneLinePersona).toContain('刺桐港');
+
+    // 不重复生成、不重复计费：重连任务 0 次 LLM 调用，生成器总调用次数不变。
+    expect(gated.calls).toBe(callsAfterFirst);
+    const rows = db
+      .prepare('SELECT job_id, status, llm_calls FROM generation_jobs ORDER BY started_at')
+      .all() as Array<{ job_id: string; status: string; llm_calls: number }>;
+    expect(rows).toHaveLength(2);
+    expect(rows[0]!.status).toBe('done');
+    expect(rows[1]!.llm_calls).toBe(0);
+    // 最终展示内容：GET 返回完整档案。
+    const hit = await fetch(`${base}/api/cities/CN-350500`);
+    expect(hit.status).toBe(200);
+    const body = (await hit.json()) as { identity: { oneLinePersona: string } | null };
+    expect(body.identity?.oneLinePersona).toContain('刺桐港');
+  });
+
+  it('重连竞态：并入运行中任务后恰好完成，仍能收到 done 终态', async () => {
+    // 复现场景：客户端在服务端完成前后之间重连（非 force）——必须并入运行中的任务，
+    // 并随任务收尾拿到 done，而不是新建刷新或卡在无终态。
+    const gated = new GatedCompleteGenerator();
+    const { db, app } = setup(gated);
+    const base = await listen(app);
+    const jobs = new JobRepo(db);
+
+    const first = await openSse(
+      `${base}/api/cities/CN-350500/generate`,
+      {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ force: true }),
+      },
+      (events) => events.filter((item) => item.event === 'module').length >= 3,
+    );
+    expect(first.status).toBe(200);
+    await first.cancel();
+    expect(jobs.getRunning('CN-350500')).not.toBeNull();
+
+    // 非 force 重连：任务仍在运行（最后一个模块被挂起）→ 必须并入而非新建。
+    const reconnected = await openSse(
+      `${base}/api/cities/CN-350500/generate`,
+      {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({}),
+      },
+      (events) => events.some((item) => item.event === 'notice' && item.data.code === 'ATTACHED'),
+    );
+    expect(reconnected.status).toBe(200);
+    expect(
+      reconnected.events.some((item) => item.event === 'notice' && item.data.code === 'ATTACHED'),
+    ).toBe(true);
+
+    // 并入确认后任务才收尾：同一条连接必须随完成收到 done。
+    gated.releaseLast();
+    await reconnected.readUntil((events) => events.some((item) => item.event === 'done'));
+    const done = reconnected.events.at(-1)!;
+    expect(done.event).toBe('done');
+    expect(done.data.status).toBe('complete');
+    await reconnected.cancel();
+
+    // 竞态未产生第二个任务；Mock 不冒充付费调用，llm_calls 保持 0。
+    await waitFor(async () => jobs.getRunning('CN-350500') === null, 10_000, 50, '任务收尾');
+    expect(gated.calls).toBe(MODULE_NAMES.length);
+    const rows = db.prepare('SELECT COUNT(*) AS n FROM generation_jobs').get() as { n: number };
+    expect(rows.n).toBe(1);
+    const job = db
+      .prepare('SELECT status, llm_calls FROM generation_jobs')
+      .get() as { status: string; llm_calls: number };
+    expect(job.status).toBe('done');
+    expect(job.llm_calls).toBe(0);
+  });
+
+  it('部分完成：截断后重连得到 partial 终态', async () => {
+    const gated = new GatedCompleteGenerator();
+    gated.failModules = ['dataPulse']; // 7 卷成功、1 卷失败 → partial
+    const { app } = setup(gated);
+    const base = await listen(app);
+    const first = await openSse(
+      `${base}/api/cities/CN-350500/generate`,
+      {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ force: true }),
+      },
+      (events) => events.filter((item) => item.event === 'module').length >= 5,
+    );
+    expect(first.status).toBe(200);
+    await first.cancel();
+    await waitFor(
+      async () => (await fetch(`${base}/api/cities/CN-350500`)).status === 200,
+      10_000,
+      50,
+      'partial 发布',
+    );
+
+    const recovered = await collectSse(`${base}/api/cities/CN-350500/generate`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({}),
+    });
+    const done = recovered.events.at(-1)!;
+    expect(done.event).toBe('done');
+    expect(done.data.status).toBe('partial');
+    expect(done.data.failedModules).toEqual(['dataPulse']);
+    // 终态内容随回放下发（identity 有值，失败卷不带内容）。
+    const identity = recovered.events.find(
+      (item) => item.event === 'module' && item.data.name === 'identity',
+    );
+    expect(identity).toBeDefined();
+    expect((identity!.data.data as { oneLinePersona: string }).oneLinePersona).toContain('刺桐港');
+  });
+
+  it('未达发布门槛：重连得到 429 COOLDOWN 并保留服务端信息', async () => {
+    const failing = new MockGenerator({ delayMs: 1, failModules: [...MODULE_NAMES] });
+    const { app } = setup(failing);
+    const base = await listen(app);
+    const first = await collectSse(`${base}/api/cities/CN-350500/generate`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ force: true }),
+    });
+    expect(first.events.at(-1)?.data.status).toBe('unpublished');
+
+    // 非 force 重连：未发布 + 冷却 → 明确的业务终态（客户端据此展示冷却，而不是无限重试）。
+    const retry = await fetch(`${base}/api/cities/CN-350500/generate`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({}),
+    });
+    expect(retry.status).toBe(429);
+    const body = (await retry.json()) as { code: string; retryAfterSec: number };
+    expect(body.code).toBe('COOLDOWN');
+    expect(body.retryAfterSec).toBeGreaterThan(0);
+  });
+});
+
+describe('保护与限流（冷却与限流）', () => {
   it('整体失败后进入冷却，GET 与再次生成均返回 429', async () => {
     const failing = new MockGenerator({ delayMs: 1, failModules: [...MODULE_NAMES] });
     const { app } = setup(failing);

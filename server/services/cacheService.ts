@@ -4,10 +4,11 @@
  */
 import type {
   CityArchiveResponse,
+  ModuleErrorCode,
   ModuleName,
   ModuleStatus,
 } from '../../shared/schema';
-import { MODULE_NAMES } from '../../shared/schema';
+import { MODULE_ERROR_CODES, MODULE_NAMES } from '../../shared/schema';
 import { DEFAULT_THEME_PALETTE } from '../../shared/cityThemes';
 import type { CityBrief } from '../db/cityRepo';
 import type { ArchiveRecord, ArchiveRepo, ModuleRecord } from '../db/archiveRepo';
@@ -49,6 +50,13 @@ export function buildArchiveResponse(
     if (module.status === 'failed' || module.status === 'missing') return null;
     return module.data;
   };
+  // 最近一次生成尝试失败（内容可能仍可用）：随档案下发，让「旧内容 + 本次失败」同时可见。
+  const moduleAttempts: NonNullable<CityArchiveResponse['meta']>['moduleAttempts'] = {};
+  for (const name of MODULE_NAMES) {
+    const record = bundle.modules.get(name);
+    const attempt = latestAttempt(record);
+    if (attempt) moduleAttempts[name] = attempt;
+  }
   return {
     fromCache: true,
     meta: {
@@ -62,6 +70,7 @@ export function buildArchiveResponse(
       generatedAt: bundle.archive.generatedAt,
       status: bundle.archive.status,
       moduleStatus: status,
+      ...(Object.keys(moduleAttempts).length > 0 ? { moduleAttempts } : {}),
       generator: bundle.archive.generator,
       isPreset: bundle.archive.isPreset,
       themePalette: bundle.archive.themePalette,
@@ -98,6 +107,34 @@ export function lastAttemptFailed(module: ModuleRecord | undefined): boolean {
   if (!module) return false;
   const verification = module.verification as { lastAttempt?: { status?: string } } | null;
   return verification?.lastAttempt?.status === 'failed';
+}
+
+/** 取出规范的「最近一次失败尝试」记录；没有则返回 null。 */
+export function latestAttempt(
+  module: ModuleRecord | undefined,
+): { status: 'failed'; code: ModuleErrorCode; message?: string; at: string } | null {
+  if (!module) return null;
+  const verification = module.verification as {
+    status?: string;
+    code?: string;
+    message?: string;
+    at?: string;
+    lastAttempt?: { status?: string; code?: string; message?: string; at?: string };
+  } | null;
+  // 两种存储形态：保留旧内容的失败记在 verification.lastAttempt；
+  // 无旧内容的失败把 attempt 直接作为 verification 根对象（markModuleFailed）。
+  const attempt =
+    verification?.lastAttempt ?? (verification?.status === 'failed' ? verification : null);
+  if (attempt?.status !== 'failed' || typeof attempt.at !== 'string') return null;
+  const code = MODULE_ERROR_CODES.includes(attempt.code as ModuleErrorCode)
+    ? (attempt.code as ModuleErrorCode)
+    : 'SCHEMA_INVALID';
+  return {
+    status: 'failed',
+    code,
+    ...(typeof attempt.message === 'string' ? { message: attempt.message } : {}),
+    at: attempt.at,
+  };
 }
 
 export function cooldownSeconds(untilIso: string, now = Date.now()): number {
